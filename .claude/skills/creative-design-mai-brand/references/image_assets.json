@@ -1,0 +1,459 @@
+{
+  "metadata": {
+    "title": "Microsoft AI Brand Image Reference Library",
+    "description": "Curated collection of images embodying the MAI visual language",
+    "version": "1.0",
+    "lastUpdated": "2025-01"
+  },
+  "categories": [
+    {
+      "id": "abstract",
+      "name": "Abstract & Artistic",
+      "description": "Abstract landscapes, data visualizations, and artistic compositions"
+    },
+    {
+      "id": "locations",
+      "name": "Illustrated Cityscapes",
+      "description": "Watercolor-style illustrations of global MAI office locations"
+    },
+    {
+      "id": "portraits",
+      "name": "People Photography",
+      "description": "Candid and professional portraits embodying human connection"
+    },
+    {
+      "id": "gradients",
+      "name": "Gradients",
+      "description": "Smooth color gradient backgrounds for brand materials"
+    }
+  ],
+  "images": [
+    {
+      "id": "01",
+      "category": "abstract",
+      "title": "Abstract Landscape Triptych",
+      "file": "images/01-2025.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/12/2025.png",
+      "format": "png",
+      "description": "A triptych of three abstract landscape paintings featuring painterly brushstrokes. Left panel shows a dramatic sunset with orange and coral clouds over teal water. Center panel depicts rolling green hills under a pale sky. Right panel shows a dark moody landscape with magenta accents on the horizon.",
+      "keywords": ["abstract", "landscape", "triptych", "painterly", "sunset", "hills", "impressionist", "brushstrokes", "coral", "teal", "green", "moody", "artistic", "nature", "horizon"],
+      "bestFor": ["backgrounds", "hero sections", "mood setting", "Expressive Exploration philosophy"]
+    },
+    {
+      "id": "02",
+      "category": "abstract",
+      "title": "Nature Photography Mood Board",
+      "file": "images/02-group-2147233287-2.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Group-2147233287-2.jpg",
+      "format": "jpg",
+      "description": "A curated mood board layout on a beige/cream background with scattered photo cards. Features nature and lifestyle imagery including: a crocodile in water with lily pads, a windswept grass field at sunset, mountain sunrise with rural road, a lone tree silhouette at sunset, gourmet open-faced sandwiches, ocean sunset, and a citrus cross-section. Subtle pencil sketch lines add an artistic touch.",
+      "keywords": ["mood board", "collage", "nature photography", "lifestyle", "crocodile", "sunset", "tree silhouette", "mountains", "food photography", "citrus", "warm tones", "beige", "cream", "editorial", "curated"],
+      "bestFor": ["editorial layouts", "warmth", "human connection", "The Messy Middle philosophy"]
+    },
+    {
+      "id": "03",
+      "category": "abstract",
+      "title": "Abstract Wave Data Visualization",
+      "file": "images/03-group-2147233287-1.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/Group-2147233287-1.jpg",
+      "format": "jpg",
+      "description": "A minimalist black and white artistic data visualization featuring sinusoidal wave patterns with ink splatter effects. Multiple overlapping curves create depth, with scattered dots and vertical lines suggesting data points or musical notation. The composition evokes scientific graphs merged with abstract expressionism.",
+      "keywords": ["abstract", "data visualization", "waves", "sinusoidal", "ink", "splatter", "minimalist", "black and white", "monochrome", "scientific", "artistic", "dots", "lines", "graph", "musical", "rhythm"],
+      "bestFor": ["Proof in Line philosophy", "technical content", "data visualization", "scientific themes"]
+    },
+    {
+      "id": "04",
+      "category": "abstract",
+      "title": "Ancient Smiling Stone Face",
+      "file": "images/04-smiling-rock.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/03/mattimuspr1me_smiling_rock_styled_like_it_is_from_an_ancient__e70ad561-8b5d-46ca-9e49-2ea6fced83a8_0-1-1.png",
+      "format": "png",
+      "description": "A carved stone sculpture resembling an ancient artifact with a simple, friendly smiling face. The oval-shaped gray stone features minimal carved features - two curved eyes and a wide smile - evoking prehistoric or indigenous art styles. The warm, approachable expression suggests AI personality and accessibility.",
+      "keywords": ["stone", "sculpture", "ancient", "artifact", "smiling", "face", "carved", "prehistoric", "indigenous", "friendly", "minimal", "gray", "oval", "AI personality", "approachable", "primitive art"],
+      "bestFor": ["AI personality", "approachability", "brand mascot", "The First Spark philosophy"]
+    },
+    {
+      "id": "05",
+      "category": "abstract",
+      "title": "Retro Tech Object Collection",
+      "file": "images/05-screenshot.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/01/Screenshot-2025-09-03-at-5.04.51%E2%80%AFPM-1.png",
+      "format": "png",
+      "description": "A flat-lay composition on black background featuring vintage and modern technology objects. Includes: retro CRT computer monitor, vintage typewriter, mushrooms, classic car detail, CPU/microprocessor chip, circuit boards, microscope, ceramic vase, and various tech components. The juxtaposition of organic (mushrooms) with mechanical creates an interesting contrast.",
+      "keywords": ["retro tech", "vintage", "typewriter", "computer", "CRT monitor", "mushrooms", "microprocessor", "circuit board", "flat lay", "black background", "nostalgia", "technology evolution", "objects", "contrast", "organic meets mechanical"],
+      "bestFor": ["technology themes", "history of AI", "The Messy Middle philosophy", "editorial collage"]
+    },
+    {
+      "id": "06",
+      "category": "abstract",
+      "title": "Impressionist Summer Scene",
+      "file": "images/06-image-17.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/11/image-17.jpg",
+      "format": "jpg",
+      "description": "A vibrant impressionist-style illustration of a Mediterranean summer scene. Features people swimming in a winding river or pool, cyclists on a path, lush green foliage, cypress trees, and purple mountains in the background. The loose, expressive brushwork and warm color palette evoke leisure and joy.",
+      "keywords": ["impressionist", "illustration", "summer", "Mediterranean", "swimming", "cycling", "leisure", "vibrant", "colorful", "green", "foliage", "cypress", "mountains", "lifestyle", "joyful", "painterly", "outdoor recreation"],
+      "bestFor": ["Expressive Exploration philosophy", "lifestyle content", "joyful themes", "hero images"]
+    },
+    {
+      "id": "07",
+      "category": "abstract",
+      "title": "White Daisies Against Blue Sky",
+      "file": "images/07-mask-group.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Mask-group.jpg",
+      "format": "jpg",
+      "description": "A serene nature photograph featuring white daisy flowers with yellow centers against a soft, gradient blue sky background. The shallow depth of field creates a dreamy bokeh effect with some flowers in sharp focus while others blur softly. Conveys simplicity, calm, and natural beauty.",
+      "keywords": ["daisies", "flowers", "white", "yellow", "blue sky", "nature", "bokeh", "shallow depth of field", "serene", "calm", "minimalist", "dreamy", "soft focus", "floral", "natural beauty", "peaceful"],
+      "bestFor": ["calm themes", "natural beauty", "minimalist compositions", "The First Spark philosophy"]
+    },
+    {
+      "id": "08",
+      "category": "abstract",
+      "title": "Human Eye Close-Up",
+      "file": "images/08-video.mp4",
+      "thumbnail": "images/08-video-thumbnail.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/01/7322713-uhd_2880_2160_25fps.mp4",
+      "format": "mp4",
+      "videoSpecs": {
+        "codec": "H.264",
+        "resolution": "2880x2160",
+        "quality": "4K UHD",
+        "fps": 25,
+        "duration": "8.4 seconds",
+        "fileSize": "~23MB"
+      },
+      "description": "An extreme macro close-up video of a human eye with blue-gray iris and auburn/red hair visible at the edges. The video captures subtle natural movements including blinking. The intimate, cinematic footage emphasizes human connection, warmth, and the beauty of natural details. Soft, warm lighting highlights skin texture and the intricate details of the iris and eyelashes.",
+      "keywords": ["eye", "close-up", "macro", "human", "portrait", "blinking", "iris", "blue eye", "auburn hair", "redhead", "cinematic", "intimate", "4K", "UHD", "warm lighting", "skin texture", "eyelashes", "natural beauty", "human connection", "emotional"],
+      "bestFor": ["human connection themes", "motion pieces", "intimacy", "video backgrounds"]
+    },
+    {
+      "id": "09",
+      "category": "abstract",
+      "title": "Copilot Sessions Meeting Pod",
+      "file": "images/09-img-6650.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/11/IMG_6650.jpg",
+      "format": "jpg",
+      "description": "A modern meeting pod booth at a Microsoft event, featuring two people having a casual conversation at a small round table. The glass-walled pod displays 'Copilot Sessions' and 'Release' branding with artwork including the friendly MAI mascot. Surrounded by indoor plants and natural light, creating an inviting, collaborative atmosphere.",
+      "keywords": ["meeting pod", "collaboration", "workspace", "Copilot", "Microsoft event", "conversation", "modern office", "glass booth", "indoor plants", "branding", "casual meeting", "tech workspace"],
+      "bestFor": ["collaboration themes", "product context", "workspace imagery", "event materials"]
+    },
+    {
+      "id": "10",
+      "category": "locations",
+      "title": "Redmond Park Scene",
+      "file": "images/10-location-image-2065416747.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/image-2065416747-1.png",
+      "format": "png",
+      "description": "A loose, sketch-style watercolor illustration of a Redmond park scene with Mt. Hood visible in the background. People relax on green lawns with deck chairs, surrounded by tall evergreen trees and urban buildings. Bright, cheerful palette with blue sky and white clouds.",
+      "keywords": ["Redmond", "Mt. Hood", "park", "watercolor", "illustration", "cityscape", "outdoor", "leisure", "trees", "urban nature", "sketch style", "Pacific Northwest", "summer"],
+      "bestFor": ["Redmond office content", "headquarters materials", "The First Spark philosophy", "casual themes"]
+    },
+    {
+      "id": "11",
+      "category": "locations",
+      "title": "New York Times Square",
+      "file": "images/11-location-new-york.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/mattimuspr1me_tightly_framed_New_York_city_scene_with_free_ed_b6d9e337-d392-4eef-9e16-b4b0cb322f47_3-1.png",
+      "format": "png",
+      "description": "A vibrant, loose watercolor illustration of Times Square in New York City. Features iconic billboards, yellow taxis, bustling pedestrians, and urban energy. Expressive brushstrokes capture the chaos and excitement of the iconic intersection with warm and cool color contrasts.",
+      "keywords": ["New York", "Times Square", "cityscape", "watercolor", "illustration", "taxis", "billboards", "urban", "bustling", "pedestrians", "iconic", "American city", "energetic"],
+      "bestFor": ["New York office content", "energy and excitement", "Expressive Exploration philosophy"]
+    },
+    {
+      "id": "12",
+      "category": "locations",
+      "title": "Lisbon/Istanbul Bosphorus Bridge",
+      "file": "images/12-location-image-2065416743.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/image-2065416743.png",
+      "format": "png",
+      "description": "A colorful watercolor cityscape showing a coastal city with a prominent suspension bridge (resembling the Bosphorus or 25 de Abril bridge). Features terracotta-roofed buildings cascading down hillsides, blue water with sailboats, and a bright Mediterranean atmosphere.",
+      "keywords": ["coastal city", "bridge", "watercolor", "Mediterranean", "Lisbon", "Istanbul", "hillside", "terracotta", "boats", "harbor", "colorful", "European city", "suspension bridge"],
+      "bestFor": ["European themes", "coastal imagery", "warmth", "Expressive Exploration philosophy"]
+    },
+    {
+      "id": "13",
+      "category": "locations",
+      "title": "Beijing Cityscape",
+      "file": "images/13-location-beijing.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/u7749841744_organic_edge_Beijing_city_scape_-profile_qh15un6_2ab8d304-956d-46a7-9c7f-6946e4315fbd_3-1.png",
+      "format": "png",
+      "description": "An illustrated Beijing cityscape blending traditional Chinese architecture (pagoda-style temple) with modern skyscrapers. Features the CCTV tower, busy streets with traffic, and lush green parks. Warm color palette with reds and greens capturing the city's cultural fusion.",
+      "keywords": ["Beijing", "China", "cityscape", "pagoda", "skyscrapers", "CCTV tower", "traditional", "modern", "urban", "illustration", "watercolor", "Asian city", "cultural fusion"],
+      "bestFor": ["Beijing office content", "cultural fusion themes", "global presence"]
+    },
+    {
+      "id": "14",
+      "category": "locations",
+      "title": "London Street Scene",
+      "file": "images/14-location-london.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/mattimuspr1me_Warmly_colored_tightly_cropped_Iconic_London_sc_680c9aea-d6b0-4f07-8492-c4ccd2d05b1e_0-1.png",
+      "format": "png",
+      "description": "A charming watercolor illustration of a London street scene featuring a classic red double-decker bus, a green newsstand kiosk, and outdoor cafe seating. Georgian architecture and tree-lined streets create a quintessentially British atmosphere with warm, inviting colors.",
+      "keywords": ["London", "England", "red bus", "double-decker", "street scene", "cafe", "newsstand", "British", "watercolor", "illustration", "urban", "European city", "charming"],
+      "bestFor": ["London office content", "charming urban themes", "European presence"]
+    },
+    {
+      "id": "15",
+      "category": "locations",
+      "title": "Suzhou Water Canal",
+      "file": "images/15-location-suzhou.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/mattimuspr1me_Suzhou_floating_illustration_with_irregular_unfin_06d3d189-8718-49cd-ae79-a1fde194d9c8-1.png",
+      "format": "png",
+      "description": "A delicate watercolor of Suzhou's famous water canals with traditional boats, weeping willow trees, and historic waterside buildings with red-tiled roofs. The floating, unfinished edges give an ethereal quality. Soft pastels and blues evoke the tranquil 'Venice of the East.'",
+      "keywords": ["Suzhou", "China", "canal", "watercolor", "boats", "willow tree", "traditional architecture", "water town", "Venice of the East", "tranquil", "pastel", "Asian city", "floating illustration"],
+      "bestFor": ["Suzhou office content", "tranquility", "The First Spark philosophy", "ethereal themes"]
+    },
+    {
+      "id": "16",
+      "category": "locations",
+      "title": "Hyderabad Cityscape",
+      "file": "images/16-location-hyderabad.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/mattimuspr1me_Warmly_colored_tightly_cropped_Iconic_Hyderabad_498377e6-94c4-46d5-81c0-a61d8064c689_2-1.png",
+      "format": "png",
+      "description": "A warm-toned watercolor illustration of Hyderabad, India featuring modern high-rise buildings, palm trees, and tropical vegetation. The cityscape has a sunny, vibrant feel with turquoise and coral accents against a blue sky with stars suggesting evening.",
+      "keywords": ["Hyderabad", "India", "cityscape", "palm trees", "tropical", "modern buildings", "watercolor", "illustration", "warm colors", "urban", "South Asian city", "evening", "vibrant"],
+      "bestFor": ["Hyderabad office content", "tropical warmth", "vibrant themes"]
+    },
+    {
+      "id": "17",
+      "category": "locations",
+      "title": "Zurich Old Town",
+      "file": "images/17-location-zurich.png",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/09/mattimuspr1me_Downtown_Zurich_floating_illustration_with_irre_a65bdc1f-95f0-4404-bfa3-acb9a14abe73_2-1.png",
+      "format": "png",
+      "description": "A charming watercolor illustration of Zurich's old town featuring the distinctive Grossmünster church spire, colorful historic buildings with orange and coral rooftops, and European street life. Soft, warm palette captures the Swiss city's blend of medieval and modern character.",
+      "keywords": ["Zurich", "Switzerland", "old town", "church spire", "Grossmünster", "European city", "watercolor", "illustration", "historic buildings", "colorful rooftops", "Swiss", "charming", "urban"],
+      "bestFor": ["Zurich office content", "European heritage", "charming themes"]
+    },
+    {
+      "id": "18",
+      "category": "portraits",
+      "title": "Woman with Phone Smiling",
+      "file": "images/18-portrait-screenshot-304.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Screenshot-2025-08-26-at-3.04.17-PM-2.jpg",
+      "format": "jpg",
+      "description": "A candid portrait of a young woman with wavy brown hair, smiling warmly while holding a phone. Wearing a black top in a modern office environment with plants visible. The warm, low-light setting creates an intimate, approachable feel.",
+      "keywords": ["portrait", "woman", "phone", "smiling", "candid", "office", "warm lighting", "brown hair", "approachable", "casual", "technology", "communication", "friendly"],
+      "bestFor": ["technology in use", "approachability", "candid moments", "Individual lens"]
+    },
+    {
+      "id": "19",
+      "category": "portraits",
+      "title": "Man Against Sky Background",
+      "file": "images/19-portrait-gemini-dg75.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Gemini_Generated_Image_dg75wjdg75wjdg75-15-1.jpg",
+      "format": "jpg",
+      "description": "A professional headshot of a man with strawberry blonde hair wearing a dark navy sweater, photographed against a soft blue sky background. Natural lighting, slight smile, looking off-camera. Clean, minimalist corporate portrait style.",
+      "keywords": ["portrait", "headshot", "man", "professional", "blue sky", "natural light", "corporate", "clean", "minimalist", "blonde hair", "navy sweater", "outdoor"],
+      "bestFor": ["professional headshots", "clean layouts", "corporate materials"]
+    },
+    {
+      "id": "20",
+      "category": "portraits",
+      "title": "Woman with Autumn Leaves",
+      "file": "images/20-portrait-screenshot-135.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Screenshot-2025-08-26-at-1.35.49-PM-11-2.jpg",
+      "format": "jpg",
+      "description": "A playful portrait of a woman in a yellow jacket holding autumn leaves over her eyes, smiling broadly. Outdoor setting with green foliage and stairs in background. Captures joy, playfulness, and connection with nature in warm autumn tones.",
+      "keywords": ["portrait", "woman", "playful", "autumn", "leaves", "yellow jacket", "smiling", "outdoor", "joyful", "nature", "candid", "fun", "Asian woman", "seasonal"],
+      "bestFor": ["playful themes", "joy", "Expressive Exploration philosophy", "seasonal content"]
+    },
+    {
+      "id": "21",
+      "category": "portraits",
+      "title": "Woman at Event with Coffee",
+      "file": "images/21-portrait-dsc1233.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/DSC_1233-1-2-2.jpg",
+      "format": "jpg",
+      "description": "A candid photo of an Asian woman at an indoor event, holding a coffee cup and smiling while looking to the side. Wearing a gray sweater in warm ambient lighting. Captures a genuine moment of engagement and warmth at a professional gathering.",
+      "keywords": ["portrait", "woman", "event", "coffee", "candid", "Asian woman", "smiling", "professional", "networking", "warm lighting", "gray sweater", "genuine", "social"],
+      "bestFor": ["event materials", "networking themes", "genuine moments", "Individual lens"]
+    },
+    {
+      "id": "22",
+      "category": "portraits",
+      "title": "Woman by Window Smiling",
+      "file": "images/22-portrait-image-2.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/image-2.jpg",
+      "format": "jpg",
+      "description": "A natural portrait of an Asian woman with long dark hair in a ponytail, wearing a dark patterned top. Photographed near a window with soft natural light, looking off-camera with a warm smile. Professional yet relaxed atmosphere.",
+      "keywords": ["portrait", "woman", "window light", "natural", "Asian woman", "ponytail", "smiling", "professional", "relaxed", "indoor", "warm", "candid"],
+      "bestFor": ["natural lighting", "relaxed professional themes", "Individual lens"]
+    },
+    {
+      "id": "23",
+      "category": "portraits",
+      "title": "Woman Laughing at Conference",
+      "file": "images/23-portrait-dsc1212.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/DSC_1212-4-2.jpg",
+      "format": "jpg",
+      "description": "A dynamic candid shot of a blonde woman laughing heartily at a conference or professional event. Wearing a black top with a lanyard badge, with visible arm tattoo. Background shows other attendees, capturing genuine joy and connection at a workplace gathering.",
+      "keywords": ["portrait", "woman", "laughing", "conference", "candid", "blonde", "tattoo", "lanyard", "professional event", "joy", "genuine", "networking", "dynamic"],
+      "bestFor": ["genuine joy", "conference materials", "dynamic energy", "Individual lens"]
+    },
+    {
+      "id": "24",
+      "category": "portraits",
+      "title": "Woman Speaker with Microphone",
+      "file": "images/24-portrait-image-2065416726.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/image-2065416726-8-3.jpg",
+      "format": "jpg",
+      "description": "A confident portrait of a woman with long dark wavy hair holding a microphone at an event. Wearing a navy blue dress with a conference lanyard, soft smile, against a light background. Professional speaker or presenter presence.",
+      "keywords": ["portrait", "woman", "speaker", "microphone", "presenter", "conference", "professional", "dark hair", "lanyard", "confident", "public speaking", "event"],
+      "bestFor": ["speaker materials", "conference themes", "leadership", "confident presence"]
+    },
+    {
+      "id": "25",
+      "category": "portraits",
+      "title": "Young Man Outdoor Portrait",
+      "file": "images/25-portrait-unnamed.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/unnamed-1-3.jpg",
+      "format": "jpg",
+      "description": "A bright, friendly portrait of a young South Asian man with glasses, smiling warmly in an outdoor garden setting. Wearing a sage green button-up shirt with lush green foliage and flowers in the soft-focus background. Natural, approachable headshot style.",
+      "keywords": ["portrait", "man", "glasses", "outdoor", "garden", "smiling", "South Asian", "green", "nature", "friendly", "headshot", "young professional", "approachable"],
+      "bestFor": ["approachable headshots", "nature connection", "friendly themes"]
+    },
+    {
+      "id": "26",
+      "category": "portraits",
+      "title": "Man Seated Casual Portrait",
+      "file": "images/26-portrait-dscn1048.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/DSCN1048-1-2-1.jpg",
+      "format": "jpg",
+      "description": "A casual portrait of a bearded man with a warm smile, seated on a green chair wearing a burgundy sweater and jeans. Minimal background, relaxed posture. The image has a vintage film quality with warm tones and genuine expression.",
+      "keywords": ["portrait", "man", "seated", "casual", "beard", "burgundy sweater", "relaxed", "smiling", "vintage feel", "film photography", "genuine", "informal"],
+      "bestFor": ["casual themes", "film aesthetic", "relaxed authenticity", "Individual lens"]
+    },
+    {
+      "id": "27",
+      "category": "portraits",
+      "title": "Man in Blue Shirt Headshot",
+      "file": "images/27-portrait-nidevelope.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/NiDevelopCoreUI_ETCropLL@1x-1-1.jpg",
+      "format": "jpg",
+      "description": "A professional headshot of a young man with dark hair wearing a light blue oxford shirt, smiling naturally against a soft green bokeh background. Dappled sunlight creates a warm, outdoor feel. Clean, polished corporate portrait.",
+      "keywords": ["portrait", "headshot", "man", "professional", "blue shirt", "smiling", "bokeh", "outdoor", "corporate", "clean", "natural light", "young professional"],
+      "bestFor": ["professional headshots", "dappled light example", "corporate materials"]
+    },
+    {
+      "id": "28",
+      "category": "portraits",
+      "title": "Woman with Camera Winter Portrait",
+      "file": "images/28-portrait-000162700013.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/02/000162700013-Large-2.jpg",
+      "format": "jpg",
+      "description": "An environmental portrait of a woman in a brown wool coat holding a camera, standing in a winter landscape with patchy snow and a water tower in the background. Film photography aesthetic with muted, nostalgic colors. Captures creativity and outdoor exploration.",
+      "keywords": ["portrait", "woman", "camera", "photographer", "winter", "coat", "outdoor", "film aesthetic", "nostalgic", "water tower", "creative", "exploration", "cold weather"],
+      "bestFor": ["creative themes", "film aesthetic", "exploration", "Possibility lens"]
+    },
+    {
+      "id": "29",
+      "category": "portraits",
+      "title": "Man in Black T-Shirt Portrait",
+      "file": "images/29-portrait-gemini-dg75-8.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/02/Gemini_Generated_Image_dg75wjdg75wjdg75-8-2.jpg",
+      "format": "jpg",
+      "description": "A relaxed portrait of a man with curly dark hair wearing a black t-shirt, photographed against soft white curtains. Natural smile, looking slightly off-camera. Warm, intimate feel with soft diffused lighting. Approachable, casual style.",
+      "keywords": ["portrait", "man", "curly hair", "black t-shirt", "curtains", "natural light", "relaxed", "casual", "warm", "intimate", "approachable", "soft lighting"],
+      "bestFor": ["intimate themes", "approachability", "soft lighting example"]
+    },
+    {
+      "id": "30",
+      "category": "portraits",
+      "title": "Man in Purple Shirt Outdoor",
+      "file": "images/30-portrait-mustafa-suleyman.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/01/MAI_2025_Portraits_Mustafa_Suleyman-65Fullsize-4-3-1-2.jpg",
+      "format": "jpg",
+      "description": "A professional outdoor portrait of a man in a purple/blue patterned shirt with a dark jacket, wearing a gold necklace. Smiling warmly with hand near his ear in a natural pose. Modern glass building reflections in background create depth.",
+      "keywords": ["portrait", "man", "professional", "outdoor", "purple shirt", "jacket", "necklace", "smiling", "executive", "leadership", "modern architecture", "confident", "warm"],
+      "bestFor": ["leadership content", "executive portraits", "confident presence"]
+    },
+    {
+      "id": "31",
+      "category": "portraits",
+      "title": "Woman in Red Cardigan",
+      "file": "images/31-portrait-screenshot-135-10.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Screenshot-2025-08-26-at-1.35.49-PM-10.jpg",
+      "format": "jpg",
+      "description": "A striking portrait of a woman with curly highlighted hair and large black glasses, wearing a bright red cardigan over black. Photographed from a low angle against a pale blue sky, looking upward with a confident, joyful smile.",
+      "keywords": ["portrait", "woman", "glasses", "red cardigan", "curly hair", "confident", "joyful", "low angle", "blue sky", "fashion", "bold", "stylish", "empowered"],
+      "bestFor": ["bold themes", "confidence", "empowerment", "striking visuals"]
+    },
+    {
+      "id": "32",
+      "category": "portraits",
+      "title": "Person Presenting with MAI Lanyard",
+      "file": "images/32-portrait-team-huddle.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/11/TeamHuddleEdit-2.jpg",
+      "format": "jpg",
+      "description": "A candid portrait of a person with short dark hair and round glasses, gesturing while speaking at what appears to be a Microsoft AI event. Wearing a blue denim shirt with an 'MAI' branded lanyard. Captures active engagement and communication.",
+      "keywords": ["portrait", "presenter", "glasses", "MAI", "Microsoft AI", "speaking", "gesturing", "lanyard", "blue shirt", "engaged", "communication", "tech event", "candid"],
+      "bestFor": ["MAI branded content", "engagement", "communication themes", "event materials"]
+    },
+    {
+      "id": "33",
+      "category": "portraits",
+      "title": "Man with Glasses Green Shirt",
+      "file": "images/33-portrait-lmi8mce.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/lmi8mce112640rmt2ogps9jums-2.jpg",
+      "format": "jpg",
+      "description": "A thoughtful professional portrait of a man with glasses wearing an emerald green mandarin-collar shirt. Photographed in soft window light with a blurred indoor background. Composed, intelligent expression with a slight contemplative look.",
+      "keywords": ["portrait", "man", "glasses", "green shirt", "mandarin collar", "professional", "thoughtful", "window light", "composed", "indoor", "intellectual", "elegant"],
+      "bestFor": ["thoughtful themes", "intellectual content", "elegant professionalism"]
+    },
+    {
+      "id": "34",
+      "category": "portraits",
+      "title": "Person Jumping into Lake",
+      "file": "images/34-portrait-img4406.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/IMG_4406-3-1.jpg",
+      "format": "jpg",
+      "description": "An action shot capturing a person mid-jump from a dock into a calm lake surrounded by forested hills. Arms raised in joy, captured from behind. Blue sky with fluffy clouds, summer vibes. Evokes freedom, spontaneity, and outdoor adventure.",
+      "keywords": ["action", "jumping", "lake", "summer", "outdoor", "freedom", "joy", "dock", "water", "forest", "adventure", "spontaneous", "lifestyle", "swimming"],
+      "bestFor": ["freedom themes", "spontaneity", "adventure", "Possibility lens", "lifestyle"]
+    },
+    {
+      "id": "35",
+      "category": "portraits",
+      "title": "Man on Terracotta Background",
+      "file": "images/35-portrait-screenshot-214.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/11/Screenshot-2025-09-02-at-2.14.jpg",
+      "format": "jpg",
+      "description": "A warm studio portrait of a bearded man with dark hair, smiling genuinely, wearing an olive/brown corduroy jacket over a dark shirt. Shot against a rich terracotta/burnt orange backdrop. Warm, earthy tones create an inviting, approachable feel.",
+      "keywords": ["portrait", "man", "studio", "beard", "corduroy jacket", "terracotta background", "warm tones", "earthy", "smiling", "approachable", "professional", "genuine"],
+      "bestFor": ["warm earthy themes", "Orange spectrum content", "approachability"]
+    },
+    {
+      "id": "36",
+      "category": "portraits",
+      "title": "Woman in Olive Turtleneck",
+      "file": "images/36-portrait-group-2147233133.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/Group-2147233133.jpg",
+      "format": "jpg",
+      "description": "A polished portrait of a woman with long brown hair wearing an olive green ribbed turtleneck sweater with a delicate gold necklace. Soft sage/mint background, looking slightly off-camera with a subtle, confident expression. Clean, modern aesthetic.",
+      "keywords": ["portrait", "woman", "turtleneck", "olive green", "professional", "elegant", "necklace", "clean background", "confident", "modern", "polished", "sophisticated", "headshot"],
+      "bestFor": ["elegant professionalism", "Green spectrum content", "sophisticated themes"]
+    },
+    {
+      "id": "37",
+      "category": "portraits",
+      "title": "Woman at Museum Event",
+      "file": "images/37-portrait-dscn1052.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/11/DSCN1052-1-3.jpg",
+      "format": "jpg",
+      "description": "A candid portrait of a woman with long dark hair laughing at what appears to be a museum or aviation-themed venue. Wearing a leopard print jacket with leather collar, holding a drink. Purple ambient lighting, vintage aircraft visible in background.",
+      "keywords": ["portrait", "woman", "laughing", "museum", "event", "leopard print", "jacket", "candid", "purple lighting", "aviation", "social", "stylish", "genuine joy", "nightlife"],
+      "bestFor": ["event atmosphere", "genuine joy", "Purple spectrum content", "social moments"]
+    },
+    {
+      "id": "38",
+      "category": "gradients",
+      "title": "Orange Gradient Background",
+      "file": "images/38-gradient-orange.jpg",
+      "url": "https://microsoft.ai/wp-content/uploads/2025/10/orange-gradient.jpg",
+      "format": "jpg",
+      "description": "A smooth, warm gradient background transitioning through shades of orange, from peachy coral to deeper burnt orange tones. Soft, organic flow with subtle variations. Ideal for backgrounds, overlays, or brand materials requiring warm, inviting tones.",
+      "keywords": ["gradient", "orange", "background", "warm", "coral", "peach", "burnt orange", "smooth", "abstract", "brand asset", "overlay", "warm tones", "soft", "flowing"],
+      "bestFor": ["Orange spectrum backgrounds", "warm overlays", "brand materials", "text backgrounds"]
+    }
+  ]
+}
