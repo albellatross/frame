@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geli Guo | UI/UX Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Segoe+UI:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Segoe UI', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              'zh': ['zihun143hao-zhengkuchaojihei', 'Inter', 'Microsoft YaHei', 'sans-serif'],
+            },
+            colors: {
+              // Microsoft Fluent Design inspired colors
+              accent: '#0078D4', // Microsoft Blue
+              'accent-blue': '#0078D4',
+              'accent-dark': '#106EBE',
+              'accent-light': '#50E6FF',
+              'accent-pink': '#E3008C',
+              'success': '#107C10',
+              'warning': '#FFB900',
+            },
+            backgroundImage: {
+              'gradient-accent': 'linear-gradient(135deg, #0078D4 0%, #106EBE 100%)',
+              'gradient-accent-hover': 'linear-gradient(135deg, #106EBE 0%, #005A9E 100%)',
+              'gradient-fluent': 'linear-gradient(135deg, #0078D4 0%, #50E6FF 50%, #E3008C 100%)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Chinese Fonts - 正文使用 ExtraLight，标题使用超级黑 */
+      /* Use unicode-range to only apply to Chinese characters, keeping English fonts intact */
+      
+      /* ExtraLight for body text */
+      @font-face {
+        font-family: 'ZhFont';
+        src: url('/fonts/ZHZKCJYXT-ExtraLight.woff2') format('woff2'),
+             url('/fonts/ZHZKCJYXT-ExtraLight.woff') format('woff'),
+             url('/fonts/ZHZKCJYXT-ExtraLight.ttf') format('truetype');
+        font-weight: 200;
+        font-style: normal;
+        font-display: swap;
+        unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF;
+      }
+      
+      /* Regular/Normal weight */
+      @font-face {
+        font-family: 'ZhFont';
+        src: url('/fonts/ZHZKCJYXT-ExtraLight.woff2') format('woff2'),
+             url('/fonts/ZHZKCJYXT-ExtraLight.woff') format('woff'),
+             url('/fonts/ZHZKCJYXT-ExtraLight.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF;
+      }
+      
+      /* Bold weight - 超级黑 for titles */
+      @font-face {
+        font-family: 'ZhFont';
+        src: url('/fonts/zihun143hao-zhengkuchaojihei.woff2') format('woff2'),
+             url('/fonts/zihun143hao-zhengkuchaojihei.woff') format('woff'),
+             url('/fonts/zihun143hao-zhengkuchaojihei.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+        unicode-range: U+4E00-9FFF, U+3400-4DBF, U+20000-2A6DF, U+2A700-2B73F, U+2B740-2B81F, U+2B820-2CEAF, U+F900-FAFF, U+2F800-2FA1F, U+3000-303F, U+FF00-FFEF;
+      }
+      
+      /* Apply Chinese font as fallback - English will use Inter, Chinese will use ZhFont */
+      html[lang="zh"] body {
+        font-family: Inter, 'ZhFont', sans-serif;
+        font-weight: 400;
+      }
+      
+      /* Normal text in Chinese mode - use ExtraLight */
+      html[lang="zh"] p,
+      html[lang="zh"] span,
+      html[lang="zh"] li,
+      html[lang="zh"] td,
+      html[lang="zh"] th {
+        font-family: Inter, 'ZhFont', sans-serif !important;
+        font-weight: 400;
+      }
+      
+      /* Bold text for headings - use 超级黑 */
+      html[lang="zh"] .font-semibold,
+      html[lang="zh"] .font-bold,
+      html[lang="zh"] .font-black,
+      html[lang="zh"] h1,
+      html[lang="zh"] h2,
+      html[lang="zh"] h3,
+      html[lang="zh"] h4,
+      html[lang="zh"] h5,
+      html[lang="zh"] h6,
+      html[lang="zh"] strong,
+      html[lang="zh"] b {
+        font-family: Inter, 'ZhFont', sans-serif !important;
+        font-weight: 700;
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Gradient accent utilities */
+      .bg-gradient-accent {
+        background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+      }
+      .bg-gradient-accent-hover:hover {
+        background: linear-gradient(135deg, #2563EB 0%, #7C3AED 50%, #DB2777 100%);
+      }
+      .text-gradient-accent {
+        background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .border-gradient-accent {
+        border-image: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%) 1;
+      }
+      .shadow-gradient-accent {
+        box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.4);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "framer-motion": "https://esm.sh/framer-motion@11.0.8?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react,react-dom",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
