@@ -98,25 +98,34 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
         <div className={`absolute left-1/2 -translate-x-1/2 transition-all duration-500 hidden md:block ${
            isMenuOpen ? 'opacity-0 translate-y-[-20px] pointer-events-none' : 'opacity-100 translate-y-0'
         }`}>
-           <div className={`flex items-center gap-1 p-1 rounded-full transition-all duration-300 ${
-             isScrolled 
-               ? 'bg-neutral-100/50 border border-neutral-200/50 backdrop-blur-md' 
-               : 'bg-transparent'
+           <div className={`flex items-center gap-1 p-1.5 rounded-full transition-all duration-300 ${
+             isScrolled
+               ? 'bg-white/90 border border-neutral-200/60 backdrop-blur-xl shadow-button'
+               : 'bg-white/70 border border-neutral-200/40 backdrop-blur-md'
            }`}>
              {navLinks.map((link) => (
-               <button
+               <motion.button
                  key={link.id}
                  onClick={() => handleNavClick(link.id, link.type)}
-                 className={`w-20 py-2 rounded-full text-xs font-medium transition-all duration-300 uppercase tracking-wide text-center ${
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.95 }}
+                 className={`relative w-20 py-2.5 rounded-full text-xs font-medium transition-all duration-300 uppercase tracking-wide text-center overflow-hidden ${
                     isActive(link.id)
-                    ? 'text-neutral-900 bg-white shadow-sm' 
-                    : 'text-neutral-600 hover:text-neutral-900 hover:bg-white/80'
+                    ? 'text-neutral-900 bg-white shadow-sm'
+                    : 'text-neutral-600 hover:text-neutral-900'
                  }`}
                >
-                 <span className="inline-block transition-transform duration-300">
+                 {isActive(link.id) && (
+                   <motion.div
+                     layoutId="activeTab"
+                     className="absolute inset-0 bg-white rounded-full shadow-sm"
+                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                   />
+                 )}
+                 <span className="relative inline-block transition-transform duration-300">
                    {link.label}
                  </span>
-               </button>
+               </motion.button>
              ))}
            </div>
         </div>
@@ -156,13 +165,15 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
 
            {/* Generate Button - Only show on home or work view */}
            <div className={`transition-all duration-300 ${currentPage === 'profile' ? 'opacity-0 pointer-events-none w-0 overflow-hidden' : 'opacity-100 w-auto'}`}>
-             <button 
+             <motion.button
                onClick={onOpenGenerator}
                disabled={isMenuOpen}
+               whileHover={{ scale: 1.05 }}
+               whileTap={{ scale: 0.95 }}
                className={`relative group flex items-center justify-center gap-2 w-[100px] sm:w-[110px] h-10 rounded-full text-sm font-medium transition-all duration-300 overflow-hidden ${
-                 isMenuOpen 
-                   ? 'opacity-0 pointer-events-none translate-x-10' 
-                   : 'opacity-100 translate-x-0 bg-neutral-900 text-white shadow-lg hover:shadow-xl hover:scale-[1.02]'
+                 isMenuOpen
+                   ? 'opacity-0 pointer-events-none translate-x-10'
+                   : 'opacity-100 translate-x-0 bg-neutral-900 text-white shadow-button hover:shadow-button-hover'
                }`}
              >
                <div className="absolute inset-0 bg-gradient-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -171,39 +182,52 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={language + '-generate'}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
                     >
                       {t('nav.generate')}
                     </motion.span>
                   </AnimatePresence>
                   {selectedCount > 0 && (
-                    <span className="ml-1 bg-white text-neutral-900 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="ml-1 bg-white text-neutral-900 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold"
+                    >
                       {selectedCount}
-                    </span>
+                    </motion.span>
                   )}
                </div>
-             </button>
+             </motion.button>
            </div>
 
            {/* Hamburger Toggle */}
-           <button 
+           <motion.button
              onClick={() => setIsMenuOpen(!isMenuOpen)}
+             whileHover={{ scale: 1.05 }}
+             whileTap={{ scale: 0.95 }}
              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group ${
-               isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100'
+               isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100/80'
              }`}
            >
              {isMenuOpen ? (
                <X size={24} className="text-neutral-900" />
              ) : (
                <div className="space-y-1.5 p-2">
-                 <span className="block w-6 h-0.5 bg-neutral-900 group-hover:w-4 transition-all duration-300 ml-auto"></span>
-                 <span className="block w-4 h-0.5 bg-neutral-900 group-hover:w-6 transition-all duration-300 ml-auto"></span>
+                 <motion.span
+                   className="block w-6 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
+                   animate={{ width: isMenuOpen ? 24 : 24 }}
+                   whileHover={{ width: 16 }}
+                 />
+                 <motion.span
+                   className="block w-4 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
+                   whileHover={{ width: 24 }}
+                 />
                </div>
              )}
-           </button>
+           </motion.button>
         </div>
       </nav>
 

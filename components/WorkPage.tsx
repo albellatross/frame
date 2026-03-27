@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Project } from '../types';
 import { Plus, Check, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface WorkPageProps {
@@ -15,9 +15,133 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
   const [filter, setFilter] = useState<'All' | 'System' | 'C-Side' | 'B-Side'>('All');
   const { t } = useLanguage();
 
-  const filteredProjects = filter === 'All' 
-    ? projects 
+  const filteredProjects = filter === 'All'
+    ? projects
     : projects.filter(p => p.category === filter);
+
+  // Card 3D Tilt Component
+  const ProjectCard: React.FC<{ project: Project; idx: number; isFullWidth: boolean }> = ({ project, idx, isFullWidth }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const isSelected = selectedProjectIds.includes(project.id);
+
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['8deg', '-8deg']);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-8deg', '8deg']);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!cardRef.current) return;
+
+      const rect = cardRef.current.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const xPct = mouseX / width - 0.5;
+      const yPct = mouseY / height - 0.5;
+
+      x.set(xPct);
+      y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+      x.set(0);
+      y.set(0);
+    };
+
+    return (
+      <motion.div
+        ref={cardRef}
+        layout
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: idx * 0.08 }}
+        className={`group cursor-pointer ${isFullWidth ? 'md:col-span-2' : 'md:col-span-1'}`}
+        style={{
+          perspective: '1000px',
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => onProjectClick(project)}
+      >
+        <motion.div
+          style={{
+            rotateX,
+            rotateY,
+            transformStyle: 'preserve-3d',
+          }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        >
+          {/* Image Container */}
+          <div className={`relative overflow-hidden bg-neutral-100 mb-6 rounded-2xl shadow-card group-hover:shadow-card-hover transition-shadow duration-500 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
+            <img
+              src={project.coverImage}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black/5 via-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            {/* Shimmer Effect */}
+            <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            </div>
+
+            {/* Selection Button */}
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSelect(project.id);
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className={`absolute top-6 right-6 z-20 w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-button hover:shadow-button-hover ${
+                isSelected ? 'bg-gradient-accent text-white scale-110' : 'bg-white/90 text-neutral-400 hover:bg-white hover:text-neutral-900'
+              }`}
+            >
+              {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} />}
+            </motion.button>
+          </div>
+
+          {/* Typography */}
+          <div className="flex justify-between items-start px-2">
+            <div className="flex-1 min-w-0">
+              <motion.span
+                className="text-[10px] sm:text-xs font-mono font-semibold uppercase tracking-widest mb-1 sm:mb-2 block bg-gradient-accent bg-clip-text text-transparent"
+                style={{ backgroundSize: '200% 200%' }}
+                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+              >
+                {project.category} — {project.year}
+              </motion.span>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-neutral-900 mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
+                {project.title}
+              </h3>
+              <p className="text-neutral-500 text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg leading-relaxed">
+                {project.shortDescription}
+              </p>
+            </div>
+
+            <motion.div
+              className="hidden md:flex items-center gap-2 text-neutral-400 group-hover:text-accent transition-colors mt-2"
+              whileHover={{ x: 5 }}
+            >
+              <span className="text-sm font-medium uppercase tracking-wider">{t('work.viewCase')}</span>
+              <ArrowRight size={18} />
+            </motion.div>
+          </div>
+        </motion.div>
+      </motion.div>
+    );
+  };
 
   return (
     <motion.div 
@@ -58,65 +182,14 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
           {filteredProjects.map((project, idx) => {
-            const isSelected = selectedProjectIds.includes(project.id);
-            // Alternate layout logic for visual interest: every 3rd item is full width
-            const isFullWidth = (idx % 3 === 2); 
-
+            const isFullWidth = (idx % 3 === 2);
             return (
-              <motion.div
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                key={project.id} 
-                className={`group cursor-pointer ${isFullWidth ? 'md:col-span-2' : 'md:col-span-1'}`}
-                onClick={() => onProjectClick(project)}
-              >
-                 {/* Image Container */}
-                 <div className={`relative overflow-hidden bg-neutral-100 mb-6 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
-                    <img 
-                      src={project.coverImage} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-                    
-                    {/* Selection Button */}
-                    <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onToggleSelect(project.id);
-                        }}
-                        className={`absolute top-6 right-6 z-20 w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-lg ${
-                          isSelected ? 'bg-gradient-accent text-white' : 'bg-white/90 text-neutral-400 hover:bg-white hover:text-neutral-900'
-                        }`}
-                     >
-                        {isSelected ? <Check size={20} /> : <Plus size={20} />}
-                     </button>
-                 </div>
-
-                 {/* Typography */}
-                 <div className="flex justify-between items-start">
-                    <div className="flex-1 min-w-0">
-                       <span className="text-[10px] sm:text-xs font-mono text-gradient-accent uppercase tracking-widest mb-1 sm:mb-2 block">
-                          {project.category} — {project.year}
-                       </span>
-                       <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-neutral-900 mb-1 sm:mb-2 group-hover:underline decoration-1 underline-offset-4">
-                          {project.title}
-                       </h3>
-                       <p className="text-neutral-500 text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg leading-relaxed">
-                          {project.shortDescription}
-                       </p>
-                    </div>
-                    
-                    <div className="hidden md:flex items-center gap-2 text-neutral-400 group-hover:text-accent transition-colors mt-2">
-                       <span className="text-sm font-medium uppercase tracking-wider">{t('work.viewCase')}</span>
-                       <ArrowRight size={18} />
-                    </div>
-                 </div>
-              </motion.div>
+              <ProjectCard
+                key={project.id}
+                project={project}
+                idx={idx}
+                isFullWidth={isFullWidth}
+              />
             );
           })}
         </div>
