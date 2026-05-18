@@ -80,7 +80,7 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
           {/* Image Container */}
-          <div className={`relative overflow-hidden bg-neutral-100 mb-6 rounded-2xl shadow-card group-hover:shadow-card-hover transition-shadow duration-500 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
+          <div className={`relative overflow-hidden bg-cream mb-6 rounded-2xl shadow-card group-hover:shadow-card-hover transition-shadow duration-500 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
             <img
               src={project.coverImage}
               alt={project.title}
@@ -104,7 +104,7 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className={`absolute top-6 right-6 z-20 w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-300 shadow-button hover:shadow-button-hover ${
-                isSelected ? 'bg-gradient-accent text-white scale-110' : 'bg-white/90 text-neutral-400 hover:bg-white hover:text-neutral-900'
+                isSelected ? 'bg-gradient-accent text-white scale-110' : 'bg-white/90 text-warm-gray hover:bg-white hover:text-dark-brown'
               }`}
             >
               {isSelected ? <Check size={20} strokeWidth={3} /> : <Plus size={20} />}
@@ -122,16 +122,16 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
               >
                 {project.category} — {project.year}
               </motion.span>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-neutral-900 mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-dark-brown mb-1 sm:mb-2 group-hover:text-primary transition-colors duration-300">
                 {project.title}
               </h3>
-              <p className="text-neutral-500 text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg leading-relaxed">
+              <p className="text-warm-gray text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg leading-relaxed">
                 {project.shortDescription}
               </p>
             </div>
 
             <motion.div
-              className="hidden md:flex items-center gap-2 text-neutral-400 group-hover:text-accent transition-colors mt-2"
+              className="hidden md:flex items-center gap-2 text-warm-gray group-hover:text-accent transition-colors mt-2"
               whileHover={{ x: 5 }}
             >
               <span className="text-sm font-medium uppercase tracking-wider">{t('work.viewCase')}</span>
@@ -148,15 +148,15 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-28 sm:pt-32 pb-16 sm:pb-24 px-6 md:px-12 bg-white min-h-screen"
+      className="pt-28 sm:pt-32 pb-16 sm:pb-24 px-6 md:px-12 bg-cream-light min-h-screen"
     >
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
-        <div className="border-b border-neutral-100 pb-12 mb-12 flex flex-col md:flex-row justify-between items-end gap-8">
+        <div className="border-b border-cream-dark pb-12 mb-12 flex flex-col md:flex-row justify-between items-end gap-8">
            <div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-neutral-900 mb-4 sm:mb-6">{t('work.title')}</h1>
-              <p className="text-base sm:text-lg md:text-xl text-neutral-500 max-w-md sm:max-w-xl font-light leading-relaxed">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-dark-brown mb-4 sm:mb-6">{t('work.title')}</h1>
+              <p className="text-base sm:text-lg md:text-xl text-warm-gray max-w-md sm:max-w-xl font-light leading-relaxed">
                 {t('work.description')}
               </p>
            </div>
@@ -169,8 +169,8 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
                 onClick={() => setFilter(f as any)}
                 className={`px-6 py-3 rounded-full text-sm transition-all whitespace-nowrap border ${
                   filter === f 
-                    ? 'bg-neutral-900 text-white border-neutral-900' 
-                    : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400'
+                    ? 'bg-dark-brown text-white border-dark-brown' 
+                    : 'bg-cream-light text-warm-gray border-cream-dark hover:border-brown'
                 }`}
               >
                 {f === 'All' ? t('work.all') : f}

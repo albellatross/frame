@@ -1,0 +1,60 @@
+[
+  {
+    "id": "c1",
+    "period": "Feb 2025 - Present",
+    "company": "Microsoft STCA",
+    "role": "UI/UX Designer",
+    "oneLiner": "Designing voice-driven AI experiences for Office Copilot.",
+    "skills": [
+      "Voice Interaction",
+      "AI UX",
+      "Cross-timezone Collaboration"
+    ],
+    "image": "/STCA.png",
+    "relatedProjectIds": [
+      "p1",
+      "p2"
+    ]
+  },
+  {
+    "id": "c2",
+    "period": "Jun 2022 - Feb 2025",
+    "company": "Microsoft Research Asia",
+    "role": "UI/UX Designer, Graphic Designer",
+    "oneLiner": "Led 10+ AI product designs from AIGC tools to research platforms.",
+    "skills": [
+      "AIGC Design",
+      "B2B Tools",
+      "Visual Systems",
+      "Graphic Design"
+    ],
+    "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200",
+    "relatedProjectIds": [
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p9",
+      "p10",
+      "p11"
+    ]
+  },
+  {
+    "id": "c3",
+    "period": "2020 - 2021",
+    "company": "NABA Milan & Study in Italy",
+    "role": "Visual Communication Design",
+    "oneLiner": "Master's degree, QS Top 100, focusing on UX and branding.",
+    "skills": [
+      "Visual Design",
+      "Branding",
+      "User Research",
+      "Illustration"
+    ],
+    "image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200",
+    "relatedProjectIds": [
+      "p7",
+      "p8"
+    ]
+  }
+]

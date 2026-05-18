@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -8,8 +8,10 @@ const Hero: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [colorIndex, setColorIndex] = useState(0);
   const containerRef = useRef<HTMLSpanElement>(null);
-  
-  const colors = ['#2563EB', '#EC4899'];
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const rafRef = useRef<number>(0);
+
+  const colors = ['#5F4E41', '#8C5462'];
 
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -26,138 +28,84 @@ const Hero: React.FC = () => {
     }
   };
 
+  // Video fade-in/out with smooth manual loop
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const FADE_IN = 1.5;
+    const FADE_OUT = 2.0;
+    let stopped = false;
+
+    const startPlayback = () => {
+      if (stopped) return;
+      video.currentTime = 0;
+      video.play().then(() => {
+        if (!stopped) rafRef.current = requestAnimationFrame(handleFrame);
+      }).catch(() => {});
+    };
+
+    const handleFrame = () => {
+      if (stopped || !video) return;
+      const { currentTime, duration } = video;
+      if (duration && duration > 0) {
+        if (currentTime < FADE_IN) {
+          video.style.opacity = String(Math.min(currentTime / FADE_IN, 1));
+        } else if (currentTime > duration - FADE_OUT) {
+          const remaining = duration - currentTime;
+          video.style.opacity = String(Math.max(remaining / FADE_OUT, 0));
+          // When fully faded out, pause and restart
+          if (remaining < 0.05) {
+            video.pause();
+            video.style.opacity = '0';
+            setTimeout(startPlayback, 200);
+            return;
+          }
+        } else {
+          video.style.opacity = '1';
+        }
+      }
+      rafRef.current = requestAnimationFrame(handleFrame);
+    };
+
+    video.style.opacity = '0';
+    startPlayback();
+
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   return (
-    <section id="hero" className="min-h-screen relative flex flex-col justify-center items-center px-6 md:px-12 bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-50 overflow-hidden pt-24 sm:pt-28 md:pt-20">
-
-      <div className="absolute inset-0 overflow-hidden">
-        <svg className="absolute w-0 h-0">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
-              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -12" result="goo" />
-              <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-            </filter>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(37, 99, 235, 0.2)" />
-              <stop offset="100%" stopColor="rgba(37, 99, 235, 0.05)" />
-            </linearGradient>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(236, 72, 153, 0.18)" />
-              <stop offset="100%" stopColor="rgba(249, 115, 22, 0.08)" />
-            </linearGradient>
-            <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(59, 130, 246, 0.15)" />
-              <stop offset="50%" stopColor="rgba(236, 72, 153, 0.12)" />
-              <stop offset="100%" stopColor="rgba(249, 115, 22, 0.08)" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div className="absolute inset-0 animate-gradient bg-gradient-mesh opacity-60" />
-
-        <div className="absolute inset-0" style={{ filter: 'url(#goo)' }}>
-          <motion.div
-            className="absolute w-[600px] h-[600px] rounded-full"
-            style={{
-              background: 'url(#gradient1)',
-              fill: 'url(#gradient1)',
-              backgroundColor: 'rgba(37, 99, 235, 0.18)',
-              top: '-15%',
-              left: '-8%',
-              boxShadow: '0 0 120px 40px rgba(37, 99, 235, 0.12)',
-            }}
-            animate={{
-              x: ['0%', '35%', '18%', '45%', '0%'],
-              y: ['0%', '25%', '40%', '18%', '0%'],
-              scale: [1, 1.35, 1.15, 1.3, 1],
-            }}
-            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-          />
-
-          <motion.div
-            className="absolute w-[550px] h-[550px] rounded-full"
-            style={{
-              background: 'url(#gradient2)',
-              backgroundColor: 'rgba(236, 72, 153, 0.15)',
-              bottom: '-18%',
-              right: '-12%',
-              boxShadow: '0 0 100px 35px rgba(236, 72, 153, 0.1)',
-            }}
-            animate={{
-              x: ['0%', '-40%', '-18%', '-50%', '0%'],
-              y: ['0%', '-28%', '-45%', '-22%', '0%'],
-              scale: [1, 1.25, 1.4, 1.2, 1],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          />
-
-          <motion.div
-            className="absolute w-[400px] h-[400px] rounded-full"
-            style={{
-              background: 'url(#gradient3)',
-              backgroundColor: 'rgba(59, 130, 246, 0.12)',
-              top: '35%',
-              left: '35%',
-              boxShadow: '0 0 80px 30px rgba(236, 72, 153, 0.08)',
-            }}
-            animate={{
-              x: ['0%', '25%', '-20%', '15%', '0%'],
-              y: ['0%', '-25%', '20%', '-15%', '0%'],
-              scale: [1, 1.45, 1.15, 1.35, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          />
-
-          <motion.div
-            className="absolute w-[250px] h-[250px] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(251, 146, 60, 0.08) 100%)',
-              top: '10%',
-              right: '15%',
-              boxShadow: '0 0 60px 20px rgba(249, 115, 22, 0.08)',
-            }}
-            animate={{
-              x: ['0%', '-20%', '15%', '-10%', '0%'],
-              y: ['0%', '30%', '-20%', '15%', '0%'],
-              scale: [1, 1.3, 1.1, 1.2, 1],
-            }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-          />
-        </div>
-
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          }}
+    <section id="hero" className="relative min-h-screen w-full overflow-hidden bg-white pt-24 sm:pt-28 md:pt-20">
+      {/* Video Background */}
+      <div className="absolute z-0" style={{ top: '300px', inset: 'auto 0 0 0' }}>
+        <video
+          ref={videoRef}
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_083109_283f3553-e28f-428b-a723-d639c617eb2b.mp4"
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+          style={{ opacity: 0 }}
         />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-50/50 via-transparent to-transparent" />
+        {/* Gradient overlay - top fade only */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-transparent" style={{ height: '40%' }} />
       </div>
-      
-      <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center min-h-[80vh]">
-        <div className="relative z-20 text-center flex flex-col items-center">
-          
+
+      {/* Hero Content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center px-6 pb-32" style={{ paddingTop: 'calc(13rem - 75px)' }}>
+        <div className="text-center flex flex-col items-center">
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
+            className="mb-2 sm:mb-4"
           >
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neutral-900 italic tracking-tight">
-              Design isn't just
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.8rem] lg:text-5xl text-dark-brown italic tracking-tight leading-tight">
+              Design isn't just <span className="font-sans not-italic font-black uppercase tracking-tighter">OUTPUT</span>
             </h1>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="my-2 sm:my-4"
-          >
-            <h2 className="font-sans text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black text-neutral-900 tracking-tighter leading-none uppercase">
-              OUTPUT
-            </h2>
           </motion.div>
 
           <motion.div
@@ -165,7 +113,7 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            <h3 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-neutral-900 italic tracking-tight">
+            <h3 className="font-serif text-3xl sm:text-4xl md:text-[2.8rem] lg:text-5xl text-dark-brown italic tracking-tight leading-tight">
               It's the{' '}
               <span
                 ref={containerRef}
@@ -176,7 +124,7 @@ const Hero: React.FC = () => {
                 style={{ cursor: isHovering ? 'none' : 'default' }}
               >
                 <span className="relative">frame</span>
-                
+
                 {isHovering && (
                   <motion.span
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -214,7 +162,7 @@ const Hero: React.FC = () => {
                     <span
                       className="absolute inset-0 rounded-full pointer-events-none animate-gradient"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(59, 130, 246, 0.12) 25%, rgba(249, 115, 22, 0.15) 50%, rgba(236, 72, 153, 0.12) 75%, rgba(59, 130, 246, 0.15) 100%)',
+                        background: 'linear-gradient(135deg, rgba(140, 84, 98, 0.12) 0%, rgba(98, 140, 140, 0.10) 25%, rgba(229, 184, 92, 0.12) 50%, rgba(140, 84, 98, 0.10) 75%, rgba(98, 140, 140, 0.12) 100%)',
                         backgroundSize: '200% 200%',
                         zIndex: 4,
                       }}
@@ -265,30 +213,38 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="mt-8 sm:mt-12 max-w-xl text-base sm:text-lg text-neutral-600 leading-relaxed text-center"
+            className="mt-6 sm:mt-8 max-w-md text-sm sm:text-base text-warm-gray leading-relaxed text-center"
           >
             {t('hero.description')}
           </motion.p>
         </div>
 
-        <motion.a
-          href="#introduction"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors group"
-        >
-          <span>{t('hero.enterFrame')}</span>
-          <motion.span 
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            ↓
-          </motion.span>
-        </motion.a>
       </div>
+
+      {/* Enter the frame - scroll indicator */}
+      <motion.a
+        href="#introduction"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute bottom-[180px] left-0 right-0 z-30 flex flex-col items-center gap-3 cursor-pointer group"
+      >
+        <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/90 group-hover:text-white transition-colors duration-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+          {t('hero.enterFrame')}
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-[1px] h-8 bg-gradient-to-b from-white/70 to-transparent"
+        />
+      </motion.a>
+
+      {/* Smooth transition gradient to next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#FEF9ED] z-20 pointer-events-none" />
     </section>
   );
 };
 
 export default Hero;
+
+

@@ -70,7 +70,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 font-sans selection:bg-accent selection:text-white">
+    <div className="min-h-screen bg-cream-light font-sans selection:bg-accent selection:text-white">
       
       {/* Navigation Bar */}
       <nav 
@@ -155,7 +155,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
              <motion.div
                layout
                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-               className={`relative z-10 w-7 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px] font-bold shadow-md ${
+               className={`relative z-10 w-7 h-6 rounded-full bg-dark-brown text-white flex items-center justify-center text-[10px] font-bold shadow-md ${
                  language === 'zh' ? 'ml-auto' : ''
                }`}
              >
@@ -173,7 +173,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
                className={`relative group flex items-center justify-center gap-2 w-[100px] sm:w-[110px] h-10 rounded-full text-sm font-medium transition-all duration-300 overflow-hidden ${
                  isMenuOpen
                    ? 'opacity-0 pointer-events-none translate-x-10'
-                   : 'opacity-100 translate-x-0 bg-neutral-900 text-white shadow-button hover:shadow-button-hover'
+                   : 'opacity-100 translate-x-0 bg-dark-brown text-white shadow-button hover:shadow-button-hover'
                }`}
              >
                <div className="absolute inset-0 bg-gradient-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -299,7 +299,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
         {children}
       </main>
 
-      <footer className="bg-neutral-900 text-white py-16 sm:py-24 px-6 md:px-12 relative z-10">
+      <footer className="bg-dark-brown text-white py-16 sm:py-24 px-6 md:px-12 relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mb-6 sm:mb-8 leading-tight">Let's create <br/>together.</h2>

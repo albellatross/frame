@@ -2,7 +2,7 @@
 name: creative-design-mai-brand
 description: Generate beautiful, unique creative designs or artwork coherent with the Microsoft AI brand identity. Use this skill when the user asks to create web pages, posters, email newsletters, presentations, PDF documents, or other visual creative work aligned with the MAI brand. Create original visual designs that embody the human, emergent, and trusted principles of Microsoft AI.
 metadata:
-  author: yu.he@microsoft.com
+  author: yu.he@microsoft.comhttps://file+.vscode-resource.vscode-cdn.net/Users/aa123/.vscode/extensions/anthropic.claude-code-2.1.133-darwin-arm64/resources/welcome-art-dark.svg
   version: "1.0"
 ---
 

@@ -18,7 +18,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, sel
     : projects.filter(p => p.category === filter);
 
   return (
-    <section id="work" className="py-24 px-6 md:px-12 bg-neutral-50">
+    <section id="work" className="py-24 px-6 md:px-12 bg-cream-light">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div>

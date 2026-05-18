@@ -16,11 +16,11 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
   const { t } = useLanguage();
 
   return (
-    <section ref={containerRef} id="timeline" className="relative bg-neutral-900 text-white py-24 md:py-0">
+    <section ref={containerRef} id="timeline" className="relative bg-dark-brown text-white py-24 md:py-0">
       <div className="flex flex-col md:flex-row">
         
         {/* Left Panel: Sticky Visuals (Desktop Only) */}
-        <div className="hidden md:block md:w-1/2 h-screen sticky top-0 overflow-hidden bg-neutral-800">
+        <div className="hidden md:block md:w-2/5 h-screen sticky top-0 overflow-hidden bg-brown">
           <AnimatePresence mode="wait">
              {stages.map((stage) => (
                 stage.id === activeStageId && (
@@ -37,7 +37,7 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                       alt={stage.company} 
                       className="w-full h-full object-cover opacity-60" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-brown via-transparent to-transparent" />
                     
                     {/* Atmospheric Text */}
                     <div className="absolute bottom-12 lg:bottom-24 left-8 lg:left-12 max-w-sm lg:max-w-md">
@@ -51,12 +51,12 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
         </div>
 
         {/* Right Panel: Scrolling Content */}
-        <div className="w-full md:w-1/2 relative bg-white">
+        <div className="w-full md:w-3/5 relative bg-cream-light">
           <div className="max-w-xl mx-auto px-6 py-24 md:py-48 space-y-48">
             
             <div className="mb-12 sm:mb-24">
-                <span className="text-neutral-400 uppercase tracking-widest text-[10px] sm:text-xs">{t('timeline.journey')}</span>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-neutral-900 mt-2">{t('timeline.title')}</h2>
+                <span className="text-warm-gray uppercase tracking-widest text-[10px] sm:text-xs">{t('timeline.journey')}</span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-dark-brown mt-2">{t('timeline.title')}</h2>
             </div>
 
             {stages.map((stage, index) => (
@@ -93,11 +93,10 @@ const TimelineItem: React.FC<{
   
   // 根据索引计算颜色 - 索引0是最近的（粉色），索引越大越远（蓝色）
   const getTimelineColor = () => {
-    // 颜色从粉色到蓝色的渐变
     const colors = [
-      { line: '#EC4899', text: '#EC4899' },  // 粉色 - 最近
-      { line: '#8B5CF6', text: '#8B5CF6' },  // 紫色 - 中间
-      { line: '#3B82F6', text: '#3B82F6' },  // 蓝色 - 最远
+      { line: '#5F4E41', text: '#5F4E41' },  // Brown - 最近
+      { line: '#8C5462', text: '#8C5462' },  // Mauve - 中间
+      { line: '#72675B', text: '#72675B' },  // Warm Gray - 最远
     ];
     return colors[Math.min(index, colors.length - 1)];
   };
@@ -125,7 +124,7 @@ const TimelineItem: React.FC<{
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ margin: "-20% 0px" }}
       onViewportEnter={onInView} // Backup trigger
-      className="relative pl-8 border-l-2 border-neutral-100"
+      className="relative pl-8 border-l-2 border-cream-dark"
     >
       {/* Active Indicator Line - Dynamic Color */}
       <motion.div 
@@ -142,8 +141,8 @@ const TimelineItem: React.FC<{
       >
         {stage.period}
       </span>
-      <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-neutral-900 mb-1">{stage.company}</h3>
-      <p className="text-base sm:text-lg text-neutral-500 font-light mb-4 sm:mb-6">{stage.role}</p>
+      <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-dark-brown mb-1">{stage.company}</h3>
+      <p className="text-base sm:text-lg text-warm-gray font-light mb-4 sm:mb-6">{stage.role}</p>
       
       {/* Mobile-only visible visual since sticky is hidden */}
       <div className="md:hidden w-full h-48 mb-6 rounded-lg overflow-hidden relative">
@@ -151,7 +150,7 @@ const TimelineItem: React.FC<{
          <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      <p className="text-sm sm:text-base text-neutral-600 leading-relaxed mb-6 sm:mb-8">
+      <p className="text-sm sm:text-base text-warm-gray leading-relaxed mb-6 sm:mb-8">
         {stage.oneLiner}
       </p>
 
@@ -161,7 +160,7 @@ const TimelineItem: React.FC<{
            <motion.div 
              key={project.id}
              whileHover={{ y: -5 }}
-             className="group cursor-pointer bg-neutral-50 rounded-xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-md transition-all"
+             className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-cream-dark shadow-sm hover:shadow-md transition-all"
              onClick={() => onProjectClick(project.id)}
            >
              <div className="relative h-48 overflow-hidden">
@@ -177,8 +176,8 @@ const TimelineItem: React.FC<{
                 </div>
              </div>
              <div className="p-4 sm:p-5">
-                <h4 className="font-serif text-base sm:text-lg text-neutral-900">{project.title}</h4>
-                <p className="text-[10px] sm:text-xs text-neutral-500 mt-1 line-clamp-2">{project.shortDescription}</p>
+                <h4 className="font-serif text-base sm:text-lg text-dark-brown">{project.title}</h4>
+                <p className="text-[10px] sm:text-xs text-warm-gray mt-1 line-clamp-2">{project.shortDescription}</p>
              </div>
            </motion.div>
          ))}
@@ -186,7 +185,7 @@ const TimelineItem: React.FC<{
 
       <div className="flex flex-wrap gap-2 mt-8">
         {stage.skills.map(skill => (
-          <span key={skill} className="text-[10px] uppercase tracking-wide bg-neutral-100 text-neutral-600 px-3 py-1 rounded-full">
+          <span key={skill} className="text-[10px] uppercase tracking-wide bg-cream text-warm-gray px-3 py-1 rounded-full">
             {skill}
           </span>
         ))}

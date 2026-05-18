@@ -1,0 +1,60 @@
+[
+  {
+    "id": "c1",
+    "period": "2025年2月 - 至今",
+    "company": "Microsoft STCA",
+    "role": "UI/UX 设计师",
+    "oneLiner": "为 Office Copilot 设计语音驱动的 AI 体验。",
+    "skills": [
+      "语音交互",
+      "AI 用户体验",
+      "跨时区协作"
+    ],
+    "image": "/STCA.png",
+    "relatedProjectIds": [
+      "p1",
+      "p2"
+    ]
+  },
+  {
+    "id": "c2",
+    "period": "2022年6月 - 2025年2月",
+    "company": "Microsoft Research Asia",
+    "role": "UI/UX 设计师, 平面设计师",
+    "oneLiner": "主导 10+ AI 产品设计，从 AIGC 工具到研究平台。",
+    "skills": [
+      "AIGC 设计",
+      "B2B 工具",
+      "视觉系统",
+      "平面设计"
+    ],
+    "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200",
+    "relatedProjectIds": [
+      "p3",
+      "p4",
+      "p5",
+      "p6",
+      "p9",
+      "p10",
+      "p11"
+    ]
+  },
+  {
+    "id": "c3",
+    "period": "2020 - 2021",
+    "company": "NABA 米兰与意大利留学",
+    "role": "视觉传达设计",
+    "oneLiner": "硕士学位，QS全球前100，专注UX和品牌设计。",
+    "skills": [
+      "视觉设计",
+      "品牌设计",
+      "用户研究",
+      "插画"
+    ],
+    "image": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200",
+    "relatedProjectIds": [
+      "p7",
+      "p8"
+    ]
+  }
+]

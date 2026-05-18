@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500&display=swap');
+
+/* Bradford — MAI Primary Serif */
+@font-face {
+  font-family: 'Bradford';
+  src: url('/fonts/BradfordLLWeb-Regular.woff2') format('woff2'),
+       url('/fonts/BradfordLL-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bradford';
+  src: url('/fonts/BradfordLLWeb-Italic.woff2') format('woff2'),
+       url('/fonts/BradfordLL-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Red Hat Mono — MAI Monospace */
+@font-face {
+  font-family: 'Red Hat Mono';
+  src: url('/fonts/RedHatMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Red Hat Mono';
+  src: url('/fonts/RedHatMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Segoe Sans — MAI Supporting Sans */
+@font-face {
+  font-family: 'Segoe Sans';
+  src: url('/fonts/Segoe-sans.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

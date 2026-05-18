@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { PROJECTS_EN, PROJECTS_ZH, CAREER_TIMELINE_EN, CAREER_TIMELINE_ZH } from './constants';
 import { Project } from './types';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
@@ -22,6 +23,9 @@ const AppContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'home' | 'work' | 'profile'>('home');
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+
+  // Re-resolve activeProject when language changes
+  const resolvedProject = activeProject ? PROJECTS.find(p => p.id === activeProject.id) || activeProject : null;
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
 
   // Handlers
@@ -73,10 +77,14 @@ const AppContent: React.FC = () => {
       )}
 
       {/* Overlays */}
-      <ProjectDetail 
-        project={activeProject} 
-        onClose={() => setActiveProject(null)} 
-      />
+      <AnimatePresence>
+        {resolvedProject && (
+          <ProjectDetail 
+            project={resolvedProject} 
+            onClose={() => setActiveProject(null)} 
+          />
+        )}
+      </AnimatePresence>
       
       <PortfolioGenerator
         isOpen={isGeneratorOpen}

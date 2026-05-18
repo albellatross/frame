@@ -98,7 +98,239 @@ export const PROJECTS_EN: Project[] = [
         content: 'Successfully launched Dogfood version. Transformed passive reading into active dialogue.',
         impact: 'Dogfood Launch'
       }
-    }
+    },
+    externalLinks: {
+      behance: 'https://www.figma.com/design/1MdXjP52UK8cwvVo6VgzHD/Portfolio?node-id=455-35981&m=dev'
+    },
+    caseSections: [
+      {
+        type: 'hero',
+        title: 'Interactive ReadAloud with Copilot Voice',
+        subtitle: 'Redefining How We Listen',
+        bgImage: '/projects/read-aloud/cover-bg-1.png',
+        tags: ['Voice UX', 'AI Design', 'Accessibility', 'Conversation Design'],
+        role: 'Visual & Interaction Designer',
+        date: '2024.08 - 2025.02'
+      },
+      {
+        type: 'stats',
+        category: 'PROJECT OVERVIEW',
+        label: '01',
+        title: 'Background',
+        subtitle: 'Microsoft Word Read Aloud',
+        content: 'Word Read Aloud has accumulated 10M+ MAU and is an important gateway to document accessibility. However, existing read-aloud is still limited to passive linear playback, unable to meet users\' deep comprehension needs.',
+        stats: [
+          { value: '10M+', label: 'Monthly Active Users' },
+          { value: '78%', label: 'Users want interactive reading' },
+          { value: '4.2→4.6', label: 'Satisfaction improvement target' },
+          { value: '40%', label: 'Content not fully absorbed' }
+        ]
+      },
+      {
+        type: 'personas',
+        label: '02',
+        title: 'Target Users',
+        items: [
+          { icon: '\uD83D\uDCBC', title: 'Information Worker', subtitle: 'Knowledge-intensive professional', description: 'Needs to quickly grasp key information from long documents, often multitasking. Wants voice reading to support Q&A for on-demand understanding.', color: '#7B61FF' },
+          { icon: '\u270D\uFE0F', title: 'Content Creator', subtitle: 'Writers, editors & reviewers', description: 'Uses read-aloud for proofreading and rhythm checks. Needs pause/question capability to verify content accuracy and flow.', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'flow',
+        label: '03',
+        title: 'Current Experience: Passive \u00B7 Linear \u00B7 One-Way',
+        content: 'Before Copilot Voice, the reading experience followed a rigid linear path with no ability to interact or ask questions.',
+        steps: [
+          { label: 'Open Document' },
+          { label: 'Click Play' },
+          { label: 'Listen Passively' },
+          { label: 'Finish or Stop' }
+        ],
+        subtitle: 'Passive \u00B7 One-Way \u00B7 Linear',
+        image: '/projects/read-aloud/player-ui.png'
+      },
+      {
+        type: 'cards',
+        label: '04',
+        title: 'Key Pain Points',
+        items: [
+          { icon: '\uD83D\uDE24', title: 'Cannot Interrupt', description: 'Users cannot pause to ask questions during reading, forced to listen passively.' },
+          { icon: '\uD83D\uDE35', title: 'Information Overload', description: 'Long documents cause cognitive fatigue with no way to focus on key sections.' },
+          { icon: '\uD83D\uDE10', title: 'No Interaction', description: 'Read-aloud is purely one-way output, lacking any dialogue or feedback mechanism.' },
+          { icon: '\uD83E\uDD2C', title: 'Context Loss', description: 'After interruption, users lose their place and must restart from the beginning.' }
+        ]
+      },
+      {
+        type: 'principles',
+        label: '05',
+        title: 'Design Principles',
+        items: [
+          { number: 1, title: 'Interruptibility', subtitle: 'Pause & Ask Anytime', description: 'Users can naturally interrupt reading at any point to ask questions, with the system seamlessly handling the transition.' },
+          { number: 2, title: 'Comprehensibility', subtitle: 'Understand, Not Just Hear', description: 'Voice interaction helps users truly understand content through Q&A, summaries, and contextual explanations.' },
+          { number: 3, title: 'Resumability', subtitle: 'Never Lose Your Place', description: 'After any interruption or Q&A session, reading automatically resumes from the exact position.' }
+        ]
+      },
+      {
+        type: 'two-column',
+        label: '06',
+        title: 'Design Goals & Strategy',
+        subtitle: 'Balancing product innovation with visual system consistency across Word\'s existing design language.',
+        columns: [
+          { title: 'Product Strategy', items: ['Transform passive reading into active dialogue', 'Support natural language questions during playback', 'Provide intelligent summaries on demand', 'Seamless mode switching between reading modes'] },
+          { title: 'Visual Strategy', items: ['Integrate with Rocksteady design system tokens', 'Maintain Word UI consistency and familiarity', 'Design clear voice state indicators', 'Create intuitive mode toggle patterns'] }
+        ]
+      },
+      {
+        type: 'voice-states',
+        category: 'DESIGN SYSTEM',
+        label: '07',
+        title: 'Design System',
+        subtitle: 'Rocksteady Token Integration',
+        content: 'Five distinct voice states provide clear feedback throughout the interaction, each with unique visual indicators following the Rocksteady design system.',
+        items: [
+          { title: 'Working', color: '#6B7280', description: 'System initializing' },
+          { title: 'Speaking', color: '#2DA562', description: 'Reading aloud' },
+          { title: 'Waiting', color: '#E97548', description: 'Ready for input' },
+          { title: 'Thinking', color: '#8B5CF6', description: 'Processing query' },
+          { title: 'Listening', color: '#E97548', description: 'Capturing voice' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        title: 'Copilot Voice in Word',
+        subtitle: 'Interactive voice companion embedded within the familiar Word reading experience',
+        image: '/projects/read-aloud/word-mockup-1.png',
+        annotations: [
+          { y: 8, label: 'Word Ribbon', detail: 'Familiar Office toolbar context', side: 'left' },
+          { y: 22, label: 'Copilot Voice Panel', detail: 'Persistent toolbar with voice state', side: 'right', color: '#2DA562' },
+          { y: 38, label: 'Reading Highlight', detail: 'Synchronized text tracking', side: 'left', color: '#7B61FF' },
+          { y: 55, label: 'Voice Waveform', detail: 'Real-time audio visualization', side: 'right', color: '#E97548' },
+          { y: 68, label: 'Suggestion Pills', detail: '"You Can Say..." prompts', side: 'left' },
+          { y: 82, label: 'Playback Controls', detail: 'Play / Pause / Speed / Mode', side: 'right' },
+          { y: 93, label: 'Mic Button', detail: 'One-tap voice activation', side: 'left', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        label: '08',
+        title: 'From Suggestions to Voice States: Elevating the Visual Entry for Active Interaction',
+        subtitle: 'This design effectively guides users to speak up, improving the discoverability and usage of voice entry points.',
+        image: '/projects/read-aloud/word-mockup-2.png',
+        annotations: [
+          { y: 18, label: 'Dynamic Waveform', detail: 'Visual cue draws attention', side: 'right', color: '#2DA562' },
+          { y: 35, label: 'Guided Prompt', detail: '"You Can Say..." suggestion', side: 'left' },
+          { y: 52, label: 'Suggestion Chips', detail: 'Tappable example questions', side: 'right' },
+          { y: 70, label: 'Mode Toggle', detail: 'Document / Summary switch', side: 'left', color: '#8B5CF6' },
+          { y: 85, label: 'Mic Activation', detail: 'Primary voice entry point', side: 'right', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        label: '09',
+        title: 'From Playback Control to Customization: Building Tempo Ownership for Voice Reading',
+        subtitle: 'Flexible model switching entry points help users control reading density and voice reading experience.',
+        image: '/projects/read-aloud/word-mockup-1.png',
+        annotations: [
+          { y: 15, label: 'Reading Goal', detail: 'User determines current objective', side: 'left' },
+          { y: 32, label: 'Full Document Mode', detail: 'Complete original text playback', side: 'right' },
+          { y: 50, label: 'Summary Mode', detail: 'AI-condensed quick focus', side: 'left', color: '#8B5CF6' },
+          { y: 68, label: 'Model Selection', detail: 'Choose appropriate voice model', side: 'right' },
+          { y: 85, label: 'Interactive Expectation', detail: 'From passive listening to active engagement', side: 'left', color: '#2DA562' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        title: 'Summary Reading with AI-Generated Summaries',
+        subtitle: 'Copilot Voice generates and reads document summaries, transforming long documents into digestible audio content',
+        image: '/projects/read-aloud/word-mockup-2.png',
+        annotations: [
+          { y: 20, label: 'Summary Panel', detail: 'AI-generated content overview', side: 'right', color: '#8B5CF6' },
+          { y: 40, label: 'Key Points', detail: 'Extracted main arguments', side: 'left' },
+          { y: 60, label: 'Voice Reading', detail: 'Natural TTS of summary', side: 'right', color: '#2DA562' },
+          { y: 80, label: 'Full Doc Toggle', detail: 'Switch back to original text', side: 'left' }
+        ]
+      },
+      {
+        type: 'interaction-path',
+        category: 'DESIGN FOUNDATION',
+        label: '10',
+        title: 'From Pain Points to Breakthrough: Building ReadAloud\'s New Interaction Path',
+        subtitle: 'Users don\'t just need to "hear documents" \u2014 they need to "understand content". Understanding depends on active participation and real-time feedback.',
+        steps: [
+          { label: '\uD83C\uDFA7 Listen' },
+          { label: '\u2753 Ask / Answer' },
+          { label: '\uD83D\uDD01 Resume' }
+        ],
+        rows: [
+          { action: 'Click Read Aloud', feedback: 'Launch Copilot Voice toolbar, begin reading', value: 'Immersive reading, improved focus' },
+          { action: 'Switch mode (Original / Summary)', feedback: 'UI shows current reading mode, content switches in real-time', value: 'Choose info density per task' },
+          { action: 'Click microphone to ask', feedback: 'Pause playback, recognize speech, deliver voice answer', value: 'Get explanations or summaries needed' },
+          { action: 'Resume playback', feedback: 'System prompts "Continue Reading", auto/manual resume', value: 'Maintain continuity, return to task flow' }
+        ],
+        content: 'In questioning scenarios, users can ask any natural language question: "What is the key argument?" "What does this mean?" "Can you simplify this?"'
+      },
+      {
+        type: 'state-flow',
+        category: 'DESIGN RATIONALE',
+        label: '11',
+        title: 'From Playback to Question to Resumption: The Rhythm of Conversational Reading',
+        content: 'Before Copilot Voice, Word\'s ReadAloud was a passive listen-only feature. Here is the new conversational flow:',
+        items: [
+          { title: 'Speaking', color: '#2DA562', description: 'Reading document aloud' },
+          { title: 'Mic Activated', color: '#E97548', description: 'User clicks mic button' },
+          { title: 'Listening', color: '#E97548', description: 'Capturing voice input' },
+          { title: 'Thinking', color: '#8B5CF6', description: 'Processing via Copilot' },
+          { title: 'Answering', color: '#2DA562', description: 'Speaking the response' },
+          { title: 'Auto Resume', color: '#2DA562', description: 'Returns to reading' }
+        ]
+      },
+      {
+        type: 'validation',
+        category: 'DESIGN VALIDATION',
+        label: '12',
+        title: 'From Usage Growth to Behavior Change: Validating the Real Value of Voice Experience',
+        subtitle: 'Multi-dimensional user behavior data covering usage frequency, feature engagement, and user sentiment changes.',
+        stats: [
+          { value: '+37%', label: 'Overall Utilization Rate' },
+          { value: '+92%', label: 'Mic Usage Rate Growth' },
+          { value: '62%', label: 'Active Questioning Users' }
+        ],
+        quotes: [
+          { avatar: '\uD83D\uDE0A', text: 'It lets me think while doing other things. This approach makes me more engaged with the document content.' },
+          { avatar: '\uD83E\uDD29', text: 'This is the first time a reading tool can "talk back to me." It has truly changed how I use Word.' },
+          { avatar: '\uD83D\uDE42', text: 'Processing long documents is so much easier now. Copilot is like having a thoughtful voice assistant.' },
+          { avatar: '\uD83D\uDE04', text: 'We can pause and ask questions anytime, then continue listening. It feels as natural as having a conversation.' }
+        ],
+        content: 'User satisfaction score rose from 3.4 (Read Aloud) to 4.6 (Copilot Voice).'
+      },
+      {
+        type: 'text',
+        category: 'DESIGN VALIDATION',
+        label: '13',
+        title: 'From Collaboration to Leadership: My Role Value in Copilot Voice',
+        content: 'As the sole visual and interaction design representative in the Beijing region, I drove multiple key milestones from requirements to final delivery throughout the entire project cycle.',
+        image: '/projects/read-aloud/megaphone-3d.png',
+        secondaryImage: '/projects/read-aloud/emoji-hearts.png'
+      },
+      {
+        type: 'outcomes',
+        label: '14',
+        title: 'Results & Impact',
+        subtitle: 'Successfully launched Dogfood version, transforming passive reading into active dialogue.',
+        content: 'Dogfood Launch \u00B7 10M+ MAU',
+        image: '/projects/read-aloud/cover-bg-2.png',
+        items: [
+          { title: 'Product Delivery', description: 'Voice interruption, mode switching, and natural voice feedback system shipped in Dogfood' },
+          { title: 'Visual Consistency', description: 'Full Rocksteady design system integration with Word UI token compliance' },
+          { title: 'Interaction Model', description: '5 voice states with seamless transitions' },
+          { title: 'Scalability', description: 'Extensible architecture ready for podcast, accessibility, and future voice capabilities' }
+        ]
+      }
+    ]
   },
   {
     id: 'p2',
@@ -426,7 +658,239 @@ export const PROJECTS_ZH: Project[] = [
         content: '成功上线 Dogfood 版本。将被动阅读转为主动对话。',
         impact: 'Dogfood 上线'
       }
-    }
+    },
+    externalLinks: {
+      behance: 'https://www.figma.com/design/1MdXjP52UK8cwvVo6VgzHD/Portfolio?node-id=455-35981&m=dev'
+    },
+    caseSections: [
+      {
+        type: 'hero',
+        title: 'Interactive ReadAloud with Copilot Voice',
+        subtitle: '重新定义我们的聆听方式',
+        bgImage: '/projects/read-aloud/cover-bg-1.png',
+        tags: ['Voice UX', 'AI Design', 'Accessibility', 'Conversation Design'],
+        role: '视觉与交互设计师',
+        date: '2024.08 - 2025.02'
+      },
+      {
+        type: 'stats',
+        category: 'PROJECT OVERVIEW',
+        label: '01',
+        title: '背景',
+        subtitle: 'Microsoft Word Read Aloud',
+        content: 'Word Read Aloud 已积累超过 1000万 MAU，是文档无障碍访问的重要入口。然而，现有的朗读仍局限于被动线性播放，无法满足用户深度理解的需求。',
+        stats: [
+          { value: '1000万+', label: '月活跃用户' },
+          { value: '78%', label: '用户希望交互式阅读' },
+          { value: '4.2→4.6', label: '满意度提升目标' },
+          { value: '40%', label: '内容未被充分吸收' }
+        ]
+      },
+      {
+        type: 'personas',
+        label: '02',
+        title: '目标用户',
+        items: [
+          { icon: '💼', title: '信息工作者', subtitle: '知识密集型专业人士', description: '需要从长文档中快速掌握关键信息，常常多任务进行。希望语音阅读支持问答，按需理解。', color: '#7B61FF' },
+          { icon: '✍️', title: '内容创作者', subtitle: '作家、编辑与审阅者', description: '使用朗读进行校对和节奏检查。需要暂停/提问能力来验证内容准确性和流畅度。', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'flow',
+        label: '03',
+        title: '当前体验：被动 · 单向 · 线性',
+        content: '在 Copilot Voice 之前，阅读体验遵循严格的线性路径，无法交互或提问。',
+        steps: [
+          { label: '打开文档' },
+          { label: '点击播放' },
+          { label: '被动听取' },
+          { label: '结束或停止' }
+        ],
+        subtitle: '被动 · 单向 · 线性',
+        image: '/projects/read-aloud/player-ui.png'
+      },
+      {
+        type: 'cards',
+        label: '04',
+        title: '核心痛点',
+        items: [
+          { icon: '😤', title: '无法中断', description: '用户在阅读过程中无法暂停提问，只能被动听取。' },
+          { icon: '😵', title: '信息过载', description: '长文档导致认知疲劳，无法聚焦关键段落。' },
+          { icon: '😐', title: '无交互', description: '朗读是纯粹的单向输出，缺乏任何对话或反馈机制。' },
+          { icon: '🤬', title: '上下文丢失', description: '中断后用户会丢失位置，必须从头开始。' }
+        ]
+      },
+      {
+        type: 'principles',
+        label: '05',
+        title: '设计原则',
+        items: [
+          { number: 1, title: '可中断性', subtitle: '随时暂停与提问', description: '用户可以在任何时刻自然地中断阅读提问，系统无缝处理过渡。' },
+          { number: 2, title: '可理解性', subtitle: '理解，而不仅仅是听', description: '语音交互通过问答、摘要和上下文解释帮助用户真正理解内容。' },
+          { number: 3, title: '可回溯性', subtitle: '永不丢失位置', description: '任何中断或问答后，阅读自动从精确位置恢复。' }
+        ]
+      },
+      {
+        type: 'two-column',
+        label: '06',
+        title: '设计目标与策略',
+        subtitle: '在产品创新与 Word 现有设计语言的视觉系统一致性之间取得平衡。',
+        columns: [
+          { title: '产品策略', items: ['将被动阅读转化为主动对话', '支持播放过程中的自然语言提问', '按需提供智能摘要', '阅读模式间无缝切换'] },
+          { title: '视觉策略', items: ['集成 Rocksteady 设计系统 token', '保持 Word UI 一致性和熟悉感', '设计清晰的语音状态指示器', '创建直觉的模式切换模式'] }
+        ]
+      },
+      {
+        type: 'voice-states',
+        category: 'DESIGN SYSTEM',
+        label: '07',
+        title: '设计系统',
+        subtitle: 'Rocksteady Token 集成',
+        content: '五种独特的语音状态在整个交互过程中提供清晰反馈，每种状态都有独特的视觉指示器，遵循 Rocksteady 设计系统。',
+        items: [
+          { title: 'Working 工作中', color: '#6B7280', description: '系统初始化' },
+          { title: 'Speaking 播放中', color: '#2DA562', description: '正在朗读' },
+          { title: 'Waiting 等待中', color: '#E97548', description: '准备接受输入' },
+          { title: 'Thinking 思考中', color: '#8B5CF6', description: '处理查询' },
+          { title: 'Listening 聆听中', color: '#E97548', description: '捕捉语音' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        title: 'Word 中的 Copilot Voice',
+        subtitle: '嵌入熟悉的 Word 阅读体验中的智能语音伴读',
+        image: '/projects/read-aloud/word-mockup-1.png',
+        annotations: [
+          { y: 8, label: 'Word 工具栏', detail: '熟悉的 Office 操作环境', side: 'left' },
+          { y: 22, label: 'Copilot Voice 面板', detail: '常驻工具栏与语音状态', side: 'right', color: '#2DA562' },
+          { y: 38, label: '阅读高亮', detail: '同步文本追踪定位', side: 'left', color: '#7B61FF' },
+          { y: 55, label: '语音波形', detail: '实时音频可视化反馈', side: 'right', color: '#E97548' },
+          { y: 68, label: '建议语', detail: '"You Can Say..." 提示', side: 'left' },
+          { y: 82, label: '播放控制', detail: '播放 / 暂停 / 速度 / 模式', side: 'right' },
+          { y: 93, label: '麦克风按钮', detail: '一键语音激活', side: 'left', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        label: '08',
+        title: '从建议语到语音状态：提升主动交互的视觉入口',
+        subtitle: '该设计有效引导用户开口发言，提升语音入口的可发现性和使用率。',
+        image: '/projects/read-aloud/word-mockup-2.png',
+        annotations: [
+          { y: 18, label: '动态波形', detail: '视觉线索吸引注意力', side: 'right', color: '#2DA562' },
+          { y: 35, label: '引导提示语', detail: '"You Can Say..." 建议', side: 'left' },
+          { y: 52, label: '建议标签', detail: '可点击的示例问题', side: 'right' },
+          { y: 70, label: '模式切换', detail: '文档 / 摘要模式', side: 'left', color: '#8B5CF6' },
+          { y: 85, label: '麦克风激活', detail: '主要语音入口', side: 'right', color: '#E97548' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        label: '09',
+        title: '从控制播放到定制体验：构建语音阅读的节奏主控权',
+        subtitle: '针对两类阅读需求提供灵活切换的模型入口，帮助用户把控阅读密度。',
+        image: '/projects/read-aloud/word-mockup-1.png',
+        annotations: [
+          { y: 15, label: '阅读目标', detail: '用户确定当前目的', side: 'left' },
+          { y: 32, label: '完整文档模式', detail: '原文逐字播放', side: 'right' },
+          { y: 50, label: '摘要模式', detail: 'AI 精炼快速聚焦', side: 'left', color: '#8B5CF6' },
+          { y: 68, label: '模型选择', detail: '选择合适的语音模型', side: 'right' },
+          { y: 85, label: '交互期待', detail: '从被动听读到主动参与', side: 'left', color: '#2DA562' }
+        ]
+      },
+      {
+        type: 'annotated-mockup',
+        category: 'DESIGN RATIONALE',
+        title: '摘要模式阅读与 AI 生成摘要',
+        subtitle: 'Copilot Voice 生成并朗读文档摘要，将长文档转化为易于消化的音频内容',
+        image: '/projects/read-aloud/word-mockup-2.png',
+        annotations: [
+          { y: 20, label: '摘要面板', detail: 'AI 生成内容概览', side: 'right', color: '#8B5CF6' },
+          { y: 40, label: '核心要点', detail: '提取主要论点', side: 'left' },
+          { y: 60, label: '语音朗读', detail: '自然 TTS 摘要播放', side: 'right', color: '#2DA562' },
+          { y: 80, label: '全文切换', detail: '返回原始文本', side: 'left' }
+        ]
+      },
+      {
+        type: 'interaction-path',
+        category: 'DESIGN FOUNDATION',
+        label: '10',
+        title: '从痛点到突破：构建 ReadAloud 的全新交互路径',
+        subtitle: '用户需要的不仅是"听完文档"，而是"理解内容"——而理解依赖于主动参与和即时反馈。',
+        steps: [
+          { label: '🎧 聆听 Listen' },
+          { label: '❓ 提问 Ask / Answer' },
+          { label: '🔁 回听 Resume' }
+        ],
+        rows: [
+          { action: '点击 Read Aloud', feedback: '启动 Copilot Voice 工具栏，开始朗读文档', value: '沉浸式阅读，提升专注力' },
+          { action: '切换模式（原文 / 摘要）', feedback: 'UI 显示当前阅读模式，朗读内容实时切换', value: '根据任务选择不同信息密度' },
+          { action: '点击麦克风按钮提问', feedback: '暂停播放，语音识别提问内容并开始输出语音回答', value: '用户获得所需解释或总结' },
+          { action: '主动点击播放', feedback: '系统提示"继续阅读"，自动/手动恢复朗读', value: '保持连续性，回到任务流' }
+        ],
+        content: '提问场景中，用户可以提出任意自然语言问题："这段的核心观点是什么？""它是什么意思？""可以用更简单的话说一遍吗？"'
+      },
+      {
+        type: 'state-flow',
+        category: 'DESIGN RATIONALE',
+        label: '11',
+        title: '从播放到提问再到回读：对话式阅读的体验节奏',
+        content: '在 Copilot Voice 之前，Word 的 ReadAloud 是一个被动听取的功能。以下是全新的对话式流程：',
+        items: [
+          { title: '播放中 Speaking', color: '#2DA562', description: '正在朗读文档' },
+          { title: '用户激活 Mic', color: '#E97548', description: '点击麦克风按钮' },
+          { title: '语音输入 Listening', color: '#E97548', description: '捕捉用户语音' },
+          { title: '系统思考 Thinking', color: '#8B5CF6', description: '通过 Copilot 处理' },
+          { title: '系统作答 Speaking', color: '#2DA562', description: '语音回复用户' },
+          { title: '自动恢复阅读', color: '#2DA562', description: '回到朗读位置' }
+        ]
+      },
+      {
+        type: 'validation',
+        category: 'DESIGN VALIDATION',
+        label: '12',
+        title: '从使用提升到行为转变：验证 Voice 体验的真实价值',
+        subtitle: '为验证 Copilot Voice 的真实价值，我们收集了多项用户行为数据，涵盖使用频次、功能触发及用户反馈变化。',
+        stats: [
+          { value: '+37%', label: '用户整体使用率' },
+          { value: '+92%', label: 'Mic 启用率增长' },
+          { value: '62%', label: '主动中断提问占比' }
+        ],
+        quotes: [
+          { avatar: '😊', text: '它让我边做事边思考，不再像以前那样只是被动跟读。这种交互让我更容易沉浸在文档内容里。' },
+          { avatar: '🤩', text: '我第一次发现朗读能够"跟我说话"了。这真的改变了我使用 Word 的方式。' },
+          { avatar: '🙂', text: '现在处理长文档轻松多了，Copilot 就像个周到的语音助手。' },
+          { avatar: '😄', text: '可以随时暂停提问，然后继续听下去，就像和人对话一样自然。' }
+        ],
+        content: '用户满意度从 3.4（Read Aloud）上升至 4.6（Copilot Voice）。'
+      },
+      {
+        type: 'text',
+        category: 'DESIGN VALIDATION',
+        label: '13',
+        title: '从协作到引领：我在 Copilot Voice 中的角色价值',
+        content: '在 Copilot Voice 项目中，我承担了中国区唯一视觉与交互设计师角色，从需求到最终交付，持续驱动多个关键环节。',
+        image: '/projects/read-aloud/megaphone-3d.png',
+        secondaryImage: '/projects/read-aloud/emoji-hearts.png'
+      },
+      {
+        type: 'outcomes',
+        label: '14',
+        title: '成果与影响',
+        subtitle: '成功上线 Dogfood 版本，将被动阅读转化为主动对话。',
+        content: 'Dogfood 上线 · 1000万+ MAU',
+        image: '/projects/read-aloud/cover-bg-2.png',
+        items: [
+          { title: '产品交付', description: '语音中断、模式切换、自然语音反馈系统已在 Dogfood 中交付' },
+          { title: '视觉一致性', description: '完整集成 Rocksteady 设计系统，符合 Word UI token 规范' },
+          { title: '交互模型', description: '5 种语音状态无缝过渡' },
+          { title: '可扩展性', description: '可扩展架构，为 podcast、无障碍和未来语音能力做好准备' }
+        ]
+      }
+    ]
   },
   {
     id: 'p2',
