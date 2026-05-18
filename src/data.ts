@@ -1197,3 +1197,150 @@ export const PROJECTS_ZH: Project[] = [
 
 // 保持向后兼容
 export const PROJECTS = PROJECTS_EN;
+
+// ===== EXPLORATION PROJECTS (Walk-Through AI Garden cards) =====
+export const EXPLORATIONS_EN: Project[] = [
+  {
+    id: 'exp-aigc',
+    title: 'AIGC Image Creation',
+    category: 'B-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: 'AI Explorer & Visual Designer',
+    shortDescription: 'From ideas to visuals — exploring AI-generated art and creative expression.',
+    coverImage: '/projects/walk-through/aigc-01.png',
+    tags: ['AIGC', 'Midjourney', 'Stable Diffusion', 'Creative AI', 'Visual Art'],
+    slides: [
+      '/projects/walk-through/aigc-01.png',
+      '/projects/walk-through/aigc-02.png',
+      '/projects/walk-through/aigc-03.png',
+      '/projects/walk-through/aigc-04.png',
+    ],
+    acts: {
+      act1: { title: 'Exploration', content: 'Exploring AI-generated imagery as a creative medium — from concept to final composition.' },
+      act2: { title: 'Process', content: 'Iterating through prompts, styles, and visual languages to find unique expressions.', decisionPoints: ['Prompt engineering', 'Style transfer', 'Composition'] },
+      act3: { title: 'Output', content: 'A collection of AI-generated artworks that push creative boundaries.', impact: 'Personal exploration' }
+    }
+  },
+  {
+    id: 'exp-prompt',
+    title: 'Prompt & Template Thinking',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'Prompt Designer',
+    shortDescription: 'Good prompts shape great results. I design systems that make prompting easier.',
+    coverImage: '/projects/walk-through/aigc-02.png',
+    tags: ['Prompt Design', 'Template Systems', 'AI UX', 'Copilot'],
+    acts: {
+      act1: { title: 'The Problem', content: 'Most users struggle with prompting — they don\'t know what to ask or how to structure their intent.' },
+      act2: { title: 'Template Systems', content: 'Designing reusable prompt templates that guide users toward better AI interactions.', decisionPoints: ['Context framing', 'Intent scaffolding', 'Output shaping'] },
+      act3: { title: 'Impact', content: 'Systems that make AI more accessible through thoughtful prompt design.', impact: 'Shipped in Copilot' }
+    }
+  },
+  {
+    id: 'exp-workflow',
+    title: 'AI Workflow Design',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UX Designer',
+    shortDescription: 'Designing human-centered AI workflows that inspire clarity and productivity.',
+    coverImage: '/projects/walk-through/aigc-03.png',
+    tags: ['AI Workflow', 'UX Design', 'Productivity', 'Human-AI Interaction'],
+    acts: {
+      act1: { title: 'Complexity', content: 'AI workflows often feel opaque — users lose trust when they can\'t understand what\'s happening.' },
+      act2: { title: 'Clarity', content: 'Designing transparent, step-by-step AI flows that keep humans in the loop.', decisionPoints: ['Progressive disclosure', 'Trust indicators', 'Undo patterns'] },
+      act3: { title: 'Result', content: 'Workflows that feel natural and empower users rather than replacing them.', impact: 'Enhanced productivity' }
+    }
+  },
+  {
+    id: 'exp-vibe-coding',
+    title: 'Vibe Coding',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: 'Designer & Developer',
+    shortDescription: 'Where code meets vibe. Building with AI to turn ideas into life.',
+    coverImage: '/projects/walk-through/aigc-04.png',
+    tags: ['Vibe Coding', 'AI Development', 'Creative Coding', 'Copilot', 'Claude'],
+    acts: {
+      act1: { title: 'The Spark', content: 'What if coding felt less like engineering and more like creating? AI makes this possible.' },
+      act2: { title: 'The Process', content: 'Using AI as a creative partner to rapidly prototype, iterate, and ship ideas.', decisionPoints: ['AI pair programming', 'Rapid prototyping', 'Creative expression'] },
+      act3: { title: 'The Output', content: 'This very portfolio — built with AI assistance, shipped in record time.', impact: 'This portfolio' }
+    }
+  },
+];
+
+export const EXPLORATIONS_ZH: Project[] = [
+  {
+    id: 'exp-aigc',
+    title: 'AIGC 图像创作',
+    category: 'B-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: 'AI 探索者 & 视觉设计师',
+    shortDescription: '从想法到视觉，探索 AI 生成艺术与创作表达。',
+    coverImage: '/projects/walk-through/aigc-01.png',
+    tags: ['AIGC', 'Midjourney', 'Stable Diffusion', '创意 AI', '视觉艺术'],
+    slides: [
+      '/projects/walk-through/aigc-01.png',
+      '/projects/walk-through/aigc-02.png',
+      '/projects/walk-through/aigc-03.png',
+      '/projects/walk-through/aigc-04.png',
+    ],
+    acts: {
+      act1: { title: '探索', content: '将 AI 图像生成作为创作媒介，从概念到最终构图的探索之旅。' },
+      act2: { title: '过程', content: '通过迭代提示词、风格和视觉语言，寻找独特的表达方式。', decisionPoints: ['提示词工程', '风格迁移', '构图设计'] },
+      act3: { title: '成果', content: '一组突破创意边界的 AI 生成艺术作品。', impact: '个人探索' }
+    }
+  },
+  {
+    id: 'exp-prompt',
+    title: 'Prompt 与模板思维',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'Prompt 设计师',
+    shortDescription: '好的提示词会带来好的结果，我也在设计让 prompting 更轻松的系统。',
+    coverImage: '/projects/walk-through/aigc-02.png',
+    tags: ['Prompt 设计', '模板系统', 'AI UX', 'Copilot'],
+    acts: {
+      act1: { title: '痛点', content: '大多数用户在提示词上遇到困难——不知道该问什么，也不知道如何组织意图。' },
+      act2: { title: '模板系统', content: '设计可复用的提示词模板，引导用户实现更好的 AI 交互。', decisionPoints: ['上下文框架', '意图脚手架', '输出塑形'] },
+      act3: { title: '影响', content: '通过深思熟虑的提示词设计让 AI 更易用的系统。', impact: '已在 Copilot 中上线' }
+    }
+  },
+  {
+    id: 'exp-workflow',
+    title: 'AI Workflow 设计',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UX 设计师',
+    shortDescription: '设计以人为中心的 AI 工作流，让清晰度与效率一起提升。',
+    coverImage: '/projects/walk-through/aigc-03.png',
+    tags: ['AI 工作流', 'UX 设计', '生产力', '人机交互'],
+    acts: {
+      act1: { title: '复杂性', content: 'AI 工作流往往让人觉得不透明——当用户无法理解发生了什么时就会失去信任。' },
+      act2: { title: '清晰化', content: '设计透明、分步的 AI 流程，让人始终保持在循环中。', decisionPoints: ['渐进式披露', '信任指标', '撤销模式'] },
+      act3: { title: '结果', content: '感觉自然且赋能用户而非替代用户的工作流。', impact: '提升生产力' }
+    }
+  },
+  {
+    id: 'exp-vibe-coding',
+    title: 'Vibe Coding',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: '设计师 & 开发者',
+    shortDescription: '当代码遇见 vibe，用 AI 把想法更快地带到现实里。',
+    coverImage: '/projects/walk-through/aigc-04.png',
+    tags: ['Vibe Coding', 'AI 开发', '创意编程', 'Copilot', 'Claude'],
+    acts: {
+      act1: { title: '灵感', content: '如果写代码不像工程而更像创作呢？AI 让这成为可能。' },
+      act2: { title: '过程', content: '用 AI 作为创意伙伴来快速原型、迭代和交付想法。', decisionPoints: ['AI 结对编程', '快速原型', '创意表达'] },
+      act3: { title: '成果', content: '这个作品集本身——在 AI 辅助下构建，在创纪录的时间内上线。', impact: '这个作品集' }
+    }
+  },
+];

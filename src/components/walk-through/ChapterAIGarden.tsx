@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code2, MessageCircle, Palette, Wand2, Workflow } from 'lucide-react';
+import { ArrowRight, Code2, MessageCircle, Palette, Workflow } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { zhWalkthroughType } from './typography';
 
@@ -12,24 +12,23 @@ interface Props {
   };
   onNext: () => void;
   onPrev: () => void;
+  onExplorationClick?: (index: number) => void;
 }
 
-const ChapterAIGarden: React.FC<Props> = ({ data }) => {
+const ChapterAIGarden: React.FC<Props> = ({ data, onExplorationClick }) => {
   const { language } = useLanguage();
   const items = data.explorations.slice(0, 5);
-  const icons = [Palette, Wand2, MessageCircle, Workflow, Code2];
+  const icons = [Palette, MessageCircle, Workflow, Code2];
   const sectionLabel = language === 'zh' ? 'AI 花园' : 'AI Garden';
   const cardSize = { width: 'clamp(250px, 16.5vw, 298px)', height: 'clamp(250px, 27vh, 290px)' } as const;
   const desktopCardLayouts: React.CSSProperties[] = [
-    { left: '0%', top: '30%', ...cardSize },
-    { left: '35%', top: '0%', ...cardSize },
-    { left: '70%', top: '12%', ...cardSize },
+    { left: '-3%', top: '36%', ...cardSize },
+    { left: '33%', top: '12%', ...cardSize },
     { left: '35%', top: '55%', ...cardSize },
     { left: '70%', top: '57%', ...cardSize },
   ];
   const mediumCardLayouts = [
     'col-start-1 row-start-2',
-    'col-start-2 row-start-1',
     'col-start-2 row-start-2 mt-2',
     'col-start-1 row-start-3',
     'col-start-2 row-start-3',
@@ -153,7 +152,8 @@ const ChapterAIGarden: React.FC<Props> = ({ data }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.28 + index * 0.08 }}
                   style={desktopCardLayouts[index]}
-                  className={`absolute flex flex-col ${cardClass}`}
+                  onClick={() => onExplorationClick?.(index)}
+                  className={`absolute flex flex-col cursor-pointer ${cardClass}`}
                 >
                   <div className={cardHighlightClass} />
                   <Icon size={27} strokeWidth={2} className="text-[rgba(59,36,22,0.92)]" />
@@ -201,7 +201,8 @@ const ChapterAIGarden: React.FC<Props> = ({ data }) => {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.22 + index * 0.07 }}
-                  className={`flex min-h-[220px] flex-col ${mediumCardLayouts[index]} ${mediumCardClass}`}
+                  onClick={() => onExplorationClick?.(index)}
+                  className={`flex min-h-[220px] flex-col cursor-pointer ${mediumCardLayouts[index]} ${mediumCardClass}`}
                 >
                   <div className={cardHighlightClass} />
                   <Icon size={22} strokeWidth={1.9} className="text-[rgba(59,36,22,0.92)]" />
@@ -240,7 +241,8 @@ const ChapterAIGarden: React.FC<Props> = ({ data }) => {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.22 + index * 0.07 }}
-                  className={`flex min-h-[214px] flex-col ${mobileCardClass}`}
+                  onClick={() => onExplorationClick?.(index)}
+                  className={`flex min-h-[214px] flex-col cursor-pointer ${mobileCardClass}`}
                 >
                   <div className={cardHighlightClass} />
                   <Icon size={22} strokeWidth={1.9} className="text-[rgba(59,36,22,0.92)]" />

@@ -15,7 +15,6 @@ export const WALK_DATA = {
       whyAI: "I love AI. I explore how it helps us create,\nunderstand, and connect — in more human ways.",
       explorations: [
         { label: 'AIGC Image Creation', desc: 'From ideas to visuals — exploring AI-generated art and creative expression.' },
-        { label: 'AI Editing Experience', desc: 'Smart editing, effortless flow. Rethinking how we refine and perfect.' },
         { label: 'Prompt & Template Thinking', desc: 'Good prompts shape great results. I design systems that make prompting easier.' },
         { label: 'AI Workflow Design', desc: 'Designing human-centered AI workflows that inspire clarity and productivity.' },
         { label: 'Vibe Coding', desc: 'Where code meets vibe. Building with AI to turn ideas into life.' },
@@ -92,7 +91,6 @@ export const WALK_DATA = {
       whyAI: "我喜欢 AI。\n我也在探索它如何帮助我们以更人的方式去创造、理解与连接。",
       explorations: [
         { label: 'AIGC 图像创作', desc: '从想法到视觉，探索 AI 生成艺术与创作表达。' },
-        { label: 'AI 编辑体验', desc: '更聪明的编辑，更流畅的过程。重新思考精修与打磨。' },
         { label: 'Prompt 与模板思维', desc: '好的提示词会带来好的结果，我也在设计让 prompting 更轻松的系统。' },
         { label: 'AI Workflow 设计', desc: '设计以人为中心的 AI 工作流，让清晰度与效率一起提升。' },
         { label: 'Vibe Coding', desc: '当代码遇见 vibe，用 AI 把想法更快地带到现实里。' },

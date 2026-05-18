@@ -18,23 +18,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
+/* Hide scrollbar globally but keep scroll */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: #EFE2D1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D4CFC0;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #A39A8E;
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Hide scrollbar for specific elements */

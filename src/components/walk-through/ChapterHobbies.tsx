@@ -30,7 +30,7 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
   const { language } = useLanguage();
   const hobbies = [data.drawing, data.reading, data.dance, data.travel];
   const titleClass = language === 'zh'
-    ? `${zhWalkthroughType.displayL} text-[48px] text-dark-brown sm:text-[56px] lg:text-[64px]`
+    ? `${zhWalkthroughType.displayL} text-[36px] text-dark-brown sm:text-[42px] lg:text-[50px] whitespace-nowrap`
     : 'font-serif text-5xl italic tracking-tight leading-[0.98] text-dark-brown sm:text-6xl lg:text-[68px]';
   const itemTitleClass = language === 'zh' ? `${zhWalkthroughType.displayM} text-[18px] text-white` : 'font-serif text-2xl font-medium';
   const itemTitleMobileClass = language === 'zh' ? `${zhWalkthroughType.displayM} text-[16px] text-dark-brown` : 'font-serif text-base text-dark-brown';
@@ -79,7 +79,7 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mx-auto max-w-3xl text-center"
+          className={`mx-auto max-w-3xl text-center ${language === 'zh' ? 'translate-x-4' : ''}`}
         >
           <h2 className={titleClass}>
             {language === 'zh' ? '那些让我保持灵感的小事情。' : 'The little things that keep me inspired.'}
@@ -104,7 +104,25 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
                 className={`absolute ${desktopPositions[index]} flex items-start gap-3 text-left`}
               >
                 <div>
-                  <div className="mt-1 h-4 w-4 rounded-full border border-white bg-white shadow-[0_0_20px_rgba(255,255,255,0.95)]" />
+                  <div className="relative mt-1 h-4 w-4">
+                    <motion.div
+                      animate={{
+                        scale: [1, 2.8, 3.2],
+                        opacity: [0.5, 0.15, 0],
+                      }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: index * 0.4 }}
+                      className="absolute inset-0 rounded-full bg-white"
+                    />
+                    <motion.div
+                      animate={{
+                        scale: [1, 2, 2.4],
+                        opacity: [0.4, 0.1, 0],
+                      }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: index * 0.4 + 0.3 }}
+                      className="absolute inset-0 rounded-full bg-white"
+                    />
+                    <div className="absolute inset-0 rounded-full border border-white bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]" />
+                  </div>
                   <div className="ml-[7px] mt-2 h-16 w-px border-l border-dashed border-white/70" />
                 </div>
                 <div className="max-w-[220px] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.28)]">

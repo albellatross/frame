@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import LanguageToggle from '../LanguageToggle';
+import ExplorationGallery from './ExplorationGallery';
 import { WALK_DATA } from './data';
 import { zhWalkthroughType } from './typography';
+import { EXPLORATIONS_EN, EXPLORATIONS_ZH } from '../../data';
+import { Project } from '../../types';
 import ChapterGate from './ChapterGate';
 import ChapterWelcome from './ChapterWelcome';
 import ChapterAIGarden from './ChapterAIGarden';
@@ -54,9 +57,13 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
   const [chapter, setChapter] = useState(-1);
   const [direction, setDirection] = useState(1);
   const [transitionVideo, setTransitionVideo] = useState<string | null>(null);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [activeExploration, setActiveExploration] = useState<Project | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const pendingActionRef = useRef<(() => void) | null>(null);
   const chapterRef = useRef(-1);
   const data = language === 'zh' ? WALK_DATA.zh : WALK_DATA.en;
+  const explorations = language === 'zh' ? EXPLORATIONS_ZH : EXPLORATIONS_EN;
   const navItems = language === 'zh'
     ? ['欢迎', 'AI 花园', 'IP 宇宙', '日常灵感', '最后一帧']
     : ['Welcome', 'AI Garden', 'IP World', 'Daily Sparks', 'Final Frame'];
@@ -79,9 +86,6 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
   const navNumberClass = language === 'zh'
     ? `mr-1.5 ${zhWalkthroughType.microTight} text-[10px] opacity-60`
     : 'mr-2 font-mono text-[11px] opacity-70';
-  const ambientClass = language === 'zh'
-    ? `pointer-events-none absolute bottom-6 left-6 z-40 rounded-full border border-white/70 bg-white/65 px-4 py-2 ${zhWalkthroughType.bodyM} text-[13px] text-neutral-600 shadow-button backdrop-blur-md sm:bottom-8 sm:left-10`
-    : 'pointer-events-none absolute bottom-6 left-6 z-40 rounded-full border border-white/70 bg-white/65 px-4 py-2 font-sans text-xs text-neutral-600 shadow-button backdrop-blur-md sm:bottom-8 sm:left-10';
   const wheelLockedRef = useRef(false);
   const wheelAccumRef = useRef(0);
 
@@ -111,6 +115,38 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
     }
   };
 
+  const toggleAudio = () => {
+    if (!audioRef.current) {
+      const audio = new Audio('/ambient-bgm.flac');
+      audio.loop = true;
+      audio.volume = 0.4;
+      audioRef.current = audio;
+    }
+    if (audioPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setAudioPlaying(!audioPlaying);
+  };
+
+  // Auto-play audio on mount
+  useEffect(() => {
+    const audio = new Audio('/ambient-bgm.flac');
+    audio.loop = true;
+    audio.volume = 0.4;
+    audioRef.current = audio;
+    audio.play().then(() => {
+      setAudioPlaying(true);
+    }).catch(() => {
+      // Browser may block autoplay without user interaction
+    });
+    return () => {
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
+
   useEffect(() => {
     chapterRef.current = chapter;
   }, [chapter]);
@@ -132,6 +168,10 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
+      if (activeExploration) {
+        return;
+      }
+
       if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
         return;
       }
@@ -175,7 +215,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
     return () => {
       window.removeEventListener('wheel', handleWheel);
     };
-  }, []);
+  }, [activeExploration, transitionVideo]);
 
   return (
     <motion.div
@@ -185,25 +225,25 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
       transition={{ duration: 0.5 }}
       className="fixed inset-0 z-[9999] overflow-hidden bg-[#f8f3e8]"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-40 flex items-start justify-between px-6 pt-6 sm:px-10 lg:px-12">
-        <div className="pointer-events-auto flex items-start gap-3">
-          <motion.button
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.15 }}
-            onClick={onClose}
-            className={backButtonClass}
-          >
-            <ArrowLeft size={13} />
-            <span>{language === 'zh' ? '返回主页' : 'Back Home'}</span>
-          </motion.button>
-        </div>
+      <div className="fixed left-6 top-6 z-[10020] sm:left-10 lg:left-12">
+        <motion.button
+          initial={{ opacity: 0, x: -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.15 }}
+          onClick={onClose}
+          className={backButtonClass}
+        >
+          <ArrowLeft size={13} />
+          <span>{language === 'zh' ? '返回主页' : 'Back Home'}</span>
+        </motion.button>
+      </div>
 
+      <div className="pointer-events-none fixed inset-x-0 top-6 z-40 hidden justify-center px-6 sm:flex sm:px-10 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="pointer-events-auto hidden rounded-full border border-white/70 bg-white/60 px-2 py-2 shadow-button backdrop-blur-xl sm:flex sm:items-center sm:gap-1"
+          className="pointer-events-auto rounded-full border border-white/70 bg-white/60 px-2 py-2 shadow-button backdrop-blur-xl sm:flex sm:items-center sm:gap-1"
         >
           {navItems.map((label, index) => (
             <button
@@ -216,27 +256,28 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
             </button>
           ))}
         </motion.div>
+      </div>
 
+      <div className="fixed right-6 top-6 z-[10020] sm:right-10 lg:right-12">
         <motion.div
           initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="pointer-events-auto flex items-center gap-3"
+          className="flex items-center gap-3"
         >
           <div>
             <LanguageToggle trackClassName="bg-white/90 backdrop-blur-md shadow-sm border border-neutral-200/50" />
           </div>
+          <button
+            onClick={toggleAudio}
+            className="flex items-center gap-1.5 rounded-full border border-white/70 bg-white/90 px-3 py-2 font-sans text-xs text-neutral-600 shadow-sm backdrop-blur-md transition-colors hover:bg-white/100"
+          >
+            {audioPlaying ? <Volume2 size={14} /> : <VolumeX size={14} />}
+          </button>
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className={ambientClass}
-      >
-        {language === 'zh' ? '环境音开启' : 'Ambient On'}
-      </motion.div>
+
 
       <AnimatePresence mode="wait">
         {scrollHintText && (
@@ -301,7 +342,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
             exit="exit"
             className="absolute inset-0"
           >
-            <ChapterAIGarden data={data.aiGarden} onNext={next} onPrev={prev} />
+            <ChapterAIGarden data={data.aiGarden} onNext={next} onPrev={prev} onExplorationClick={(index) => setActiveExploration(explorations[index])} />
           </motion.div>
         )}
         {chapter === 2 && (
@@ -376,10 +417,21 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
                 muted
                 playsInline
                 onEnded={handleTransitionEnd}
+                ref={(el) => { if (el) el.playbackRate = 1.8; }}
                 className="h-full w-full object-cover"
               />
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Exploration detail overlay */}
+      <AnimatePresence>
+        {activeExploration && (
+          <ExplorationGallery
+            project={activeExploration}
+            onClose={() => setActiveExploration(null)}
+          />
         )}
       </AnimatePresence>
     </motion.div>
