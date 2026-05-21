@@ -14,6 +14,7 @@ import ChapterAIGarden from './ChapterAIGarden';
 import ChapterVisualStudio from './ChapterVisualStudio';
 import ChapterHobbies from './ChapterHobbies';
 import ChapterFinalFrame from './ChapterFinalFrame';
+import { assetUrl } from '../../utils/assets';
 
 interface WalkThroughProps {
   onClose: () => void;
@@ -117,7 +118,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
   const toggleAudio = () => {
     if (!audioRef.current) {
-      const audio = new Audio('/ambient-bgm.mp3');
+      const audio = new Audio(assetUrl('/ambient-bgm.mp3'));
       audio.loop = true;
       audio.volume = 0.4;
       audioRef.current = audio;
@@ -154,12 +155,12 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
   const next = () => {
     // Gate → Welcome: play transition video
     if (chapterRef.current === -1) {
-      playTransitionThen('/background/01（1）.mp4', () => goToChapter(0));
+      playTransitionThen(assetUrl('/background/01（1）.mp4'), () => goToChapter(0));
       return;
     }
     // Welcome → AI Garden: play transition video
     if (chapterRef.current === 0) {
-      playTransitionThen('/background/01（1）.mp4', () => goToChapter(1));
+      playTransitionThen(assetUrl('/background/01（1）.mp4'), () => goToChapter(1));
       return;
     }
     goToChapter(chapter + 1);
@@ -202,7 +203,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
       // Gate → Welcome or Welcome → AI Garden: play transition video
       if ((currentChapter === -1 && target === 0) || (currentChapter === 0 && target === 1)) {
-        playTransitionThen('/background/01（1）.mp4', () => goToChapter(target));
+        playTransitionThen(assetUrl('/background/01（1）.mp4'), () => goToChapter(target));
         window.setTimeout(() => { wheelLockedRef.current = false; }, 3000);
       } else {
         goToChapter(target);
@@ -314,8 +315,8 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
             <ChapterGate
               onStart={next}
               onExploreWork={onExploreWork}
-              onLeftButton={() => playTransitionThen('/background/02 （2）.mp4', () => { onExploreWork?.(); })}
-              onRightButton={() => playTransitionThen('/background/02 （1）.mp4', () => goToChapter(0))}
+              onLeftButton={() => playTransitionThen(assetUrl('/background/02 （2）.mp4'), () => { onExploreWork?.(); })}
+              onRightButton={() => playTransitionThen(assetUrl('/background/02 （1）.mp4'), () => goToChapter(0))}
             />
           </motion.div>
         )}

@@ -25,6 +25,7 @@ import WorkflowArticleView from './WorkflowArticleView';
 import { EXPLORATION_ARTICLES } from './explorationArticles';
 import { VIBE_CODING_ARTICLES } from './vibeCodingArticles';
 import { WORKFLOW_ARTICLES } from './workflowArticles';
+import { assetUrl } from '../../utils/assets';
 
 interface ExplorationGalleryProps {
   project: Project;
@@ -947,7 +948,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                               >
                                 {aigcUploadPreview ? (
                                   <img
-                                    src={aigcUploadPreview}
+                                    src={assetUrl(aigcUploadPreview)}
                                     alt={isZh ? '上传预览' : 'Upload preview'}
                                     width={aigcUploadDimensions?.width}
                                     height={aigcUploadDimensions?.height}
@@ -1025,7 +1026,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                           }`}
                         >
                           <img
-                            src={src}
+                            src={assetUrl(src)}
                             alt={`${project.title} - ${label}`}
                             width={dimensions?.width}
                             height={dimensions?.height}
@@ -1114,7 +1115,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                         onDragEnd={handleDragEnd}
                       >
                         <img
-                          src={src}
+                          src={assetUrl(src)}
                           alt={`${project.title} - ${isZh ? '第' : 'Image '}${index + 1}${isZh ? '张' : ''}`}
                           className="h-[340px] w-full object-cover"
                           loading={index < 4 ? 'eager' : 'lazy'}
@@ -1189,7 +1190,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                         className="group relative mb-5 block w-full break-inside-avoid overflow-hidden rounded-[26px] border border-[#dfd0bf]/85 bg-white text-left shadow-[0_18px_40px_rgba(59,35,14,0.1)] transition duration-300 hover:-translate-y-1.5 hover:border-[#3B230E]/22 hover:shadow-[0_24px_60px_rgba(59,35,14,0.16)]"
                       >
                         <img
-                          src={src}
+                          src={assetUrl(src)}
                           alt={`${project.title} - ${isZh ? '第' : 'Image '}${index + 1}${isZh ? '张' : ''}`}
                           className="block h-auto w-full"
                           loading={index < 6 ? 'eager' : 'lazy'}
@@ -1311,7 +1312,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.22 }}
-                    src={previewImage}
+                    src={assetUrl(previewImage)}
                     alt={`${project.title} preview ${previewIndex !== null ? previewIndex + 1 : ''}`}
                     width={previewDimensions?.width}
                     height={previewDimensions?.height}
@@ -1376,7 +1377,7 @@ const ExplorationGallery: React.FC<ExplorationGalleryProps> = ({ project, onClos
                               }`}
                             >
                               <img
-                                src={src}
+                                src={assetUrl(src)}
                                 alt={`${project.title} thumbnail ${actualIndex + 1}`}
                                 className="h-full w-full object-cover"
                                 onError={(event) => handleImageError(event, actualIndex)}

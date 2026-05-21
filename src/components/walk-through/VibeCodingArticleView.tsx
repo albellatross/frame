@@ -322,7 +322,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               transition={sectionTransition(0.16)}
               className="absolute right-[6%] top-[8%] w-[68%] overflow-hidden rounded-[12px] shadow-[0_28px_80px_rgba(70,53,130,0.28)]"
             >
-              <img src={figmaAssets.elsewhereBrowser} alt="Elsewhere landing page" className="w-full object-cover" loading="eager" />
+              <img src={assetUrl(figmaAssets.elsewhereBrowser)} alt="Elsewhere landing page" className="w-full object-cover" loading="eager" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: -34, y: 38, rotate: -1.6 }}
@@ -330,7 +330,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               transition={sectionTransition(0.22)}
               className="absolute bottom-[8%] left-[7%] w-[56%] overflow-hidden rounded-[12px] shadow-[0_24px_70px_rgba(92,60,160,0.22)]"
             >
-              <img src={figmaAssets.idPhotoWorkspace} alt="Elsewhere ID photo workflow" className="w-full object-cover" loading="eager" />
+              <img src={assetUrl(figmaAssets.idPhotoWorkspace)} alt="Elsewhere ID photo workflow" className="w-full object-cover" loading="eager" />
             </motion.div>
             <div className="absolute bottom-5 left-6 right-6 flex flex-wrap gap-2">
               {content.stats.map((stat) => (
@@ -495,7 +495,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
             <h3 className={`mt-3 ${sectionTitleClass}`}>{content.buildTitle}</h3>
             <p className={`mt-4 ${bodyClass}`}>{content.buildIntro}</p>
             <figure className="mt-6 overflow-hidden rounded-[24px] bg-[#fffaf2] shadow-[0_16px_38px_rgba(42,26,10,0.08)]">
-              <img src={architectureImage} alt={isZh ? 'AI 辅助无代码前后端联动架构图' : 'AI assisted full-stack workflow'} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+              <img src={assetUrl(architectureImage)} alt={isZh ? 'AI 辅助无代码前后端联动架构图' : 'AI assisted full-stack workflow'} className="aspect-[16/9] w-full object-cover" loading="lazy" />
             </figure>
           </div>
 

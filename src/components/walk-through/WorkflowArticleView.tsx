@@ -269,7 +269,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             {isZh ? '提效不是口号，要能被结果证明' : 'Efficiency has to be proven by output'}
           </h3>
           <figure className="mt-5 overflow-hidden rounded-[24px] bg-white shadow-inner">
-            <img src={evidenceImages.board} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
+            <img src={assetUrl(evidenceImages.board)} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
           </figure>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[

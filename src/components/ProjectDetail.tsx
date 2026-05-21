@@ -701,7 +701,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                   {project.slides.map((src, i) => (
                     <div key={i} className="relative group">
                       <img
-                        src={src}
+                        src={assetUrl(src)}
                         alt={`${project.title} — ${isZh ? '第' : 'Page '}${i + 1}${isZh ? '页' : ''}`}
                         className="w-full h-auto block"
                         loading={i < 2 ? 'eager' : 'lazy'}
