@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 983 51.3507" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 52">
+<mask id="path-1-inside-1_484_59473" fill="white">
+<path d="M0 0H983V51.3507H0V0Z"/>
+</mask>
+<path d="M983 51.3507V46.4602H0V51.3507V56.2413H983V51.3507Z" fill="var(--stroke-0, #898989)" mask="url(#path-1-inside-1_484_59473)"/>
+<circle id="Ellipse 1" cx="46.4606" cy="25.6754" r="11.0037" fill="var(--fill-0, #C7C7CC)"/>
+<circle id="Ellipse 2" cx="86.8067" cy="25.6754" r="11.0037" fill="var(--fill-0, #C7C7CC)"/>
+<circle id="Ellipse 3" cx="127.154" cy="25.6754" r="11.0037" fill="var(--fill-0, #C7C7CC)"/>
+</g>
+</svg>

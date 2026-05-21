@@ -20,7 +20,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Led 10+ AI product designs from AIGC tools to research platforms.',
     skills: ['AIGC Design', 'B2B Tools', 'Visual Systems', 'Graphic Design'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p3', 'p4', 'p5', 'p6', 'p9', 'p10', 'p11']
+    relatedProjectIds: ['p3', 'p4', 'p5', 'p6']
   },
   {
     id: 'c3',
@@ -54,7 +54,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '主导 10+ AI 产品设计，从 AIGC 工具到研究平台。',
     skills: ['AIGC 设计', 'B2B 工具', '视觉系统', '平面设计'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p3', 'p4', 'p5', 'p6', 'p9', 'p10', 'p11']
+    relatedProjectIds: ['p3', 'p4', 'p5', 'p6']
   },
   {
     id: 'c3',
@@ -1229,13 +1229,19 @@ export const EXPLORATIONS_EN: Project[] = [
     platform: 'Web',
     year: '2024',
     role: 'Prompt Designer',
-    shortDescription: 'Good prompts shape great results. I design systems that make prompting easier.',
+    shortDescription: 'Writing image prompts as visual design briefs, from vague intent to executable decisions.',
     coverImage: '/projects/walk-through/aigc-02.png',
-    tags: ['Prompt Design', 'Template Systems', 'AI UX', 'Copilot'],
+    slides: [
+      '/projects/walk-through/aigc-02.png',
+      '/projects/walk-through/aigc-01.png',
+      '/projects/walk-through/aigc-03.png',
+      '/projects/walk-through/aigc-04.png',
+    ],
+    tags: ['Visual Prompting', 'Prompt Framework', 'Image Models', 'Design Brief'],
     acts: {
-      act1: { title: 'The Problem', content: 'Most users struggle with prompting — they don\'t know what to ask or how to structure their intent.' },
-      act2: { title: 'Template Systems', content: 'Designing reusable prompt templates that guide users toward better AI interactions.', decisionPoints: ['Context framing', 'Intent scaffolding', 'Output shaping'] },
-      act3: { title: 'Impact', content: 'Systems that make AI more accessible through thoughtful prompt design.', impact: 'Shipped in Copilot' }
+      act1: { title: 'The Problem', content: 'Keyword piles make the model guess composition, camera, light, and mood.' },
+      act2: { title: 'Prompt Framework', content: 'I turn visual judgment into reusable slots: emotion, subject, camera, lighting, and detail.', decisionPoints: ['Style anchor', 'Composition', 'Pseudo perspective', 'Lighting'] },
+      act3: { title: 'Impact', content: 'Prompt writing becomes a design brief that can be repeated, refined, and compared across models.', impact: 'More controllable image generation' }
     }
   },
   {
@@ -1244,14 +1250,14 @@ export const EXPLORATIONS_EN: Project[] = [
     category: 'B-Side',
     platform: 'Web',
     year: '2024',
-    role: 'UX Designer',
-    shortDescription: 'Designing human-centered AI workflows that inspire clarity and productivity.',
+    role: 'AI Workflow Designer',
+    shortDescription: 'Building AI-powered helper tools for complex image-generation production.',
     coverImage: '/projects/walk-through/aigc-03.png',
-    tags: ['AI Workflow', 'UX Design', 'Productivity', 'Human-AI Interaction'],
+    tags: ['Batch Generation', '3:4 Review Board', 'AIGC Production', 'Design Automation'],
     acts: {
-      act1: { title: 'Complexity', content: 'AI workflows often feel opaque — users lose trust when they can\'t understand what\'s happening.' },
-      act2: { title: 'Clarity', content: 'Designing transparent, step-by-step AI flows that keep humans in the loop.', decisionPoints: ['Progressive disclosure', 'Trust indicators', 'Undo patterns'] },
-      act3: { title: 'Result', content: 'Workflows that feel natural and empower users rather than replacing them.', impact: 'Enhanced productivity' }
+      act1: { title: 'Production Complexity', content: 'Complex image-generation work created repeated generating, filtering, resizing, and review preparation.' },
+      act2: { title: 'AI Helper Tools', content: 'I built two small tools: batch image generation and a 3:4 review board for team selection.', decisionPoints: ['Batch generation', '3:4 normalization', 'Team screening', 'Final selection'] },
+      act3: { title: 'Result', content: 'My time moved from manual operation to image judgment, review, and communication.', impact: 'Faster review-ready production' }
     }
   },
   {
@@ -1261,13 +1267,13 @@ export const EXPLORATIONS_EN: Project[] = [
     platform: 'Web',
     year: '2025',
     role: 'Designer & Developer',
-    shortDescription: 'Where code meets vibe. Building with AI to turn ideas into life.',
+    shortDescription: 'Elsewhere: an independent AI template website, from product idea to working demo.',
     coverImage: '/projects/walk-through/aigc-04.png',
-    tags: ['Vibe Coding', 'AI Development', 'Creative Coding', 'Copilot', 'Claude'],
+    tags: ['Vibe Coding', 'Template Website', 'React', 'Live Demo', 'Interaction'],
     acts: {
-      act1: { title: 'The Spark', content: 'What if coding felt less like engineering and more like creating? AI makes this possible.' },
-      act2: { title: 'The Process', content: 'Using AI as a creative partner to rapidly prototype, iterate, and ship ideas.', decisionPoints: ['AI pair programming', 'Rapid prototyping', 'Creative expression'] },
-      act3: { title: 'The Output', content: 'This very portfolio — built with AI assistance, shipped in record time.', impact: 'This portfolio' }
+      act1: { title: 'The Spark', content: 'Elsewhere started from the problem that blank prompt boxes are hard for normal users.' },
+      act2: { title: 'The Process', content: 'I designed template-first flows, visual interaction states, and then used AI-assisted coding to implement the site.', decisionPoints: ['Template UX', 'Guided generation', 'Preview states', 'Deployable app'] },
+      act3: { title: 'The Output', content: 'A working React + Vite website with a live ID photo interaction model.', impact: 'Live GitHub Pages demo' }
     }
   },
 ];
@@ -1302,13 +1308,19 @@ export const EXPLORATIONS_ZH: Project[] = [
     platform: 'Web',
     year: '2024',
     role: 'Prompt 设计师',
-    shortDescription: '好的提示词会带来好的结果，我也在设计让 prompting 更轻松的系统。',
+    shortDescription: '把图像 prompt 写成视觉设计 brief，从模糊想法变成可执行决策。',
     coverImage: '/projects/walk-through/aigc-02.png',
-    tags: ['Prompt 设计', '模板系统', 'AI UX', 'Copilot'],
+    slides: [
+      '/projects/walk-through/aigc-02.png',
+      '/projects/walk-through/aigc-01.png',
+      '/projects/walk-through/aigc-03.png',
+      '/projects/walk-through/aigc-04.png',
+    ],
+    tags: ['视觉 Prompt', 'Prompt 框架', '生图模型', '设计 Brief'],
     acts: {
-      act1: { title: '痛点', content: '大多数用户在提示词上遇到困难——不知道该问什么，也不知道如何组织意图。' },
-      act2: { title: '模板系统', content: '设计可复用的提示词模板，引导用户实现更好的 AI 交互。', decisionPoints: ['上下文框架', '意图脚手架', '输出塑形'] },
-      act3: { title: '影响', content: '通过深思熟虑的提示词设计让 AI 更易用的系统。', impact: '已在 Copilot 中上线' }
+      act1: { title: '痛点', content: '关键词堆叠会让模型自己猜构图、镜头、光线和情绪。' },
+      act2: { title: 'Prompt 框架', content: '我把视觉判断拆成可复用槽位：情绪、主体、镜头、光线和细节。', decisionPoints: ['风格锚点', '构图', '伪透视', '光线'] },
+      act3: { title: '影响', content: 'Prompt 变成可以复用、微调和跨模型比较的视觉 brief。', impact: '更可控的图像生成' }
     }
   },
   {
@@ -1317,14 +1329,14 @@ export const EXPLORATIONS_ZH: Project[] = [
     category: 'B-Side',
     platform: 'Web',
     year: '2024',
-    role: 'UX 设计师',
-    shortDescription: '设计以人为中心的 AI 工作流，让清晰度与效率一起提升。',
+    role: 'AI Workflow 设计师',
+    shortDescription: '为复杂生图生产制作 AI 提效小工具。',
     coverImage: '/projects/walk-through/aigc-03.png',
-    tags: ['AI 工作流', 'UX 设计', '生产力', '人机交互'],
+    tags: ['批量生图', '3:4 展示板', 'AIGC 生产', '设计自动化'],
     acts: {
-      act1: { title: '复杂性', content: 'AI 工作流往往让人觉得不透明——当用户无法理解发生了什么时就会失去信任。' },
-      act2: { title: '清晰化', content: '设计透明、分步的 AI 流程，让人始终保持在循环中。', decisionPoints: ['渐进式披露', '信任指标', '撤销模式'] },
-      act3: { title: '结果', content: '感觉自然且赋能用户而非替代用户的工作流。', impact: '提升生产力' }
+      act1: { title: '生产复杂度', content: '复杂生图工作会产生大量重复生成、筛选、改比例和整理 review 的工作。' },
+      act2: { title: 'AI 提效工具', content: '我做了两个小工具：批量生图，以及给团队筛选用的 3:4 图片展示板。', decisionPoints: ['批量生成', '统一 3:4', '团队筛选', '最终选择'] },
+      act3: { title: '结果', content: '我的时间从重复操作转向审美判断、review 和沟通。', impact: '更快进入可筛选状态' }
     }
   },
   {
@@ -1334,13 +1346,13 @@ export const EXPLORATIONS_ZH: Project[] = [
     platform: 'Web',
     year: '2025',
     role: '设计师 & 开发者',
-    shortDescription: '当代码遇见 vibe，用 AI 把想法更快地带到现实里。',
+    shortDescription: 'Elsewhere：独立完成的 AI 模板网站，从产品想法到可运行 demo。',
     coverImage: '/projects/walk-through/aigc-04.png',
-    tags: ['Vibe Coding', 'AI 开发', '创意编程', 'Copilot', 'Claude'],
+    tags: ['Vibe Coding', '模板网站', 'React', 'Live Demo', '交互设计'],
     acts: {
-      act1: { title: '灵感', content: '如果写代码不像工程而更像创作呢？AI 让这成为可能。' },
-      act2: { title: '过程', content: '用 AI 作为创意伙伴来快速原型、迭代和交付想法。', decisionPoints: ['AI 结对编程', '快速原型', '创意表达'] },
-      act3: { title: '成果', content: '这个作品集本身——在 AI 辅助下构建，在创纪录的时间内上线。', impact: '这个作品集' }
+      act1: { title: '灵感', content: 'Elsewhere 从一个问题开始：普通用户很难从空白 prompt 框开始。' },
+      act2: { title: '过程', content: '我设计模板优先的流程、视觉交互状态，再用 AI 辅助编码完成网站实现。', decisionPoints: ['模板 UX', '引导式生成', '预览状态', '可部署 App'] },
+      act3: { title: '成果', content: '一个包含 ID photo 交互模型的 React + Vite 可运行网站。', impact: '已部署 GitHub Pages demo' }
     }
   },
 ];

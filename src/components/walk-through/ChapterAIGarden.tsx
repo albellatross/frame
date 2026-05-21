@@ -49,7 +49,7 @@ const ChapterAIGarden: React.FC<Props> = ({ data, onExplorationClick }) => {
     : 'font-mono text-[11px] uppercase tracking-[0.18em] text-[#6c5740]';
   const desktopTextClass = 'absolute left-[64px] top-[192px] z-10 w-[392px]';
   const desktopCardsCanvasClass = 'absolute right-[130px] top-[130px] h-[min(74vh,780px)] w-[min(58vw,900px)] 2xl:right-[170px]';
-  const desktopGlowClass = 'absolute -left-18 -top-18 -z-10 h-[430px] w-[560px] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,244,236,0.88),rgba(248,244,236,0.62)_34%,rgba(248,244,236,0.24)_54%,transparent_78%)] blur-[24px]';
+  const desktopGlowClass = 'pointer-events-none absolute -left-18 -top-18 -z-10 h-[430px] w-[560px] rounded-full bg-[radial-gradient(circle_at_center,rgba(248,244,236,0.88),rgba(248,244,236,0.62)_34%,rgba(248,244,236,0.24)_54%,transparent_78%)] blur-[24px]';
   const desktopTitleClass = language === 'zh'
     ? 'font-zh-display font-medium tracking-[-0.02em] leading-[0.98] text-[64px] text-[#402313]'
     : 'font-serif text-[72px] italic tracking-[-0.02em] leading-[0.98] text-[#402313]';

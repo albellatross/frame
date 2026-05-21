@@ -15,9 +15,9 @@ export const WALK_DATA = {
       whyAI: "I love AI. I explore how it helps us create,\nunderstand, and connect — in more human ways.",
       explorations: [
         { label: 'AIGC Image Creation', desc: 'From ideas to visuals — exploring AI-generated art and creative expression.' },
-        { label: 'Prompt & Template Thinking', desc: 'Good prompts shape great results. I design systems that make prompting easier.' },
-        { label: 'AI Workflow Design', desc: 'Designing human-centered AI workflows that inspire clarity and productivity.' },
-        { label: 'Vibe Coding', desc: 'Where code meets vibe. Building with AI to turn ideas into life.' },
+        { label: 'Prompt & Template Thinking', desc: 'Writing image prompts as visual design briefs, from vague intent to executable decisions.' },
+        { label: 'AI Workflow Design', desc: 'Two AI-made helper tools for batch image generation and 3:4 team review.' },
+        { label: 'Vibe Coding', desc: 'Elsewhere: an independent AI template website from product idea to working demo.' },
       ],
       // Replace with real AIGC artwork paths
       artworks: [
@@ -91,9 +91,9 @@ export const WALK_DATA = {
       whyAI: "我喜欢 AI。\n我也在探索它如何帮助我们以更人的方式去创造、理解与连接。",
       explorations: [
         { label: 'AIGC 图像创作', desc: '从想法到视觉，探索 AI 生成艺术与创作表达。' },
-        { label: 'Prompt 与模板思维', desc: '好的提示词会带来好的结果，我也在设计让 prompting 更轻松的系统。' },
-        { label: 'AI Workflow 设计', desc: '设计以人为中心的 AI 工作流，让清晰度与效率一起提升。' },
-        { label: 'Vibe Coding', desc: '当代码遇见 vibe，用 AI 把想法更快地带到现实里。' },
+        { label: 'Prompt 与模板思维', desc: '把图像 prompt 写成视觉设计 brief，从模糊想法变成可执行决策。' },
+        { label: 'AI Workflow 设计', desc: '为批量生图和 3:4 团队筛选制作两个 AI 提效小工具。' },
+        { label: 'Vibe Coding', desc: 'Elsewhere：独立完成的 AI 模板网站，从产品想法到可运行 demo。' },
       ],
       artworks: [
         '/projects/walk-through/aigc-01.png',

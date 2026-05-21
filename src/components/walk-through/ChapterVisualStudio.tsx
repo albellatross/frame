@@ -1,6 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { IpUniverseModal } from './CreativeArchiveModal';
+import { IP_UNIVERSE_ASSETS } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 
 const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
   const { language } = useLanguage();
+  const [isIpOpen, setIsIpOpen] = useState(false);
   const swatches = ['#f4eee3', '#c6c6a0', '#b8b18b', '#e4d6bd', '#f1d2b2', '#daa875', '#a6bfd6'];
   const usageCards = language === 'zh'
     ? ['头像', '横幅', '贴纸']
@@ -111,7 +114,7 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
             {data.intro}
           </p>
           <button
-            onClick={onNext}
+            onClick={() => setIsIpOpen(true)}
             className={ctaClass}
           >
             {sectionLabels.cta}
@@ -124,6 +127,12 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
             : 'A story-driven world, built with warmth and imagination.'}
         </div>
       </div>
+
+      <AnimatePresence>
+        {isIpOpen ? (
+          <IpUniverseModal isZh={language === 'zh'} onClose={() => setIsIpOpen(false)} />
+        ) : null}
+      </AnimatePresence>
     </motion.div>
   );
 };

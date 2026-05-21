@@ -58,6 +58,12 @@ body {
   .glass-effect-dark {
     @apply backdrop-blur-xl bg-neutral-900/70 border border-white/10;
   }
+
+  .aigc-prompt-overlay,
+  .aigc-prompt-overlay * {
+    color: white !important;
+  }
+
 }
 
 /* Smooth scroll behavior */
@@ -75,4 +81,3 @@ html {
   background-color: #EC4899;
   color: white;
 }
-

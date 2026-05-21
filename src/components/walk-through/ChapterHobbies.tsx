@@ -1,7 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Pencil, BookOpen, Music, Camera } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { DailySparkModal } from './CreativeArchiveModal';
+import { DailySparkKind } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
 
 interface HobbySection {
@@ -25,10 +27,14 @@ interface Props {
 }
 
 const hobbyIcons = [Pencil, BookOpen, Music, Camera];
+const hobbyKinds: DailySparkKind[] = ['painting', 'reading', 'dance', 'travel'];
 
 const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
   const { language } = useLanguage();
+  const [activeKind, setActiveKind] = useState<DailySparkKind | null>(null);
   const hobbies = [data.drawing, data.reading, data.dance, data.travel];
+  const activeIndex = activeKind ? hobbyKinds.indexOf(activeKind) : -1;
+  const activeHobby = activeIndex >= 0 ? hobbies[activeIndex] : null;
   const titleClass = language === 'zh'
     ? `${zhWalkthroughType.displayL} text-[36px] text-dark-brown sm:text-[42px] lg:text-[50px] whitespace-nowrap`
     : 'font-serif text-5xl italic tracking-tight leading-[0.98] text-dark-brown sm:text-6xl lg:text-[68px]';
@@ -96,32 +102,28 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
             const Icon = hobbyIcons[index];
 
             return (
-              <motion.div
+              <motion.button
                 key={hobby.title}
+                type="button"
+                onClick={() => setActiveKind(hobbyKinds[index])}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.04, y: -4 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ delay: 0.4 + index * 0.08 }}
-                className={`absolute ${desktopPositions[index]} flex items-start gap-3 text-left`}
+                className={`absolute ${desktopPositions[index]} flex items-start gap-3 rounded-[28px] p-3 text-left transition hover:bg-white/10`}
               >
                 <div>
-                  <div className="relative mt-1 h-4 w-4">
+                  <div className="relative isolate mt-1 h-4 w-4 transform-gpu">
                     <motion.div
                       animate={{
-                        scale: [1, 2.8, 3.2],
-                        opacity: [0.5, 0.15, 0],
+                        scale: [1, 1.8, 1],
+                        opacity: [0.32, 0.16, 0.32],
                       }}
-                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: index * 0.4 }}
-                      className="absolute inset-0 rounded-full bg-white"
+                      transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut', delay: index * 0.28 }}
+                      className="absolute inset-[-6px] rounded-full bg-white/70 blur-[3px] will-change-transform"
                     />
-                    <motion.div
-                      animate={{
-                        scale: [1, 2, 2.4],
-                        opacity: [0.4, 0.1, 0],
-                      }}
-                      transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: index * 0.4 + 0.3 }}
-                      className="absolute inset-0 rounded-full bg-white"
-                    />
-                    <div className="absolute inset-0 rounded-full border border-white bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)]" />
+                    <div className="absolute inset-0 rounded-full border border-white bg-white shadow-[0_0_10px_rgba(255,255,255,0.82)]" />
                   </div>
                   <div className="ml-[7px] mt-2 h-16 w-px border-l border-dashed border-white/70" />
                 </div>
@@ -131,8 +133,11 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
                     <span>{hobby.title}</span>
                   </div>
                   <p className={captionClass}>{hobbyCaptions[index]}</p>
+                  <p className="mt-3 inline-flex rounded-full bg-white/20 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+                    {language === 'zh' ? '打开子页面' : 'Open page'}
+                  </p>
                 </div>
-              </motion.div>
+              </motion.button>
             );
           })}
         </div>
@@ -142,7 +147,12 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
             const Icon = hobbyIcons[index];
 
             return (
-              <div key={hobby.title} className="rounded-3xl border border-white/70 bg-white/78 p-4 shadow-card backdrop-blur-md">
+              <button
+                key={hobby.title}
+                type="button"
+                onClick={() => setActiveKind(hobbyKinds[index])}
+                className="rounded-3xl border border-white/70 bg-white/78 p-4 text-left shadow-card backdrop-blur-md transition hover:-translate-y-1 hover:bg-white"
+              >
                 <div className="flex items-start gap-3">
                   <Icon size={18} className="mt-1 text-[#72542e]" />
                   <div>
@@ -150,11 +160,23 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
                     <p className={mobileDescClass}>{hobby.message}</p>
                   </div>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
       </div>
+
+      <AnimatePresence>
+        {activeKind && activeHobby ? (
+          <DailySparkModal
+            kind={activeKind}
+            title={activeHobby.title}
+            message={activeHobby.message}
+            isZh={language === 'zh'}
+            onClose={() => setActiveKind(null)}
+          />
+        ) : null}
+      </AnimatePresence>
     </motion.div>
   );
 };

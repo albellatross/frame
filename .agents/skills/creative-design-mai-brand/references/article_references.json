@@ -1,0 +1,292 @@
+{
+  "metadata": {
+    "title": "Microsoft AI Brand Article Reference Library",
+    "description": "Curated articles from microsoft.ai providing insight into MAI mission, values, and voice",
+    "version": "1.0",
+    "lastUpdated": "2025-01"
+  },
+  "usageInstructions": {
+    "purpose": "Reference these articles when creating artifacts to ensure messaging and tone alignment with the Microsoft AI brand",
+    "howToUse": [
+      "1. Identify the type of content you are creating",
+      "2. Select relevant articles based on the 'bestFor' field",
+      "3. Use WebFetch to retrieve full article content if needed",
+      "4. Extract key themes, messaging, and voice characteristics",
+      "5. Apply insights to artifact text, headlines, and conceptual direction"
+    ]
+  },
+  "articles": [
+    {
+      "id": "home",
+      "title": "Microsoft AI Homepage",
+      "url": "https://microsoft.ai/",
+      "type": "homepage",
+      "author": null,
+      "publishDate": null,
+      "summary": "The Microsoft AI homepage positions the brand around 'Approachable Intelligence' - responsible AI that is accessible and human-centered. It emphasizes creating technology that earns trust, amplifies human potential, and makes life meaningfully better. CEO Mustafa Suleyman's vision focuses on intelligent systems that strengthen authentic human connections.",
+      "keyThemes": [
+        "Approachable Intelligence",
+        "Responsible AI development",
+        "Human-centered design",
+        "Collective innovation",
+        "Trust and authenticity"
+      ],
+      "keyMessages": [
+        "We make responsible AI to empower people's lives",
+        "Technology that earns trust, amplifies human potential",
+        "AI that is more human and deepens our trust and understanding",
+        "Builders, thinkers, and creators working together"
+      ],
+      "keywords": ["responsible AI", "approachable", "human potential", "trust", "empowerment", "collective innovation"],
+      "tone": "Warm, confident, forward-looking, grounded",
+      "bestFor": ["Overall brand voice", "Current messaging", "Homepage designs", "Brand introductions"]
+    },
+    {
+      "id": "about",
+      "title": "About Microsoft AI",
+      "url": "https://microsoft.ai/about/",
+      "type": "about",
+      "author": null,
+      "publishDate": null,
+      "summary": "The About page outlines Microsoft AI's core identity structured around three pillars: Technology (pioneering AI capabilities), Experiences (AI-centered solutions for people), and Connection (interconnected experiences with warmth). The organization operates by six guiding principles: Kindness, Trust, Quality, Simplicity, Safety & Security, and Evaluation.",
+      "keyThemes": [
+        "Technology, Experiences, Connection",
+        "Six guiding principles",
+        "Ambition balanced with responsibility",
+        "Global presence and innovation",
+        "Psychological safety for teams"
+      ],
+      "keyMessages": [
+        "We make responsible AI to empower people's lives",
+        "Building interconnected experiences with warmth",
+        "Balancing ambition with responsibility",
+        "Continuous improvement and radical innovation"
+      ],
+      "values": {
+        "kindness": "Central to organizational conduct",
+        "trust": "Prioritizing users and earning confidence",
+        "quality": "Delivering reliable, elegant products",
+        "simplicity": "Avoiding overcomplexity; favoring minimalism",
+        "safetySecurity": "Advancing AI through ethical principles while preserving digital safety",
+        "evaluation": "Using feedback for continuous improvement"
+      },
+      "globalOffices": ["Redmond", "New York", "Mountain View", "Beijing", "London", "Suzhou", "Hyderabad", "Zurich"],
+      "keywords": ["mission", "identity", "values", "principles", "kindness", "trust", "simplicity", "global"],
+      "tone": "Professional, values-driven, warm, principled",
+      "bestFor": ["Mission statements", "Values content", "About sections", "Culture materials"]
+    },
+    {
+      "id": "team",
+      "title": "Microsoft AI Team",
+      "url": "https://microsoft.ai/team/",
+      "type": "team",
+      "author": null,
+      "publishDate": null,
+      "summary": "The Team page showcases Microsoft AI as a global network of 10,000+ creative professionals including developers, scientists, designers, and storytellers. It emphasizes that 'MAI begins with people' - both those served and those doing the work. Team members are described as 'interconnected by curiosity and driven by possibility.'",
+      "keyThemes": [
+        "Collaborative diversity",
+        "Human-centered approach",
+        "Interdisciplinary connection",
+        "Individual stories matter",
+        "Career development and growth"
+      ],
+      "keyMessages": [
+        "MAI begins with people, not just those we aim to serve, but those doing the work from within",
+        "When we help others flourish, we flourish as well",
+        "Interconnected by curiosity and driven by possibility",
+        "10,000+ creative professionals across disciplines"
+      ],
+      "keywords": ["team", "people", "culture", "diversity", "collaboration", "curiosity", "possibility", "careers"],
+      "tone": "Inclusive, celebratory, human, collaborative",
+      "bestFor": ["Team content", "Careers materials", "Culture pieces", "People-focused content"]
+    },
+    {
+      "id": "humanist-superintelligence",
+      "title": "Towards Humanist Superintelligence",
+      "url": "https://microsoft.ai/news/towards-humanist-superintelligence/",
+      "type": "thought-leadership",
+      "author": "Mustafa Suleyman",
+      "publishDate": "2025-11-06",
+      "summary": "Suleyman argues that as AI approaches superintelligence, society must prioritize building systems designed specifically to serve humanity rather than pursuing unbounded advancement. He proposes 'Humanist Superintelligence' (HSI) - carefully controlled, domain-specific AI that tackles concrete problems while maintaining human oversight and control.",
+      "keyThemes": [
+        "Purpose over progress",
+        "Containment challenge",
+        "Domain-specific design",
+        "Human primacy",
+        "Competitive coordination problem"
+      ],
+      "keyMessages": [
+        "Humans matter more than AI",
+        "Technology should advance human civilization and well-being",
+        "HSI should be narrowly focused rather than general-purpose and autonomous",
+        "Keeping humanity in control and at the center of decision-making"
+      ],
+      "applicationDomains": [
+        "AI companions for learning and productivity",
+        "Medical superintelligence for diagnostics",
+        "Clean energy innovation"
+      ],
+      "keywords": ["superintelligence", "humanist", "control", "safety", "purpose", "domain-specific", "oversight", "philosophy"],
+      "tone": "Philosophical, thoughtful, visionary, cautious optimism",
+      "bestFor": ["Vision pieces", "Thought leadership", "Philosophy content", "Long-form editorial"]
+    },
+    {
+      "id": "human-centered-ai",
+      "title": "Human-centered AI",
+      "url": "https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/10/23/human-centered-ai/",
+      "type": "product-announcement",
+      "author": "Mustafa Suleyman",
+      "publishDate": "2025-10-23",
+      "summary": "Microsoft announced its Copilot Fall Release with 12 new features designed to make AI more personal, useful, and interconnected. The update emphasizes building technology that serves human needs rather than demanding attention, with capabilities ranging from collaborative group chats to health-related assistance.",
+      "keyThemes": [
+        "Service to people",
+        "Connection over isolation",
+        "Personalization with integrity",
+        "Privacy and control",
+        "Practical utility"
+      ],
+      "keyMessages": [
+        "Technology should work in service of people. Not the other way around.",
+        "AI should be social, not isolating",
+        "Empathetic and supportive, not sycophantic",
+        "Users maintain explicit consent over data access"
+      ],
+      "designPrinciples": [
+        "Service over attention-seeking",
+        "Connection over isolation",
+        "Integrity in personalization",
+        "User control over data",
+        "Practical friction reduction"
+      ],
+      "keywords": ["human-centered", "Copilot", "personalization", "privacy", "connection", "service", "practical", "empathetic"],
+      "tone": "Warm, user-focused, practical, empowering",
+      "bestFor": ["Design principles", "Product announcements", "User-focused content", "Feature explanations"]
+    },
+    {
+      "id": "mai-image-1",
+      "title": "Introducing MAI-Image-1",
+      "url": "https://microsoft.ai/news/introducing-mai-image-1-debuting-in-the-top-10-on-lmarena/",
+      "type": "product-launch",
+      "author": null,
+      "publishDate": "2025-11",
+      "summary": "Microsoft AI announced MAI-Image-1, their first in-house image generation model, which entered the top 10 text-to-image models on LMArena. The model generates photorealistic imagery with strong performance in lighting, landscapes, and creative flexibility, now available in Bing Image Creator and Copilot Audio Expressions.",
+      "keyThemes": [
+        "In-house development",
+        "Speed and quality balance",
+        "Creator-focused design",
+        "Product integration",
+        "AI for everyone"
+      ],
+      "keyMessages": [
+        "Part of Microsoft's strategy to build proprietary AI models",
+        "Real flexibility, visual diversity and practical value",
+        "Developed with input from creative professionals",
+        "Reaching billions of users with practical creative tools"
+      ],
+      "technicalHighlights": [
+        "Top 10 on LMArena",
+        "Photorealistic imagery",
+        "Strong lighting performance",
+        "Faster than larger competitors"
+      ],
+      "keywords": ["image generation", "MAI-Image-1", "creative tools", "photorealistic", "Bing", "Copilot", "in-house", "LMArena"],
+      "tone": "Confident, technical, accessible, achievement-oriented",
+      "bestFor": ["Product launches", "Technical announcements", "Creative tool content", "Achievement highlights"]
+    },
+    {
+      "id": "two-new-models",
+      "title": "Two in-house models in support of our mission",
+      "url": "https://microsoft.ai/news/two-new-in-house-models/",
+      "type": "technical-announcement",
+      "author": null,
+      "publishDate": "2025-08-28",
+      "summary": "Microsoft AI unveiled two proprietary models: MAI-Voice-1, a speech generation system enabling natural, expressive audio creation (generating a minute of audio in under one second), and MAI-1-preview, a mixture-of-experts foundation model trained on approximately 15,000 NVIDIA H100 GPUs, now undergoing public testing on LMArena.",
+      "keyThemes": [
+        "Speech synthesis efficiency",
+        "Foundation model scale",
+        "Multi-speaker capability",
+        "Mixture-of-experts architecture",
+        "Community evaluation"
+      ],
+      "keyMessages": [
+        "Proprietary models designed to advance our mission",
+        "MAI-Voice-1 among the fastest speech systems available",
+        "Public testing to gather user feedback for iterative improvements"
+      ],
+      "technicalHighlights": [
+        "MAI-Voice-1: Full minute of audio in under one second on single GPU",
+        "MAI-1-preview: Pre-trained on ~15,000 H100 GPUs",
+        "Multi-speaker high-fidelity output",
+        "Mixture-of-experts for specialized orchestration"
+      ],
+      "keywords": ["voice synthesis", "MAI-Voice-1", "MAI-1", "foundation model", "mixture-of-experts", "speech generation", "technical"],
+      "tone": "Technical, achievement-focused, transparent, iterative",
+      "bestFor": ["Technical announcements", "Model capabilities", "Research content", "Infrastructure stories"]
+    },
+    {
+      "id": "medical-superintelligence",
+      "title": "The Path to Medical Superintelligence",
+      "url": "https://microsoft.ai/news/the-path-to-medical-superintelligence/",
+      "type": "research",
+      "author": "Dominic King & Harsha Nori",
+      "publishDate": null,
+      "summary": "Microsoft researchers present evidence that AI diagnostic systems can outperform experienced physicians in complex medical reasoning. The Microsoft AI Diagnostic Orchestrator (MAI-DxO) achieved 85.5% accuracy on challenging NEJM case studies, compared to 20% for practicing clinicians, while reducing unnecessary testing costs.",
+      "keyThemes": [
+        "Clinical reasoning evolution",
+        "AI as complement to physicians",
+        "Cost efficiency",
+        "Benchmarking innovation",
+        "Safety and validation",
+        "Orchestration architecture"
+      ],
+      "keyMessages": [
+        "AI augmenting rather than replacing physician expertise",
+        "Superior diagnostic accuracy while reducing healthcare expenditures",
+        "Necessity for clinical validation and regulatory approval before deployment",
+        "Coordinated language models enhance transparency and trustworthiness"
+      ],
+      "researchHighlights": [
+        "MAI-DxO: 85.5% accuracy on NEJM cases",
+        "Practicing clinicians: 20% accuracy on same cases",
+        "Sequential Diagnosis Benchmark introduction",
+        "Orchestration architecture for high-stakes workflows"
+      ],
+      "keywords": ["medical AI", "diagnostics", "healthcare", "MAI-DxO", "clinical reasoning", "research", "safety", "validation"],
+      "tone": "Academic, evidence-based, cautiously optimistic, rigorous",
+      "bestFor": ["Research content", "Healthcare themes", "Domain-specific AI", "Evidence-based claims"]
+    },
+    {
+      "id": "ai-companion",
+      "title": "An AI companion for everyone",
+      "url": "https://microsoft.ai/news/an-ai-companion-for-everyone/",
+      "type": "vision",
+      "author": "Mustafa Suleyman",
+      "publishDate": null,
+      "summary": "Microsoft AI is developing Copilot as a personal AI companion designed to understand context, safeguard privacy, and adapt to individual needs over time. The vision emphasizes creating supportive technology that enriches human uniqueness rather than diminishing it, with capabilities ranging from note-taking at appointments to helping with life decisions.",
+      "keyThemes": [
+        "Accessibility and inclusivity",
+        "Warmth and human connection",
+        "Responsible development",
+        "Personal adaptation",
+        "Supportive presence"
+      ],
+      "keyMessages": [
+        "Perhaps the greatest amplifier of human well-being in history",
+        "Tangible and lasting benefits for billions of people",
+        "There for you, in your corner, by your side",
+        "Share the load of life's complexities",
+        "Patience and care with our deployments"
+      ],
+      "companionQualities": [
+        "Understands context",
+        "Safeguards privacy",
+        "Adapts to individual needs",
+        "Enriches human uniqueness",
+        "Accompanies through important moments"
+      ],
+      "keywords": ["companion", "accessibility", "warmth", "inclusive", "supportive", "personal", "well-being", "everyone"],
+      "tone": "Warm, inclusive, hopeful, personal, caring",
+      "bestFor": ["Accessibility content", "Warmth themes", "Inclusive messaging", "Personal AI stories", "Vision pieces"]
+    }
+  ]
+}
