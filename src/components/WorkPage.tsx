@@ -3,6 +3,7 @@ import { Project } from '../types';
 import { Plus, Check, ArrowRight } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 interface WorkPageProps {
   projects: Project[];
@@ -82,7 +83,7 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
           {/* Image Container */}
           <div className={`relative overflow-hidden bg-cream mb-6 rounded-2xl shadow-card group-hover:shadow-card-hover transition-shadow duration-500 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
             <img
-              src={project.coverImage}
+              src={assetUrl(project.coverImage)}
               alt={project.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />

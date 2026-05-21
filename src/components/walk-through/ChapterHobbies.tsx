@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Pencil, BookOpen, Music, Camera } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { DailySparkModal } from './CreativeArchiveModal';
+import { assetUrl } from '../../utils/assets';
 import { DailySparkKind } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
 
@@ -77,7 +78,7 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
       transition={{ duration: 0.6 }}
       className="relative h-full w-full overflow-hidden"
     >
-      <video src="/background/06.mp4" autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
+      <video src={assetUrl('/background/06.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,250,242,0.74),rgba(255,250,242,0.2)_34%,rgba(59,35,14,0.14)_82%,rgba(59,35,14,0.22)_100%)]" />
 
       <div className="relative z-10 h-full w-full px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pt-32">

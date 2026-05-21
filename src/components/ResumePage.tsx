@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Mail, Linkedin, Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 const ResumePage: React.FC = () => {
   const { language } = useLanguage();
@@ -42,7 +43,7 @@ const ResumePage: React.FC = () => {
         <motion.div {...fadeIn(0.1)} className="bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-neutral-100">
           <div className="flex items-center gap-5 mb-6">
             <div className="w-20 h-20 rounded-full bg-neutral-200 overflow-hidden flex-shrink-0">
-              <img src="/profile.jpg" alt="Geli Guo" className="w-full h-full object-cover" />
+              <img src={assetUrl('/profile.jpg')} alt="Geli Guo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-neutral-900 font-['Instrument_Serif']">郭格里</h1>

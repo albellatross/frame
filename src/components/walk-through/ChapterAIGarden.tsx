@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Code2, MessageCircle, Palette, Workflow } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { zhWalkthroughType } from './typography';
+import { assetUrl } from '../../utils/assets';
 
 interface Props {
   data: {
@@ -110,7 +111,7 @@ const ChapterAIGarden: React.FC<Props> = ({ data, onExplorationClick }) => {
       transition={{ duration: 0.6 }}
       className="relative h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain xl:overflow-hidden"
     >
-      <video src="/background/04.mp4" autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover brightness-[0.94] saturate-[0.92]" />
+      <video src={assetUrl('/background/04.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover brightness-[0.94] saturate-[0.92]" />
       <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(248,244,236,0.76)_0%,rgba(248,244,236,0.62)_22%,rgba(248,244,236,0.28)_46%,rgba(248,244,236,0.06)_64%,rgba(59,35,14,0.1)_100%)]" />
       <div className="absolute inset-y-0 left-0 w-[62%] bg-[linear-gradient(90deg,rgba(248,244,236,0.88)_0%,rgba(248,244,236,0.72)_24%,rgba(248,244,236,0.42)_48%,rgba(248,244,236,0)_72%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_42%,rgba(249,245,238,0.9),rgba(249,245,238,0.56)_28%,rgba(249,245,238,0.1)_48%,transparent_66%),radial-gradient(circle_at_80%_22%,rgba(255,248,235,0.18),transparent_26%),radial-gradient(circle_at_center,rgba(255,250,241,0.14),rgba(255,250,241,0.04)_34%,rgba(41,31,16,0.14)_84%,rgba(41,31,16,0.22)_100%)]" />

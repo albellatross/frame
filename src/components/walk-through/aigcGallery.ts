@@ -1295,7 +1295,7 @@ const createLabelFromFileName = (fileName: string) =>
     .trim();
 
 export const AIGC_GALLERY_IMAGES: AigcGalleryItem[] = AIGC_GALLERY_FILES.map(({ fileName, width, height }) => ({
-  src: '/AI images/' + encodeURIComponent(fileName),
+  src: import.meta.env.BASE_URL + 'AI images/' + encodeURIComponent(fileName),
   fileName,
   width,
   height,

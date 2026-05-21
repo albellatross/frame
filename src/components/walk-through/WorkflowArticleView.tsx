@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Project } from '../../types';
 import { WorkflowArticleContent } from './workflowArticles';
+import { assetUrl } from '../../utils/assets';
 
 interface WorkflowArticleViewProps {
   content: WorkflowArticleContent;
@@ -218,7 +219,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             </div>
 
             <figure className="mt-4 overflow-hidden rounded-[22px] bg-[#f3eadf] shadow-inner">
-              <img src={activeToolData.image} alt="" className="aspect-[16/9] w-full object-cover object-top" loading="lazy" />
+              <img src={assetUrl(activeToolData.image)} alt="" className="aspect-[16/9] w-full object-cover object-top" loading="lazy" />
             </figure>
 
             <div className="mt-4 grid gap-3 md:grid-cols-3">

@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import { DAILY_SPARK_ASSETS, DailySparkKind, IP_UNIVERSE_ASSETS, READING_EXCERPTS } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
+import { assetUrl } from '../../utils/assets';
 
 interface IpUniverseModalProps {
   isZh: boolean;
@@ -102,10 +103,11 @@ const MediaTile: React.FC<{
   imgClassName?: string;
   controls?: boolean;
 }> = ({ src, className = '', imgClassName = mediaClass, controls = false }) => {
+  const resolvedSrc = assetUrl(src);
   if (isVideo(src)) {
     return (
       <video
-        src={src}
+        src={resolvedSrc}
         autoPlay={!controls}
         loop
         muted
@@ -116,7 +118,7 @@ const MediaTile: React.FC<{
     );
   }
 
-  return <img src={src} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
+  return <img src={resolvedSrc} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
 };
 
 const EmptyVisualShelf: React.FC<{ isZh: boolean; kind: DailySparkKind }> = ({ isZh, kind }) => {

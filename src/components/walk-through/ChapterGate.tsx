@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Clock3, Sparkles } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { zhWalkthroughType } from './typography';
+import { assetUrl } from '../../utils/assets';
 
 interface Props {
   onStart: () => void;
@@ -91,7 +92,7 @@ const ChapterGate: React.FC<Props> = ({ onStart, onExploreWork, onLeftButton, on
         className="absolute inset-[-20px]"
       >
         <video
-          src="/background/02.mp4"
+          src={assetUrl('/background/02.mp4')}
           autoPlay
           loop
           muted

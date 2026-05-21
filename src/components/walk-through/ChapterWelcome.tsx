@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Clock3 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { zhWalkthroughType } from './typography';
+import { assetUrl } from '../../utils/assets';
 
 interface Props {
   data: {
@@ -59,7 +60,7 @@ const ChapterWelcome: React.FC<Props> = ({ data, onNext }) => {
         className="absolute inset-[-20px]"
       >
         <video
-          src="/background/01.mp4"
+          src={assetUrl('/background/01.mp4')}
           autoPlay
           loop
           muted

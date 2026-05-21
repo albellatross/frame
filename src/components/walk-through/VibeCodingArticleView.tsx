@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { Project } from '../../types';
 import { VibeCodingArticleContent } from './vibeCodingArticles';
+import { assetUrl } from '../../utils/assets';
 
 interface VibeCodingArticleViewProps {
   content: VibeCodingArticleContent;
@@ -278,12 +279,12 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               ].map((item) => (
                 <div key={item.title} className="grid grid-cols-[56px_minmax(0,1fr)] items-center gap-3 rounded-[18px] bg-[#fff8ef] p-3 shadow-[0_10px_24px_rgba(42,26,10,0.04)]">
                   <div className="h-[56px] overflow-hidden rounded-[12px] bg-[#efe2d1]">
-                    <img src={item.image} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+                    <img src={assetUrl(item.image)} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
                   </div>
                   <div>
                     <p className="text-[14px] font-semibold text-dark-brown">{item.title}</p>
                     <div className="mt-1 flex items-center gap-2">
-                      <img src={item.mark} alt="" className="h-4 w-4 object-contain" loading="lazy" />
+                      <img src={assetUrl(item.mark)} alt="" className="h-4 w-4 object-contain" loading="lazy" />
                       <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-400">{item.tool}</p>
                     </div>
                   </div>
@@ -434,7 +435,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               className="grid overflow-hidden rounded-[26px] border border-[#efe2d1] bg-white/72 shadow-[0_18px_42px_rgba(42,26,10,0.055)] lg:grid-cols-[0.92fr_1.08fr]"
             >
               <div className="relative min-h-[260px] overflow-hidden bg-[#f3eadf]">
-                <img src={item.image} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+                <img src={assetUrl(item.image)} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,18,10,0.04),rgba(30,18,10,0.42))]" />
                 <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-2">
                   <span className="rounded-full bg-white/92 px-3 py-1.5 text-[11px] font-semibold text-[#8C5462] shadow-[0_8px_20px_rgba(42,26,10,0.1)]">

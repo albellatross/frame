@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Download, SendHorizontal, Sprout } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { zhWalkthroughType } from './typography';
+import { assetUrl } from '../../utils/assets';
 
 interface Props {
   data: {
@@ -52,7 +53,7 @@ const ChapterFinalFrame: React.FC<Props> = ({ data, onClose, onPrev, onExploreWo
       transition={{ duration: 0.6 }}
       className="relative h-full w-full overflow-hidden"
     >
-      <video src="/background/03.mp4" autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
+      <video src={assetUrl('/background/03.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,251,242,0.72),rgba(255,251,242,0.18)_38%,rgba(59,35,14,0.14)_82%,rgba(59,35,14,0.24)_100%)]" />
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">

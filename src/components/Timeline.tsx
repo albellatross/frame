@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { CareerStage, Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 interface TimelineProps {
   stages: CareerStage[];
@@ -33,7 +34,7 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                     className="absolute inset-0"
                   >
                     <img 
-                      src={stage.image} 
+                      src={assetUrl(stage.image)} 
                       alt={stage.company} 
                       className="w-full h-full object-cover opacity-60" 
                     />
@@ -146,7 +147,7 @@ const TimelineItem: React.FC<{
       
       {/* Mobile-only visible visual since sticky is hidden */}
       <div className="md:hidden w-full h-48 mb-6 rounded-lg overflow-hidden relative">
-         <img src={stage.image} className="w-full h-full object-cover" alt="" />
+         <img src={assetUrl(stage.image)} className="w-full h-full object-cover" alt="" />
          <div className="absolute inset-0 bg-black/20" />
       </div>
 
@@ -165,7 +166,7 @@ const TimelineItem: React.FC<{
            >
              <div className="relative h-48 overflow-hidden">
                 <img 
-                  src={project.coverImage} 
+                  src={assetUrl(project.coverImage)} 
                   alt={project.title} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

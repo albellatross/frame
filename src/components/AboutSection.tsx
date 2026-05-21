@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 interface AboutSectionProps {
   onOpenWalkThrough?: () => void;
@@ -46,7 +47,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onOpenWalkThrough }) => {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden aspect-[3/4]">
                 <img
-                  src="/profile.jpg"
+                  src={assetUrl('/profile.jpg')}
                   alt="Bella - UI/UX Designer"
                   className="w-full h-full object-cover"
                 />

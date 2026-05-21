@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
@@ -32,7 +33,7 @@ const Hero: React.FC = () => {
       {/* Video Background */}
       <div className="absolute z-0 overflow-hidden" style={{ top: '300px', inset: 'auto 0 0 0' }}>
         <video
-          src="/hero/frame-hero-background.mp4"
+          src={assetUrl('/hero/frame-hero-background.mp4')}
           autoPlay
           loop
           muted

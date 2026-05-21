@@ -3,6 +3,7 @@ import { Project, CaseSection } from '../types';
 import { ArrowRight, ExternalLink, ChevronUp, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import { assetUrl } from '../utils/assets';
 
 interface ProjectDetailProps {
   project: Project | null;
@@ -29,7 +30,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
     case 'hero':
       return (
         <div className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
-          {section.bgImage && <img src={section.bgImage} alt="" className="absolute inset-0 w-full h-full object-cover" />}
+          {section.bgImage && <img src={assetUrl(section.bgImage)} alt="" className="absolute inset-0 w-full h-full object-cover" />}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
           <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 md:px-12 flex flex-col justify-end h-full pb-14 pt-40">
             <span className="text-sm font-serif italic tracking-wide text-white/60 mb-6">PROJECT OVERVIEW</span>
@@ -115,7 +116,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
           {section.subtitle && <p className="text-center text-sm font-mono tracking-wider" style={{ color: '#7B61FF' }}>{section.subtitle}</p>}
           {section.image && (
             <div className="rounded-2xl overflow-hidden shadow-md mt-10">
-              <img src={section.image} alt="" className="w-full h-auto block" />
+              <img src={assetUrl(section.image)} alt="" className="w-full h-auto block" />
             </div>
           )}
         </SectionWrapper>
@@ -245,7 +246,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             {section.image && (
               <div className={layoutMode === 'contained' ? 'rounded-2xl overflow-hidden shadow-xl' : ''}>
                 <img
-                  src={section.image}
+                  src={assetUrl(section.image)}
                   alt={section.title || 'Portfolio board'}
                   className="w-full h-auto block"
                   style={{ maxWidth: maxW }}
@@ -275,7 +276,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             )}
             {section.image && (
               <div className="rounded-2xl overflow-hidden shadow-xl">
-                <img src={section.image} alt={section.title || ''} className="w-full h-auto block" />
+                <img src={assetUrl(section.image)} alt={section.title || ''} className="w-full h-auto block" />
               </div>
             )}
           </div>
@@ -313,7 +314,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
               {/* Central image with anchor dots and connector lines */}
               <div className="flex-1 relative">
                 <div className="rounded-2xl overflow-hidden shadow-xl relative">
-                  <img src={section.image} alt={section.title || ''} className="w-full h-auto block" />
+                  <img src={assetUrl(section.image)} alt={section.title || ''} className="w-full h-auto block" />
                 </div>
                 {/* SVG connector lines overlay */}
                 <svg className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none" style={{ overflow: 'visible' }}>
@@ -379,8 +380,8 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             </div>
             {(section.image || section.secondaryImage) && (
               <div className="flex-shrink-0 flex items-center gap-2">
-                {section.image && <img src={section.image} alt="" className="w-12 h-12 sm:w-16 sm:h-16 object-contain drop-shadow-md" />}
-                {section.secondaryImage && <img src={section.secondaryImage} alt="" className="w-10 h-10 sm:w-14 sm:h-14 object-contain drop-shadow-md" />}
+                {section.image && <img src={assetUrl(section.image)} alt="" className="w-12 h-12 sm:w-16 sm:h-16 object-contain drop-shadow-md" />}
+                {section.secondaryImage && <img src={assetUrl(section.secondaryImage)} alt="" className="w-10 h-10 sm:w-14 sm:h-14 object-contain drop-shadow-md" />}
               </div>
             )}
           </div>
@@ -519,7 +520,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             )}
             {section.image && (
               <div className="rounded-2xl overflow-hidden shadow-md">
-                <img src={section.image} alt="" className="w-full h-auto block" />
+                <img src={assetUrl(section.image)} alt="" className="w-full h-auto block" />
               </div>
             )}
           </div>
@@ -560,7 +561,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
           )}
           {section.image && (
             <div className="rounded-2xl overflow-hidden shadow-md mt-8">
-              <img src={section.image} alt="" className="w-full h-auto block" />
+              <img src={assetUrl(section.image)} alt="" className="w-full h-auto block" />
             </div>
           )}
         </SectionWrapper>
@@ -727,7 +728,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
               <>
                 {/* Legacy: Hero Cover Image */}
                 <div className="relative w-full bg-neutral-100 overflow-hidden" style={{ maxHeight: '480px' }}>
-                  <img src={project.coverImage} alt={project.title} className="w-full h-auto object-cover" style={{ maxHeight: '480px', objectPosition: 'center' }} />
+                  <img src={assetUrl(project.coverImage)} alt={project.title} className="w-full h-auto object-cover" style={{ maxHeight: '480px', objectPosition: 'center' }} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 </div>
 
