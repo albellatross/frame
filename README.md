@@ -1,12 +1,8 @@
 # Frame — Personal Portfolio
 
-<div align="center">
-<img src="public/og-preview.png" alt="Frame Portfolio Preview" width="100%" />
-</div>
+![Frame Portfolio Preview](public/og-preview.png)
 
-<p align="center">
-  <a href="https://albellatross.github.io/frame/">🔗 Live Site</a>
-</p>
+**Live Site → [https://albellatross.github.io/frame/](https://albellatross.github.io/frame/)**
 
 A creative portfolio site showcasing design work, IP universe, AI-generated art, and project case studies.
 
