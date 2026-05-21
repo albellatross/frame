@@ -117,7 +117,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
   const toggleAudio = () => {
     if (!audioRef.current) {
-      const audio = new Audio('/ambient-bgm.flac');
+      const audio = new Audio('/ambient-bgm.mp3');
       audio.loop = true;
       audio.volume = 0.4;
       audioRef.current = audio;
@@ -132,7 +132,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
   // Auto-play audio on mount
   useEffect(() => {
-    const audio = new Audio('/ambient-bgm.flac');
+    const audio = new Audio('/ambient-bgm.mp3');
     audio.loop = true;
     audio.volume = 0.4;
     audioRef.current = audio;

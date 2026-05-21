@@ -116,12 +116,12 @@ export const DAILY_SPARK_ASSETS: Record<DailySparkKind, string[]> = {
   ],
   reading: [],
   dance: [
-    '/dance/18bb20766c665e8303c95abf9e9572dc.MP4',
-    '/dance/448b4547-a9bc-4a4f-b0cf-1fd68df1ddf01746443512274.MP4',
-    '/dance/IMG_6438.MOV',
-    '/dance/copy_039F8810-96E4-46D5-B9E5-E5B514B82783.MOV',
-    '/dance/export_1737206491990.MOV',
-    '/dance/export_1744556711252.MOV',
+    '/dance/18bb20766c665e8303c95abf9e9572dc.mp4',
+    '/dance/448b4547-a9bc-4a4f-b0cf-1fd68df1ddf01746443512274.mp4',
+    '/dance/IMG_6438.mp4',
+    '/dance/copy_039F8810-96E4-46D5-B9E5-E5B514B82783.mp4',
+    '/dance/export_1737206491990.mp4',
+    '/dance/export_1744556711252.mp4',
   ],
   travel: [
     '/travel/微信图片_2026-05-20_152035_551.jpg',

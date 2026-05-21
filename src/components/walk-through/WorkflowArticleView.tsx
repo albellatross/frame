@@ -25,12 +25,12 @@ interface WorkflowArticleViewProps {
 type WorkflowTool = 'batch' | 'board';
 
 const sampleImages = [
-  '/AI images/20251010%20Images%20for%20Creator%20Gallery%20-%20Halloween__image16.png',
-  '/AI images/20251211%20Images%20for%20Imagine%20-Christmas__image30.png',
-  '/AI images/20251117%20Images%20for%20Imagine%20-thanksgiving__image23.png',
-  '/AI images/20250829%20Images%20for%20Creator%20Gallery__image31.png',
-  '/AI images/20250826%20Images%20for%20Creator%20Gallery__image42.png',
-  '/AI images/20250820%20Images%20for%20Creator%20Gallery__image12.png',
+  '/AI images/20251010%20Images%20for%20Creator%20Gallery%20-%20Halloween__image16.webp',
+  '/AI images/20251211%20Images%20for%20Imagine%20-Christmas__image30.webp',
+  '/AI images/20251117%20Images%20for%20Imagine%20-thanksgiving__image23.webp',
+  '/AI images/20250829%20Images%20for%20Creator%20Gallery__image31.webp',
+  '/AI images/20250826%20Images%20for%20Creator%20Gallery__image42.webp',
+  '/AI images/20250820%20Images%20for%20Creator%20Gallery__image12.webp',
 ];
 
 const evidenceImages = {

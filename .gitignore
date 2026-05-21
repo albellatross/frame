@@ -24,7 +24,5 @@ dist-ssr
 *.sw?
 
 # Large media files (excluded to stay under GitHub 2GB limit)
-public/AI images/
-public/dance/
 public/draw/RPReplay_Final1638447471.MP4
 public/ambient-bgm.flac
