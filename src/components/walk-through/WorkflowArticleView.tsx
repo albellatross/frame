@@ -36,7 +36,7 @@ const sampleImages = [
 
 const evidenceImages = {
   batch: '/Frame.png',
-  board: '/projects/ai-workflow-design/figma/content-proof.png',
+  board: '/Frame-1.png',
 };
 
 const sectionTransition = (delay: number) => ({ duration: 0.42, delay, ease: [0.22, 1, 0.36, 1] as const });
