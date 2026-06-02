@@ -10,9 +10,24 @@ const FIGMA_KEETA_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/keeta-user-flow/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
+const FIGMA_REME_SLIDES = Array.from(
+  { length: 15 },
+  (_, index) => `/projects/figma-portfolio/reme-ai-companion/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
 const FIGMA_RD_AGENT_SLIDES = Array.from(
-  { length: 6 },
+  { length: 12 },
   (_, index) => `/projects/figma-portfolio/rd-agent/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_TASKMATRIX_SLIDES = Array.from(
+  { length: 11 },
+  (_, index) => `/projects/figma-portfolio/taskmatrix-ai/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_XIAODU_SLIDES = Array.from(
+  { length: 13 },
+  (_, index) => `/projects/figma-portfolio/xiaodu-learning-tablet/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
 const FIGMA_BAIDU_AI_CLOUD_SLIDES = Array.from(
@@ -28,6 +43,26 @@ const FIGMA_HEART_PRINTING_SLIDES = Array.from(
 const FIGMA_WHITE_ELEPHANT_SLIDES = Array.from(
   { length: 10 },
   (_, index) => `/projects/figma-portfolio/white-elephant-packaging/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_MSRA_25TH_SLIDES = Array.from(
+  { length: 7 },
+  (_, index) => `/projects/figma-portfolio/msra-25th-anniversary/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_VALUE_COMPASS_SLIDES = Array.from(
+  { length: 7 },
+  (_, index) => `/projects/figma-portfolio/value-compass/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_IOETE_SLIDES = Array.from(
+  { length: 1 },
+  (_, index) => `/projects/figma-portfolio/ioete-tea-shop/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_ILLUSTRATION_SLIDES = Array.from(
+  { length: 3 },
+  (_, index) => `/projects/figma-portfolio/illustration-works/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
 // ===== CAREER TIMELINE - English =====
@@ -50,7 +85,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Led 10+ AI product designs from AIGC tools to research platforms.',
     skills: ['AIGC Design', 'B2B Tools', 'Visual Systems', 'Graphic Design'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p5', 'p9', 'p11', 'p12']
+    relatedProjectIds: ['p5', 'p9', 'p11', 'p12', 'p13', 'p14', 'p15']
   },
   {
     id: 'c3',
@@ -84,7 +119,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '主导 10+ AI 产品设计，从 AIGC 工具到研究平台。',
     skills: ['AIGC 设计', 'B2B 工具', '视觉系统', '平面设计'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p5', 'p9', 'p11', 'p12']
+    relatedProjectIds: ['p5', 'p9', 'p11', 'p12', 'p13', 'p14', 'p15']
   },
   {
     id: 'c3',
@@ -444,7 +479,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2023',
     role: 'Lead UI/UX & Brand Designer',
     shortDescription: 'AI chatbot helping Alzheimer\'s patients.',
-    coverImage: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/reme-ai-companion/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_REME_SLIDES,
+    },
     tags: ['Mobile App', 'Healthcare', 'Brand Design', 'UI System', 'User Research', 'Empathy Design'],
     acts: {
       act1: {
@@ -503,7 +543,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2023',
     role: 'Graphic Designer',
     shortDescription: 'Fridge magnets and banners celebrating 25 years.',
-    coverImage: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/msra-25th-anniversary/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_MSRA_25TH_SLIDES,
+    },
     tags: ['Graphic Design', 'Brand Identity', 'Print Design', 'Adobe Illustrator', 'Visual Communication'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743'
@@ -533,7 +578,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2021',
     role: 'Brand Designer',
     shortDescription: 'Complete brand identity for Milan tea shop.',
-    coverImage: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_IOETE_SLIDES,
+    },
     tags: ['Brand Identity', 'Packaging Design', 'Visual System', 'Print Design', 'Adobe Creative Suite'],
     externalLinks: {
       behance: 'https://www.behance.net/albellatrocb95'
@@ -563,7 +613,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2021-2023',
     role: 'Illustrator',
     shortDescription: 'Commercial illustrations and IP character design.',
-    coverImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/illustration-works/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_ILLUSTRATION_SLIDES,
+    },
     tags: ['Illustration', 'Character Design', 'Digital Art', 'Commercial Art', 'Visual Storytelling'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743',
@@ -721,6 +776,105 @@ export const PROJECTS_EN: Project[] = [
         title: 'Reader Delivery',
         content: 'Displayed the final Chinese design pages in the Works reader.',
         impact: '11 Source Pages'
+      }
+    }
+  },
+  {
+    id: 'p13',
+    title: 'TaskMatrix.AI Storytelling Agent',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2023',
+    role: 'UI/UX Designer',
+    shortDescription: 'Source Figma pages for TaskMatrix.AI storytelling agent and AI workflow design.',
+    coverImage: '/projects/figma-portfolio/taskmatrix-ai/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_TASKMATRIX_SLIDES,
+    },
+    gallery: FIGMA_TASKMATRIX_SLIDES,
+    tags: ['AI Agent', 'Workflow Design', 'B2B Platform', 'Figma'],
+    acts: {
+      act1: {
+        title: 'Agent Workflow',
+        content: 'TaskMatrix.AI needed a clear way to explain agent-driven storytelling and task orchestration.'
+      },
+      act2: {
+        title: 'Source-Design Reader',
+        content: 'Preserved the original Figma pages as a high-resolution case reader.',
+        decisionPoints: ['Original ordering', 'AI workflow clarity', 'Responsive reader']
+      },
+      act3: {
+        title: 'Reader Delivery',
+        content: 'Displayed the complete exported design story in the Works reader.',
+        impact: '11 Source Pages'
+      }
+    }
+  },
+  {
+    id: 'p14',
+    title: 'Xiaodu Learning Tablet Homepage Redesign',
+    category: 'C-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: 'UI/UX Designer',
+    shortDescription: 'Learning tablet homepage redesign focused on hierarchy, study rhythm, and AI entry points.',
+    coverImage: '/projects/figma-portfolio/xiaodu-learning-tablet/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_XIAODU_SLIDES,
+    },
+    gallery: FIGMA_XIAODU_SLIDES,
+    tags: ['Homepage Redesign', 'Education UX', 'AI Entry', 'Figma'],
+    acts: {
+      act1: {
+        title: 'Homepage Complexity',
+        content: 'The learning tablet homepage needed stronger hierarchy for study content, product features, and AI capabilities.'
+      },
+      act2: {
+        title: 'Structured Redesign',
+        content: 'Organized the redesign case as exported Figma pages to keep the original presentation intact.',
+        decisionPoints: ['Information hierarchy', 'Study rhythm', 'AI entry points']
+      },
+      act3: {
+        title: 'Reader Delivery',
+        content: 'Displayed the full homepage redesign flow in the Works reader.',
+        impact: '13 Source Pages'
+      }
+    }
+  },
+  {
+    id: 'p15',
+    title: 'Value Compass',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UI/UX Designer',
+    shortDescription: 'AI value-alignment research interface and visual system.',
+    coverImage: '/projects/figma-portfolio/value-compass/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_VALUE_COMPASS_SLIDES,
+    },
+    gallery: FIGMA_VALUE_COMPASS_SLIDES,
+    tags: ['AI Research', 'Value Alignment', 'Visual System', 'Figma'],
+    acts: {
+      act1: {
+        title: 'Research Communication',
+        content: 'The project needed a concise visual system for communicating AI value-alignment research.'
+      },
+      act2: {
+        title: 'Interface & System',
+        content: 'Exported the source pages from Figma to preserve the research narrative and visual direction.',
+        decisionPoints: ['Research clarity', 'Interface structure', 'Visual consistency']
+      },
+      act3: {
+        title: 'Reader Delivery',
+        content: 'Displayed the complete Figma case pages as a high-resolution reader.',
+        impact: '7 Source Pages'
       }
     }
   }
@@ -1066,7 +1220,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2023',
     role: 'UI/UX 与品牌主导设计师',
     shortDescription: '帮助阿尔茨海默病患者的 AI 聊天机器人。',
-    coverImage: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/reme-ai-companion/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_REME_SLIDES,
+    },
     acts: {
       act1: {
         title: '需要共情',
@@ -1123,7 +1282,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2023',
     role: '平面设计师',
     shortDescription: '庆祝 25 周年的冰箱贴和条幅。',
-    coverImage: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/msra-25th-anniversary/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_MSRA_25TH_SLIDES,
+    },
     acts: {
       act1: {
         title: '周年庆典',
@@ -1149,7 +1313,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2021',
     role: '品牌设计师',
     shortDescription: '米兰茶店的完整品牌识别。',
-    coverImage: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_IOETE_SLIDES,
+    },
     acts: {
       act1: {
         title: '品牌识别',
@@ -1175,7 +1344,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2021-2023',
     role: '插画师',
     shortDescription: '商业插画和 IP 角色设计。',
-    coverImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/illustration-works/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_ILLUSTRATION_SLIDES,
+    },
     acts: {
       act1: {
         title: '创意表达',
@@ -1328,6 +1502,105 @@ export const PROJECTS_ZH: Project[] = [
         title: 'Reader 呈现',
         content: '在 Works 中展示完整中文设计稿页面。',
         impact: '11 页源文件'
+      }
+    }
+  },
+  {
+    id: 'p13',
+    title: 'TaskMatrix.AI Storytelling Agent',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2023',
+    role: 'UI/UX 设计师',
+    shortDescription: 'TaskMatrix.AI 的 Storytelling Agent 与 AI 工作流设计稿展示。',
+    coverImage: '/projects/figma-portfolio/taskmatrix-ai/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_TASKMATRIX_SLIDES,
+    },
+    gallery: FIGMA_TASKMATRIX_SLIDES,
+    tags: ['AI Agent', '工作流设计', 'B2B 平台', 'Figma'],
+    acts: {
+      act1: {
+        title: 'Agent 工作流',
+        content: 'TaskMatrix.AI 需要清晰呈现 agent 驱动的故事生成与任务编排逻辑。'
+      },
+      act2: {
+        title: '源文件阅读器',
+        content: '保留 Figma 原始页面顺序，以高分辨率图片展示完整方案。',
+        decisionPoints: ['原始顺序', 'AI 工作流清晰度', '响应式阅读']
+      },
+      act3: {
+        title: 'Reader 呈现',
+        content: '在 Works 中展示完整导出的设计叙事。',
+        impact: '11 页源文件'
+      }
+    }
+  },
+  {
+    id: 'p14',
+    title: '小度学习机首页重构',
+    category: 'C-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: 'UI/UX 设计师',
+    shortDescription: '围绕信息层级、学习节律与 AI 入口的小度学习机首页重构。',
+    coverImage: '/projects/figma-portfolio/xiaodu-learning-tablet/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_XIAODU_SLIDES,
+    },
+    gallery: FIGMA_XIAODU_SLIDES,
+    tags: ['首页重构', '教育 UX', 'AI 入口', 'Figma'],
+    acts: {
+      act1: {
+        title: '首页复杂度',
+        content: '学习机首页需要更清晰地承载学习内容、产品功能与 AI 能力入口。'
+      },
+      act2: {
+        title: '结构化重构',
+        content: '以 Figma 原始页面形式保留完整重构方案和展示节奏。',
+        decisionPoints: ['信息层级', '学习节律', 'AI 入口']
+      },
+      act3: {
+        title: 'Reader 呈现',
+        content: '在 Works 中展示完整首页重构流程。',
+        impact: '13 页源文件'
+      }
+    }
+  },
+  {
+    id: 'p15',
+    title: 'Value Compass',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UI/UX 设计师',
+    shortDescription: 'AI 价值对齐研究项目的界面与视觉系统设计。',
+    coverImage: '/projects/figma-portfolio/value-compass/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_VALUE_COMPASS_SLIDES,
+    },
+    gallery: FIGMA_VALUE_COMPASS_SLIDES,
+    tags: ['AI 研究', '价值对齐', '视觉系统', 'Figma'],
+    acts: {
+      act1: {
+        title: '研究表达',
+        content: '项目需要用清晰的视觉系统传达 AI 价值对齐研究。'
+      },
+      act2: {
+        title: '界面与系统',
+        content: '以 Figma 原始页面保留研究叙事和视觉方向。',
+        decisionPoints: ['研究清晰度', '界面结构', '视觉一致性']
+      },
+      act3: {
+        title: 'Reader 呈现',
+        content: '以高分辨率阅读器展示完整 Figma 方案。',
+        impact: '7 页源文件'
       }
     }
   }
