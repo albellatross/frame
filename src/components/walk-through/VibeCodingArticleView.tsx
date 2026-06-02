@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { Project } from '../../types';
 import { VibeCodingArticleContent } from './vibeCodingArticles';
-import { assetUrl } from '../../utils/assets';
 
 interface VibeCodingArticleViewProps {
   content: VibeCodingArticleContent;
@@ -279,12 +278,12 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               ].map((item) => (
                 <div key={item.title} className="grid grid-cols-[56px_minmax(0,1fr)] items-center gap-3 rounded-[18px] bg-[#fff8ef] p-3 shadow-[0_10px_24px_rgba(42,26,10,0.04)]">
                   <div className="h-[56px] overflow-hidden rounded-[12px] bg-[#efe2d1]">
-                    <img src={assetUrl(item.image)} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+                    <img src={item.image} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
                   </div>
                   <div>
                     <p className="text-[14px] font-semibold text-dark-brown">{item.title}</p>
                     <div className="mt-1 flex items-center gap-2">
-                      <img src={assetUrl(item.mark)} alt="" className="h-4 w-4 object-contain" loading="lazy" />
+                      <img src={item.mark} alt="" className="h-4 w-4 object-contain" loading="lazy" />
                       <p className="text-[11px] uppercase tracking-[0.14em] text-neutral-400">{item.tool}</p>
                     </div>
                   </div>
@@ -322,7 +321,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               transition={sectionTransition(0.16)}
               className="absolute right-[6%] top-[8%] w-[68%] overflow-hidden rounded-[12px] shadow-[0_28px_80px_rgba(70,53,130,0.28)]"
             >
-              <img src={assetUrl(figmaAssets.elsewhereBrowser)} alt="Elsewhere landing page" className="w-full object-cover" loading="eager" />
+              <img src={figmaAssets.elsewhereBrowser} alt="Elsewhere landing page" className="w-full object-cover" loading="eager" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: -34, y: 38, rotate: -1.6 }}
@@ -330,7 +329,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               transition={sectionTransition(0.22)}
               className="absolute bottom-[8%] left-[7%] w-[56%] overflow-hidden rounded-[12px] shadow-[0_24px_70px_rgba(92,60,160,0.22)]"
             >
-              <img src={assetUrl(figmaAssets.idPhotoWorkspace)} alt="Elsewhere ID photo workflow" className="w-full object-cover" loading="eager" />
+              <img src={figmaAssets.idPhotoWorkspace} alt="Elsewhere ID photo workflow" className="w-full object-cover" loading="eager" />
             </motion.div>
             <div className="absolute bottom-5 left-6 right-6 flex flex-wrap gap-2">
               {content.stats.map((stat) => (
@@ -435,7 +434,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
               className="grid overflow-hidden rounded-[26px] border border-[#efe2d1] bg-white/72 shadow-[0_18px_42px_rgba(42,26,10,0.055)] lg:grid-cols-[0.92fr_1.08fr]"
             >
               <div className="relative min-h-[260px] overflow-hidden bg-[#f3eadf]">
-                <img src={assetUrl(item.image)} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+                <img src={item.image} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,18,10,0.04),rgba(30,18,10,0.42))]" />
                 <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-2">
                   <span className="rounded-full bg-white/92 px-3 py-1.5 text-[11px] font-semibold text-[#8C5462] shadow-[0_8px_20px_rgba(42,26,10,0.1)]">
@@ -495,7 +494,7 @@ const VibeCodingArticleView: React.FC<VibeCodingArticleViewProps> = ({ content, 
             <h3 className={`mt-3 ${sectionTitleClass}`}>{content.buildTitle}</h3>
             <p className={`mt-4 ${bodyClass}`}>{content.buildIntro}</p>
             <figure className="mt-6 overflow-hidden rounded-[24px] bg-[#fffaf2] shadow-[0_16px_38px_rgba(42,26,10,0.08)]">
-              <img src={assetUrl(architectureImage)} alt={isZh ? 'AI 辅助无代码前后端联动架构图' : 'AI assisted full-stack workflow'} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+              <img src={architectureImage} alt={isZh ? 'AI 辅助无代码前后端联动架构图' : 'AI assisted full-stack workflow'} className="aspect-[16/9] w-full object-cover" loading="lazy" />
             </figure>
           </div>
 

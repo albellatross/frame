@@ -13,22 +13,28 @@ import ProjectDetail from './components/ProjectDetail';
 import PortfolioGenerator from './components/PortfolioGenerator';
 import WalkThrough from './components/walk-through';
 
+const hasPortfolioReaderPages = (project: Project) =>
+  Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length);
+
 const AppContent: React.FC = () => {
   const { language } = useLanguage();
   
   // 根据语言选择数据
   const PROJECTS = language === 'zh' ? PROJECTS_ZH : PROJECTS_EN;
+  const WORK_PROJECTS = PROJECTS.filter(hasPortfolioReaderPages);
   const CAREER_TIMELINE = language === 'zh' ? CAREER_TIMELINE_ZH : CAREER_TIMELINE_EN;
 
   // State
   const [currentPage, setCurrentPage] = useState<'home' | 'work' | 'profile'>('home');
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-
-  // Re-resolve activeProject when language changes
-  const resolvedProject = activeProject ? PROJECTS.find(p => p.id === activeProject.id) || activeProject : null;
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [isWalkThroughOpen, setIsWalkThroughOpen] = useState(false);
+
+  // Re-resolve activeProject when language changes
+  const resolvedProject = activeProject
+    ? WORK_PROJECTS.find(p => p.id === activeProject.id) || PROJECTS.find(p => p.id === activeProject.id) || activeProject
+    : null;
 
   // Handlers
   const handleProjectSelect = (id: string) => {
@@ -42,7 +48,7 @@ const AppContent: React.FC = () => {
   };
 
   const handleProjectClickById = (id: string) => {
-    const project = PROJECTS.find(p => p.id === id);
+    const project = WORK_PROJECTS.find(p => p.id === id);
     if (project) setActiveProject(project);
   };
 
@@ -60,7 +66,7 @@ const AppContent: React.FC = () => {
           <AboutSection onOpenWalkThrough={() => setIsWalkThroughOpen(true)} />
           <Timeline 
             stages={CAREER_TIMELINE}
-            allProjects={PROJECTS}
+            allProjects={WORK_PROJECTS}
             onProjectClick={handleProjectClickById}
           />
         </>
@@ -68,7 +74,7 @@ const AppContent: React.FC = () => {
 
       {currentPage === 'work' && (
         <WorkPage 
-          projects={PROJECTS}
+          projects={WORK_PROJECTS}
           onProjectClick={handleProjectClick}
           selectedProjectIds={selectedProjectIds}
           onToggleSelect={handleProjectSelect}
@@ -93,7 +99,7 @@ const AppContent: React.FC = () => {
         isOpen={isGeneratorOpen}
         onClose={() => setIsGeneratorOpen(false)}
         selectedIds={selectedProjectIds}
-        projects={PROJECTS}
+        projects={WORK_PROJECTS}
         onRemove={handleProjectSelect}
       />
     </Layout>

@@ -4,6 +4,7 @@ import { ArrowRight, ExternalLink, ChevronUp, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { assetUrl } from '../utils/assets';
+import PortfolioReader from './PortfolioReader';
 
 interface ProjectDetailProps {
   project: Project | null;
@@ -24,6 +25,22 @@ const SectionWrapper: React.FC<{ children: React.ReactNode; bg?: string; classNa
     </div>
   </div>
 );
+
+const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
+  const localizedSlides = project.slideSets?.[language] || project.slideSets?.zh || project.slideSets?.en;
+  const directPages = localizedSlides || project.slides || project.gallery;
+
+  if (directPages && directPages.length > 0) {
+    return Array.from(new Set(directPages));
+  }
+
+  const sectionPages = (project.caseSections || []).flatMap((section) => [
+    section.bgImage,
+    section.image,
+  ]).filter((src): src is string => Boolean(src));
+
+  return Array.from(new Set(sectionPages));
+};
 
 const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   switch (section.type) {
@@ -578,6 +595,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { language } = useLanguage();
   const isZh = language === 'zh';
+  const readerPages = project ? collectReaderPages(project, language) : [];
+  const hasReaderPages = readerPages.length > 0;
 
   useEffect(() => {
     if (project) {
@@ -627,29 +646,31 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
         className="fixed inset-x-0 bottom-0 z-[60] flex flex-col"
-        style={{ top: '120px' }}
+        style={{ top: hasReaderPages ? '24px' : '120px' }}
       >
         {/* Rounded top container */}
-        <div className="relative flex flex-col h-full bg-white rounded-t-2xl overflow-hidden shadow-2xl">
+        <div className={`relative flex flex-col h-full overflow-hidden shadow-2xl ${hasReaderPages ? 'bg-[#2F3033] rounded-t-xl' : 'bg-white rounded-t-2xl'}`}>
 
           {/* Drag handle / top bar */}
-          <div className="flex-shrink-0 sticky top-0 z-10 bg-white rounded-t-2xl">
-            <div className="flex justify-center pt-3 pb-2">
-              <div className="w-10 h-1 rounded-full bg-neutral-300" />
+          {!hasReaderPages && (
+            <div className="flex-shrink-0 sticky top-0 z-10 bg-white rounded-t-2xl">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-neutral-300" />
+              </div>
+              <div className="px-4 sm:px-6 md:px-8 pb-2 flex items-center justify-end">
+                <button
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
+                >
+                  <X size={16} className="text-neutral-500" />
+                </button>
+              </div>
             </div>
-            <div className="px-4 sm:px-6 md:px-8 pb-2 flex items-center justify-end">
-              <button
-                onClick={onClose}
-                className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
-              >
-                <X size={16} className="text-neutral-500" />
-              </button>
-            </div>
-          </div>
+          )}
 
           {/* Sticky bar that appears on scroll */}
           <AnimatePresence>
-            {showStickyBar && (
+            {showStickyBar && !hasReaderPages && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -674,49 +695,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
           </AnimatePresence>
 
           {/* Scrollable content */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto scroll-smooth bg-cream">
+          <div ref={scrollRef} className={`flex-1 overflow-y-auto scroll-smooth ${hasReaderPages ? 'bg-[#2F3033]' : 'bg-cream'}`}>
 
-            {/* Mode A: Slide Showcase — for finished portfolio pages */}
-            {project.slides && project.slides.length > 0 ? (
-              <div className="bg-neutral-50">
-                {/* Light header */}
-                <div className="max-w-5xl mx-auto px-6 sm:px-8 md:px-12 py-10 sm:py-14">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags && project.tags.map((t, i) => (
-                      <span key={i} className="text-[10px] px-3 py-1 rounded-full border border-neutral-200 text-neutral-500 uppercase tracking-wider">{t}</span>
-                    ))}
-                  </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-neutral-900 mb-3 leading-tight">{project.title}</h1>
-                  <p className="text-base sm:text-lg text-neutral-500 italic max-w-2xl">{project.shortDescription}</p>
-                  <div className="flex flex-wrap gap-6 text-xs text-neutral-400 mt-5 pt-5 border-t border-neutral-100">
-                    <span>{project.role}</span>
-                    <span>{project.year}</span>
-                    <span>{project.platform}</span>
-                    <span className="ml-auto text-neutral-300">{project.slides.length} {isZh ? '页' : 'pages'}</span>
-                  </div>
-                </div>
-
-                {/* Slides — vertical scroll showcase */}
-                <div className="space-y-1 pb-16">
-                  {project.slides.map((src, i) => (
-                    <div key={i} className="relative group">
-                      <img
-                        src={assetUrl(src)}
-                        alt={`${project.title} — ${isZh ? '第' : 'Page '}${i + 1}${isZh ? '页' : ''}`}
-                        className="w-full h-auto block"
-                        loading={i < 2 ? 'eager' : 'lazy'}
-                      />
-                      {/* Page indicator on hover */}
-                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span className="text-[10px] px-2.5 py-1 rounded-full bg-black/50 text-white/80 backdrop-blur-sm font-mono">
-                          {i + 1} / {project.slides!.length}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+            {/* Mode A: Portfolio/PDF Reader — finished pages exported from Figma */}
+            {hasReaderPages ? (
+              <PortfolioReader
+                project={project}
+                pages={readerPages}
+                isZh={isZh}
+                onClose={onClose}
+                scrollRootRef={scrollRef}
+              />
             ) : project.caseSections && project.caseSections.length > 0 ? (
               /* Mode B: Modular Case Study — for projects built from sections */
               <>
@@ -766,7 +755,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
             )}
 
             {/* External Links */}
-            {project.externalLinks && Object.keys(project.externalLinks).length > 0 && (
+            {!hasReaderPages && project.externalLinks && Object.keys(project.externalLinks).length > 0 && (
               <div className="bg-white border-t border-neutral-100">
                 <div className="max-w-4xl mx-auto px-6 sm:px-8 md:px-12 py-10">
                   <p className="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">{isZh ? '查看更多' : 'View More'}</p>
@@ -774,7 +763,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                     {project.externalLinks.behance && (
                       <a href={project.externalLinks.behance} target="_blank" rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 bg-[#2E4D4D] hover:bg-[#434D46] text-white px-5 py-2.5 rounded-full text-sm font-medium transition-colors">
-                        <ExternalLink size={15} /> Behance
+                        <ExternalLink size={15} /> {project.externalLinks.behance.includes('figma.com') ? 'Figma' : 'Behance'}
                       </a>
                     )}
                     {project.externalLinks.zcool && (
@@ -795,7 +784,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
             )}
 
             {/* Footer */}
-            <div className="bg-white border-t border-neutral-100">
+            {!hasReaderPages && <div className="bg-white border-t border-neutral-100">
               <div className="max-w-4xl mx-auto px-6 sm:px-8 md:px-12 py-10 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <span className="text-sm text-neutral-400">{isZh ? '案例结束' : 'End of Case Study'}</span>
                 <button
@@ -806,7 +795,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                   <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                 </button>
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </motion.div>

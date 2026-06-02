@@ -1,0 +1,63 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" fill="#F3FAF6"/>
+  <radialGradient id="rdGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1120 420) rotate(137) scale(650 520)">
+    <stop stop-color="#BDEAD9"/>
+    <stop offset="0.55" stop-color="#EEF8F2"/>
+    <stop offset="1" stop-color="#F3FAF6" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1600" height="1000" fill="url(#rdGlow)"/>
+  <rect x="100" y="92" width="1400" height="816" rx="54" fill="white" filter="url(#rdShadow)"/>
+  <text x="168" y="185" fill="#0D8F67" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="7">RESEARCH AGENT</text>
+  <text x="168" y="328" fill="#081F19" font-family="Georgia, 'Times New Roman', serif" font-size="126" letter-spacing="-5">RD-Agent</text>
+  <text x="172" y="414" fill="#253B35" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">AI-assisted hypothesis generation platform</text>
+  <text x="172" y="476" fill="#64766F" font-family="Inter, Arial, sans-serif" font-size="24">Traceable research loop • agent states • experiment metrics</text>
+  <rect x="170" y="615" width="180" height="58" rx="29" fill="#0D8F67"/>
+  <text x="217" y="652" fill="white" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Plan</text>
+  <rect x="368" y="615" width="184" height="58" rx="29" fill="#F3FAF6" stroke="#D5E9DF"/>
+  <text x="414" y="652" fill="#4E655E" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Run</text>
+  <rect x="570" y="615" width="210" height="58" rx="29" fill="#F3FAF6" stroke="#D5E9DF"/>
+  <text x="612" y="652" fill="#4E655E" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Report</text>
+
+  <g transform="translate(795 192)">
+    <rect x="0" y="0" width="610" height="498" rx="42" fill="#081512" filter="url(#screenShadow)"/>
+    <rect x="0" y="0" width="610" height="42" rx="42" fill="#F7FAF8"/>
+    <circle cx="26" cy="21" r="7" fill="#FF5F57"/>
+    <circle cx="48" cy="21" r="7" fill="#FFBD2E"/>
+    <circle cx="70" cy="21" r="7" fill="#28C840"/>
+    <rect x="0" y="42" width="176" height="456" fill="#0B211A"/>
+    <rect x="26" y="82" width="42" height="42" rx="12" fill="#0D8F67"/>
+    <text x="82" y="110" fill="white" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">RD-Agent</text>
+    <rect x="26" y="168" width="126" height="38" rx="19" fill="white"/>
+    <text x="46" y="193" fill="#0B211A" font-family="Inter, Arial, sans-serif" font-size="15">Hypothesis</text>
+    <text x="46" y="248" fill="#6A7F78" font-family="Inter, Arial, sans-serif" font-size="15">Experiment</text>
+    <text x="46" y="306" fill="#6A7F78" font-family="Inter, Arial, sans-serif" font-size="15">Report</text>
+    <text x="210" y="102" fill="#A9BBB4" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="6">WORKSPACE</text>
+    <text x="210" y="164" fill="white" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">Run candidate ideas</text>
+    <text x="210" y="204" fill="white" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">as a loop</text>
+    <rect x="210" y="248" width="106" height="92" rx="22" fill="#172D26"/>
+    <rect x="334" y="248" width="106" height="92" rx="22" fill="#172D26"/>
+    <rect x="458" y="248" width="106" height="92" rx="22" fill="#172D26"/>
+    <text x="228" y="302" fill="#0D8F67" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">23</text>
+    <text x="352" y="302" fill="#75A7FF" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">08</text>
+    <text x="476" y="302" fill="#F4B740" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">05</text>
+    <rect x="210" y="368" width="354" height="94" rx="20" fill="white"/>
+    <text x="230" y="399" fill="#0B1F1A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800">Agent plan</text>
+    <rect x="230" y="424" width="292" height="8" rx="4" fill="#E9DED0"/>
+    <rect x="230" y="424" width="244" height="8" rx="4" fill="#0D8F67">
+      <animate attributeName="width" values="70;244;244" dur="1.8s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="230" y="446" width="292" height="8" rx="4" fill="#E9DED0"/>
+    <rect x="230" y="446" width="178" height="8" rx="4" fill="#0D8F67">
+      <animate attributeName="width" values="40;178;178" dur="1.8s" begin=".25s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <defs>
+    <filter id="rdShadow" x="55" y="52" width="1490" height="906" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="32" flood-color="#063C2B" flood-opacity="0.12"/>
+    </filter>
+    <filter id="screenShadow" x="-50" y="-10" width="710" height="610" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="36" flood-color="#063C2B" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+</svg>

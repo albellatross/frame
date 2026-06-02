@@ -24,6 +24,9 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
   const ProjectCard: React.FC<{ project: Project; idx: number; isFullWidth: boolean }> = ({ project, idx, isFullWidth }) => {
     const cardRef = useRef<HTMLDivElement>(null);
     const isSelected = selectedProjectIds.includes(project.id);
+    const shouldContainCover = project.coverDisplay === 'contain' || Boolean(project.slideSets || project.slides);
+    const coverAspectRatio = shouldContainCover ? project.coverAspectRatio : undefined;
+    const defaultAspectClass = isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]';
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -81,11 +84,14 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         >
           {/* Image Container */}
-          <div className={`relative overflow-hidden bg-cream mb-6 rounded-2xl shadow-card group-hover:shadow-card-hover transition-shadow duration-500 ${isFullWidth ? 'aspect-[21/9]' : 'aspect-[16/10] md:aspect-[4/3]'}`}>
+          <div
+            className={`relative mb-6 overflow-hidden rounded-2xl shadow-card transition-shadow duration-500 group-hover:shadow-card-hover ${shouldContainCover ? 'bg-white' : 'bg-cream'} ${coverAspectRatio ? '' : defaultAspectClass}`}
+            style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
+          >
             <img
               src={assetUrl(project.coverImage)}
               alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
             />
 
             {/* Gradient Overlay */}

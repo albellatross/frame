@@ -272,7 +272,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
         )}
       </AnimatePresence>
 
-      <main className="relative z-0">
+      <main className="relative">
         {children}
       </main>
 

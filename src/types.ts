@@ -64,8 +64,18 @@ export interface Project {
   role: string;
   shortDescription: string;
   coverImage: string;
+  // Cover behavior for source-design screenshots/PDF-style pages.
+  // These should be shown without cropping or stretching.
+  coverDisplay?: 'cover' | 'contain';
+  coverAspectRatio?: number;
   // Slide showcase mode — when present, renders as full-page slide viewer
   slides?: string[];
+  // Reserved for future localized exports. These are separate source files,
+  // never auto-translated from the current image content.
+  slideSets?: {
+    zh?: string[];
+    en?: string[];
+  };
   // 新增字段
   gallery?: string[]; // 项目图片集
   externalLinks?: {

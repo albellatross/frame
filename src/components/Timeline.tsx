@@ -157,31 +157,39 @@ const TimelineItem: React.FC<{
 
       {/* Embedded Project Cards (Photos as requested) */}
       <div className="grid grid-cols-1 gap-6">
-         {projects.map((project) => (
-           <motion.div 
-             key={project.id}
-             whileHover={{ y: -5 }}
-             className="group cursor-pointer bg-white rounded-xl overflow-hidden border border-cream-dark shadow-sm hover:shadow-md transition-all"
-             onClick={() => onProjectClick(project.id)}
-           >
-             <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={assetUrl(project.coverImage)} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                   <div className="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-white text-xs font-medium flex items-center gap-2">
-                      {t('timeline.viewCase')} <ArrowUpRight size={14} />
-                   </div>
-                </div>
-             </div>
-             <div className="p-4 sm:p-5">
-                <h4 className="font-serif text-base sm:text-lg text-dark-brown">{project.title}</h4>
-                <p className="text-[10px] sm:text-xs text-warm-gray mt-1 line-clamp-2">{project.shortDescription}</p>
-             </div>
-           </motion.div>
-         ))}
+         {projects.map((project) => {
+           const shouldContainCover = project.coverDisplay === 'contain' || Boolean(project.slideSets || project.slides);
+           const coverAspectRatio = shouldContainCover ? project.coverAspectRatio : undefined;
+
+           return (
+             <motion.div
+               key={project.id}
+               whileHover={{ y: -5 }}
+               className="group cursor-pointer overflow-hidden rounded-xl border border-cream-dark bg-white shadow-sm transition-all hover:shadow-md"
+               onClick={() => onProjectClick(project.id)}
+             >
+               <div
+                 className={`relative overflow-hidden ${shouldContainCover ? 'bg-white' : 'bg-cream'} ${coverAspectRatio ? '' : 'h-48'}`}
+                 style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
+               >
+                  <img
+                    src={assetUrl(project.coverImage)}
+                    alt={project.title}
+                    className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                     <div className="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-white text-xs font-medium flex items-center gap-2">
+                        {t('timeline.viewCase')} <ArrowUpRight size={14} />
+                     </div>
+                  </div>
+               </div>
+               <div className="p-4 sm:p-5">
+                  <h4 className="font-serif text-base sm:text-lg text-dark-brown">{project.title}</h4>
+                  <p className="text-[10px] sm:text-xs text-warm-gray mt-1 line-clamp-2">{project.shortDescription}</p>
+               </div>
+             </motion.div>
+           );
+         })}
       </div>
 
       <div className="flex flex-wrap gap-2 mt-8">

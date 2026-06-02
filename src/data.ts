@@ -1,5 +1,35 @@
 import { CareerStage, Project } from './types';
 
+const FIGMA_READ_ALOUD_SLIDES = Array.from(
+  { length: 18 },
+  (_, index) => `/projects/figma-portfolio/read-aloud/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_KEETA_SLIDES = Array.from(
+  { length: 6 },
+  (_, index) => `/projects/figma-portfolio/keeta-user-flow/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_RD_AGENT_SLIDES = Array.from(
+  { length: 6 },
+  (_, index) => `/projects/figma-portfolio/rd-agent/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_BAIDU_AI_CLOUD_SLIDES = Array.from(
+  { length: 11 },
+  (_, index) => `/projects/figma-portfolio/baidu-ai-cloud/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_HEART_PRINTING_SLIDES = Array.from(
+  { length: 7 },
+  (_, index) => `/projects/figma-portfolio/heart-printing-packaging/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_WHITE_ELEPHANT_SLIDES = Array.from(
+  { length: 10 },
+  (_, index) => `/projects/figma-portfolio/white-elephant-packaging/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
 // ===== CAREER TIMELINE - English =====
 export const CAREER_TIMELINE_EN: CareerStage[] = [
   {
@@ -20,7 +50,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Led 10+ AI product designs from AIGC tools to research platforms.',
     skills: ['AIGC Design', 'B2B Tools', 'Visual Systems', 'Graphic Design'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p3', 'p4', 'p5', 'p6']
+    relatedProjectIds: ['p5', 'p9', 'p11', 'p12']
   },
   {
     id: 'c3',
@@ -30,7 +60,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: "Master's degree, QS Top 100, focusing on UX and branding.",
     skills: ['Visual Design', 'Branding', 'User Research', 'Illustration'],
     image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p7', 'p8']
+    relatedProjectIds: []
   }
 ];
 
@@ -54,7 +84,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '主导 10+ AI 产品设计，从 AIGC 工具到研究平台。',
     skills: ['AIGC 设计', 'B2B 工具', '视觉系统', '平面设计'],
     image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p3', 'p4', 'p5', 'p6']
+    relatedProjectIds: ['p5', 'p9', 'p11', 'p12']
   },
   {
     id: 'c3',
@@ -64,7 +94,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '硕士学位，QS全球前100，专注UX和品牌设计。',
     skills: ['视觉设计', '品牌设计', '用户研究', '插画'],
     image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p7', 'p8']
+    relatedProjectIds: []
   }
 ];
 
@@ -81,7 +111,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2025',
     role: 'UI/UX Designer',
     shortDescription: 'Real-time voice interaction for Office documents.',
-    coverImage: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/read-aloud/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_READ_ALOUD_SLIDES,
+    },
     tags: ['Voice UX', 'AI Design', 'Accessibility', 'Figma', 'Microsoft Office', 'Conversation Design'],
     acts: {
       act1: {
@@ -344,28 +379,33 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     id: 'p2',
-    title: 'Office AI Internal Tools',
+    title: 'Keeta User Flow Analysis & Design Optimization',
     category: 'B-Side',
-    platform: 'Web',
+    platform: 'Mobile',
     year: '2025',
-    role: 'Lead Designer',
-    shortDescription: 'Dashboard and metrics system for Office AI team.',
-    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
-    tags: ['B2B Dashboard', 'Data Visualization', 'Information Architecture', 'Figma', 'User Research'],
+    role: 'UI/UX Designer',
+    shortDescription: 'User-flow analysis and design optimization from store page to order submission.',
+    coverImage: '/projects/figma-portfolio/keeta-user-flow/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_KEETA_SLIDES,
+    },
+    tags: ['User Flow', 'Mobile UX', 'Design Optimization', 'Figma'],
     acts: {
       act1: {
-        title: 'Data Complexity',
-        content: 'Internal teams needed efficient tools to track AI metrics and generate insights.'
+        title: 'Flow Analysis',
+        content: 'Mapped the original journey from store discovery to order submission.'
       },
       act2: {
-        title: 'User-Centered B2B',
-        content: 'Designed dashboard, reports, and metrics preview through deep user research.',
-        decisionPoints: ['Streamlined visualization', 'Intuitive navigation', 'Focus on usability']
+        title: 'Design Optimization',
+        content: 'Organized the project as a Figma-exported reader to preserve the original case pages.',
+        decisionPoints: ['Original page order', 'Source-design fidelity', 'Responsive viewing']
       },
       act3: {
-        title: 'High Satisfaction',
-        content: 'Received highly positive feedback for ease of use and operational convenience.',
-        impact: '30% Usage Increase'
+        title: 'Reader Delivery',
+        content: 'Displayed the final Chinese Figma pages without rebuilding the design in HTML.',
+        impact: '6 Source Pages'
       }
     }
   },
@@ -431,7 +471,12 @@ export const PROJECTS_EN: Project[] = [
     year: '2024',
     role: 'UI/UX Designer',
     shortDescription: 'AI-assisted hypothesis generation for researchers.',
-    coverImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/rd-agent/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_RD_AGENT_SLIDES,
+    },
     tags: ['B2B Tool', 'Research Platform', 'AI Integration', 'Design System', 'Figma'],
     acts: {
       act1: {
@@ -543,16 +588,19 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     id: 'p9',
-    title: '"心相印" Jump into Freedom',
+    title: '"心相印" Packaging Design',
     category: 'C-Side',
     platform: 'Digital',
     year: '2023',
-    role: 'Illustrator',
-    shortDescription: 'Commercial illustration for Heart Printing Package Creative Contest.',
-    coverImage: '/project-covers/heart-printing-jump-into-freedom.svg',
-    gallery: [
-      '/project-covers/heart-printing-jump-into-freedom.svg'
-    ],
+    role: 'Packaging Designer',
+    shortDescription: 'Source Figma pages for the Heart Printing packaging design project.',
+    coverImage: '/projects/figma-portfolio/heart-printing-packaging/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_HEART_PRINTING_SLIDES,
+    },
+    gallery: FIGMA_HEART_PRINTING_SLIDES,
     tags: ['Commercial Illustration', 'Contest', 'Visual Storytelling', 'Brand Collaboration'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743'
@@ -615,10 +663,13 @@ export const PROJECTS_EN: Project[] = [
     year: '2022',
     role: 'Poster Designer',
     shortDescription: 'Creative poster design for White Elephant Soup brand.',
-    coverImage: '/project-covers/white-elephant-soup-tastes-good.svg',
-    gallery: [
-      '/project-covers/white-elephant-soup-tastes-good.svg'
-    ],
+    coverImage: '/projects/figma-portfolio/white-elephant-packaging/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 1814 / 796,
+    slideSets: {
+      zh: FIGMA_WHITE_ELEPHANT_SLIDES,
+    },
+    gallery: FIGMA_WHITE_ELEPHANT_SLIDES,
     tags: ['Poster Design', 'Brand Design', 'Visual Communication', 'Contest'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743'
@@ -639,6 +690,39 @@ export const PROJECTS_EN: Project[] = [
         impact: '106 Views, 3 Recommendations'
       }
     }
+  },
+  {
+    id: 'p12',
+    title: 'Baidu AI Cloud Knowledge Platform Visual Upgrade',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UI/UX Designer',
+    shortDescription: 'Source Figma pages for the Baidu AI Cloud knowledge platform visual upgrade.',
+    coverImage: '/projects/figma-portfolio/baidu-ai-cloud/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_BAIDU_AI_CLOUD_SLIDES,
+    },
+    gallery: FIGMA_BAIDU_AI_CLOUD_SLIDES,
+    tags: ['B2B Platform', 'Visual Upgrade', 'Knowledge Platform', 'Figma'],
+    acts: {
+      act1: {
+        title: 'Platform Context',
+        content: 'Organized the visual upgrade case as exported source pages from Figma.'
+      },
+      act2: {
+        title: 'Source-Design Reader',
+        content: 'The website preserves the original Figma pages as high-resolution images.',
+        decisionPoints: ['Original ordering', 'No HTML reconstruction', 'Responsive reader']
+      },
+      act3: {
+        title: 'Reader Delivery',
+        content: 'Displayed the final Chinese design pages in the Works reader.',
+        impact: '11 Source Pages'
+      }
+    }
   }
 ];
 
@@ -652,7 +736,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2025',
     role: 'UI/UX 设计师',
     shortDescription: 'Office 文档的实时语音交互。',
-    coverImage: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/read-aloud/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_READ_ALOUD_SLIDES,
+    },
     acts: {
       act1: {
         title: '挑战',
@@ -914,27 +1003,32 @@ export const PROJECTS_ZH: Project[] = [
   },
   {
     id: 'p2',
-    title: 'Office AI 内部工具',
+    title: 'Keeta 用户流分析与设计优化',
     category: 'B-Side',
-    platform: 'Web',
+    platform: 'Mobile',
     year: '2025',
-    role: '主导设计师',
-    shortDescription: 'Office AI 团队的仪表盘和指标系统。',
-    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    role: 'UI/UX 设计师',
+    shortDescription: '从门店页到提交订单页的用户动线分析与设计策略。',
+    coverImage: '/projects/figma-portfolio/keeta-user-flow/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_KEETA_SLIDES,
+    },
     acts: {
       act1: {
-        title: '数据复杂性',
-        content: '内部团队需要高效工具来跟踪 AI 指标和生成洞察。'
+        title: '用户动线',
+        content: '围绕从门店页到提交订单页的路径进行分析。'
       },
       act2: {
-        title: '以用户为中心的 B2B',
-        content: '通过深入用户研究设计仪表盘、报告和指标预览。',
-        decisionPoints: ['简化可视化', '直观导航', '聚焦可用性']
+        title: '设计优化',
+        content: '以 Figma 导出的原始页面作为唯一视觉来源。',
+        decisionPoints: ['原始顺序', '高保真展示', '响应式阅读']
       },
       act3: {
-        title: '高满意度',
-        content: '在易用性和操作便捷性方面获得高度积极反馈。',
-        impact: '使用量增长30%'
+        title: 'Reader 呈现',
+        content: '网页只展示原始中文设计稿，不重建设计内容。',
+        impact: '6 页源文件'
       }
     }
   },
@@ -998,7 +1092,12 @@ export const PROJECTS_ZH: Project[] = [
     year: '2024',
     role: 'UI/UX 设计师',
     shortDescription: 'AI 辅助研究员假设生成工具。',
-    coverImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800',
+    coverImage: '/projects/figma-portfolio/rd-agent/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_RD_AGENT_SLIDES,
+    },
     acts: {
       act1: {
         title: '研究效率',
@@ -1096,16 +1195,19 @@ export const PROJECTS_ZH: Project[] = [
   },
   {
     id: 'p9',
-    title: '心相印 Jump into Freedom',
+    title: '心相印包装设计',
     category: 'C-Side',
     platform: 'Digital',
     year: '2023',
-    role: '插画师',
-    shortDescription: '心相印创意包装设计比赛商业插画作品。',
-    coverImage: '/project-covers/heart-printing-jump-into-freedom.svg',
-    gallery: [
-      '/project-covers/heart-printing-jump-into-freedom.svg'
-    ],
+    role: '包装设计师',
+    shortDescription: '心相印包装设计项目的 Figma 原始页面展示。',
+    coverImage: '/projects/figma-portfolio/heart-printing-packaging/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_HEART_PRINTING_SLIDES,
+    },
+    gallery: FIGMA_HEART_PRINTING_SLIDES,
     tags: ['商业插画', '设计比赛', '视觉叙事', '品牌合作'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743'
@@ -1168,10 +1270,13 @@ export const PROJECTS_ZH: Project[] = [
     year: '2022',
     role: '海报设计师',
     shortDescription: '白象汤品牌创意海报设计。',
-    coverImage: '/project-covers/white-elephant-soup-tastes-good.svg',
-    gallery: [
-      '/project-covers/white-elephant-soup-tastes-good.svg'
-    ],
+    coverImage: '/projects/figma-portfolio/white-elephant-packaging/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 1814 / 796,
+    slideSets: {
+      zh: FIGMA_WHITE_ELEPHANT_SLIDES,
+    },
+    gallery: FIGMA_WHITE_ELEPHANT_SLIDES,
     tags: ['海报设计', '品牌设计', '视觉传达', '设计比赛'],
     externalLinks: {
       zcool: 'https://www.zcool.com.cn/u/18429743'
@@ -1190,6 +1295,39 @@ export const PROJECTS_ZH: Project[] = [
         title: '最高参与度',
         content: '在作品集中获得最高互动，106 次浏览和 3 次推荐。',
         impact: '106 浏览量，3 次推荐'
+      }
+    }
+  },
+  {
+    id: 'p12',
+    title: '百度智能云平台视觉升级',
+    category: 'B-Side',
+    platform: 'Web',
+    year: '2024',
+    role: 'UI/UX 设计师',
+    shortDescription: '百度智能云知识平台全流程视觉升级方案。',
+    coverImage: '/projects/figma-portfolio/baidu-ai-cloud/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_BAIDU_AI_CLOUD_SLIDES,
+    },
+    gallery: FIGMA_BAIDU_AI_CLOUD_SLIDES,
+    tags: ['B2B 平台', '视觉升级', '知识平台', 'Figma'],
+    acts: {
+      act1: {
+        title: '平台背景',
+        content: '以 Figma 原始导出页面整理视觉升级方案。'
+      },
+      act2: {
+        title: '源文件阅读器',
+        content: '网页只负责高保真展示，不重建页面布局。',
+        decisionPoints: ['原始顺序', '不拆组件', '响应式阅读']
+      },
+      act3: {
+        title: 'Reader 呈现',
+        content: '在 Works 中展示完整中文设计稿页面。',
+        impact: '11 页源文件'
       }
     }
   }

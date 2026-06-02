@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -17,24 +17,18 @@ import {
   Music,
   Palette,
   Pencil,
-  PencilLine,
   PlayCircle,
-  Plus,
   Quote,
   Route,
-  Save,
   Send,
   Smartphone,
   Sparkles,
   Sticker,
-  Trash2,
   Trophy,
-  Upload,
   X,
 } from 'lucide-react';
 import { DAILY_SPARK_ASSETS, DailySparkKind, IP_UNIVERSE_ASSETS, READING_EXCERPTS } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
-import { assetUrl } from '../../utils/assets';
 
 interface IpUniverseModalProps {
   isZh: boolean;
@@ -61,41 +55,7 @@ const overlayTransition = { duration: 0.36, ease: [0.22, 1, 0.36, 1] as const };
 
 const mediaClass = 'h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]';
 
-const isVideo = (src: string) => /^data:video\//i.test(src) || /\.(mp4|mov|webm)$/i.test(src);
-
-type ReadingExcerpt = (typeof READING_EXCERPTS.zh)[number];
-
-const safeReadJson = <T,>(key: string, fallback: T): T => {
-  if (typeof window === 'undefined') return fallback;
-  try {
-    const raw = window.localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
-  }
-};
-
-const safeWriteJson = (key: string, value: unknown) => {
-  if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    window.alert('这个文件太大了，浏览器本地存储放不下。可以先压缩后再上传。');
-  }
-};
-
-const readFilesAsDataUrls = (files: FileList): Promise<string[]> =>
-  Promise.all(
-    Array.from(files).map(
-      (file) =>
-        new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(String(reader.result));
-          reader.onerror = () => reject(reader.error);
-          reader.readAsDataURL(file);
-        }),
-    ),
-  );
+const isVideo = (src: string) => /\.(mp4|mov|webm)$/i.test(src);
 
 const MediaTile: React.FC<{
   src: string;
@@ -103,11 +63,10 @@ const MediaTile: React.FC<{
   imgClassName?: string;
   controls?: boolean;
 }> = ({ src, className = '', imgClassName = mediaClass, controls = false }) => {
-  const resolvedSrc = assetUrl(src);
   if (isVideo(src)) {
     return (
       <video
-        src={resolvedSrc}
+        src={src}
         autoPlay={!controls}
         loop
         muted
@@ -118,7 +77,7 @@ const MediaTile: React.FC<{
     );
   }
 
-  return <img src={resolvedSrc} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
+  return <img src={src} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
 };
 
 const EmptyVisualShelf: React.FC<{ isZh: boolean; kind: DailySparkKind }> = ({ isZh, kind }) => {
@@ -203,7 +162,7 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
     { label: isZh ? '延展角色' : 'Extensions', detail: isZh ? '形成可持续的 IP 宇宙' : 'Builds a sustainable IP world' },
   ];
   const performance = IP_UNIVERSE_ASSETS.performance;
-  const heroBanners = IP_UNIVERSE_ASSETS.showcase.slice(0, 3);
+  const heroBanners = IP_UNIVERSE_ASSETS.showcase.slice(0, 4);
   const mainIpStats = [
     {
       label: isZh ? '已上架专辑' : 'Published albums',
@@ -389,7 +348,7 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
                           >
                             <MediaTile
                               src={src}
-                              imgClassName={`${index >= 3 ? 'aspect-square' : 'aspect-[4/3]'} max-h-[230px] w-full rounded-[17px] object-cover transition duration-500 group-hover:scale-[1.035]`}
+                              imgClassName={`${index === 3 ? 'aspect-[2.35/1]' : index > 4 ? 'aspect-square' : 'aspect-[4/3]'} max-h-[230px] w-full rounded-[17px] object-cover transition duration-500 group-hover:scale-[1.035]`}
                             />
                           </motion.figure>
                         ))}
@@ -521,30 +480,17 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={overlayTransition}
-                  className="space-y-5"
+                  className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
                 >
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {IP_UNIVERSE_ASSETS.teamShowcase.map((src, index) => (
-                      <motion.figure
-                        key={src}
-                        whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.8 : 0.8 }}
-                        className="group overflow-hidden rounded-[26px] bg-white p-2 shadow-[0_16px_42px_rgba(59,35,14,0.09)]"
-                      >
-                        <MediaTile src={src} imgClassName="aspect-[2.35/1] h-full w-full rounded-[20px] object-cover transition duration-500 group-hover:scale-[1.035]" />
-                      </motion.figure>
-                    ))}
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    {IP_UNIVERSE_ASSETS.colleagues.map((src, index) => (
-                      <motion.figure
-                        key={src}
-                        whileHover={{ y: -8, rotate: index % 2 === 0 ? -1.5 : 1.5 }}
-                        className={`${index === 0 ? 'sm:col-span-2 lg:col-span-2' : ''} group overflow-hidden rounded-[26px] bg-white p-2 shadow-[0_16px_42px_rgba(59,35,14,0.09)]`}
-                      >
-                        <MediaTile src={src} imgClassName={`${index === 0 ? 'aspect-[3/2]' : 'aspect-square'} h-full w-full rounded-[20px] object-cover transition duration-500 group-hover:scale-[1.035]`} />
-                      </motion.figure>
-                    ))}
-                  </div>
+                  {IP_UNIVERSE_ASSETS.colleagues.map((src, index) => (
+                    <motion.figure
+                      key={src}
+                      whileHover={{ y: -8, rotate: index % 2 === 0 ? -1.5 : 1.5 }}
+                      className={`${index === 0 ? 'sm:col-span-2 lg:col-span-2' : ''} group overflow-hidden rounded-[26px] bg-white p-2 shadow-[0_16px_42px_rgba(59,35,14,0.09)]`}
+                    >
+                      <MediaTile src={src} imgClassName={`${index === 0 ? 'aspect-[3/2]' : 'aspect-square'} h-full w-full rounded-[20px] object-cover transition duration-500 group-hover:scale-[1.035]`} />
+                    </motion.figure>
+                  ))}
                 </motion.div>
               ) : null}
 
@@ -594,19 +540,7 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
 
 export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, message, isZh, onClose }) => {
   const assets = DAILY_SPARK_ASSETS[kind];
-  const languageKey = isZh ? 'zh' : 'en';
-  const uploadStorageKey = `daily-spark:${kind}:uploads`;
-  const hiddenStorageKey = `daily-spark:${kind}:hidden`;
-  const readingStorageKey = `daily-spark:reading:${languageKey}`;
-  const [isManaging, setIsManaging] = useState(false);
-  const [uploadedAssets, setUploadedAssets] = useState<string[]>(() => safeReadJson<string[]>(uploadStorageKey, []));
-  const [hiddenAssets, setHiddenAssets] = useState<string[]>(() => safeReadJson<string[]>(hiddenStorageKey, []));
-  const [readingItems, setReadingItems] = useState<ReadingExcerpt[]>(() =>
-    safeReadJson<ReadingExcerpt[]>(readingStorageKey, isZh ? READING_EXCERPTS.zh : READING_EXCERPTS.en),
-  );
-  const [editingExcerptIndex, setEditingExcerptIndex] = useState<number | null>(null);
-  const [excerptDraft, setExcerptDraft] = useState<ReadingExcerpt>({ title: '', body: '', note: '' });
-  const excerpts = readingItems;
+  const excerpts = isZh ? READING_EXCERPTS.zh : READING_EXCERPTS.en;
   const iconMap = {
     painting: Pencil,
     reading: BookOpen,
@@ -621,79 +555,7 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
     ? `${zhWalkthroughType.bodyM} text-[15px] leading-[1.82] text-neutral-600`
     : 'font-sans text-[15px] leading-[1.78] text-neutral-600';
 
-  const mediaAssets = useMemo(
-    () => [...assets.filter((src) => Boolean(src) && !hiddenAssets.includes(src)), ...uploadedAssets],
-    [assets, hiddenAssets, uploadedAssets],
-  );
-
-  const persistUploads = (nextUploads: string[]) => {
-    setUploadedAssets(nextUploads);
-    safeWriteJson(uploadStorageKey, nextUploads);
-  };
-
-  const persistHidden = (nextHidden: string[]) => {
-    setHiddenAssets(nextHidden);
-    safeWriteJson(hiddenStorageKey, nextHidden);
-  };
-
-  const persistReading = (nextItems: ReadingExcerpt[]) => {
-    setReadingItems(nextItems);
-    safeWriteJson(readingStorageKey, nextItems);
-  };
-
-  const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files?.length) return;
-    const nextUploads = [...uploadedAssets, ...(await readFilesAsDataUrls(files))];
-    persistUploads(nextUploads);
-    event.target.value = '';
-  };
-
-  const deleteMedia = (src: string) => {
-    if (uploadedAssets.includes(src)) {
-      persistUploads(uploadedAssets.filter((item) => item !== src));
-      return;
-    }
-    persistHidden([...hiddenAssets, src]);
-  };
-
-  const replaceMedia = async (src: string, event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files?.length) return;
-    const [replacement] = await readFilesAsDataUrls(files);
-    if (uploadedAssets.includes(src)) {
-      persistUploads(uploadedAssets.map((item) => (item === src ? replacement : item)));
-    } else {
-      persistHidden([...hiddenAssets, src]);
-      persistUploads([...uploadedAssets, replacement]);
-    }
-    event.target.value = '';
-  };
-
-  const openExcerptEditor = (index: number | null) => {
-    setEditingExcerptIndex(index);
-    setExcerptDraft(index === null ? { title: '', body: '', note: '' } : excerpts[index]);
-  };
-
-  const saveExcerpt = () => {
-    if (!excerptDraft.title.trim() || !excerptDraft.body.trim()) return;
-    const nextDraft = {
-      title: excerptDraft.title.trim(),
-      body: excerptDraft.body.trim(),
-      note: excerptDraft.note.trim(),
-    };
-    const nextItems =
-      editingExcerptIndex === null
-        ? [...excerpts, nextDraft]
-        : excerpts.map((item, index) => (index === editingExcerptIndex ? nextDraft : item));
-    persistReading(nextItems);
-    setEditingExcerptIndex(null);
-  };
-
-  const deleteExcerpt = (index: number) => {
-    persistReading(excerpts.filter((_, itemIndex) => itemIndex !== index));
-    if (editingExcerptIndex === index) setEditingExcerptIndex(null);
-  };
+  const mediaAssets = useMemo(() => assets.filter(Boolean), [assets]);
   const sparkCopy = {
     painting: {
       mode: isZh ? '像翻一本速写本' : 'Like opening a sketchbook',
@@ -737,29 +599,6 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
     },
   }[kind];
   const SparkModeIcon = sparkCopy.icon;
-  const acceptedMediaTypes = kind === 'dance' ? 'video/*' : kind === 'reading' ? undefined : 'image/*,video/*';
-
-  const renderMediaActions = (src: string) => {
-    if (!isManaging) return null;
-
-    return (
-      <div className="absolute inset-x-3 top-3 z-20 flex items-center justify-end gap-2">
-        <label className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-white/30 bg-black/55 px-2.5 py-1 text-[11px] font-semibold text-white shadow-[0_8px_18px_rgba(0,0,0,0.22)] backdrop-blur-md transition hover:bg-black/70">
-          <PencilLine size={12} />
-          <span>{isZh ? '替换' : 'Replace'}</span>
-          <input type="file" accept={acceptedMediaTypes} className="sr-only" onChange={(event) => replaceMedia(src, event)} />
-        </label>
-        <button
-          type="button"
-          onClick={() => deleteMedia(src)}
-          className="inline-flex items-center gap-1 rounded-full border border-red-200/30 bg-red-500/70 px-2.5 py-1 text-[11px] font-semibold text-white shadow-[0_8px_18px_rgba(0,0,0,0.22)] backdrop-blur-md transition hover:bg-red-500"
-        >
-          <Trash2 size={12} />
-          <span>{isZh ? '删除' : 'Delete'}</span>
-        </button>
-      </div>
-    );
-  };
 
   const renderPainting = () => {
     if (!mediaAssets.length) {
@@ -775,9 +614,8 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
           <div className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
             <motion.figure
               whileHover={{ y: -6, rotate: -0.6 }}
-              className="group relative overflow-hidden rounded-[28px] bg-[#fffaf2] p-3 shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
+              className="group overflow-hidden rounded-[28px] bg-[#fffaf2] p-3 shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
             >
-              {renderMediaActions(featuredWorks[0])}
               <MediaTile src={featuredWorks[0]} imgClassName="mx-auto max-h-[560px] w-auto max-w-full rounded-[22px] object-contain transition duration-500 group-hover:scale-[1.015]" />
             </motion.figure>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -785,9 +623,8 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
                 <motion.figure
                   key={src}
                   whileHover={{ y: -6, rotate: index % 2 === 0 ? 0.8 : -0.8 }}
-                  className="group relative overflow-hidden rounded-[26px] bg-[#fffaf2] p-3 shadow-[0_16px_38px_rgba(0,0,0,0.14)]"
+                  className="group overflow-hidden rounded-[26px] bg-[#fffaf2] p-3 shadow-[0_16px_38px_rgba(0,0,0,0.14)]"
                 >
-                  {renderMediaActions(src)}
                   <MediaTile src={src} imgClassName="mx-auto max-h-[240px] w-auto max-w-full rounded-[20px] object-contain transition duration-500 group-hover:scale-[1.015]" />
                 </motion.figure>
               ))}
@@ -819,9 +656,8 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
             <motion.figure
               key={src}
               whileHover={{ y: -7, rotate: index % 2 === 0 ? -0.6 : 0.6 }}
-              className="group relative mb-4 break-inside-avoid overflow-hidden rounded-[28px] bg-white p-3 shadow-[0_16px_42px_rgba(59,35,14,0.08)]"
+              className="group mb-4 break-inside-avoid overflow-hidden rounded-[28px] bg-white p-3 shadow-[0_16px_42px_rgba(59,35,14,0.08)]"
             >
-              {renderMediaActions(src)}
               <MediaTile src={src} imgClassName="h-auto w-full rounded-[22px] object-contain transition duration-500 group-hover:scale-[1.012]" />
             </motion.figure>
           ))}
@@ -861,76 +697,12 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
         <p className="mt-5 text-[14px] leading-7 text-white/72">{sparkCopy.role}</p>
       </article>
       <div className="space-y-4">
-        {isManaging ? (
-          <div className="rounded-[26px] border border-[#d9c4b0] bg-white/82 p-4 shadow-[0_14px_34px_rgba(59,35,14,0.07)]">
-            <div className="grid gap-3">
-              <input
-                value={excerptDraft.title}
-                onChange={(event) => setExcerptDraft({ ...excerptDraft, title: event.target.value })}
-                placeholder={isZh ? '标题' : 'Title'}
-                className="rounded-[16px] border border-[#ead8c6] bg-[#fffaf2] px-4 py-3 text-[13px] text-[#3B230E] outline-none focus:border-[#8C5462]"
-              />
-              <textarea
-                value={excerptDraft.body}
-                onChange={(event) => setExcerptDraft({ ...excerptDraft, body: event.target.value })}
-                placeholder={isZh ? '摘录内容' : 'Excerpt'}
-                rows={3}
-                className="rounded-[16px] border border-[#ead8c6] bg-[#fffaf2] px-4 py-3 text-[13px] leading-6 text-[#3B230E] outline-none focus:border-[#8C5462]"
-              />
-              <textarea
-                value={excerptDraft.note}
-                onChange={(event) => setExcerptDraft({ ...excerptDraft, note: event.target.value })}
-                placeholder={isZh ? '设计联想 / 备注' : 'Design note'}
-                rows={2}
-                className="rounded-[16px] border border-[#ead8c6] bg-[#fffaf2] px-4 py-3 text-[13px] leading-6 text-[#3B230E] outline-none focus:border-[#8C5462]"
-              />
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={saveExcerpt}
-                className="inline-flex items-center gap-2 rounded-full bg-[#3B230E] px-4 py-2 text-[12px] font-semibold text-white transition hover:bg-[#54331a]"
-              >
-                <Save size={14} />
-                {editingExcerptIndex === null ? (isZh ? '添加摘录' : 'Add excerpt') : isZh ? '保存修改' : 'Save changes'}
-              </button>
-              <button
-                type="button"
-                onClick={() => openExcerptEditor(null)}
-                className="inline-flex items-center gap-2 rounded-full border border-[#ead8c6] bg-white px-4 py-2 text-[12px] font-semibold text-[#6f6257] transition hover:bg-[#fffaf2]"
-              >
-                <Plus size={14} />
-                {isZh ? '新建' : 'New'}
-              </button>
-            </div>
-          </div>
-        ) : null}
         {excerpts.map((excerpt, index) => (
           <motion.article
             key={excerpt.title}
             whileHover={{ x: 8 }}
-            className="relative grid gap-4 rounded-[26px] bg-white/78 p-5 shadow-[0_16px_42px_rgba(59,35,14,0.08)] md:grid-cols-[0.28fr_1fr]"
+            className="grid gap-4 rounded-[26px] bg-white/78 p-5 shadow-[0_16px_42px_rgba(59,35,14,0.08)] md:grid-cols-[0.28fr_1fr]"
           >
-            {isManaging ? (
-              <div className="absolute right-4 top-4 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => openExcerptEditor(index)}
-                  className="grid h-8 w-8 place-items-center rounded-full bg-[#34263f]/10 text-[#34263f] transition hover:bg-[#34263f]/16"
-                  aria-label={isZh ? '编辑摘录' : 'Edit excerpt'}
-                >
-                  <PencilLine size={14} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => deleteExcerpt(index)}
-                  className="grid h-8 w-8 place-items-center rounded-full bg-red-500/10 text-red-600 transition hover:bg-red-500/16"
-                  aria-label={isZh ? '删除摘录' : 'Delete excerpt'}
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            ) : null}
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#B67655]">{String(index + 1).padStart(2, '0')}</p>
               <p className="mt-3 text-[17px] font-semibold text-[#3B230E]">{excerpt.title}</p>
@@ -953,8 +725,7 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
     return (
       <div className="space-y-4">
         <div className="grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
-          <figure className="relative overflow-hidden rounded-[32px] bg-[#101418] p-2 shadow-[0_24px_64px_rgba(16,20,24,0.22)]">
-            {renderMediaActions(mediaAssets[0])}
+          <figure className="overflow-hidden rounded-[32px] bg-[#101418] p-2 shadow-[0_24px_64px_rgba(16,20,24,0.22)]">
             <MediaTile src={mediaAssets[0]} controls imgClassName="aspect-video h-full w-full rounded-[26px] object-cover" />
           </figure>
           <div className="grid gap-4">
@@ -980,9 +751,8 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
             <motion.figure
               key={src}
               whileHover={{ y: -7 }}
-              className="relative overflow-hidden rounded-[26px] bg-[#101418] p-2 shadow-[0_16px_42px_rgba(16,20,24,0.14)]"
+              className="overflow-hidden rounded-[26px] bg-[#101418] p-2 shadow-[0_16px_42px_rgba(16,20,24,0.14)]"
             >
-              {renderMediaActions(src)}
               <MediaTile src={src} controls imgClassName={`${index % 3 === 0 ? 'aspect-[4/5]' : 'aspect-video'} h-full w-full rounded-[20px] object-cover`} />
             </motion.figure>
           ))}
@@ -1007,7 +777,6 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
       <div className="space-y-4">
         <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
           <figure className="group relative min-h-[430px] overflow-hidden rounded-[32px] bg-white p-2 shadow-[0_24px_64px_rgba(59,35,14,0.11)]">
-            {renderMediaActions(mediaAssets[0])}
             <MediaTile src={mediaAssets[0]} imgClassName="h-full min-h-[410px] w-full rounded-[26px] object-cover transition duration-500 group-hover:scale-[1.035]" />
             <div className="absolute inset-x-6 bottom-6 rounded-[24px] bg-[#2a190c]/62 p-5 text-white backdrop-blur-md">
               <Map size={20} className="text-[#F6C685]" />
@@ -1041,9 +810,8 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
             <motion.figure
               key={src}
               whileHover={{ y: -7, rotate: index % 2 === 0 ? -0.8 : 0.8 }}
-              className={`${index % 5 === 0 ? 'row-span-2' : ''} ${index % 8 === 0 ? 'md:col-span-2' : ''} group relative overflow-hidden rounded-[26px] bg-white p-2 shadow-[0_14px_36px_rgba(59,35,14,0.08)]`}
+              className={`${index % 5 === 0 ? 'row-span-2' : ''} ${index % 8 === 0 ? 'md:col-span-2' : ''} group overflow-hidden rounded-[26px] bg-white p-2 shadow-[0_14px_36px_rgba(59,35,14,0.08)]`}
             >
-              {renderMediaActions(src)}
               <MediaTile src={src} imgClassName="h-full w-full rounded-[20px] object-cover transition duration-500 group-hover:scale-[1.035]" />
             </motion.figure>
           ))}
@@ -1119,40 +887,6 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
                       ? isZh ? `${excerpts.length} 条阅读摘录` : `${excerpts.length} excerpts`
                       : isZh ? `${mediaAssets.length} 个素材` : `${mediaAssets.length} assets`}
                   </span>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsManaging((value) => !value);
-                      if (kind === 'reading' && !isManaging) openExcerptEditor(null);
-                    }}
-                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold transition ${
-                      isManaging ? 'bg-[#3B230E] text-white' : 'border border-[#ead8c6] bg-white text-[#6f6257] hover:bg-[#fffaf2]'
-                    }`}
-                  >
-                    <PencilLine size={14} />
-                    {isManaging ? (isZh ? '完成管理' : 'Done') : isZh ? '编辑 / 删除' : 'Edit / delete'}
-                  </button>
-                  {kind === 'reading' ? (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsManaging(true);
-                        openExcerptEditor(null);
-                      }}
-                      className="inline-flex items-center gap-2 rounded-full border border-[#ead8c6] bg-white px-4 py-2 text-[12px] font-semibold text-[#6f6257] transition hover:bg-[#fffaf2]"
-                    >
-                      <Plus size={14} />
-                      {isZh ? '添加' : 'Add'}
-                    </button>
-                  ) : (
-                    <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-[#ead8c6] bg-white px-4 py-2 text-[12px] font-semibold text-[#6f6257] transition hover:bg-[#fffaf2]">
-                      <Upload size={14} />
-                      {isZh ? '上传' : 'Upload'}
-                      <input type="file" multiple accept={acceptedMediaTypes} className="sr-only" onChange={handleUpload} />
-                    </label>
-                  )}
                 </div>
               </div>
             </aside>

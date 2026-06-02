@@ -1,0 +1,61 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1000" fill="#F5F7FF"/>
+  <radialGradient id="readGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1180 330) rotate(136) scale(620 520)">
+    <stop stop-color="#C9D4FF"/>
+    <stop offset="0.52" stop-color="#EEF2FF"/>
+    <stop offset="1" stop-color="#F5F7FF" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1600" height="1000" fill="url(#readGlow)"/>
+  <rect x="100" y="92" width="1400" height="816" rx="54" fill="white" filter="url(#readShadow)"/>
+  <text x="168" y="185" fill="#425BFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="7">VOICE UX</text>
+  <text x="168" y="316" fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="112" letter-spacing="-4">Copilot</text>
+  <text x="168" y="438" fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="112" letter-spacing="-4">Read Aloud</text>
+  <text x="172" y="512" fill="#4F596A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600">Interactive ReadAloud with Copilot Voice</text>
+  <text x="172" y="574" fill="#7A8190" font-family="Inter, Arial, sans-serif" font-size="24">PDF-style case study • motion states • hover specs</text>
+  <rect x="170" y="668" width="176" height="58" rx="29" fill="#425BFF"/>
+  <text x="217" y="705" fill="white" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Listen</text>
+  <rect x="364" y="668" width="178" height="58" rx="29" fill="#F6F7FB" stroke="#DDE2F2"/>
+  <text x="411" y="705" fill="#596273" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Ask AI</text>
+  <rect x="560" y="668" width="210" height="58" rx="29" fill="#F6F7FB" stroke="#DDE2F2"/>
+  <text x="606" y="705" fill="#596273" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Resume</text>
+
+  <g transform="translate(800 180)">
+    <rect x="0" y="0" width="580" height="500" rx="44" fill="#EAF0FF"/>
+    <path d="M93 288C185 219 289 211 426 258C471 274 509 269 580 222V500H0V372C34 355 60 325 93 288Z" fill="#DCE6FF"/>
+    <rect x="89" y="112" width="360" height="230" rx="22" fill="white" transform="rotate(13 89 112)" filter="url(#paperShadow)"/>
+    <circle cx="283" cy="194" r="40" fill="#0B2DFF"/>
+    <text x="267" y="206" fill="white" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">AI</text>
+    <rect x="196" y="275" width="182" height="24" rx="8" fill="#E6ECFF" transform="rotate(13 196 275)"/>
+    <rect x="186" y="322" width="235" height="10" rx="5" fill="#D7DFF8" transform="rotate(13 186 322)"/>
+    <rect x="184" y="346" width="190" height="10" rx="5" fill="#D7DFF8" transform="rotate(13 184 346)"/>
+    <rect x="-40" y="336" width="500" height="180" rx="32" fill="#11131F" filter="url(#panelShadow)"/>
+    <rect x="44" y="396" width="332" height="72" rx="24" fill="white" transform="rotate(7 44 396)"/>
+    <circle cx="94" cy="421" r="7" fill="#FF5F57"/>
+    <circle cx="112" cy="423" r="7" fill="#FFBD2E"/>
+    <circle cx="130" cy="425" r="7" fill="#28C840"/>
+    <text x="162" y="439" fill="#6A7180" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" transform="rotate(7 162 439)">Document Reading</text>
+    <g transform="translate(240 438) rotate(7)">
+      <rect x="0" y="0" width="4" height="24" rx="2" fill="#425BFF">
+        <animate attributeName="height" values="16;30;16" dur="1.2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="13" y="-5" width="4" height="34" rx="2" fill="#425BFF">
+        <animate attributeName="height" values="28;15;28" dur="1.2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="26" y="0" width="4" height="24" rx="2" fill="#425BFF">
+        <animate attributeName="height" values="18;32;18" dur="1.2s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <defs>
+    <filter id="readShadow" x="55" y="52" width="1490" height="906" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="32" flood-color="#243064" flood-opacity="0.12"/>
+    </filter>
+    <filter id="paperShadow" x="40" y="90" width="490" height="350" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#425BFF" flood-opacity="0.16"/>
+    </filter>
+    <filter id="panelShadow" x="-90" y="300" width="600" height="280" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="28" stdDeviation="34" flood-color="#111827" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+</svg>
