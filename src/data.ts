@@ -46,7 +46,7 @@ const FIGMA_WHITE_ELEPHANT_SLIDES = Array.from(
 );
 
 const FIGMA_MSRA_25TH_SLIDES = Array.from(
-  { length: 7 },
+  { length: 9 },
   (_, index) => `/projects/figma-portfolio/msra-25th-anniversary/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
