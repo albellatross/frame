@@ -72,9 +72,9 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     period: 'Feb 2025 - Present',
     company: 'Microsoft STCA',
     role: 'UI/UX Designer',
-    oneLiner: 'Designing voice-driven AI experiences for Office Copilot.',
-    skills: ['Voice Interaction', 'AI UX', 'Cross-timezone Collaboration'],
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1200',
+    oneLiner: 'Designing Copilot voice, creator, and education experiences that turn AI into controllable product flows.',
+    skills: ['Copilot Voice', 'Generative AI', 'Creator Tools', 'Education UX'],
+    image: '/projects/figma-portfolio/read-aloud/page-01.png',
     relatedProjectIds: ['p1', 'p2']
   },
   {
@@ -82,20 +82,30 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     period: 'Jun 2022 - Feb 2025',
     company: 'Microsoft Research Asia',
     role: 'UI/UX Designer, Graphic Designer',
-    oneLiner: 'Led 10+ AI product designs from AIGC tools to research platforms.',
-    skills: ['AIGC Design', 'B2B Tools', 'Visual Systems', 'Graphic Design'],
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p5', 'p9', 'p11', 'p12', 'p13', 'p14', 'p15']
+    oneLiner: 'Led AI-native product design across research tooling, agents, cognitive companionship, and visual systems.',
+    skills: ['AI Agents', 'Research Tooling', 'AIGC UX', 'Visual Systems'],
+    image: '/projects/figma-portfolio/rd-agent/page-01.png',
+    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p12', 'p14', 'p6', 'p9', 'p11']
   },
   {
     id: 'c3',
+    period: 'Aug 2021 - Dec 2021',
+    company: 'FOM Studio Milan',
+    role: 'Design Intern',
+    oneLiner: 'Built brand and packaging systems for real-world retail and energy clients in Milan.',
+    skills: ['Brand Identity', 'Packaging', 'Retail Visuals'],
+    image: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    relatedProjectIds: ['p7']
+  },
+  {
+    id: 'c4',
     period: '2020 - 2021',
     company: 'NABA Milan & Study in Italy',
     role: 'Visual Communication Design',
-    oneLiner: "Master's degree, QS Top 100, focusing on UX and branding.",
+    oneLiner: "Master's degree in Italy, grounding product thinking in branding, visual systems, and illustration.",
     skills: ['Visual Design', 'Branding', 'User Research', 'Illustration'],
-    image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: []
+    image: '/projects/figma-portfolio/illustration-works/page-01.png',
+    relatedProjectIds: ['p8']
   }
 ];
 
@@ -106,9 +116,9 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     period: '2025年2月 - 至今',
     company: 'Microsoft STCA',
     role: 'UI/UX 设计师',
-    oneLiner: '为 Office Copilot 设计语音驱动的 AI 体验。',
-    skills: ['语音交互', 'AI 用户体验', '跨时区协作'],
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1200',
+    oneLiner: '围绕 Copilot 语音、创作者工具与教育场景，把 AI 能力转化为用户可控的产品流程。',
+    skills: ['Copilot Voice', '生成式 AI', '创作者工具', '教育 UX'],
+    image: '/projects/figma-portfolio/read-aloud/page-01.png',
     relatedProjectIds: ['p1', 'p2']
   },
   {
@@ -116,20 +126,30 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     period: '2022年6月 - 2025年2月',
     company: 'Microsoft Research Asia',
     role: 'UI/UX 设计师, 平面设计师',
-    oneLiner: '主导 10+ AI 产品设计，从 AIGC 工具到研究平台。',
-    skills: ['AIGC 设计', 'B2B 工具', '视觉系统', '平面设计'],
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: ['p5', 'p9', 'p11', 'p12', 'p13', 'p14', 'p15']
+    oneLiner: '主导多个 AI-native 产品体验，覆盖研究工具、Agent、认知陪伴与视觉系统。',
+    skills: ['AI Agent', '研究工具', 'AIGC UX', '视觉系统'],
+    image: '/projects/figma-portfolio/rd-agent/page-01.png',
+    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p12', 'p14', 'p6', 'p9', 'p11']
   },
   {
     id: 'c3',
+    period: '2021年8月 - 2021年12月',
+    company: 'FOM Studio Milan',
+    role: '设计实习生',
+    oneLiner: '在米兰参与真实商业项目，将品牌识别、包装与线下视觉系统落地。',
+    skills: ['品牌识别', '包装设计', '零售视觉'],
+    image: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    relatedProjectIds: ['p7']
+  },
+  {
+    id: 'c4',
     period: '2020 - 2021',
     company: 'NABA 米兰与意大利留学',
     role: '视觉传达设计',
-    oneLiner: '硕士学位，QS全球前100，专注UX和品牌设计。',
+    oneLiner: '在意大利完成视觉传达硕士训练，以品牌、视觉系统与插画建立设计底盘。',
     skills: ['视觉设计', '品牌设计', '用户研究', '插画'],
-    image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200',
-    relatedProjectIds: []
+    image: '/projects/figma-portfolio/illustration-works/page-01.png',
+    relatedProjectIds: ['p8']
   }
 ];
 

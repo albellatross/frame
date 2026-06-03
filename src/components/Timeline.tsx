@@ -53,7 +53,7 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
 
         {/* Right Panel: Scrolling Content */}
         <div className="w-full md:w-3/5 relative bg-cream-light">
-          <div className="max-w-xl mx-auto px-6 py-24 md:py-48 space-y-48">
+          <div className="max-w-2xl mx-auto px-6 py-24 md:py-48 space-y-48">
             
             <div className="mb-12 sm:mb-24">
                 <span className="text-warm-gray uppercase tracking-widest text-[10px] sm:text-xs">{t('timeline.journey')}</span>
@@ -91,6 +91,8 @@ const TimelineItem: React.FC<{
   total: number;
 }> = ({ stage, projects, onProjectClick, onInView, t, index, total }) => {
   const ref = useRef(null);
+  const featuredProject = projects[0];
+  const supportingProjects = projects.slice(1);
   
   // 根据索引计算颜色 - 索引0是最近的（粉色），索引越大越远（蓝色）
   const getTimelineColor = () => {
@@ -155,42 +157,102 @@ const TimelineItem: React.FC<{
         {stage.oneLiner}
       </p>
 
-      {/* Embedded Project Cards (Photos as requested) */}
-      <div className="grid grid-cols-1 gap-6">
-         {projects.map((project) => {
-           const shouldContainCover = project.coverDisplay === 'contain' || Boolean(project.slideSets || project.slides);
-           const coverAspectRatio = shouldContainCover ? project.coverAspectRatio : undefined;
+      {featuredProject && (() => {
+        const shouldContainCover = featuredProject.coverDisplay === 'contain' || Boolean(featuredProject.slideSets || featuredProject.slides);
+        const coverAspectRatio = shouldContainCover ? featuredProject.coverAspectRatio : undefined;
+        const featuredTags = featuredProject.tags?.slice(0, 3) || [];
 
-           return (
-             <motion.div
-               key={project.id}
-               whileHover={{ y: -5 }}
-               className="group cursor-pointer overflow-hidden rounded-xl border border-cream-dark bg-white shadow-sm transition-all hover:shadow-md"
-               onClick={() => onProjectClick(project.id)}
-             >
-               <div
-                 className={`relative overflow-hidden ${shouldContainCover ? 'bg-white' : 'bg-cream'} ${coverAspectRatio ? '' : 'h-48'}`}
-                 style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
-               >
-                  <img
-                    src={assetUrl(project.coverImage)}
-                    alt={project.title}
-                    className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                     <div className="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-white text-xs font-medium flex items-center gap-2">
-                        {t('timeline.viewCase')} <ArrowUpRight size={14} />
-                     </div>
+        return (
+          <motion.div
+            whileHover={{ y: -6 }}
+            className="group mb-5 cursor-pointer overflow-hidden rounded-xl border border-cream-dark bg-white shadow-sm transition-all hover:shadow-lg"
+            onClick={() => onProjectClick(featuredProject.id)}
+          >
+            <div
+              className={`relative overflow-hidden ${shouldContainCover ? 'bg-white' : 'bg-cream'} ${coverAspectRatio ? '' : 'aspect-[16/9]'}`}
+              style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
+            >
+              <img
+                src={assetUrl(featuredProject.coverImage)}
+                alt={featuredProject.title}
+                className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-105'}`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-brown/80 via-dark-brown/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-white/80">
+                  {featuredProject.category} · {featuredProject.year}
+                </span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-dark-brown shadow-sm">
+                  <ArrowUpRight size={16} />
+                </span>
+              </div>
+            </div>
+
+            <div className="p-5 sm:p-6">
+              <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.2em]" style={{ color: timelineColor.text }}>
+                {t('timeline.featuredWork')}
+              </span>
+              <h4 className="font-serif text-xl sm:text-2xl text-dark-brown">{featuredProject.title}</h4>
+              <p className="mt-2 text-sm text-warm-gray leading-relaxed">{featuredProject.shortDescription}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {featuredTags.map(tag => (
+                  <span key={tag} className="rounded-full bg-cream px-3 py-1 text-[10px] uppercase tracking-wide text-warm-gray">
+                    {tag}
+                  </span>
+                ))}
+                {featuredProject.acts.act3.impact && (
+                  <span className="rounded-full bg-dark-brown px-3 py-1 text-[10px] uppercase tracking-wide text-white">
+                    {featuredProject.acts.act3.impact}
+                  </span>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        );
+      })()}
+
+      {supportingProjects.length > 0 && (
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-warm-gray">
+              {t('timeline.selectedWorks')}
+            </span>
+            <span className="h-px flex-1 bg-cream-dark" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {supportingProjects.map((project) => {
+              const shouldContainCover = project.coverDisplay === 'contain' || Boolean(project.slideSets || project.slides);
+
+              return (
+                <motion.div
+                  key={project.id}
+                  whileHover={{ y: -4 }}
+                  className="group cursor-pointer overflow-hidden rounded-lg border border-cream-dark bg-white shadow-sm transition-all hover:shadow-md"
+                  onClick={() => onProjectClick(project.id)}
+                >
+                  <div className={`relative aspect-[16/9] overflow-hidden ${shouldContainCover ? 'bg-white' : 'bg-cream'}`}>
+                    <img
+                      src={assetUrl(project.coverImage)}
+                      alt={project.title}
+                      className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
+                    />
+                    <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-dark-brown opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100">
+                      <ArrowUpRight size={14} />
+                    </div>
                   </div>
-               </div>
-               <div className="p-4 sm:p-5">
-                  <h4 className="font-serif text-base sm:text-lg text-dark-brown">{project.title}</h4>
-                  <p className="text-[10px] sm:text-xs text-warm-gray mt-1 line-clamp-2">{project.shortDescription}</p>
-               </div>
-             </motion.div>
-           );
-         })}
-      </div>
+                  <div className="p-4">
+                    <p className="mb-1 text-[10px] font-mono uppercase tracking-[0.16em] text-warm-gray">
+                      {project.category} · {project.year}
+                    </p>
+                    <h4 className="font-serif text-base text-dark-brown leading-tight">{project.title}</h4>
+                    <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-warm-gray">{project.shortDescription}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-2 mt-8">
         {stage.skills.map(skill => (

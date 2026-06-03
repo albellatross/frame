@@ -56,6 +56,8 @@ const translations: Record<Language, Record<string, string>> = {
     'timeline.journey': 'The Journey',
     'timeline.title': 'Career Timeline',
     'timeline.viewCase': 'View Case Study',
+    'timeline.featuredWork': 'Featured Work',
+    'timeline.selectedWorks': 'Selected Works',
     
     // Work Page
     'work.title': 'Work Index.',
@@ -167,6 +169,8 @@ const translations: Record<Language, Record<string, string>> = {
     'timeline.journey': '成长历程',
     'timeline.title': '职业时间线',
     'timeline.viewCase': '查看案例',
+    'timeline.featuredWork': '重点作品',
+    'timeline.selectedWorks': '精选项目',
     
     // Work Page
     'work.title': '作品索引',
