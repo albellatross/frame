@@ -216,6 +216,208 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
   );
 };
 
+const getNuwaTheme = (variant?: CaseSection['variant']) => {
+  switch (variant) {
+    case 'xl':
+      return { accent: '#F5C45E', soft: '#FFF4D1', name: 'NUWA XL' };
+    case 'drag':
+      return { accent: '#FF6A5C', soft: '#FFE3DF', name: 'DragNUWA' };
+    case 'infinity':
+      return { accent: '#A8BCFF', soft: '#E7ECFF', name: 'NUWA-Infinity' };
+    default:
+      return { accent: '#8C73FF', soft: '#EEE9FF', name: 'NUWA Series' };
+  }
+};
+
+const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
+  const theme = getNuwaTheme(section.variant);
+  const isInfinity = section.variant === 'infinity' && section.demoUrl;
+
+  if (isInfinity) {
+    return <LiveDemoWindow section={section} isZh={isZh} />;
+  }
+
+  const renderXlVisual = () => (
+    <div className="relative h-[360px] overflow-hidden bg-[#070707] sm:h-[440px]">
+      {section.fallbackImage && (
+        <img src={assetUrl(section.fallbackImage)} alt={section.fallbackAlt || ''} className="absolute inset-0 h-full w-full object-cover opacity-28" />
+      )}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:56px_100%]" />
+      <div className="absolute left-5 right-5 top-8">
+        <div className="mb-4 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-white/45">
+          <span>{isZh ? '稀疏关键帧' : 'Sparse keyframes'}</span>
+          <span>{isZh ? '完整长视频' : 'Dense long video'}</span>
+        </div>
+        <div className="grid grid-cols-8 gap-2 sm:grid-cols-12">
+          {Array.from({ length: 24 }).map((_, index) => {
+            const isKeyFrame = index % 5 === 0 || index === 23;
+            return (
+              <div key={index} className={`aspect-[9/12] rounded border ${isKeyFrame ? 'border-white/70 bg-white/16' : 'border-white/10 bg-white/7'}`}>
+                <div className="h-full w-full rounded-sm" style={{ backgroundColor: isKeyFrame ? `${theme.accent}26` : 'rgba(255,255,255,0.04)' }} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="absolute bottom-8 left-5 right-5">
+        <div className="mb-4 h-1 rounded-full bg-white/10">
+          <div className="h-full w-[74%] rounded-full" style={{ backgroundColor: theme.accent }} />
+        </div>
+        <div className="grid grid-cols-3 gap-3 text-xs text-white/70">
+          <span>{isZh ? '全局扩散生成故事骨架' : 'Global diffusion creates the story spine'}</span>
+          <span>{isZh ? '局部扩散补齐中间帧' : 'Local diffusion fills intermediate frames'}</span>
+          <span>{isZh ? '并行生成降低等待感' : 'Parallel generation reduces perceived waiting'}</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderDragVisual = () => (
+    <div className="relative h-[360px] overflow-hidden bg-[#070707] sm:h-[440px]">
+      {section.fallbackImage && (
+        <img src={assetUrl(section.fallbackImage)} alt={section.fallbackAlt || ''} className="absolute inset-0 h-full w-full object-cover opacity-32" />
+      )}
+      <div className="absolute inset-0 bg-black/45" />
+      <div className="absolute left-5 right-5 top-5 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.18em] text-white/65">
+        <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5">Text</span>
+        <span className="rounded-full border border-white/15 bg-white/8 px-3 py-1.5">Image</span>
+        <span className="rounded-full border px-3 py-1.5" style={{ borderColor: `${theme.accent}80`, color: theme.accent }}>Trajectory</span>
+      </div>
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 640 440" role="img" aria-label={isZh ? '拖拽轨迹控制视频运动的示意图' : 'Trajectory control visual for generated motion'}>
+        <path d="M116 292 C 202 188, 276 326, 376 210 S 494 148, 552 226" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="18" strokeLinecap="round" />
+        <path d="M116 292 C 202 188, 276 326, 376 210 S 494 148, 552 226" fill="none" stroke={theme.accent} strokeWidth="4" strokeLinecap="round" strokeDasharray="8 10" />
+        <circle cx="116" cy="292" r="12" fill="#fff" />
+        <circle cx="552" cy="226" r="14" fill={theme.accent} />
+        <path d="M538 212 L552 226 L532 231" fill="none" stroke="#050505" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <div className="absolute bottom-5 left-5 right-5 grid grid-cols-1 gap-3 text-xs text-white/70 sm:grid-cols-3">
+        <div className="rounded-xl border border-white/10 bg-white/8 p-3">
+          <span className="block font-semibold text-white">{isZh ? '语义' : 'Semantic'}</span>
+          <span>{isZh ? '文字描述意图' : 'Text describes intent'}</span>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-white/8 p-3">
+          <span className="block font-semibold text-white">{isZh ? '空间' : 'Spatial'}</span>
+          <span>{isZh ? '图像提供场景' : 'Image anchors the scene'}</span>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-white/8 p-3">
+          <span className="block font-semibold text-white">{isZh ? '时间' : 'Temporal'}</span>
+          <span>{isZh ? '轨迹表达运动' : 'Trajectory directs motion'}</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0B0B0D] shadow-[0_24px_70px_rgba(0,0,0,0.32)]">
+      <div className="flex min-h-12 items-center gap-3 border-b border-white/10 bg-white/[0.04] px-4 py-2">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+        </div>
+        <div className="min-w-0 flex-1 font-mono text-[11px] text-white/45">{theme.name} / interaction evidence</div>
+        {section.demoUrl && (
+          <a href={section.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-neutral-950 transition hover:bg-neutral-200">
+            <ExternalLink size={13} />
+            {section.buttonLabel || (isZh ? '打开来源' : 'Open source')}
+          </a>
+        )}
+      </div>
+      {section.variant === 'drag' ? renderDragVisual() : renderXlVisual()}
+      {section.caption && (
+        <div className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/48">{section.caption}</div>
+      )}
+    </div>
+  );
+};
+
+const SeriesTimelineSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => (
+  <div className="bg-[#070707] text-white">
+    <div className="mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-24 md:px-12">
+      <CategoryLabel category={section.category} />
+      <SectionLabel label={section.label} />
+      <div className="max-w-3xl">
+        <h3 className="text-2xl font-bold leading-tight sm:text-4xl">{section.title}</h3>
+        {section.subtitle && <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">{section.subtitle}</p>}
+      </div>
+      {section.items && (
+        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
+          {section.items.map((item, index) => {
+            const variant = index === 0 ? 'infinity' : index === 1 ? 'xl' : 'drag';
+            const theme = getNuwaTheme(variant);
+            return (
+              <div key={item.title} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="font-mono text-xs text-white/42">{item.number || `0${index + 1}`}</span>
+                  <span className="h-2 w-16 rounded-full" style={{ backgroundColor: theme.accent }} />
+                </div>
+                <h4 className="text-xl font-semibold">{item.title}</h4>
+                {item.subtitle && <p className="mt-2 text-sm font-medium" style={{ color: theme.accent }}>{item.subtitle}</p>}
+                <p className="mt-5 text-sm leading-6 text-white/58">{item.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {section.content && <p className="mt-10 max-w-3xl text-sm leading-7 text-white/52">{section.content}</p>}
+    </div>
+  </div>
+);
+
+const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
+  const theme = getNuwaTheme(section.variant);
+  return (
+    <div className="bg-[#09090A] text-white">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 sm:py-24 md:px-12 lg:grid-cols-[0.92fr_1.18fr]">
+        <div>
+          <CategoryLabel category={section.category} />
+          <SectionLabel label={section.label} />
+          <h3 className="text-2xl font-bold leading-tight sm:text-4xl">{section.title}</h3>
+          {section.subtitle && <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">{section.subtitle}</p>}
+          {section.content && <p className="mt-6 text-base leading-8 text-white/72">{section.content}</p>}
+
+          {section.items && (
+            <div className="mt-8 space-y-3">
+              {section.items.map((item, index) => (
+                <div key={`${item.title}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-neutral-950" style={{ backgroundColor: theme.accent }}>
+                      {item.number || index + 1}
+                    </span>
+                    <div>
+                      {item.subtitle && <span className="block text-[10px] font-mono uppercase tracking-[0.18em] text-white/38">{item.subtitle}</span>}
+                      <span className="block text-sm font-semibold text-white">{item.title}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-6 text-white/60">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {section.rows && (
+            <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+              <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
+                {section.rows.map((row, index) => (
+                  <div key={`${row.action}-${index}`} className="bg-white/[0.03] p-5">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em]" style={{ color: theme.accent }}>{row.action}</span>
+                    <p className="mt-3 text-sm font-semibold text-white">{row.feedback}</p>
+                    <p className="mt-3 text-xs leading-5 text-white/52">{row.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="lg:sticky lg:top-8 lg:self-start">
+          <NuwaEvidenceVisual section={section} isZh={isZh} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
   const localizedSlides = project.slideSets?.[language] || project.slideSets?.zh || project.slideSets?.en;
   const directPages = localizedSlides || project.slides || project.gallery;
@@ -230,6 +432,29 @@ const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
 const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   switch (section.type) {
     case 'hero':
+      if (section.variant === 'series') {
+        return (
+          <div className="relative min-h-[620px] overflow-hidden bg-[#050505] text-white">
+            {section.bgImage && <img src={assetUrl(section.bgImage)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-36" />}
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:120px_120px]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.22)_0%,rgba(5,5,5,0.84)_78%)]" />
+            <div className="relative z-10 mx-auto flex min-h-[620px] max-w-6xl flex-col justify-end px-6 pb-16 pt-36 sm:px-8 md:px-12">
+              <span className="mb-6 font-serif text-sm italic tracking-wide text-white/58">{isZh ? 'NUWA 系列案例研究' : 'NUWA SERIES CASE STUDY'}</span>
+              {section.tags && (
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {section.tags.map((t, i) => <span key={i} className="rounded-full border border-white/20 bg-black/18 px-4 py-1.5 text-xs text-white/82 backdrop-blur-sm">{t}</span>)}
+                </div>
+              )}
+              <h1 className="max-w-4xl font-serif text-4xl leading-[0.98] text-white sm:text-6xl md:text-7xl">{section.title}</h1>
+              {section.subtitle && <p className="mt-6 max-w-3xl text-base leading-8 text-white/72 sm:text-xl">{section.subtitle}</p>}
+              <div className="mt-8 flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
+                {section.date && <span>{section.date}</span>}
+                {section.role && <span>{section.role}</span>}
+              </div>
+            </div>
+          </div>
+        );
+      }
       return (
         <div className="relative w-full overflow-hidden" style={{ minHeight: '480px' }}>
           {section.bgImage && <img src={assetUrl(section.bgImage)} alt="" className="absolute inset-0 w-full h-full object-cover" />}
@@ -330,6 +555,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
           <CategoryLabel category={section.category} />
           <SectionLabel label={section.label} />
           <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-8">{section.title}</h3>
+          {section.content && <p className="text-neutral-600 leading-relaxed mb-8 max-w-3xl">{section.content}</p>}
           {section.items && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {section.items.map((c, i) => (
@@ -667,6 +893,12 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
           )}
         </SectionWrapper>
       );
+
+    case 'series-timeline':
+      return <SeriesTimelineSection section={section} isZh={isZh} />;
+
+    case 'evidence':
+      return <EvidenceSection section={section} isZh={isZh} />;
 
     case 'live-demo':
       return (

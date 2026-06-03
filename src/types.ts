@@ -1,5 +1,5 @@
 export interface CaseSection {
-  type: 'hero' | 'stats' | 'personas' | 'flow' | 'cards' | 'principles' | 'two-column' | 'voice-states' | 'mockup' | 'text' | 'outcomes' | 'interaction-path' | 'interaction-mapping' | 'state-flow' | 'validation' | 'design-rationale' | 'annotated-mockup' | 'editorial-board' | 'live-demo';
+  type: 'hero' | 'stats' | 'personas' | 'flow' | 'cards' | 'principles' | 'two-column' | 'voice-states' | 'mockup' | 'text' | 'outcomes' | 'interaction-path' | 'interaction-mapping' | 'series-timeline' | 'evidence' | 'state-flow' | 'validation' | 'design-rationale' | 'annotated-mockup' | 'editorial-board' | 'live-demo';
   category?: string; // e.g. "DESIGN RATIONALE", "DESIGN FOUNDATION", "DESIGN VALIDATION"
   label?: string;
   title?: string;
@@ -9,6 +9,8 @@ export interface CaseSection {
   secondaryImage?: string;
   bgImage?: string;
   dark?: boolean;
+  variant?: 'series' | 'infinity' | 'xl' | 'drag';
+  accent?: string;
   items?: {
     icon?: string;
     number?: string;
