@@ -605,7 +605,7 @@ export const PROJECTS_EN: Project[] = [
     year: '2022',
     role: 'Poster Designer',
     shortDescription: 'Creative poster design for White Elephant Soup brand.',
-    coverImage: 'https://img.zcool.cn/community/01ca1463a42b330002c37bd42ba210.jpg',
+    coverImage: '/project-covers/white-elephant-soup-tastes-good.png',
     gallery: [
       'https://img.zcool.cn/community/01ca1463a42b330002c37bd42ba210.jpg'
     ],

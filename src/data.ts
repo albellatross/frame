@@ -738,9 +738,9 @@ export const PROJECTS_EN: Project[] = [
     year: '2022',
     role: 'Poster Designer',
     shortDescription: 'Creative poster design for White Elephant Soup brand.',
-    coverImage: '/projects/figma-portfolio/white-elephant-packaging/page-01.png',
+    coverImage: '/project-covers/white-elephant-soup-tastes-good.png',
     coverDisplay: 'contain',
-    coverAspectRatio: 1814 / 796,
+    coverAspectRatio: 1814 / 1304,
     slideSets: {
       zh: FIGMA_WHITE_ELEPHANT_SLIDES,
     },
