@@ -26,6 +26,196 @@ const SectionWrapper: React.FC<{ children: React.ReactNode; bg?: string; classNa
   </div>
 );
 
+const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [showFallback, setShowFallback] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
+  const fallbackTimerRef = useRef<number | null>(null);
+  const demoUrl = section.demoUrl || section.content || '';
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)');
+    const updateViewportMode = () => setIsCompactViewport(mediaQuery.matches);
+    updateViewportMode();
+
+    mediaQuery.addEventListener('change', updateViewportMode);
+    return () => mediaQuery.removeEventListener('change', updateViewportMode);
+  }, []);
+
+  useEffect(() => {
+    if (!demoUrl || isCompactViewport) {
+      setIsLoading(false);
+      setShowFallback(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setShowFallback(false);
+
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current);
+    }
+
+    fallbackTimerRef.current = window.setTimeout(() => {
+      setShowFallback(true);
+      setIsLoading(false);
+      fallbackTimerRef.current = null;
+    }, 9000);
+
+    return () => {
+      if (fallbackTimerRef.current) {
+        window.clearTimeout(fallbackTimerRef.current);
+        fallbackTimerRef.current = null;
+      }
+    };
+  }, [demoUrl, reloadKey, isCompactViewport]);
+
+  const handleIframeLoad = () => {
+    if (fallbackTimerRef.current) {
+      window.clearTimeout(fallbackTimerRef.current);
+      fallbackTimerRef.current = null;
+    }
+    setIsLoading(false);
+    setShowFallback(false);
+  };
+
+  const retryIframe = () => {
+    setReloadKey((value) => value + 1);
+    setShowFallback(false);
+    setIsLoading(true);
+  };
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)]">
+      <div className="flex min-h-12 items-center gap-3 border-b border-neutral-100 bg-neutral-50 px-3 py-2 sm:px-4">
+        <div className="flex flex-shrink-0 items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+        </div>
+        <div className="min-w-0 flex-1 rounded-full border border-neutral-200 bg-white px-3 py-1.5 font-mono text-[11px] text-neutral-500">
+          <span className="block truncate">{demoUrl}</span>
+        </div>
+        {demoUrl && (
+          <a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[11px] font-medium text-white transition hover:bg-neutral-700 sm:inline-flex"
+            aria-label={isZh ? '在新标签页打开 NUWA Infinity 在线演示' : 'Open NUWA Infinity live demo in a new tab'}
+          >
+            <ExternalLink size={13} />
+            {section.buttonLabel || (isZh ? '新标签页打开' : 'Open live demo')}
+          </a>
+        )}
+      </div>
+
+      <div className="relative h-[420px] bg-neutral-950 sm:h-[560px] lg:h-[640px]">
+        {isCompactViewport && (
+          <div className="absolute inset-0 bg-neutral-950">
+            {section.fallbackImage && (
+              <img
+                src={assetUrl(section.fallbackImage)}
+                alt={section.fallbackAlt || section.title || ''}
+                className="h-full w-full object-cover opacity-70"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10" />
+            <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/10 bg-black/62 p-4 text-white backdrop-blur-md">
+              <p className="text-sm font-semibold">{isZh ? '移动端建议新标签页打开' : 'Best opened in a new tab on mobile'}</p>
+              <p className="mt-2 text-xs leading-5 text-white/65">
+                {isZh ? '原始 NUWA demo 更适合桌面浏览。这里保留预览图和外部入口，避免窄屏 iframe 影响阅读。' : 'The original NUWA demo is desktop-oriented, so this view keeps a preview and launch path instead of squeezing the live site.'}
+              </p>
+              {demoUrl && (
+                <a
+                  href={demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                >
+                  <ExternalLink size={14} />
+                  {section.buttonLabel || (isZh ? '打开在线演示' : 'Open live demo')}
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
+        {demoUrl && !showFallback && !isCompactViewport && (
+          <iframe
+            key={reloadKey}
+            src={demoUrl}
+            title={section.title || (isZh ? 'NUWA Infinity 在线演示' : 'NUWA Infinity live demo')}
+            className="h-full w-full border-0"
+            loading="lazy"
+            onLoad={handleIframeLoad}
+            allow="fullscreen; autoplay; clipboard-read; clipboard-write"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        )}
+
+        {isLoading && !showFallback && !isCompactViewport && (
+          <div className="absolute inset-0 grid place-items-center bg-neutral-950 text-white">
+            <div className="text-center">
+              <div className="mx-auto mb-4 h-9 w-9 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+              <p className="text-sm font-medium">{isZh ? '正在加载在线演示...' : 'Loading live demo...'}</p>
+              <p className="mt-2 max-w-xs text-xs leading-5 text-white/45">
+                {isZh ? '如果目标网站不允许 iframe 嵌入，将自动显示预览图。' : 'If the target site blocks iframe embedding, a preview fallback will appear.'}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {showFallback && !isCompactViewport && (
+          <div className="absolute inset-0 bg-neutral-950">
+            {section.fallbackImage && (
+              <img
+                src={assetUrl(section.fallbackImage)}
+                alt={section.fallbackAlt || section.title || ''}
+                className="h-full w-full object-cover opacity-80"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
+            <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/10 bg-black/55 p-5 text-white backdrop-blur-md sm:inset-x-auto sm:left-6 sm:max-w-md">
+              <p className="text-sm font-semibold">{isZh ? '在线演示可能无法嵌入' : 'The live demo may not be embeddable'}</p>
+              <p className="mt-2 text-xs leading-5 text-white/62">
+                {isZh ? '这通常由目标网站的安全策略造成。你仍然可以通过预览图理解交互入口，或在新标签页打开真实项目。' : 'This is usually caused by the target site security policy. Use the preview as context, or open the real project in a new tab.'}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {demoUrl && (
+                  <a
+                    href={demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                  >
+                    <ExternalLink size={14} />
+                    {section.buttonLabel || (isZh ? '打开在线演示' : 'Open live demo')}
+                  </a>
+                )}
+                <button
+                  type="button"
+                  onClick={retryIframe}
+                  className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
+                >
+                  {isZh ? '重试嵌入' : 'Retry iframe'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="border-t border-neutral-100 bg-white px-4 py-3">
+        <p className="text-xs leading-5 text-neutral-500">
+          {section.caption || (isZh ? '作为证据模块嵌入真实项目，帮助读者验证交互体验，而不是只看静态截图。' : 'Embedded as an evidence module so readers can verify the interaction experience beyond screenshots.')}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
   const localizedSlides = project.slideSets?.[language] || project.slideSets?.zh || project.slideSets?.en;
   const directPages = localizedSlides || project.slides || project.gallery;
@@ -34,12 +224,7 @@ const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
     return Array.from(new Set(directPages));
   }
 
-  const sectionPages = (project.caseSections || []).flatMap((section) => [
-    section.bgImage,
-    section.image,
-  ]).filter((src): src is string => Boolean(src));
-
-  return Array.from(new Set(sectionPages));
+  return [];
 };
 
 const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
@@ -444,6 +629,57 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
         </SectionWrapper>
       );
 
+    case 'interaction-mapping':
+      return (
+        <SectionWrapper bg="#ffffff">
+          <CategoryLabel category={section.category} />
+          <SectionLabel label={section.label} />
+          <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-3">{section.title}</h3>
+          {section.subtitle && <p className="text-neutral-500 text-sm mb-6 max-w-3xl leading-relaxed">{section.subtitle}</p>}
+          {section.content && <p className="text-neutral-600 leading-relaxed mb-8 max-w-3xl">{section.content}</p>}
+          {section.rows && (
+            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+              <div className="hidden grid-cols-[0.24fr_0.28fr_0.48fr] border-b border-neutral-200 bg-neutral-950 text-xs font-semibold uppercase tracking-[0.14em] text-white/72 md:grid">
+                <div className="px-5 py-4">{isZh ? 'AI 能力' : 'AI capability'}</div>
+                <div className="px-5 py-4">{isZh ? '熟悉心智' : 'Familiar mental model'}</div>
+                <div className="px-5 py-4">{isZh ? '交互转译与设计价值' : 'Interaction translation & design value'}</div>
+              </div>
+              {section.rows.map((row, index) => (
+                <div
+                  key={`${row.action}-${index}`}
+                  className="grid gap-3 border-b border-neutral-100 p-5 last:border-0 md:grid-cols-[0.24fr_0.28fr_0.48fr] md:gap-0 md:p-0"
+                >
+                  <div className="md:border-r md:border-neutral-100 md:px-5 md:py-5">
+                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? 'AI 能力' : 'AI capability'}</span>
+                    <p className="text-sm font-semibold text-neutral-950">{row.action}</p>
+                  </div>
+                  <div className="md:border-r md:border-neutral-100 md:px-5 md:py-5">
+                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '熟悉心智' : 'Familiar mental model'}</span>
+                    <p className="text-sm text-neutral-600">{row.feedback}</p>
+                  </div>
+                  <div className="md:px-5 md:py-5">
+                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '交互转译与设计价值' : 'Interaction value'}</span>
+                    <p className="text-sm leading-6 text-neutral-600">{row.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </SectionWrapper>
+      );
+
+    case 'live-demo':
+      return (
+        <SectionWrapper bg="#F8F8FA" className="live-demo-section">
+          <CategoryLabel category={section.category} />
+          <SectionLabel label={section.label} />
+          <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-3">{section.title}</h3>
+          {section.subtitle && <p className="text-neutral-500 text-sm mb-6 max-w-3xl leading-relaxed">{section.subtitle}</p>}
+          {section.content && <p className="text-neutral-600 leading-relaxed mb-8 max-w-3xl">{section.content}</p>}
+          <LiveDemoWindow section={section} isZh={isZh} />
+        </SectionWrapper>
+      );
+
     case 'state-flow':
       return (
         <SectionWrapper bg="#ffffff">
@@ -776,6 +1012,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                       <a href={project.externalLinks.live} target="_blank" rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 border border-neutral-300 hover:border-neutral-400 text-neutral-700 px-5 py-2.5 rounded-full text-sm font-medium transition-colors">
                         <ExternalLink size={15} /> {isZh ? '在线项目' : 'Live Project'}
+                      </a>
+                    )}
+                    {project.externalLinks.github && (
+                      <a href={project.externalLinks.github} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 border border-neutral-300 hover:border-neutral-400 text-neutral-700 px-5 py-2.5 rounded-full text-sm font-medium transition-colors">
+                        <ExternalLink size={15} /> GitHub
                       </a>
                     )}
                   </div>

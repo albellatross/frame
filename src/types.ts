@@ -1,5 +1,5 @@
 export interface CaseSection {
-  type: 'hero' | 'stats' | 'personas' | 'flow' | 'cards' | 'principles' | 'two-column' | 'voice-states' | 'mockup' | 'text' | 'outcomes' | 'interaction-path' | 'state-flow' | 'validation' | 'design-rationale' | 'annotated-mockup' | 'editorial-board';
+  type: 'hero' | 'stats' | 'personas' | 'flow' | 'cards' | 'principles' | 'two-column' | 'voice-states' | 'mockup' | 'text' | 'outcomes' | 'interaction-path' | 'interaction-mapping' | 'state-flow' | 'validation' | 'design-rationale' | 'annotated-mockup' | 'editorial-board' | 'live-demo';
   category?: string; // e.g. "DESIGN RATIONALE", "DESIGN FOUNDATION", "DESIGN VALIDATION"
   label?: string;
   title?: string;
@@ -53,6 +53,10 @@ export interface CaseSection {
   layout?: 'full-bleed' | 'contained' | 'immersive'; // editorial-board layout mode
   caption?: string; // editorial-board caption text
   maxWidth?: string; // e.g. '1440px', '100%'
+  demoUrl?: string; // live-demo URL
+  fallbackImage?: string; // live-demo preview/fallback image
+  fallbackAlt?: string; // accessible alt text for fallback image
+  buttonLabel?: string; // live-demo external link label
 }
 
 export interface Project {

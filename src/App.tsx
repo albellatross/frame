@@ -14,7 +14,7 @@ import PortfolioGenerator from './components/PortfolioGenerator';
 import WalkThrough from './components/walk-through';
 
 const hasPortfolioReaderPages = (project: Project) =>
-  Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length);
+  Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length || project.caseSections?.length);
 
 const AppContent: React.FC = () => {
   const { language } = useLanguage();

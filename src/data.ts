@@ -85,7 +85,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Led AI-native product design across research tooling, agents, cognitive companionship, and visual systems.',
     skills: ['AI Agents', 'Research Tooling', 'AIGC UX', 'Visual Systems'],
     image: '/projects/figma-portfolio/rd-agent/page-01.png',
-    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -129,7 +129,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '主导多个 AI-native 产品体验，覆盖研究工具、Agent、认知陪伴与视觉系统。',
     skills: ['AI Agent', '研究工具', 'AIGC UX', '视觉系统'],
     image: '/projects/figma-portfolio/rd-agent/page-01.png',
-    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -466,28 +466,222 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     id: 'p3',
-    title: 'NUWA - AIGC Platform',
+    title: 'NUWA Infinity',
     category: 'C-Side',
     platform: 'Web',
-    year: '2023',
-    role: 'Lead Designer',
-    shortDescription: 'AI-powered content generation showcase.',
-    coverImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
-    tags: ['AIGC', 'AI Design', 'Visual Design', 'Web Design', 'Figma', 'Marketing'],
+    year: '2022',
+    role: 'Interaction Designer / Web Experience Designer',
+    shortDescription: 'An early multimodal AI demo that translated infinite visual synthesis into familiar exploratory interactions.',
+    coverImage: '/projects/nuwa-infinity/live-preview.png',
+    tags: ['Early AI UX', 'Multimodal AI', 'Interaction Design', 'Generative AI', 'Web Experience', 'Microsoft Research'],
+    externalLinks: {
+      live: 'https://nuwa-infinity.microsoft.com/#/',
+      github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
+    },
+    caseSections: [
+      {
+        type: 'hero',
+        title: 'Designing Familiar Interactions for Unfamiliar AI Capabilities',
+        subtitle: 'I translated abstract model capabilities into familiar actions — typing, selecting, dragging, expanding, previewing, and comparing — so users could understand NUWA Infinity by interacting with it, not by reading a technical explanation.',
+        bgImage: '/projects/nuwa-infinity/live-preview.png',
+        tags: ['Early AI UX', 'Multimodal AI', 'Exploratory Interaction', 'Microsoft Research'],
+        role: 'Interaction Design / Web Experience Design',
+        date: '2022'
+      },
+      {
+        type: 'stats',
+        category: 'PROJECT CONTEXT',
+        label: '01',
+        title: 'Designing before AI interaction patterns existed',
+        subtitle: 'NUWA Infinity was a Microsoft Research demo for infinite visual synthesis, including high-resolution image generation, outpainting, image animation, and video generation.',
+        content: 'The challenge was not simply to showcase a model. It was to help first-time users understand what a new multimodal AI capability could do, what they could control, and why the results were meaningful.',
+        stats: [
+          { value: '2022', label: 'Early generative AI context' },
+          { value: '0→1', label: 'No mature AI UX pattern to copy' },
+          { value: 'Text / Image / Video', label: 'Multimodal input and output' },
+          { value: 'Live demo', label: 'Real interaction, not only screenshots' }
+        ]
+      },
+      {
+        type: 'cards',
+        category: 'THE CHALLENGE',
+        label: '02',
+        title: 'The problem was interaction literacy',
+        content: 'Users could see that the model was powerful, but terms like outpainting, arbitrary-size generation, and image animation were not yet everyday product concepts.',
+        items: [
+          {
+            title: 'Few established AI UX patterns',
+            description: 'Prompting, outpainting, and image-to-video interactions were still unfamiliar, so the interface could not rely on conventions that users already knew.'
+          },
+          {
+            title: 'Abstract model capabilities',
+            description: 'The research model could generate beyond an image boundary or animate a still image, but those ideas needed to become concrete actions.'
+          },
+          {
+            title: 'Fast comprehension for a research demo',
+            description: 'Visitors needed to understand the model quickly without reading a paper or learning technical terminology first.'
+          },
+          {
+            title: 'Playfulness had to carry meaning',
+            description: 'The playful layer was not decoration. It was a way to reduce intimidation, invite exploration, and make the model feel controllable.'
+          }
+        ]
+      },
+      {
+        type: 'principles',
+        category: 'DESIGN PRINCIPLES',
+        label: '03',
+        title: 'Principles for making unfamiliar AI feel usable',
+        items: [
+          {
+            number: '1',
+            title: 'Familiar first, magical second',
+            subtitle: 'Start from known behaviors',
+            description: 'Use typing, selecting, dragging, expanding, and previewing as the entry points before revealing the surprising AI capability.'
+          },
+          {
+            number: '2',
+            title: 'Show through interaction',
+            subtitle: 'Explain by doing',
+            description: 'Let users learn the model by manipulating examples and seeing results, instead of making the page depend on long technical descriptions.'
+          },
+          {
+            number: '3',
+            title: 'Make generation feel controllable',
+            subtitle: 'Reduce uncertainty',
+            description: 'Because AI output can feel unpredictable, the interface needed clear steps, previews, before/after comparison, and visible ways to continue exploring.'
+          },
+          {
+            number: '4',
+            title: 'Use play as onboarding',
+            subtitle: 'Lower the barrier',
+            description: 'Responsive motion and playful exploration made a frontier research model feel approachable without hiding its technical ambition.'
+          }
+        ]
+      },
+      {
+        type: 'interaction-mapping',
+        category: 'INTERACTION TRANSLATION FRAMEWORK',
+        label: '04',
+        title: 'From AI capability to user mental model',
+        subtitle: 'The core design move was translating model capabilities into actions that users already understood.',
+        rows: [
+          {
+            action: 'Text-to-Image',
+            feedback: 'Writing a description or search query',
+            value: 'Use language as the starting point for generation, so users can summon a visual result through a familiar input pattern.'
+          },
+          {
+            action: 'Image Outpainting',
+            feedback: 'Dragging, resizing, or extending a canvas',
+            value: 'Frame generating unknown regions as expanding an existing image boundary, making an abstract AI capability feel spatial and direct.'
+          },
+          {
+            action: 'Image Animation',
+            feedback: 'Playing a video and comparing before/after',
+            value: 'Let users understand how AI makes a still image move through preview, replay, and comparison rather than terminology.'
+          },
+          {
+            action: 'Arbitrary-size Generation',
+            feedback: 'Infinite canvas, maps, zooming, and horizontal browsing',
+            value: 'Turn the model idea of “infinity” into a felt interaction: the world can keep extending beyond the visible frame.'
+          },
+          {
+            action: 'Research Model Explanation',
+            feedback: 'Examples, steps, and progressive reveal',
+            value: 'Use curated interaction moments to make the research understandable to non-technical visitors without flattening the model value.'
+          }
+        ]
+      },
+      {
+        type: 'interaction-path',
+        category: 'KEY INTERACTION MOMENTS',
+        label: '05',
+        title: 'Designing moments that made the model legible',
+        subtitle: 'Each interaction moment followed the same logic: user problem → design decision → why it helped users understand the AI capability.',
+        steps: [
+          { label: 'Prompt' },
+          { label: 'Expand' },
+          { label: 'Animate' },
+          { label: 'Compare' }
+        ],
+        rows: [
+          {
+            action: 'Users start with language',
+            feedback: 'The interface treats prompt writing as a familiar creative brief rather than a technical command line.',
+            value: 'Text-to-image becomes understandable as a conversation with visual intent.'
+          },
+          {
+            action: 'Users expand an image boundary',
+            feedback: 'Outpainting is framed as extending the current canvas, not as invoking a hidden model operation.',
+            value: 'Users can understand “AI creates beyond the frame” through a spatial action they already know.'
+          },
+          {
+            action: 'Users preview motion from a still image',
+            feedback: 'Static and animated states are shown as a before/after relationship with replayable output.',
+            value: 'The model capability becomes visible as transformation, not just a final asset.'
+          },
+          {
+            action: 'Users explore examples directly',
+            feedback: 'Gallery and live demo interactions let users test the experience rather than passively read claims.',
+            value: 'Exploration builds trust and curiosity around an unfamiliar AI system.'
+          }
+        ]
+      },
+      {
+        type: 'live-demo',
+        category: 'EMBEDDED LIVE DEMO',
+        label: '06',
+        title: 'Try the Live Demo',
+        subtitle: 'A small browser-like sandbox lets readers verify the original interaction experience inside the case study.',
+        content: 'The module defaults to the real NUWA Infinity website. If the target site ever blocks iframe embedding, the portfolio falls back to a preview image and an external “Open live demo” action.',
+        demoUrl: 'https://nuwa-infinity.microsoft.com/#/',
+        fallbackImage: '/projects/nuwa-infinity/live-preview.png',
+        fallbackAlt: 'NUWA Infinity website preview showing a gallery of generated visual examples.',
+        buttonLabel: 'Open live demo',
+        caption: 'This evidence module supports iframe embedding, loading feedback, iframe failure fallback, responsive sizing, and an external launch path.'
+      },
+      {
+        type: 'outcomes',
+        category: 'REFLECTION',
+        label: '07',
+        title: 'What this project says about my interaction design approach',
+        subtitle: 'This was an early AI interaction project, and it shaped how I think about designing for emerging technologies.',
+        content: 'Designing for emerging AI is less about inventing alien UI and more about finding the right bridge between new technical capability and existing user mental models.',
+        items: [
+          {
+            title: 'Technical translation',
+            description: 'I turned model capabilities into product-level actions that users could recognize and try.'
+          },
+          {
+            title: 'Exploratory interaction',
+            description: 'I used play, motion, and direct manipulation as onboarding tools for a new technology.'
+          },
+          {
+            title: 'Control and feedback',
+            description: 'I designed around preview, comparison, and continuation so generation felt less like a black box.'
+          },
+          {
+            title: 'Interview framing',
+            description: 'The project is best presented as an AI interaction design case study, not a visual showcase.'
+          }
+        ]
+      }
+    ],
     acts: {
       act1: {
-        title: 'Emerging Technology',
-        content: 'Showcase NUWA\'s capabilities: image expansion, text-to-image, image-to-video generation.'
+        title: 'Emerging AI Interaction',
+        content: 'NUWA Infinity needed an exploratory experience for users who were not yet familiar with generative AI workflows.'
       },
       act2: {
-        title: 'Technical Excellence',
-        content: 'Combined technical features with user needs for optimal interaction and visual design.',
-        decisionPoints: ['Intuitive AIGC workflows', 'Engaging visuals', 'Clear communication']
+        title: 'Interaction Translation',
+        content: 'Translated abstract AI capabilities into familiar actions such as typing, dragging, expanding, previewing, and before/after comparison.',
+        decisionPoints: ['Familiar mental models', 'Exploratory interaction', 'Controllable generation']
       },
       act3: {
-        title: 'Viral Success',
-        content: 'Achieved 10K+ views and engagement on social media, boosting NUWA\'s market presence.',
-        impact: '10K+ Social Engagement'
+        title: 'Understandable AI Demo',
+        content: 'Helped users understand and explore an early multimodal AI model through direct interaction rather than technical explanation.',
+        impact: 'Early AI UX'
       }
     }
   },
@@ -1208,27 +1402,222 @@ export const PROJECTS_ZH: Project[] = [
   },
   {
     id: 'p3',
-    title: 'NUWA - AIGC 平台',
+    title: 'NUWA Infinity',
     category: 'C-Side',
     platform: 'Web',
-    year: '2023',
-    role: '主导设计师',
-    shortDescription: 'AI 驱动的内容生成展示平台。',
-    coverImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+    year: '2022',
+    role: '交互设计师 / Web 体验设计师',
+    shortDescription: '早期多模态 AI demo：将无限视觉生成能力转译成用户熟悉、可探索的交互体验。',
+    coverImage: '/projects/nuwa-infinity/live-preview.png',
+    tags: ['早期 AI UX', '多模态 AI', '交互设计', '生成式 AI', 'Web 体验', 'Microsoft Research'],
+    externalLinks: {
+      live: 'https://nuwa-infinity.microsoft.com/#/',
+      github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
+    },
+    caseSections: [
+      {
+        type: 'hero',
+        title: '为陌生的 AI 能力设计熟悉的交互语言',
+        subtitle: '我将抽象的模型能力转译成用户熟悉的操作方式：输入、选择、拖拽、扩展、预览与 before/after 对比，让用户通过互动本身理解 NUWA Infinity，而不是依赖复杂的技术说明。',
+        bgImage: '/projects/nuwa-infinity/live-preview.png',
+        tags: ['早期 AI UX', '多模态 AI', '探索式交互', 'Microsoft Research'],
+        role: '交互设计 / Web 体验设计',
+        date: '2022'
+      },
+      {
+        type: 'stats',
+        category: '项目背景',
+        label: '01',
+        title: '在 AI 交互范式成熟之前做设计',
+        subtitle: 'NUWA Infinity 是 Microsoft Research 的无限视觉生成 demo，覆盖高分辨率图像生成、图像扩展、图片动画化与视频生成等能力。',
+        content: '这个项目的挑战不只是展示一个模型，而是让第一次接触它的用户理解：这个多模态 AI 能做什么、用户能控制什么，以及结果为什么有意义。',
+        stats: [
+          { value: '2022', label: '早期生成式 AI 背景' },
+          { value: '0→1', label: '没有成熟 AI UX pattern 可直接套用' },
+          { value: '文本 / 图像 / 视频', label: '多模态输入与输出' },
+          { value: 'Live demo', label: '真实交互，而不只是截图' }
+        ]
+      },
+      {
+        type: 'cards',
+        category: '设计挑战',
+        label: '02',
+        title: '真正的问题是交互理解门槛',
+        content: '用户能感受到模型很强，但 outpainting、任意尺寸生成、图片动画化这些概念，在当时还不是日常产品语言。',
+        items: [
+          {
+            title: '缺少成熟的 AI UX 范式',
+            description: 'Prompt、outpainting、image-to-video 等交互还不被用户熟悉，界面不能依赖现成的产品惯例。'
+          },
+          {
+            title: '模型能力非常抽象',
+            description: '模型可以在图片边界之外继续生成，也可以让静态图动起来，但这些能力需要被转化成具体操作。'
+          },
+          {
+            title: '研究 demo 需要快速建立理解',
+            description: '访客进入页面后，需要在不阅读论文、不学习术语的情况下，快速理解模型的价值和使用方式。'
+          },
+          {
+            title: '好玩必须服务理解',
+            description: 'playful/fancy 不是装饰，而是降低陌生感、激发探索欲，并让模型能力变得可感知、可控制。'
+          }
+        ]
+      },
+      {
+        type: 'principles',
+        category: '设计原则',
+        label: '03',
+        title: '让陌生 AI 变得可用的四个原则',
+        items: [
+          {
+            number: '1',
+            title: '先熟悉，再惊喜',
+            subtitle: '从已知行为进入',
+            description: '先用输入、选择、拖拽、扩展、预览这些用户熟悉的动作建立安全感，再展示 AI 的惊喜能力。'
+          },
+          {
+            number: '2',
+            title: '通过互动解释技术',
+            subtitle: '让用户做中理解',
+            description: '减少概念解释，让用户通过操作示例、看到结果，自然理解模型的能力。'
+          },
+          {
+            number: '3',
+            title: '让生成过程有控制感',
+            subtitle: '降低黑箱感',
+            description: 'AI 结果不可完全预测，所以界面需要通过步骤、预览、before/after 对比和继续探索入口补足控制感。'
+          },
+          {
+            number: '4',
+            title: '把可玩性当成 onboarding',
+            subtitle: '降低技术距离',
+            description: '响应式动效和探索式交互让前沿研究模型更容易接近，同时不削弱它的技术野心。'
+          }
+        ]
+      },
+      {
+        type: 'interaction-mapping',
+        category: '交互转译框架',
+        label: '04',
+        title: '从 AI 能力到用户心智模型',
+        subtitle: '这个项目最核心的设计动作，是把模型能力翻译成用户已经理解的操作。',
+        rows: [
+          {
+            action: 'Text-to-Image',
+            feedback: '写描述、输入关键词、搜索',
+            value: '以语言作为生成起点，让用户用熟悉的输入方式召唤视觉结果。'
+          },
+          {
+            action: 'Image Outpainting',
+            feedback: '拖拽、调整画布、扩展图片边界',
+            value: '把“生成未知区域”设计成“扩展已有画面”，让抽象的 AI 能力变成直觉的空间操作。'
+          },
+          {
+            action: 'Image Animation',
+            feedback: '播放视频、查看 before/after',
+            value: '通过预览、回放和对比，让用户理解 AI 如何让一张静态图片动起来。'
+          },
+          {
+            action: 'Arbitrary-size Generation',
+            feedback: '无限画布、地图缩放、横向浏览',
+            value: '把模型里的 “infinity” 变成用户能感受到的交互：画面可以继续向可见区域之外延展。'
+          },
+          {
+            action: 'Research Model Explanation',
+            feedback: '示例、步骤、渐进式展示',
+            value: '用可探索的交互片段让非技术用户也能理解研究价值，而不是只依赖论文语言。'
+          }
+        ]
+      },
+      {
+        type: 'interaction-path',
+        category: '关键交互时刻',
+        label: '05',
+        title: '用关键时刻让模型能力变得可读',
+        subtitle: '每个交互 moment 都遵循同一个逻辑：用户问题 → 设计决策 → 为什么帮助用户理解 AI 能力。',
+        steps: [
+          { label: 'Prompt' },
+          { label: 'Expand' },
+          { label: 'Animate' },
+          { label: 'Compare' }
+        ],
+        rows: [
+          {
+            action: '用户从语言开始',
+            feedback: '界面把 prompt 写作设计成创意描述，而不是技术命令行。',
+            value: 'Text-to-image 被理解成用语言表达视觉意图。'
+          },
+          {
+            action: '用户扩展图片边界',
+            feedback: 'Outpainting 被包装成延展当前画布，而不是调用隐藏的模型操作。',
+            value: '用户通过熟悉的空间动作理解“AI 在画面之外继续生成”。'
+          },
+          {
+            action: '用户预览静态图到动态结果',
+            feedback: '静态图和动态结果以 before/after 关系呈现，并支持回放。',
+            value: '模型能力被理解成转化过程，而不只是最终素材。'
+          },
+          {
+            action: '用户直接探索示例',
+            feedback: 'Gallery 与 live demo 让用户可以试，而不是被动阅读项目说明。',
+            value: '探索建立了对陌生 AI 系统的信任感和好奇心。'
+          }
+        ]
+      },
+      {
+        type: 'live-demo',
+        category: '在线交互演示',
+        label: '06',
+        title: 'Try the Live Demo',
+        subtitle: '一个类似小浏览器窗口的 sandbox，让读者在 case study 里直接验证原项目交互。',
+        content: '模块默认加载真实的 NUWA Infinity 网站。如果目标站点未来因为安全策略不允许 iframe 嵌入，作品集会自动显示预览图，并提供“打开在线演示”的外部入口。',
+        demoUrl: 'https://nuwa-infinity.microsoft.com/#/',
+        fallbackImage: '/projects/nuwa-infinity/live-preview.png',
+        fallbackAlt: 'NUWA Infinity 网站预览图，展示生成式视觉示例 gallery。',
+        buttonLabel: '打开在线演示',
+        caption: '这个证据模块支持 iframe 嵌入、loading 状态、嵌入失败 fallback、移动端适配和外部打开入口。'
+      },
+      {
+        type: 'outcomes',
+        category: '项目反思',
+        label: '07',
+        title: '这个项目如何体现我的交互设计能力',
+        subtitle: '这是一个早期 AI 交互项目，也奠定了我后来理解 emerging technology design 的方式。',
+        content: '为新技术做设计，并不一定是创造完全陌生的 UI，而是找到新能力和用户既有心智模型之间最自然的桥。',
+        items: [
+          {
+            title: '技术转译',
+            description: '我把模型能力转化成用户能识别、能尝试的产品级操作。'
+          },
+          {
+            title: '探索式交互',
+            description: '我把可玩性、动效和直接操作当作新技术 onboarding 的方式。'
+          },
+          {
+            title: '控制感与反馈',
+            description: '我围绕预览、对比和继续探索入口设计体验，降低生成式 AI 的黑箱感。'
+          },
+          {
+            title: '面试讲法',
+            description: '这个项目应该被讲成 AI interaction design case study，而不是单纯的视觉展示。'
+          }
+        ]
+      }
+    ],
     acts: {
       act1: {
-        title: '新兴技术',
-        content: '展示 NUWA 的能力：AI扩图、文字生成图像、图像生成视频。'
+        title: '早期 AI 交互',
+        content: 'NUWA Infinity 需要一个探索式体验，服务于尚未熟悉生成式 AI 工作流的用户。'
       },
       act2: {
-        title: '技术卓越',
-        content: '结合技术特征和用户需求，实现最优交互和视觉设计。',
-        decisionPoints: ['直观的 AIGC 工作流', '引人入胜的视觉', '清晰传达']
+        title: '交互转译',
+        content: '将抽象 AI 能力转译为输入、拖拽、扩展、预览和 before/after 对比等熟悉操作。',
+        decisionPoints: ['熟悉心智模型', '探索式交互', '可控制的生成体验']
       },
       act3: {
-        title: '病毒式成功',
-        content: '在社交媒体上获得 1万+ 浏览和互动，提升 NUWA 市场影响力。',
-        impact: '万级社交互动'
+        title: '可理解的 AI demo',
+        content: '帮助用户通过直接互动理解和探索早期多模态 AI 模型，而不是只阅读技术说明。',
+        impact: '早期 AI UX'
       }
     }
   },
