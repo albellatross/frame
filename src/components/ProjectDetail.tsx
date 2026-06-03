@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Project, CaseSection } from '../types';
-import { ArrowRight, ExternalLink, ChevronUp, X } from 'lucide-react';
+import { ArrowRight, ExternalLink, ChevronUp, Languages, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { assetUrl } from '../utils/assets';
@@ -229,6 +229,37 @@ const getNuwaTheme = (variant?: CaseSection['variant']) => {
   }
 };
 
+const NuwaSectionShell: React.FC<{ section: CaseSection; children: React.ReactNode; wide?: boolean; showContent?: boolean }> = ({ section, children, wide = false, showContent = true }) => {
+  const theme = getNuwaTheme(section.variant);
+
+  return (
+    <div className="bg-[#070707] text-white">
+      <div className={`mx-auto px-6 py-16 sm:px-8 sm:py-24 md:px-12 ${wide ? 'max-w-7xl' : 'max-w-6xl'}`}>
+        <div className="mb-10 border-t border-white/10 pt-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              {section.category && (
+                <span className="mb-5 block font-serif text-sm italic tracking-wide sm:text-base" style={{ color: theme.accent }}>
+                  {section.category}
+                </span>
+              )}
+              <h3 className="text-2xl font-bold leading-tight sm:text-4xl">{section.title}</h3>
+              {section.subtitle && <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">{section.subtitle}</p>}
+              {showContent && section.content && <p className="mt-6 text-base leading-8 text-white/72">{section.content}</p>}
+            </div>
+            {section.label && (
+              <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/28 lg:pt-2">
+                {section.label}
+              </span>
+            )}
+          </div>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   const isInfinity = section.variant === 'infinity' && section.demoUrl;
@@ -445,7 +476,7 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
                   {section.tags.map((t, i) => <span key={i} className="rounded-full border border-white/20 bg-black/18 px-4 py-1.5 text-xs text-white/82 backdrop-blur-sm">{t}</span>)}
                 </div>
               )}
-              <h1 className="max-w-4xl font-serif text-4xl leading-[0.98] text-white sm:text-6xl md:text-7xl">{section.title}</h1>
+              <h1 className={`max-w-4xl font-serif text-white ${isZh ? 'text-[2.08rem] leading-[1.08] sm:text-5xl md:text-6xl' : 'text-4xl leading-[0.98] sm:text-6xl md:text-7xl'}`}>{section.title}</h1>
               {section.subtitle && <p className="mt-6 max-w-3xl text-base leading-8 text-white/72 sm:text-xl">{section.subtitle}</p>}
               <div className="mt-8 flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
                 {section.date && <span>{section.date}</span>}
@@ -477,6 +508,26 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       );
 
     case 'stats':
+      if (section.variant === 'series') {
+        return (
+          <NuwaSectionShell section={section}>
+            {section.stats && (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {section.stats.map((s, i) => {
+                  const theme = getNuwaTheme(i === 0 ? 'infinity' : i === 1 ? 'xl' : i === 2 ? 'drag' : 'series');
+                  return (
+                    <div key={i} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                      <div className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: theme.accent }} />
+                      <span className="block font-serif text-4xl text-white sm:text-5xl">{s.value}</span>
+                      <span className="mt-4 block text-sm leading-6 text-white/58">{s.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </NuwaSectionShell>
+        );
+      }
       return (
         <SectionWrapper bg="#ffffff">
           <CategoryLabel category={section.category} />
@@ -550,6 +601,26 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       );
 
     case 'cards':
+      if (section.variant === 'series') {
+        return (
+          <NuwaSectionShell section={section}>
+            {section.items && (
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                {section.items.map((c, i) => {
+                  const theme = getNuwaTheme(i % 3 === 0 ? 'infinity' : i % 3 === 1 ? 'xl' : 'drag');
+                  return (
+                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                      <div className="mb-5 h-2 w-16 rounded-full" style={{ backgroundColor: theme.accent }} />
+                      <span className="block text-lg font-semibold text-white">{c.title}</span>
+                      <span className="mt-4 block text-sm leading-7 text-white/58">{c.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </NuwaSectionShell>
+        );
+      }
       return (
         <SectionWrapper bg="#F8F8FA">
           <CategoryLabel category={section.category} />
@@ -856,6 +927,43 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       );
 
     case 'interaction-mapping':
+      if (section.variant === 'series') {
+        return (
+          <NuwaSectionShell section={section} wide>
+            {section.rows && (
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+                <div className="hidden grid-cols-[0.24fr_0.28fr_0.48fr] border-b border-white/10 bg-white/[0.06] text-xs font-semibold uppercase tracking-[0.14em] text-white/52 md:grid">
+                  <div className="px-5 py-4">{isZh ? 'AI 能力' : 'AI capability'}</div>
+                  <div className="px-5 py-4">{isZh ? '熟悉心智' : 'Familiar mental model'}</div>
+                  <div className="px-5 py-4">{isZh ? '交互转译与设计价值' : 'Interaction translation & design value'}</div>
+                </div>
+                {section.rows.map((row, index) => {
+                  const theme = getNuwaTheme(index === 0 ? 'infinity' : index === 1 ? 'xl' : index === 2 ? 'drag' : 'series');
+                  return (
+                    <div
+                      key={`${row.action}-${index}`}
+                      className="grid gap-4 border-b border-white/10 p-5 last:border-0 md:grid-cols-[0.24fr_0.28fr_0.48fr] md:gap-0 md:p-0"
+                    >
+                      <div className="md:border-r md:border-white/10 md:px-5 md:py-5">
+                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? 'AI 能力' : 'AI capability'}</span>
+                        <p className="text-sm font-semibold" style={{ color: theme.accent }}>{row.action}</p>
+                      </div>
+                      <div className="md:border-r md:border-white/10 md:px-5 md:py-5">
+                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '熟悉心智' : 'Familiar mental model'}</span>
+                        <p className="text-sm text-white/64">{row.feedback}</p>
+                      </div>
+                      <div className="md:px-5 md:py-5">
+                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '交互转译与设计价值' : 'Interaction value'}</span>
+                        <p className="text-sm leading-6 text-white/64">{row.value}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </NuwaSectionShell>
+        );
+      }
       return (
         <SectionWrapper bg="#ffffff">
           <CategoryLabel category={section.category} />
@@ -1023,6 +1131,40 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       );
 
     case 'outcomes':
+      if (section.variant === 'series') {
+        const theme = getNuwaTheme('series');
+        return (
+          <NuwaSectionShell section={section} showContent={false}>
+            {section.content && (
+              <div className="mb-8 rounded-2xl border border-white/10 bg-white/[0.05] p-6 sm:p-8">
+                <span className="block max-w-3xl font-serif text-2xl leading-tight text-white sm:text-4xl">
+                  {section.content}
+                </span>
+                <div className="mt-6 h-1 w-24 rounded-full" style={{ backgroundColor: theme.accent }} />
+              </div>
+            )}
+            {section.items && (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {section.items.map((o, i) => {
+                  const itemTheme = getNuwaTheme(i % 3 === 0 ? 'infinity' : i % 3 === 1 ? 'xl' : 'drag');
+                  return (
+                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                      <span className="mb-4 block h-2 w-12 rounded-full" style={{ backgroundColor: itemTheme.accent }} />
+                      <span className="block text-base font-semibold text-white">{o.title}</span>
+                      <span className="mt-3 block text-sm leading-7 text-white/58">{o.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+            {section.image && (
+              <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+                <img src={assetUrl(section.image)} alt="" className="block h-auto w-full" />
+              </div>
+            )}
+          </NuwaSectionShell>
+        );
+      }
       return (
         <SectionWrapper bg="#F8F8FA">
           <CategoryLabel category={section.category} />
@@ -1061,7 +1203,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const isZh = language === 'zh';
   const readerPages = project ? collectReaderPages(project, language) : [];
   const hasReaderPages = readerPages.length > 0;
@@ -1094,6 +1236,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  const languageToggleLabel = isZh ? '切换到英文版本' : 'Switch to Chinese version';
+  const languageToggleText = isZh ? 'EN' : '中';
+  const renderLanguageToggle = () => (
+    <button
+      type="button"
+      onClick={toggleLanguage}
+      aria-label={languageToggleLabel}
+      className="inline-flex h-8 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 text-xs font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950"
+    >
+      <Languages size={14} />
+      <span>{languageToggleText}</span>
+    </button>
+  );
 
   return (
     <>
@@ -1125,13 +1280,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-neutral-300" />
               </div>
-              <div className="px-4 sm:px-6 md:px-8 pb-2 flex items-center justify-end">
-                <button
-                  onClick={onClose}
-                  className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
-                >
-                  <X size={16} className="text-neutral-500" />
-                </button>
+              <div className="px-4 sm:px-6 md:px-8 pb-2 flex items-center justify-between gap-3">
+                <span className="min-w-0 truncate text-sm font-medium text-neutral-900">{project.title}</span>
+                <div className="flex shrink-0 items-center gap-2">
+                  {renderLanguageToggle()}
+                  <button
+                    type="button"
+                    aria-label={isZh ? '关闭项目详情' : 'Close project detail'}
+                    onClick={onClose}
+                    className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
+                  >
+                    <X size={16} className="text-neutral-500" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -1150,13 +1311,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                   <div className="w-10 h-1 rounded-full bg-neutral-300" />
                 </div>
                 <div className="px-4 sm:px-6 md:px-8 pb-2 flex items-center justify-between">
-                  <span className="text-sm font-medium text-neutral-900 truncate max-w-[250px] sm:max-w-[400px]">{project.title}</span>
-                  <button
-                    onClick={onClose}
-                    className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
-                  >
-                    <X size={16} className="text-neutral-500" />
-                  </button>
+                  <span className="min-w-0 truncate text-sm font-medium text-neutral-900">{project.title}</span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {renderLanguageToggle()}
+                    <button
+                      type="button"
+                      aria-label={isZh ? '关闭项目详情' : 'Close project detail'}
+                      onClick={onClose}
+                      className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
+                    >
+                      <X size={16} className="text-neutral-500" />
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             )}

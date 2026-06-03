@@ -472,10 +472,10 @@ export const PROJECTS_EN: Project[] = [
     year: '2022-2023',
     role: 'Interaction Designer / Web Experience Designer',
     shortDescription: 'A series case study on translating early generative AI research into familiar, explorable, and controllable interactions.',
-    coverImage: '/projects/nuwa-infinity/live-preview.png',
+    coverImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
     tags: ['Early AI UX', 'NUWA Series', 'Multimodal AI', 'Interaction Translation', 'Generative AI', 'Microsoft Research'],
     externalLinks: {
-      live: 'https://nuwa-infinity.microsoft.com/#/',
+      live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
       github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
     },
     caseSections: [
@@ -484,13 +484,14 @@ export const PROJECTS_EN: Project[] = [
         variant: 'series',
         title: 'NUWA Series — Designing Interaction Patterns for Early Generative AI',
         subtitle: 'Across NUWA-Infinity, NUWA XL, and DragNUWA, I designed the bridge between unfamiliar AI capabilities and familiar human interactions: spatial exploration, temporal understanding, and directable motion.',
-        bgImage: '/projects/nuwa-infinity/live-preview.png',
+        bgImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
         tags: ['Early AI Interaction', 'Emerging Technology UX', 'Research Demo Experience', 'Microsoft Research'],
         role: 'Interaction Designer / Web Experience Designer',
         date: '2022-2023'
       },
       {
         type: 'stats',
+        variant: 'series',
         category: 'PROJECT CONTEXT',
         label: '01',
         title: 'The design problem was not visual polish. It was interaction literacy.',
@@ -533,6 +534,7 @@ export const PROJECTS_EN: Project[] = [
       },
       {
         type: 'cards',
+        variant: 'series',
         category: 'DESIGN PRINCIPLES',
         label: '03',
         title: 'Principles for making early AI capabilities tangible',
@@ -564,8 +566,8 @@ export const PROJECTS_EN: Project[] = [
         title: 'From unknown AI capability to spatial exploration',
         subtitle: 'NUWA-Infinity made infinite visual synthesis understandable by turning abstract generation into a familiar spatial experience.',
         content: 'The design challenge was not to make a fancy website. It was to let users feel what the model could do through familiar interactions: entering a prompt, seeing a generated visual world, expanding beyond the frame, and continuing to explore.',
-        demoUrl: 'https://nuwa-infinity.microsoft.com/#/',
-        fallbackImage: '/projects/nuwa-infinity/live-preview.png',
+        demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
         fallbackAlt: 'NUWA-Infinity website preview showing a generated visual gallery.',
         buttonLabel: 'Open live demo',
         caption: 'Interactive evidence: desktop readers can try the original NUWA-Infinity page inside the case study; mobile readers see a preview with an external launch path.',
@@ -729,6 +731,7 @@ export const PROJECTS_EN: Project[] = [
       },
       {
         type: 'interaction-mapping',
+        variant: 'series',
         category: 'INTERACTION TRANSLATION FRAMEWORK',
         label: '07',
         title: 'A shared framework across the NUWA series',
@@ -758,6 +761,7 @@ export const PROJECTS_EN: Project[] = [
       },
       {
         type: 'outcomes',
+        variant: 'series',
         category: 'DESIGN VALUE',
         label: '08',
         title: 'What this series shows about my interaction design approach',
@@ -1523,10 +1527,10 @@ export const PROJECTS_ZH: Project[] = [
     year: '2022-2023',
     role: '交互设计师 / Web 体验设计师',
     shortDescription: '一个关于早期生成式 AI 交互范式的系列案例：把研究能力转译成可理解、可探索、可控制的体验。',
-    coverImage: '/projects/nuwa-infinity/live-preview.png',
+    coverImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
     tags: ['早期 AI UX', 'NUWA 系列', '多模态 AI', '交互转译', '生成式 AI', 'Microsoft Research'],
     externalLinks: {
-      live: 'https://nuwa-infinity.microsoft.com/#/',
+      live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
       github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
     },
     caseSections: [
@@ -1535,13 +1539,14 @@ export const PROJECTS_ZH: Project[] = [
         variant: 'series',
         title: 'NUWA Series — 为早期生成式 AI 设计交互范式',
         subtitle: '从 NUWA-Infinity 到 NUWA XL，再到 DragNUWA，我设计的是陌生 AI 能力与用户熟悉操作之间的桥：空间探索、时间理解与直接运动控制。',
-        bgImage: '/projects/nuwa-infinity/live-preview.png',
+        bgImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
         tags: ['早期 AI 交互', 'Emerging Technology UX', 'Research Demo Experience', 'Microsoft Research'],
         role: '交互设计师 / Web 体验设计师',
         date: '2022-2023'
       },
       {
         type: 'stats',
+        variant: 'series',
         category: '项目背景',
         label: '01',
         title: '真正的问题不是视觉够不够酷，而是用户能不能读懂交互。',
@@ -1584,6 +1589,7 @@ export const PROJECTS_ZH: Project[] = [
       },
       {
         type: 'cards',
+        variant: 'series',
         category: '设计原则',
         label: '03',
         title: '让早期 AI 能力变得可感知的设计原则',
@@ -1615,8 +1621,8 @@ export const PROJECTS_ZH: Project[] = [
         title: '从未知 AI 能力到空间探索体验',
         subtitle: 'NUWA-Infinity 通过把抽象生成能力转译成空间体验，让用户理解 infinite visual synthesis。',
         content: '这个项目不是为了做一个 fancy 网站，而是让用户通过熟悉动作感受到模型能力：输入 prompt、看到生成世界、扩展画面边界，并继续探索。',
-        demoUrl: 'https://nuwa-infinity.microsoft.com/#/',
-        fallbackImage: '/projects/nuwa-infinity/live-preview.png',
+        demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
         fallbackAlt: 'NUWA-Infinity 网站预览图，展示生成式视觉 gallery。',
         buttonLabel: '打开在线演示',
         caption: '交互证据：桌面端可在 case study 里直接操作原项目；移动端保留预览图和外部打开入口，避免窄屏 iframe 破坏阅读。',
@@ -1780,6 +1786,7 @@ export const PROJECTS_ZH: Project[] = [
       },
       {
         type: 'interaction-mapping',
+        variant: 'series',
         category: '交互转译框架',
         label: '07',
         title: '贯穿 NUWA 系列的一套共享框架',
@@ -1809,6 +1816,7 @@ export const PROJECTS_ZH: Project[] = [
       },
       {
         type: 'outcomes',
+        variant: 'series',
         category: '设计价值',
         label: '08',
         title: '这个系列如何体现我的交互设计能力',
