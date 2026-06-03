@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Project, CaseSection } from '../types';
-import { ArrowRight, ExternalLink, ChevronUp, Languages, X } from 'lucide-react';
+import { ArrowRight, ExternalLink, ChevronUp, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { assetUrl } from '../utils/assets';
 import PortfolioReader from './PortfolioReader';
+import LanguageToggle from './LanguageToggle';
 
 interface ProjectDetailProps {
   project: Project | null;
@@ -260,12 +261,53 @@ const NuwaSectionShell: React.FC<{ section: CaseSection; children: React.ReactNo
   );
 };
 
+const NuwaCallouts: React.FC<{ section: CaseSection; accent: string }> = ({ section, accent }) => {
+  if (!section.annotations?.length) return null;
+
+  return (
+    <div className="pointer-events-none absolute inset-0 z-20 hidden md:block">
+      {section.annotations.map((annotation, index) => {
+        const color = annotation.color || accent;
+        const x = annotation.x ?? 50;
+        const y = annotation.y;
+        const isRight = annotation.side === 'right';
+
+        return (
+          <React.Fragment key={`${annotation.label}-${index}`}>
+            <span
+              className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-4 ring-black/40"
+              style={{ left: `${x}%`, top: `${y}%`, backgroundColor: color }}
+            />
+            <div
+              className="absolute max-w-[220px] rounded-xl border bg-black/72 px-3 py-2 text-white shadow-[0_18px_48px_rgba(0,0,0,0.36)] backdrop-blur-md"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                borderColor: `${color}90`,
+                transform: isRight ? 'translate(16px, -50%)' : 'translate(calc(-100% - 16px), -50%)',
+              }}
+            >
+              <span className="block text-[10px] font-mono uppercase tracking-[0.18em]" style={{ color }}>{annotation.label}</span>
+              {annotation.detail && <span className="mt-1 block text-xs leading-5 text-white/68">{annotation.detail}</span>}
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+};
+
 const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   const isInfinity = section.variant === 'infinity' && section.demoUrl;
 
   if (isInfinity) {
-    return <LiveDemoWindow section={section} isZh={isZh} />;
+    return (
+      <div className="relative">
+        <LiveDemoWindow section={section} isZh={isZh} />
+        <NuwaCallouts section={section} accent={theme.accent} />
+      </div>
+    );
   }
 
   const renderXlVisual = () => (
@@ -354,7 +396,10 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
           </a>
         )}
       </div>
-      {section.variant === 'drag' ? renderDragVisual() : renderXlVisual()}
+      <div className="relative">
+        {section.variant === 'drag' ? renderDragVisual() : renderXlVisual()}
+        <NuwaCallouts section={section} accent={theme.accent} />
+      </div>
       {section.caption && (
         <div className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/48">{section.caption}</div>
       )}
@@ -398,17 +443,25 @@ const SeriesTimelineSection: React.FC<{ section: CaseSection; isZh: boolean }> =
 const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   return (
-    <div className="bg-[#09090A] text-white">
+    <div className="bg-[#070707] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 sm:py-24 md:px-12 lg:grid-cols-[0.92fr_1.18fr]">
         <div>
-          <CategoryLabel category={section.category} />
-          <SectionLabel label={section.label} />
-          <h3 className="text-2xl font-bold leading-tight sm:text-4xl">{section.title}</h3>
-          {section.subtitle && <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">{section.subtitle}</p>}
-          {section.content && <p className="mt-6 text-base leading-8 text-white/72">{section.content}</p>}
+          <div className="border-t border-white/10 pt-8">
+            <div className="mb-6 flex items-start justify-between gap-4">
+              {section.category && (
+                <span className="font-serif text-sm italic tracking-wide sm:text-base" style={{ color: theme.accent }}>
+                  {section.category}
+                </span>
+              )}
+              {section.label && <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/28">{section.label}</span>}
+            </div>
+            <h3 className="text-2xl font-bold leading-tight sm:text-4xl">{section.title}</h3>
+            {section.subtitle && <p className="mt-4 text-sm leading-7 text-white/58 sm:text-base">{section.subtitle}</p>}
+            {section.content && <p className="mt-6 text-base leading-8 text-white/72">{section.content}</p>}
+          </div>
 
           {section.items && (
-            <div className="mt-8 space-y-3">
+            <div className="mt-8 grid grid-cols-1 gap-3">
               {section.items.map((item, index) => (
                 <div key={`${item.title}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
                   <div className="mb-3 flex items-center gap-3">
@@ -428,6 +481,11 @@ const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ se
 
           {section.rows && (
             <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+              <div className="border-b border-white/10 bg-white/[0.04] px-5 py-4">
+                <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/55">
+                  {isZh ? '关键交互拆解' : 'Key interaction breakdown'}
+                </span>
+              </div>
               <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
                 {section.rows.map((row, index) => (
                   <div key={`${row.action}-${index}`} className="bg-white/[0.03] p-5">
@@ -934,8 +992,8 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
               <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
                 <div className="hidden grid-cols-[0.24fr_0.28fr_0.48fr] border-b border-white/10 bg-white/[0.06] text-xs font-semibold uppercase tracking-[0.14em] text-white/52 md:grid">
                   <div className="px-5 py-4">{isZh ? 'AI 能力' : 'AI capability'}</div>
-                  <div className="px-5 py-4">{isZh ? '熟悉心智' : 'Familiar mental model'}</div>
-                  <div className="px-5 py-4">{isZh ? '交互转译与设计价值' : 'Interaction translation & design value'}</div>
+                  <div className="px-5 py-4">{isZh ? '页面控制' : 'Page control'}</div>
+                  <div className="px-5 py-4">{isZh ? '页面动作与界面证据' : 'Page action & interface evidence'}</div>
                 </div>
                 {section.rows.map((row, index) => {
                   const theme = getNuwaTheme(index === 0 ? 'infinity' : index === 1 ? 'xl' : index === 2 ? 'drag' : 'series');
@@ -949,11 +1007,11 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
                         <p className="text-sm font-semibold" style={{ color: theme.accent }}>{row.action}</p>
                       </div>
                       <div className="md:border-r md:border-white/10 md:px-5 md:py-5">
-                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '熟悉心智' : 'Familiar mental model'}</span>
+                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '页面控制' : 'Page control'}</span>
                         <p className="text-sm text-white/64">{row.feedback}</p>
                       </div>
                       <div className="md:px-5 md:py-5">
-                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '交互转译与设计价值' : 'Interaction value'}</span>
+                        <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-white/34 md:hidden">{isZh ? '页面动作与界面证据' : 'Interface evidence'}</span>
                         <p className="text-sm leading-6 text-white/64">{row.value}</p>
                       </div>
                     </div>
@@ -975,8 +1033,8 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
               <div className="hidden grid-cols-[0.24fr_0.28fr_0.48fr] border-b border-neutral-200 bg-neutral-950 text-xs font-semibold uppercase tracking-[0.14em] text-white/72 md:grid">
                 <div className="px-5 py-4">{isZh ? 'AI 能力' : 'AI capability'}</div>
-                <div className="px-5 py-4">{isZh ? '熟悉心智' : 'Familiar mental model'}</div>
-                <div className="px-5 py-4">{isZh ? '交互转译与设计价值' : 'Interaction translation & design value'}</div>
+                <div className="px-5 py-4">{isZh ? '页面控制' : 'Page control'}</div>
+                <div className="px-5 py-4">{isZh ? '页面动作与界面证据' : 'Page action & interface evidence'}</div>
               </div>
               {section.rows.map((row, index) => (
                 <div
@@ -988,11 +1046,11 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
                     <p className="text-sm font-semibold text-neutral-950">{row.action}</p>
                   </div>
                   <div className="md:border-r md:border-neutral-100 md:px-5 md:py-5">
-                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '熟悉心智' : 'Familiar mental model'}</span>
+                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '页面控制' : 'Page control'}</span>
                     <p className="text-sm text-neutral-600">{row.feedback}</p>
                   </div>
                   <div className="md:px-5 md:py-5">
-                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '交互转译与设计价值' : 'Interaction value'}</span>
+                    <span className="mb-2 block text-[10px] font-mono uppercase tracking-[0.18em] text-neutral-400 md:hidden">{isZh ? '页面动作与界面证据' : 'Interface evidence'}</span>
                     <p className="text-sm leading-6 text-neutral-600">{row.value}</p>
                   </div>
                 </div>
@@ -1203,7 +1261,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { language, toggleLanguage } = useLanguage();
+  const { language } = useLanguage();
   const isZh = language === 'zh';
   const readerPages = project ? collectReaderPages(project, language) : [];
   const hasReaderPages = readerPages.length > 0;
@@ -1236,19 +1294,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const languageToggleLabel = isZh ? '切换到英文版本' : 'Switch to Chinese version';
-  const languageToggleText = isZh ? 'EN' : '中';
-  const renderLanguageToggle = () => (
-    <button
-      type="button"
-      onClick={toggleLanguage}
-      aria-label={languageToggleLabel}
-      className="inline-flex h-8 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 text-xs font-semibold text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950"
-    >
-      <Languages size={14} />
-      <span>{languageToggleText}</span>
-    </button>
-  );
+  const renderLanguageToggle = () => <LanguageToggle />;
 
   return (
     <>
