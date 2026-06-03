@@ -75,7 +75,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Designing Copilot voice, creator, and education experiences that turn AI into controllable product flows.',
     skills: ['Copilot Voice', 'Generative AI', 'Creator Tools', 'Education UX'],
     image: '/projects/figma-portfolio/read-aloud/page-01.png',
-    relatedProjectIds: ['p1', 'p2']
+    relatedProjectIds: ['p1']
   },
   {
     id: 'c2',
@@ -85,7 +85,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Led AI-native product design across research tooling, agents, cognitive companionship, and visual systems.',
     skills: ['AI Agents', 'Research Tooling', 'AIGC UX', 'Visual Systems'],
     image: '/projects/figma-portfolio/rd-agent/page-01.png',
-    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p12', 'p14', 'p6', 'p9', 'p11']
+    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -105,7 +105,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: "Master's degree in Italy, grounding product thinking in branding, visual systems, and illustration.",
     skills: ['Visual Design', 'Branding', 'User Research', 'Illustration'],
     image: '/projects/figma-portfolio/illustration-works/page-01.png',
-    relatedProjectIds: ['p8']
+    relatedProjectIds: []
   }
 ];
 
@@ -119,7 +119,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '围绕 Copilot 语音、创作者工具与教育场景，把 AI 能力转化为用户可控的产品流程。',
     skills: ['Copilot Voice', '生成式 AI', '创作者工具', '教育 UX'],
     image: '/projects/figma-portfolio/read-aloud/page-01.png',
-    relatedProjectIds: ['p1', 'p2']
+    relatedProjectIds: ['p1']
   },
   {
     id: 'c2',
@@ -129,7 +129,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '主导多个 AI-native 产品体验，覆盖研究工具、Agent、认知陪伴与视觉系统。',
     skills: ['AI Agent', '研究工具', 'AIGC UX', '视觉系统'],
     image: '/projects/figma-portfolio/rd-agent/page-01.png',
-    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p12', 'p14', 'p6', 'p9', 'p11']
+    relatedProjectIds: ['p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -149,7 +149,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '在意大利完成视觉传达硕士训练，以品牌、视觉系统与插画建立设计底盘。',
     skills: ['视觉设计', '品牌设计', '用户研究', '插画'],
     image: '/projects/figma-portfolio/illustration-works/page-01.png',
-    relatedProjectIds: ['p8']
+    relatedProjectIds: []
   }
 ];
 
