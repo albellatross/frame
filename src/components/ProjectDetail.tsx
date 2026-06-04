@@ -34,6 +34,7 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
   const [isCompactViewport, setIsCompactViewport] = useState(false);
   const fallbackTimerRef = useRef<number | null>(null);
   const demoUrl = section.demoUrl || section.content || '';
+  const isNuwaDemo = section.variant === 'infinity';
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 639px)');
@@ -88,14 +89,14 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.12)]">
-      <div className="flex min-h-12 items-center gap-3 border-b border-neutral-100 bg-neutral-50 px-3 py-2 sm:px-4">
+    <div className={`overflow-hidden rounded-2xl border shadow-[0_18px_48px_rgba(15,23,42,0.12)] ${isNuwaDemo ? 'border-white/10 bg-[#0B0B0D] shadow-[0_24px_70px_rgba(0,0,0,0.32)]' : 'border-neutral-200 bg-white'}`}>
+      <div className={`flex min-h-12 items-center gap-3 border-b px-3 py-2 sm:px-4 ${isNuwaDemo ? 'border-white/10 bg-white/[0.04]' : 'border-neutral-100 bg-neutral-50'}`}>
         <div className="flex flex-shrink-0 items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
         </div>
-        <div className="min-w-0 flex-1 rounded-full border border-neutral-200 bg-white px-3 py-1.5 font-mono text-[11px] text-neutral-500">
+        <div className={`min-w-0 flex-1 rounded-full border px-3 py-1.5 font-mono text-[11px] ${isNuwaDemo ? 'border-white/10 bg-black/28 text-white/42' : 'border-neutral-200 bg-white text-neutral-500'}`}>
           <span className="block truncate">{demoUrl}</span>
         </div>
         {demoUrl && (
@@ -103,7 +104,7 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
             href={demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full bg-neutral-900 px-3 py-1.5 text-[11px] font-medium text-white transition hover:bg-neutral-700 sm:inline-flex"
+            className={`hidden flex-shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition sm:inline-flex ${isNuwaDemo ? 'bg-white text-neutral-950 hover:bg-neutral-200' : 'bg-neutral-900 text-white hover:bg-neutral-700'}`}
             aria-label={isZh ? '在新标签页打开 NUWA Infinity 在线演示' : 'Open NUWA Infinity live demo in a new tab'}
           >
             <ExternalLink size={13} />
@@ -208,8 +209,8 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
         )}
       </div>
 
-      <div className="border-t border-neutral-100 bg-white px-4 py-3">
-        <p className="text-xs leading-5 text-neutral-500">
+      <div className={`border-t px-4 py-3 ${isNuwaDemo ? 'border-white/10 bg-[#0B0B0D]' : 'border-neutral-100 bg-white'}`}>
+        <p className={`text-xs leading-5 ${isNuwaDemo ? 'text-white/48' : 'text-neutral-500'}`}>
           {section.caption || (isZh ? '作为证据模块嵌入真实项目，帮助读者验证交互体验，而不是只看静态截图。' : 'Embedded as an evidence module so readers can verify the interaction experience beyond screenshots.')}
         </p>
       </div>
@@ -273,24 +274,32 @@ const NuwaCallouts: React.FC<{ section: CaseSection; accent: string }> = ({ sect
         const isRight = annotation.side === 'right';
 
         return (
-          <React.Fragment key={`${annotation.label}-${index}`}>
+          <button
+            key={`${annotation.label}-${index}`}
+            type="button"
+            className="group pointer-events-auto absolute max-w-[220px] text-left outline-none"
+            style={{
+              left: `${x}%`,
+              top: `${y}%`,
+              transform: isRight ? 'translate(16px, -50%)' : 'translate(calc(-100% - 16px), -50%)',
+            }}
+            aria-label={`${annotation.label}${annotation.detail ? `: ${annotation.detail}` : ''}`}
+          >
             <span
-              className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-4 ring-black/40"
-              style={{ left: `${x}%`, top: `${y}%`, backgroundColor: color }}
+              className={`absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full ring-4 ring-black/40 transition duration-200 group-hover:scale-150 group-focus-visible:scale-150 ${isRight ? '-left-5' : '-right-5'}`}
+              style={{ backgroundColor: color }}
             />
             <div
-              className="absolute max-w-[220px] rounded-xl border bg-black/72 px-3 py-2 text-white shadow-[0_18px_48px_rgba(0,0,0,0.36)] backdrop-blur-md"
+              className="rounded-xl border bg-black/72 px-3 py-2 text-white shadow-[0_18px_48px_rgba(0,0,0,0.36)] backdrop-blur-md transition duration-200 group-hover:-translate-y-0.5 group-hover:bg-black/88 group-focus-visible:-translate-y-0.5 group-focus-visible:bg-black/88 group-focus-visible:ring-2"
               style={{
-                left: `${x}%`,
-                top: `${y}%`,
                 borderColor: `${color}90`,
-                transform: isRight ? 'translate(16px, -50%)' : 'translate(calc(-100% - 16px), -50%)',
+                boxShadow: `0 18px 48px rgba(0,0,0,0.36), 0 0 0 0 rgba(0,0,0,0)`,
               }}
             >
               <span className="block text-[10px] font-mono uppercase tracking-[0.18em]" style={{ color }}>{annotation.label}</span>
               {annotation.detail && <span className="mt-1 block text-xs leading-5 text-white/68">{annotation.detail}</span>}
             </div>
-          </React.Fragment>
+          </button>
         );
       })}
     </div>
@@ -300,6 +309,7 @@ const NuwaCallouts: React.FC<{ section: CaseSection; accent: string }> = ({ sect
 const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   const isInfinity = section.variant === 'infinity' && section.demoUrl;
+  const infinitySourceImage = section.fallbackImage ? assetUrl(section.fallbackImage) : '';
 
   if (isInfinity) {
     return (
@@ -308,6 +318,123 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
         <NuwaCallouts section={section} accent={theme.accent} />
       </div>
     );
+  }
+
+  const renderInfinityFrame = (children: React.ReactNode) => (
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0B0B0D] shadow-[0_24px_70px_rgba(0,0,0,0.32)]">
+      <div className="flex min-h-12 items-center gap-3 border-b border-white/10 bg-white/[0.04] px-4 py-2">
+        <div className="flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+        </div>
+        <div className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/28 px-3 py-1.5 font-mono text-[11px] text-white/42">
+          <span className="block truncate">nuwa-infinity.microsoft.com/#/NUWAInfinity</span>
+        </div>
+      </div>
+      <div className="relative">
+        {children}
+        <NuwaCallouts section={section} accent={theme.accent} />
+      </div>
+      {section.caption && (
+        <div className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/48">{section.caption}</div>
+      )}
+    </div>
+  );
+
+  const renderInfinityScreenshotVisual = () => renderInfinityFrame(
+    <div className="relative h-[360px] overflow-hidden bg-[#050505] sm:h-[460px]">
+      {infinitySourceImage && (
+        <img
+          src={infinitySourceImage}
+          alt={section.fallbackAlt || ''}
+          className="absolute inset-0 h-full w-full object-cover opacity-75"
+        />
+      )}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(168,188,255,0.10)_1px,transparent_1px),linear-gradient(0deg,rgba(168,188,255,0.08)_1px,transparent_1px)] bg-[length:88px_88px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06)_0%,rgba(5,5,5,0.72)_100%)]" />
+      <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2 text-[10px] uppercase tracking-[0.16em] text-white/62">
+        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '入口' : 'Entry'}</span>
+        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '生成结果' : 'Generated result'}</span>
+        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '继续扩展' : 'Continue outward'}</span>
+      </div>
+    </div>
+  );
+
+  const renderInfinityCanvasVisual = () => renderInfinityFrame(
+    <div className="relative h-[360px] overflow-hidden bg-[#050505] sm:h-[460px]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(168,188,255,0.18),transparent_34%),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100%_100%,64px_64px,64px_64px]" />
+      <div className="absolute left-[7%] top-[16%] h-[58%] w-[40%] overflow-hidden rounded-xl border border-white/40 bg-white/8 shadow-[0_24px_64px_rgba(0,0,0,0.38)]">
+        {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-82" />}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(0,0,0,0.68)_100%)]" />
+        <span className="absolute bottom-3 left-3 rounded-full bg-black/62 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white/70">
+          {isZh ? '原始画面边界' : 'Original frame'}
+        </span>
+      </div>
+      <div className="absolute left-[47%] top-[16%] h-[58%] w-[40%] overflow-hidden rounded-xl border border-dashed bg-[#10121A]/70 shadow-[0_24px_64px_rgba(0,0,0,0.25)]" style={{ borderColor: `${theme.accent}CC` }}>
+        {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-28 mix-blend-screen" />}
+        <div className="absolute inset-0" style={{ background: `linear-gradient(90deg, ${theme.accent}1F, rgba(0,0,0,0.18))` }} />
+        <span className="absolute bottom-3 left-3 rounded-full border bg-black/62 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white/72" style={{ borderColor: `${theme.accent}66` }}>
+          {isZh ? '模型继续生成区域' : 'Generated continuation'}
+        </span>
+      </div>
+      <div className="absolute left-[46.8%] top-[16%] h-[58%] w-px" style={{ backgroundColor: `${theme.accent}DD` }} />
+      <svg className="absolute left-[39%] top-[36%] h-24 w-48" viewBox="0 0 190 96" aria-hidden="true">
+        <path d="M12 48 C 64 8, 118 88, 174 42" fill="none" stroke={theme.accent} strokeWidth="3" strokeLinecap="round" strokeDasharray="7 9" />
+        <path d="M162 32 L176 42 L160 52" fill="none" stroke={theme.accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <div className="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-3 text-xs text-white/64">
+        <span>{isZh ? '1. 从已生成画面开始' : '1. Start from the generated image'}</span>
+        <span>{isZh ? '2. 标出边界可继续向外' : '2. Make the expandable edge visible'}</span>
+        <span>{isZh ? '3. 预览边界外的新内容' : '3. Preview what appears beyond it'}</span>
+      </div>
+    </div>
+  );
+
+  const renderInfinityPreviewVisual = () => renderInfinityFrame(
+    <div className="relative h-[360px] overflow-hidden bg-[#050505] sm:h-[460px]">
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[length:72px_100%]" />
+      <div className="absolute left-5 right-5 top-6 flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-white/55">
+        <span>{isZh ? 'Prompt' : 'Prompt'}</span>
+        <ArrowRight size={13} />
+        <span>{isZh ? '生成' : 'Generate'}</span>
+        <ArrowRight size={13} />
+        <span>{isZh ? '扩展' : 'Expand'}</span>
+        <ArrowRight size={13} />
+        <span style={{ color: theme.accent }}>{isZh ? '预览选择' : 'Preview & select'}</span>
+      </div>
+      <div className="absolute left-5 right-5 top-[84px] grid grid-cols-3 gap-3">
+        {[
+          isZh ? '原始结果' : 'Original result',
+          isZh ? '扩展候选 A' : 'Expanded option A',
+          isZh ? '扩展候选 B' : 'Expanded option B'
+        ].map((label, index) => (
+          <div key={label} className={`relative aspect-[4/3] overflow-hidden rounded-xl border bg-white/8 ${index === 1 ? 'border-[color:var(--nuwa-accent)]' : 'border-white/12'}`} style={{ ['--nuwa-accent' as string]: theme.accent }}>
+            {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-55" style={{ objectPosition: `${48 + index * 10}% center` }} />}
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_42%,rgba(0,0,0,0.78)_100%)]" />
+            <span className="absolute bottom-2 left-2 right-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/72">{label}</span>
+          </div>
+        ))}
+      </div>
+      <div className="absolute bottom-5 left-5 right-5 overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
+        <div className="grid grid-cols-2 divide-x divide-white/10">
+          <div className="p-4">
+            <span className="text-[10px] uppercase tracking-[0.18em] text-white/38">{isZh ? 'Before' : 'Before'}</span>
+            <p className="mt-2 text-sm text-white/72">{isZh ? '只看到原始生成边界内的内容' : 'Only the generated content inside the first frame is visible.'}</p>
+          </div>
+          <div className="p-4">
+            <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: theme.accent }}>{isZh ? 'After' : 'After'}</span>
+            <p className="mt-2 text-sm text-white/72">{isZh ? '用户能比较边界外新增内容，再决定是否继续探索' : 'The visitor can compare new outer content before continuing.'}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (section.variant === 'infinity') {
+    if (section.layout === 'immersive') return renderInfinityCanvasVisual();
+    if (section.layout === 'contained') return renderInfinityPreviewVisual();
+    return renderInfinityScreenshotVisual();
   }
 
   const renderXlVisual = () => (
@@ -528,7 +655,9 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:120px_120px]" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.22)_0%,rgba(5,5,5,0.84)_78%)]" />
             <div className="relative z-10 mx-auto flex min-h-[620px] max-w-6xl flex-col justify-end px-6 pb-16 pt-36 sm:px-8 md:px-12">
-              <span className="mb-6 font-serif text-sm italic tracking-wide text-white/58">{isZh ? 'NUWA 系列案例研究' : 'NUWA SERIES CASE STUDY'}</span>
+              <span className="mb-6 font-serif text-sm italic tracking-wide text-white/58">
+                {section.title?.includes('NUWA-Infinity') ? (isZh ? 'NUWA-Infinity 案例研究' : 'NUWA-INFINITY CASE STUDY') : (isZh ? 'NUWA 系列案例研究' : 'NUWA SERIES CASE STUDY')}
+              </span>
               {section.tags && (
                 <div className="mb-6 flex flex-wrap gap-2">
                   {section.tags.map((t, i) => <span key={i} className="rounded-full border border-white/20 bg-black/18 px-4 py-1.5 text-xs text-white/82 backdrop-blur-sm">{t}</span>)}

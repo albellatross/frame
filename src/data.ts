@@ -466,14 +466,14 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     id: 'p3',
-    title: 'NUWA Series',
+    title: 'NUWA-Infinity',
     category: 'C-Side',
     platform: 'Web',
-    year: '2022-2023',
+    year: '2022',
     role: 'Interaction Designer / Web Experience Designer',
-    shortDescription: 'How I turned three Microsoft Research generative AI models into web demos people could understand through prompt, canvas, timeline, and path controls.',
+    shortDescription: 'A Microsoft Research case study on designing prompt, gallery, canvas expansion, preview, and live-demo evidence for an early generative AI model.',
     coverImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-    tags: ['Research Demo UX', 'Canvas Expansion', 'Timeline Interaction', 'Trajectory Control', 'Microsoft Research'],
+    tags: ['Research Demo UX', 'Prompt Interaction', 'Canvas Expansion', 'Outpainting', 'Microsoft Research'],
     externalLinks: {
       live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
       github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
@@ -482,357 +482,387 @@ export const PROJECTS_EN: Project[] = [
       {
         type: 'hero',
         variant: 'series',
-        title: 'NUWA Series — Designing the Web Interaction Layer for Early Generative AI Demos',
-        subtitle: 'My role was to turn research capabilities into things visitors could actually try: type a prompt, pick an example, expand an image boundary, read a timeline, or draw a motion path.',
+        title: 'NUWA-Infinity — Spatial Exploration',
+        subtitle: 'I designed an interaction experience that helped early generative AI feel understandable, explorable, and controllable through prompt, gallery, canvas expansion, and preview.',
         bgImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-        tags: ['Prompt to Image World', 'Outpainting', 'Long Video Timeline', 'Trajectory Control'],
+        tags: ['Prompt to Image World', 'Gallery Entry', 'Canvas Expansion', 'Live Demo Evidence'],
         role: 'Interaction Designer / Web Experience Designer',
-        date: '2022-2023'
+        date: '2022'
       },
       {
         type: 'stats',
         variant: 'series',
-        category: 'ROLE IN THE DEMO LAYER',
+        category: 'SUBPAGE INTRODUCTION',
         label: '01',
-        title: 'I was not decorating research results. I was designing how people would understand them.',
-        subtitle: 'Each model had a technical story, but a visitor landing on the page needed a concrete task: what can I do, what will change, and why does that result matter?',
-        content: 'I worked on the interaction layer that made the demos readable without requiring the visitor to read the paper first.',
+        title: 'This subpage had to explain a research model through actions, not through a paper abstract.',
+        subtitle: 'NUWA-Infinity was an early Microsoft Research generative AI demo for generating and extending visual content. The first-visit problem was not visual polish; it was helping people know what to try and what the result proved.',
+        content: 'I treated the page as an interaction translation layer between model capability and visitor behavior: prompt entry, example selection, canvas boundary, preview, and live verification.',
         stats: [
-          { value: '01', label: 'Translate model capability into a page task visitors can start' },
-          { value: '02', label: 'Choose controls people already know: prompt, gallery, canvas, timeline, path' },
-          { value: '03', label: 'Design states and feedback so outputs can be read, compared, and continued' },
-          { value: '04', label: 'Use the page itself as a demo, not as a poster for a research paper' }
-        ]
-      },
-      {
-        type: 'series-timeline',
-        category: 'ABILITY EVOLUTION',
-        label: '02',
-        title: 'The interaction problem changed as the model capability changed.',
-        subtitle: 'I structure the case study by what the visitor had to understand in each demo: space, time, then motion control.',
-        content: 'The three chapters are not equal feature summaries. Each one shows a different design problem caused by a different AI capability.',
-        items: [
-          {
-            number: '01',
-            title: 'NUWA-Infinity',
-            subtitle: 'Space / infinite image generation',
-            description: 'Visitors needed to see that generation could continue beyond the original frame, so the page had to teach prompt, examples, image boundary, and outpainting as one flow.'
-          },
-          {
-            number: '02',
-            title: 'NUWA XL',
-            subtitle: 'Time / long video generation',
-            description: 'A final video clip does not explain long-video synthesis, so the page needed timeline, filmstrip, keyframe, and coarse-to-fine cues.'
-          },
-          {
-            number: '03',
-            title: 'DragNUWA',
-            subtitle: 'Motion / trajectory control',
-            description: 'Prompt text is weak for movement, so the demo needed to show how text, image, and a drawn path work together.'
-          }
+          { value: '01', label: 'Project context: early generative AI / multimodal AI research demo' },
+          { value: '02', label: 'User problem: no mature AI UX pattern for visitors to recognize' },
+          { value: '03', label: 'Design challenge: explain outpainting without requiring paper-reading first' },
+          { value: '04', label: 'Design rule: every paragraph points to a visible control, screenshot, or live interaction' }
         ]
       },
       {
         type: 'cards',
         variant: 'series',
-        category: 'HOW I MADE THE DEMOS READABLE',
-        label: '03',
-        title: 'Every abstract term had to become a visible operation on the page.',
-        content: 'I used playful interactions only when they carried an explanation. The visitor should learn by doing one small action and seeing what the model changes.',
+        category: 'DESIGN PRINCIPLES',
+        label: '02',
+        title: 'The interaction rules I used before designing the page modules.',
+        content: 'Each rule is tied to a concrete interface element so the hiring reader can see what I actually designed.',
         items: [
           {
-            title: 'Give the visitor a first move',
-            description: 'For NUWA-Infinity, the first move is not “read the paper.” It is choose a prompt or example, then see the image world the model can extend.'
+            title: 'Start with a concrete first action',
+            description: 'Prompt input and gallery examples give the visitor something to try before they understand the research term “infinite visual synthesis.”'
           },
           {
-            title: 'Keep input and result visually connected',
-            description: 'Prompt, selected example, generated image, and expanded result need to sit in one path so the visitor can tell which action caused which output.'
+            title: 'Make the model output inspectable',
+            description: 'Large generated scenes work as evidence. The visitor can look at the result before reading a technical explanation.'
           },
           {
-            title: 'Use structure from the medium',
-            description: 'Images use canvas boundaries; long video uses filmstrip and timeline; motion control uses a drawn path and endpoint. The UI shape explains the AI capability.'
+            title: 'Turn outpainting into an edge action',
+            description: 'The key control is the image boundary. Expanding the edge is easier to understand than describing outpainting in model language.'
           },
           {
-            title: 'Show what to inspect',
-            description: 'Screenshots, demo windows, and diagrams need callouts: where the input starts, where the model result appears, and what changed after generation.'
+            title: 'Keep proof inside the page',
+            description: 'Annotated screenshots and an embedded live demo let readers verify the interaction instead of taking the case study text on trust.'
           }
         ]
       },
       {
         type: 'evidence',
         variant: 'infinity',
-        category: 'CHAPTER 01 / NUWA-INFINITY',
+        category: 'WEBSITE SCREENSHOT + FUNCTION MAP',
+        label: '03',
+        title: 'I use the website screenshot as a map of the interaction, not as a full-page decoration.',
+        subtitle: 'The screenshot should mark the entry, prompt/gallery examples, generated image world, and outpainting path.',
+        content: 'The reader should understand where the visitor starts, where the model result appears, and which later section proves infinite visual synthesis.',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity website screenshot used as an annotated interaction map.',
+        caption: 'Evidence caption: this screenshot anchors the reading path: entry, example gallery, generated image world, and the later outpainting task.',
+        items: [
+          {
+            number: '1',
+            title: 'User problem',
+            subtitle: 'Where the page can fail',
+            description: 'A first-time visitor cannot infer what to try from the model name alone. They need to see a start point and a result area.'
+          },
+          {
+            number: '2',
+            title: 'Design decision',
+            subtitle: 'How I organized the page',
+            description: 'I structured the page as start → inspect → expand → compare, so each model capability becomes a visitor action.'
+          },
+          {
+            number: '3',
+            title: 'Interaction evidence',
+            subtitle: 'What the screenshot should prove',
+            description: 'The marked areas point to the entry, generated scene, and later outpainting path instead of showing an unannotated full-page capture.'
+          },
+          {
+            number: '4',
+            title: 'Design value',
+            subtitle: 'Why it matters',
+            description: 'The hiring reader can connect each claim to a specific part of the interface and see that my role was interaction design, not visual dressing.'
+          }
+        ],
+        rows: [
+          {
+            action: 'Entry',
+            feedback: 'Click Enter / start the demo',
+            value: 'Turns a research page into something the visitor can begin using immediately.'
+          },
+          {
+            action: 'Prompt + gallery',
+            feedback: 'Choose a familiar input path',
+            value: 'Gives the visitor a safe first action before they know the model vocabulary.'
+          },
+          {
+            action: 'Generated image world',
+            feedback: 'Inspect what the model produced',
+            value: 'Makes the output visible as a space that can later be extended.'
+          }
+        ],
+        annotations: [
+          { x: 50, y: 52, side: 'right', label: 'Demo entry', detail: 'The first task is to enter and start exploring, not read a paper abstract.' },
+          { x: 24, y: 30, side: 'right', label: 'Prompt / gallery path', detail: 'Examples create a first action before visitors know the research term.' },
+          { x: 72, y: 74, side: 'left', label: 'Continue outward', detail: 'The lower page path leads toward the outpainting interaction.' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        category: 'FEATURE 01 / INPUT AND EXAMPLE ENTRY',
         label: '04',
-        title: 'I turned outpainting into a canvas-expansion task the visitor could follow.',
-        subtitle: 'Capability: NUWA-Infinity can generate images and videos from text, image, or video input, and can extend an image beyond its original frame.',
-        content: 'The page had to answer a basic first-visit question: “What can this AI do, and what should I try first?” I used prompt, gallery examples, image boundary, and continuation as the visitor path.',
+        title: 'Prompt and gallery turn an unfamiliar model into a first action.',
+        subtitle: 'Technology capability: generate a visual world from a text or image input.',
+        content: 'When users first meet a research demo, they often do not know whether they should read, type, scroll, or click. I placed familiar input patterns before research language.',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity page preview highlighting prompt and gallery entry.',
+        caption: 'Evidence caption: the image should be annotated around the entry area, prompt/gallery examples, and generated result area so the reader sees how the first action connects to the output.',
+        items: [
+          {
+            number: '1',
+            title: 'User problem',
+            subtitle: 'No obvious first move',
+            description: 'A visitor may not know whether NUWA-Infinity expects text, an example image, or passive viewing.'
+          },
+          {
+            number: '2',
+            title: 'Design decision',
+            subtitle: 'Use known input patterns',
+            description: 'I used prompt and gallery because people already understand typing an idea or choosing an example as a way to start.'
+          },
+          {
+            number: '3',
+            title: 'Interaction evidence',
+            subtitle: 'What to mark on the interface',
+            description: 'Call out the prompt/gallery entry, the selected example, and the result area. These three UI parts explain input → output.'
+          },
+          {
+            number: '4',
+            title: 'Design value',
+            subtitle: 'Why this helps understanding',
+            description: 'The model stops feeling like a black-box research name and becomes a system the visitor can query and inspect.'
+          }
+        ],
+        rows: [
+          {
+            action: 'Prompt input',
+            feedback: 'Type an idea',
+            value: 'Uses the most familiar interaction for text-to-image exploration.'
+          },
+          {
+            action: 'Gallery examples',
+            feedback: 'Pick instead of inventing',
+            value: 'Reduces blank-page anxiety when visitors do not yet know what prompts work.'
+          },
+          {
+            action: 'Generated result',
+            feedback: 'Inspect the output',
+            value: 'Connects the chosen input to a visible image world before moving into outpainting.'
+          }
+        ],
+        annotations: [
+          { x: 26, y: 31, side: 'right', label: 'First input', detail: 'Prompt or example selection gives the visitor a concrete first action.' },
+          { x: 54, y: 58, side: 'left', label: 'Generated scene', detail: 'The output is large enough to inspect as a visual world.' },
+          { x: 74, y: 76, side: 'left', label: 'Next task cue', detail: 'The page can then lead the visitor toward expanding the boundary.' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        layout: 'immersive',
+        category: 'FEATURE 02 / CANVAS EXPANSION',
+        label: '05',
+        title: 'I translated outpainting into expanding the image boundary.',
+        subtitle: 'Technology capability: continue the generated scene beyond the original frame.',
+        content: 'The important interaction is the edge. The user needs to see that the model is not replacing the image, but extending it into new space.',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'Canvas expansion diagram using NUWA-Infinity generated imagery.',
+        caption: 'Evidence caption: this visual should show the original frame, the boundary line, the generated continuation area, and the action that asks the visitor to continue beyond the edge.',
+        items: [
+          {
+            number: '1',
+            title: 'User problem',
+            subtitle: 'Outpainting is not obvious',
+            description: 'If the page only says “infinite visual synthesis,” visitors may not understand that the model continues an existing image outside its frame.'
+          },
+          {
+            number: '2',
+            title: 'Design decision',
+            subtitle: 'Use canvas expansion',
+            description: 'I used the image boundary as the interaction model: the frame can grow, and the visual world continues into the new area.'
+          },
+          {
+            number: '3',
+            title: 'Interaction evidence',
+            subtitle: 'What to mark on the interface',
+            description: 'Show the original frame, a highlighted boundary, and the new generated region so the user sees what changed after the expand action.'
+          },
+          {
+            number: '4',
+            title: 'Design value',
+            subtitle: 'Why this helps understanding',
+            description: 'The abstract AI ability becomes a spatial action: extend the edge, inspect the continuation, then decide whether to keep exploring.'
+          }
+        ],
+        rows: [
+          {
+            action: 'Original boundary',
+            feedback: 'What already exists',
+            value: 'Gives the visitor a stable reference before generation changes the image.'
+          },
+          {
+            action: 'Expanded area',
+            feedback: 'Where AI will continue',
+            value: 'Makes the invisible model operation visible as a new canvas region.'
+          },
+          {
+            action: 'Preview result',
+            feedback: 'What changed',
+            value: 'Lets the visitor compare the generated continuation against the original frame.'
+          }
+        ],
+        annotations: [
+          { x: 26, y: 38, side: 'right', label: 'Original frame', detail: 'The user starts from a visible image boundary.' },
+          { x: 48, y: 38, side: 'left', label: 'Expandable edge', detail: 'The boundary becomes the control point for outpainting.' },
+          { x: 72, y: 38, side: 'left', label: 'Generated continuation', detail: 'The new area explains “infinity” as visible space.' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        layout: 'contained',
+        category: 'FEATURE 03 / PREVIEW AND SELECTION',
+        label: '06',
+        title: 'Preview and comparison make the generated continuation readable.',
+        subtitle: 'Technology capability: produce possible continuations from the same starting image.',
+        content: 'A single final output would hide the design logic. I framed preview as a decision point: compare what changed, pick a direction, and continue exploring.',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity preview and selection interaction diagram.',
+        caption: 'Evidence caption: this module should show prompt → generate → expand → preview/select, then call out how before/after comparison helps visitors read the model result.',
+        items: [
+          {
+            number: '1',
+            title: 'User problem',
+            subtitle: 'The result can feel arbitrary',
+            description: 'If visitors only see one final image, they may not know what part was generated, whether it followed the prompt, or how to evaluate it.'
+          },
+          {
+            number: '2',
+            title: 'Design decision',
+            subtitle: 'Use preview and comparison',
+            description: 'I treated the generated continuation as something to inspect: show before/after, show candidates, then let the visitor continue from a chosen result.'
+          },
+          {
+            number: '3',
+            title: 'Interaction evidence',
+            subtitle: 'What to mark on the interface',
+            description: 'Call out the preview candidates, the selected result, and the before/after comparison area.'
+          },
+          {
+            number: '4',
+            title: 'Design value',
+            subtitle: 'Why this helps understanding',
+            description: 'The visitor gains control because the page explains what changed and gives them a reason to choose the next step.'
+          }
+        ],
+        rows: [
+          {
+            action: 'Before / after',
+            feedback: 'What changed',
+            value: 'Separates the original frame from generated continuation.'
+          },
+          {
+            action: 'Candidate preview',
+            feedback: 'What can be selected',
+            value: 'Shows the model output as options, not a single unexplained image.'
+          },
+          {
+            action: 'Continue exploring',
+            feedback: 'What comes next',
+            value: 'Makes the demo feel iterative: prompt, generate, extend, inspect, continue.'
+          }
+        ],
+        annotations: [
+          { x: 28, y: 40, side: 'right', label: 'Original result', detail: 'The first generated frame stays visible for comparison.' },
+          { x: 52, y: 40, side: 'left', label: 'Selected continuation', detail: 'The chosen option shows what the model added beyond the edge.' },
+          { x: 70, y: 76, side: 'left', label: 'Before / after', detail: 'Comparison makes the AI change easier to judge.' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        category: 'LIVE DEMO INTERACTION BOARD',
+        label: '07',
+        title: 'Try the original page where the design claims are being made.',
+        subtitle: 'The live demo is embedded inside the NUWA-Infinity chapter because it is interaction evidence, not a separate plugin.',
+        content: 'Use the window on the right as a small browser. Click Enter, choose a prompt or example, scroll to outpainting, then inspect preview and comparison. If the target site blocks iframe embedding, the module falls back to the preview image and keeps an external open button.',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-        fallbackAlt: 'NUWA-Infinity website preview showing the generated image world and project entry.',
-        buttonLabel: 'Open NUWA-Infinity',
-        caption: 'Evidence caption: click Enter in the live demo first. Then inspect how the page moves from prompt/gallery examples to generated image evidence, and scroll to the outpainting section that asks visitors to continue beyond the original frame.',
+        fallbackAlt: 'NUWA-Infinity live demo fallback preview.',
+        buttonLabel: 'Open live demo',
+        caption: 'Evidence caption: this embedded browser asks the reader to verify the same interaction path described in the text: input prompt → choose example → expand boundary → preview and compare. On mobile, use the preview and open the original demo in a new tab.',
         items: [
           {
-            number: 'A',
-            title: 'Technology capability',
-            subtitle: 'What the model does',
-            description: 'Generate a visual world from text or image input, then extend that world outside the original image boundary.'
+            number: '1',
+            title: 'User problem',
+            subtitle: 'Static screenshots are not enough',
+            description: 'The most important part of this project is the sequence of actions. A single screenshot cannot prove how the interaction works.'
           },
           {
-            number: 'B',
-            title: 'User understanding problem',
-            subtitle: 'Where visitors get stuck',
-            description: '“Infinite visual synthesis” is not self-explanatory. A visitor may not know whether to type, click an example, compare two images, or scroll to find the model difference.'
+            number: '2',
+            title: 'Design decision',
+            subtitle: 'Embed the demo as evidence',
+            description: 'The iframe lets readers operate the original project inside the case study and compare the live behavior with the annotated explanation.'
           },
           {
-            number: 'C',
-            title: 'My design decision',
-            subtitle: 'Familiar interaction model',
-            description: 'Use a prompt/gallery entry first, then show generated examples as a visual world, then introduce outpainting as extending the canvas boundary.'
+            number: '3',
+            title: 'Interaction evidence',
+            subtitle: 'What to try',
+            description: 'Enter the demo, use prompt/gallery examples, move toward the outpainting section, and inspect how the page presents continuation beyond the frame.'
           },
           {
-            number: 'D',
-            title: 'How it appears on the page',
-            subtitle: 'Interface evidence',
-            description: 'The hero names NUWA-Infinity, the gallery offers example scenes, the outpainting section frames the “beyond the horizon” action, and preview imagery shows what changed.'
-          },
-          {
-            number: 'E',
-            title: 'Why this works',
-            subtitle: 'Reduced learning cost',
-            description: 'Visitors do not have to decode the research term first. They can see a prompt, inspect a generated result, and understand that the image can keep growing outside the frame.'
-          },
-          {
-            number: 'F',
-            title: 'What to show visually',
-            subtitle: 'Portfolio asset direction',
-            description: 'Use an annotated original screenshot plus a prompt → generated result → expand boundary → preview comparison path. Keep the live demo inside this chapter, not as a separate plugin.'
+            number: '4',
+            title: 'Fallback behavior',
+            subtitle: 'If iframe is blocked',
+            description: 'Show the screenshot/GIF preview, explain that embedding may be blocked by security policy, and keep an “Open live demo” button.'
           }
         ],
         rows: [
           {
-            action: 'Prompt / example',
-            feedback: 'First action',
-            value: 'Gives visitors a safe starting point before they understand the research term.'
+            action: '1. Enter',
+            feedback: 'Start the staged demo',
+            value: 'The browser window preserves the original first step so readers can see the project as a real web experience.'
           },
           {
-            action: 'Generated scene',
-            feedback: 'Immediate result',
-            value: 'Shows the model output as a world to inspect, not a disconnected benchmark image.'
+            action: '2. Prompt / gallery',
+            feedback: 'Choose or type input',
+            value: 'This verifies that the page starts with familiar actions rather than research vocabulary.'
           },
           {
-            action: 'Canvas expansion',
-            feedback: 'Continue beyond the edge',
-            value: 'Turns outpainting into a concrete spatial operation: the frame grows and the image continues.'
+            action: '3. Expand / preview',
+            feedback: 'Inspect what changed',
+            value: 'This verifies the main design claim: outpainting is presented as extending a visible image boundary.'
+          },
+          {
+            action: '4. External open',
+            feedback: 'Fallback path',
+            value: 'If iframe embedding fails or the reader is on mobile, the case study still offers a direct path to the original project.'
           }
         ],
         annotations: [
-          { x: 50, y: 52, side: 'right', label: 'Enter the demo', detail: 'The original site starts as a staged demo. Click Enter before inspecting the interaction path.' },
-          { x: 24, y: 30, side: 'right', label: 'Gallery / prompt examples', detail: 'After entering, examples give visitors a first action before they know outpainting.' },
-          { x: 36, y: 78, side: 'right', label: 'Scroll to outpainting', detail: 'The “beyond the horizon” section turns expansion beyond the frame into the core task.' }
-        ]
-      },
-      {
-        type: 'evidence',
-        variant: 'xl',
-        category: 'CHAPTER 02 / NUWA XL',
-        label: '05',
-        title: 'I made long-video generation readable as a time structure, not just a final clip.',
-        subtitle: 'Capability: NUWA XL generates long videos by organizing sparse visual moments and filling temporal gaps over time.',
-        content: 'If the page only shows the final video, the visitor sees an output but misses why the model is different. I used filmstrip, timeline, keyframes, and staged filling to show how the result is built across time.',
-        demoUrl: 'https://msra-nuwa.azurewebsites.net/#/NUWAXL',
-        fallbackImage: '/projects/nuwa-series/nuwa-xl-preview.png',
-        fallbackAlt: 'NUWA XL page preview showing a long video generation demo.',
-        buttonLabel: 'Open NUWA XL page',
-        caption: 'Evidence caption: the visual should not be a plain page screenshot. It should annotate sparse keyframes, filled intermediate frames, and the progress spine so the reader can see how the model organizes time.',
-        items: [
-          {
-            number: 'A',
-            title: 'Technology capability',
-            subtitle: 'What the model does',
-            description: 'Generate longer video by treating the output as a sequence over time rather than a single image-like result.'
-          },
-          {
-            number: 'B',
-            title: 'User understanding problem',
-            subtitle: 'Where visitors get stuck',
-            description: 'A final video clip can look impressive but does not explain duration, continuity, keyframes, or how the model fills the moments between them.'
-          },
-          {
-            number: 'C',
-            title: 'My design decision',
-            subtitle: 'Familiar interaction model',
-            description: 'Use a filmstrip and timeline because people already read video as frames on a line: start, middle, end, then the in-between frames.'
-          },
-          {
-            number: 'D',
-            title: 'How it appears on the page',
-            subtitle: 'Interface evidence',
-            description: 'Keyframe cards mark sparse moments; the timeline bar shows progress; the dense frame strip makes coarse-to-fine filling visible.'
-          },
-          {
-            number: 'E',
-            title: 'Why this works',
-            subtitle: 'Reduced learning cost',
-            description: 'The visitor can understand “long video” as organized time. The model difference is visible before reading any architecture description.'
-          },
-          {
-            number: 'F',
-            title: 'What to show visually',
-            subtitle: 'Portfolio asset direction',
-            description: 'Use a keyframes → timeline → filled frames diagram, plus a marked screenshot or short GIF showing the page moving from sparse moments to long-video preview.'
-          }
-        ],
-        rows: [
-          {
-            action: 'Sparse keyframes',
-            feedback: 'Anchor moments',
-            value: 'Shows the visitor what the model uses as the story spine.'
-          },
-          {
-            action: 'Coarse-to-fine fill',
-            feedback: 'Intermediate frames',
-            value: 'Makes the invisible filling process legible as the sequence becomes denser.'
-          },
-          {
-            action: 'Timeline / progress',
-            feedback: 'Duration cue',
-            value: 'Helps the reader understand scale and continuity, not only output quality.'
-          }
-        ],
-        annotations: [
-          { x: 18, y: 26, side: 'right', label: 'Sparse keyframes', detail: 'A few anchor moments make the generation process readable.' },
-          { x: 58, y: 42, side: 'left', label: 'Filled frames', detail: 'Dense frames show the model completing the temporal gaps.' },
-          { x: 74, y: 78, side: 'left', label: 'Timeline spine', detail: 'Progress bar communicates duration and continuity.' }
-        ]
-      },
-      {
-        type: 'evidence',
-        variant: 'drag',
-        category: 'CHAPTER 03 / DragNUWA',
-        label: '06',
-        title: 'I used a drawn trajectory because prompt text is too vague for motion.',
-        subtitle: 'Capability: DragNUWA controls generated video with text, an image, and a trajectory path that tells the model where movement should go.',
-        content: 'A user can write “a bird flies across the sky,” but prompt text alone does not clearly specify path, direction, endpoint, or camera movement. I framed the trajectory as the control the visitor can draw directly on the scene.',
-        demoUrl: 'https://www.microsoft.com/en-us/research/project/dragnuwa/',
-        fallbackImage: '/projects/nuwa-series/dragnuwa-preview.png',
-        fallbackAlt: 'DragNUWA Microsoft Research page preview.',
-        buttonLabel: 'Open DragNUWA page',
-        caption: 'Evidence caption: the diagram should make the three inputs impossible to miss: text describes intent, image anchors the scene, and the path tells the model how motion should travel.',
-        items: [
-          {
-            number: 'A',
-            title: 'Technology capability',
-            subtitle: 'What the model does',
-            description: 'Generate controllable video from three inputs: a text prompt, a reference image, and a trajectory path.'
-          },
-          {
-            number: 'B',
-            title: 'User understanding problem',
-            subtitle: 'Where visitors get stuck',
-            description: 'People can describe the subject in words, but movement is spatial. Prompt text makes users translate a path into language, which is slow and imprecise.'
-          },
-          {
-            number: 'C',
-            title: 'My design decision',
-            subtitle: 'Familiar interaction model',
-            description: 'Use drawing and dragging. The visitor can show motion by placing a path on the image instead of inventing a long prompt.'
-          },
-          {
-            number: 'D',
-            title: 'How it appears on the page',
-            subtitle: 'Interface evidence',
-            description: 'The interface needs to display the text, image, and trajectory together, with the path sitting on top of the scene and ending with a direction cue.'
-          },
-          {
-            number: 'E',
-            title: 'Why this works',
-            subtitle: 'Reduced learning cost',
-            description: 'The visitor immediately sees that controllable video is different from text-only generation: the path is an input, not decoration.'
-          },
-          {
-            number: 'F',
-            title: 'What to show visually',
-            subtitle: 'Portfolio asset direction',
-            description: 'Use a three-input relationship diagram and an annotated path overlay. Show start point, endpoint, arrow direction, and how the prompt/image/path each affect the result.'
-          }
-        ],
-        rows: [
-          {
-            action: 'Text',
-            feedback: 'Subject intent',
-            value: 'Names what should happen, but does not precisely define the route.'
-          },
-          {
-            action: 'Image',
-            feedback: 'Scene anchor',
-            value: 'Shows where the subject and camera live before motion starts.'
-          },
-          {
-            action: 'Drawn path',
-            feedback: 'Motion route',
-            value: 'Turns direction and endpoint into a visible instruction the model can use.'
-          }
-        ],
-        annotations: [
-          { x: 18, y: 62, side: 'right', label: 'Start point', detail: 'The user begins motion on the object or camera path.' },
-          { x: 54, y: 38, side: 'left', label: 'Drawn trajectory', detail: 'The path carries direction and rhythm that a prompt cannot express precisely.' },
-          { x: 84, y: 52, side: 'left', label: 'Endpoint', detail: 'The arrow makes the intended final movement explicit.' }
-        ]
-      },
-      {
-        type: 'interaction-mapping',
-        variant: 'series',
-        category: 'DESIGN WORK SUMMARY',
-        label: '07',
-        title: 'The repeated design move: turn a model term into a user action and a page state.',
-        subtitle: 'This is where my interaction design work sits: understanding what the research model can do, then choosing the page control and feedback that makes that capability visible.',
-        rows: [
-          {
-            action: 'NUWA-Infinity',
-            feedback: 'Prompt + gallery + canvas edge',
-            value: 'Outpainting becomes a sequence: choose input, inspect result, expand beyond the frame, compare what changed.'
-          },
-          {
-            action: 'NUWA XL',
-            feedback: 'Filmstrip + timeline + keyframes',
-            value: 'Long-video generation becomes a visible time structure instead of a single final clip.'
-          },
-          {
-            action: 'DragNUWA',
-            feedback: 'Text + image + drawn path',
-            value: 'Motion control becomes something the visitor can draw and inspect, not only describe in words.'
-          },
-          {
-            action: 'My contribution',
-            feedback: 'Entry, flow, states, feedback, evidence',
-            value: 'The websites became places where visitors could test the research idea themselves, not just read an announcement.'
-          }
+          { x: 50, y: 52, side: 'right', label: '1. Click Enter', detail: 'Start the original NUWA-Infinity stage before inspecting the flow.' },
+          { x: 24, y: 30, side: 'right', label: '2. Prompt / example', detail: 'Look for the first input path the page gives to non-technical visitors.' },
+          { x: 38, y: 78, side: 'right', label: '3. Expand boundary', detail: 'Scroll to the outpainting area and watch how the page explains continuation.' },
+          { x: 76, y: 78, side: 'left', label: '4. Preview / compare', detail: 'Use the result preview to judge what changed after generation.' }
         ]
       },
       {
         type: 'outcomes',
         variant: 'series',
-        category: 'WHAT THIS CASE STUDY SHOULD PROVE',
+        category: 'DESIGN SUMMARY',
         label: '08',
-        title: 'I can design interaction for technology before the product pattern is obvious.',
-        subtitle: 'The value is not that the pages look novel. The value is that a non-technical visitor can understand what to try, what changed, and why the model is different.',
-        content: 'My design work translated research capability into entry points, user flows, states, feedback, and annotated evidence.',
+        title: 'What this NUWA-Infinity page proves about my interaction design work.',
+        subtitle: 'I designed the layer that lets non-technical visitors understand and control an early generative AI capability.',
+        content: 'My contribution was to understand the research capability, translate it into familiar web actions, and create enough interface evidence for visitors to explore without reading the paper first.',
         items: [
           {
-            title: 'Understanding the model',
-            description: 'I first identified what each model needed to prove: image space can expand, video can be organized over time, and motion can be directed.'
+            title: 'Read the technical capability',
+            description: 'I identified that the page needed to prove image space could continue beyond an existing boundary.'
           },
           {
-            title: 'Choosing the right control',
-            description: 'I matched each capability with a familiar control: canvas expansion for outpainting, timeline for long video, and drag path for trajectory control.'
+            title: 'Define entry and flow',
+            description: 'I organized the experience around prompt/gallery entry, result inspection, canvas expansion, preview, and continuation.'
           },
           {
-            title: 'Designing evidence',
-            description: 'I connected screenshots, demo windows, and diagrams to specific claims so hiring readers can see what design decision each visual proves.'
+            title: 'Design states and evidence',
+            description: 'I made the result, boundary, candidates, fallback, and live demo work as visible proof of the interaction logic.'
           },
           {
-            title: 'Turning a demo into an experience',
+            title: 'Turn research into exploration',
             description: 'The page shifts from “here is a research result” to “try this action and inspect what the model did.”'
           }
         ]
@@ -840,18 +870,18 @@ export const PROJECTS_EN: Project[] = [
     ],
     acts: {
       act1: {
-        title: 'NUWA Series Evolution',
-        content: 'Organized NUWA-Infinity, NUWA XL, and DragNUWA as a progression of early generative AI interaction problems.'
+        title: 'Spatial Exploration',
+        content: 'Focused the case study on NUWA-Infinity and the interaction problem of explaining infinite visual synthesis through page actions.'
       },
       act2: {
-        title: 'Interaction Layer',
-        content: 'Mapped spatial generation, long-video generation, and motion control to concrete web controls.',
-        decisionPoints: ['Canvas expansion', 'Timeline and keyframes', 'Drawn trajectory']
+        title: 'Interaction Translation',
+        content: 'Mapped a research capability to concrete controls and states a visitor can recognize.',
+        decisionPoints: ['Prompt and gallery entry', 'Canvas boundary expansion', 'Preview and before/after comparison']
       },
       act3: {
-        title: 'Understandable Research Demos',
-        content: 'Connected text, visuals, and interactive evidence so hiring readers can see the design reasoning behind each demo.',
-        impact: 'AI Interaction Language'
+        title: 'Understandable Research Demo',
+        content: 'Connected text, screenshots, callouts, and live demo behavior so hiring readers can see the design reasoning behind the page.',
+        impact: 'Early AI Interaction Design'
       }
     }
   },
@@ -1572,14 +1602,14 @@ export const PROJECTS_ZH: Project[] = [
   },
   {
     id: 'p3',
-    title: 'NUWA Series',
+    title: 'NUWA-Infinity',
     category: 'C-Side',
     platform: 'Web',
-    year: '2022-2023',
+    year: '2022',
     role: '交互设计师 / Web 体验设计师',
-    shortDescription: '我如何把三个 Microsoft Research 生成式 AI 模型，做成用户能通过 prompt、画布、时间线和路径控制理解的网页 demo。',
+    shortDescription: '一个 Microsoft Research 早期生成式 AI case study：我如何设计 prompt、gallery、画布扩展、预览选择和 live demo 证据。',
     coverImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-    tags: ['Research Demo UX', '画布扩展', '时间线交互', '轨迹控制', 'Microsoft Research'],
+    tags: ['Research Demo UX', 'Prompt 交互', '画布扩展', 'Outpainting', 'Microsoft Research'],
     externalLinks: {
       live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
       github: 'https://github.com/microsoft/NUWA/blob/main/NUWAInfinity.md'
@@ -1588,357 +1618,387 @@ export const PROJECTS_ZH: Project[] = [
       {
         type: 'hero',
         variant: 'series',
-        title: 'NUWA Series — 为早期生成式 AI Demo 设计可操作的网页体验',
-        subtitle: '我的工作是把研究模型能力变成用户能亲自试的网页动作：输入 prompt、选择示例、扩展图像边界、阅读时间线，或者直接画出运动路径。',
+        title: 'NUWA-Infinity — 空间探索',
+        subtitle: '我设计了一套让早期生成式 AI 能力可理解、可探索、可控制的交互体验：从 prompt 输入，到图像生成，再到画布边界扩展和结果预览。',
         bgImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-        tags: ['Prompt 到图像世界', 'Outpainting', '长视频时间线', '轨迹控制'],
+        tags: ['Prompt 到图像世界', 'Gallery 入口', '画布扩展', 'Live Demo 证据'],
         role: '交互设计师 / Web 体验设计师',
-        date: '2022-2023'
+        date: '2022'
       },
       {
         type: 'stats',
         variant: 'series',
-        category: '我负责的 demo 体验层',
+        category: '子页面介绍',
         label: '01',
-        title: '我不是在给研究结果做视觉包装，而是在设计用户如何理解它。',
-        subtitle: '每个模型都有技术故事，但访客打开网页时首先需要知道：我能做什么？点完会发生什么？这个结果强在哪里？',
-        content: '我的工作集中在交互体验层：让用户不先读论文，也能通过页面动作读懂模型能力。',
+        title: '这个子页面需要用一组具体操作解释研究模型，而不是只写论文摘要。',
+        subtitle: 'NUWA-Infinity 是 Microsoft Research 早期生成式 AI / multimodal AI demo。用户第一次打开页面时，真正的问题不是“视觉够不够炫”，而是：我应该先做什么？结果说明了什么？为什么它不是普通图片生成？',
+        content: '我把页面当成 research model 和非技术访客之间的交互转译层：prompt 输入、示例选择、生成结果、画布边界、预览选择和 live demo 验证都要串成一条可操作路径。',
         stats: [
-          { value: '01', label: '把模型能力变成用户能开始的页面任务' },
-          { value: '02', label: '选择用户熟悉的控制：prompt、gallery、画布、时间线、路径' },
-          { value: '03', label: '设计状态和反馈，让结果可以被阅读、比较、继续操作' },
-          { value: '04', label: '让网页成为 demo 本身，而不是论文发布页的海报' }
-        ]
-      },
-      {
-        type: 'series-timeline',
-        category: '能力演进',
-        label: '02',
-        title: '模型能力变化后，交互问题也跟着变化。',
-        subtitle: '我把这个 case study 按用户需要理解的内容来讲：空间、时间，然后是运动控制。',
-        content: '这三个项目不是平均介绍功能，而是展示三种不同 AI 能力分别带来的设计问题。',
-        items: [
-          {
-            number: '01',
-            title: 'NUWA-Infinity',
-            subtitle: '空间 / 无限图像生成',
-            description: '用户需要看懂生成可以继续超出原图边界，所以页面要把 prompt、示例、图像边界和 outpainting 串成一个流程。'
-          },
-          {
-            number: '02',
-            title: 'NUWA XL',
-            subtitle: '时间 / 长视频生成',
-            description: '只放最终视频不能解释长视频生成，所以页面需要时间线、胶片条、关键帧和 coarse-to-fine 的提示。'
-          },
-          {
-            number: '03',
-            title: 'DragNUWA',
-            subtitle: '运动 / 轨迹控制',
-            description: 'Prompt 很难描述运动路线，所以 demo 需要让用户看到 text、image 和画出的 path 是如何一起工作的。'
-          }
+          { value: '01', label: '项目背景：早期生成式 AI / 多模态 AI research demo' },
+          { value: '02', label: '用户问题：当时没有成熟 AI UX pattern 可以直接套用' },
+          { value: '03', label: '设计挑战：不要求用户先读论文，也能理解 outpainting' },
+          { value: '04', label: '设计原则：每段文案都要指向可见控件、截图或 live interaction' }
         ]
       },
       {
         type: 'cards',
         variant: 'series',
-        category: '我如何让 demo 被读懂',
-        label: '03',
-        title: '每个抽象技术词，都必须在页面上变成一个看得见的操作。',
-        content: '我只在交互能帮助解释模型时使用“好玩”的形式。用户应该通过一个小动作看到模型改变了什么。',
+        category: '设计原则',
+        label: '02',
+        title: '在设计页面模块前，我先确定了这几条交互规则。',
+        content: '每条规则都对应一个具体界面元素，方便招聘方看到我真实做了哪些交互设计判断。',
         items: [
           {
-            title: '先给用户一个第一步',
-            description: '在 NUWA-Infinity 里，第一步不是“读论文”，而是选择 prompt 或示例，然后看到模型能继续生成的图像世界。'
+            title: '先给用户一个具体第一步',
+            description: 'Prompt 输入和 gallery 示例让用户先能做一个动作，而不是一上来就面对 “infinite visual synthesis” 这样的研究术语。'
           },
           {
-            title: '让输入和结果保持连接',
-            description: 'Prompt、被选中的示例、生成图、扩展结果需要在一条路径里出现，用户才能知道哪个动作带来了哪个输出。'
+            title: '让模型结果可以被检查',
+            description: '大面积生成图像不是装饰，而是证据。用户可以先看结果，再理解技术解释。'
           },
           {
-            title: '用媒介本身的结构解释技术',
-            description: '图像用画布边界，长视频用胶片条和时间线，运动控制用路径和终点箭头。界面形状本身就在解释模型能力。'
+            title: '把 outpainting 变成边界动作',
+            description: '关键控制点是图像边界。用户理解“扩展边缘”比理解模型论文里的 outpainting 更直接。'
           },
           {
-            title: '告诉读者该看哪里',
-            description: '截图、demo 和图解都要有标注：输入从哪里开始、模型结果在哪里出现、生成后到底变了什么。'
+            title: '把证据留在页面里',
+            description: '带标注的截图和嵌入式 live demo 让读者可以自己验证交互，而不是只相信 case study 文案。'
           }
         ]
       },
       {
         type: 'evidence',
         variant: 'infinity',
-        category: '第一章 / NUWA-Infinity',
+        category: '网站截图和功能说明',
+        label: '03',
+        title: '我把网站截图当成交互地图，而不是一张装饰性的整页预览。',
+        subtitle: '这张图需要标出入口、prompt/gallery 示例、生成图像世界，以及通往 outpainting 的路径。',
+        content: '读者看这一屏时应该知道：用户从哪里开始，模型结果在哪里出现，后续哪个区域在证明 infinite visual synthesis。',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity 网站截图，用作带标注的交互地图。',
+        caption: '证据说明：这张截图用于固定阅读路径：入口、示例 gallery、生成图像世界，以及后续的 outpainting 任务。',
+        items: [
+          {
+            number: '1',
+            title: '用户问题',
+            subtitle: '页面可能失效的地方',
+            description: '用户只看到模型名字时，不能自然推断自己应该先点哪里，也不知道结果区域在哪里。'
+          },
+          {
+            number: '2',
+            title: '设计决策',
+            subtitle: '我如何组织页面',
+            description: '我把页面组织成 start → inspect → expand → compare，每个模型能力都对应一个用户动作。'
+          },
+          {
+            number: '3',
+            title: '交互证据',
+            subtitle: '截图应该证明什么',
+            description: '标注入口、生成图像区域和通往 outpainting 的路径，而不是只放一张没有解释的完整网页截图。'
+          },
+          {
+            number: '4',
+            title: '设计价值',
+            subtitle: '为什么重要',
+            description: '招聘方能把每个设计 claim 对应到具体界面位置，看出我的角色是交互设计，而不是视觉包装。'
+          }
+        ],
+        rows: [
+          {
+            action: '入口',
+            feedback: '点击 Enter / 开始 demo',
+            value: '把 research page 变成用户可以立刻开始操作的体验。'
+          },
+          {
+            action: 'Prompt + gallery',
+            feedback: '选择熟悉的输入路径',
+            value: '在用户不知道模型术语前，先给一个安全的第一步。'
+          },
+          {
+            action: '生成图像世界',
+            feedback: '检查模型生成了什么',
+            value: '把输出展示成一个后续可以继续扩展的空间。'
+          }
+        ],
+        annotations: [
+          { x: 50, y: 52, side: 'right', label: 'Demo 入口', detail: '第一件事是进入并开始探索，而不是先读论文摘要。' },
+          { x: 24, y: 30, side: 'right', label: 'Prompt / gallery 路径', detail: '示例在用户理解术语前，先提供一个可点击的第一步。' },
+          { x: 72, y: 74, side: 'left', label: '继续向外扩展', detail: '页面下方路径把用户带向 outpainting 交互。' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        category: '功能 01 / 输入创意和示例入口',
         label: '04',
-        title: '我把 outpainting 设计成用户能跟着走的“画布扩展”任务。',
-        subtitle: '技术能力：NUWA-Infinity 可以从文字、图像或视频输入生成高质量图像/视频，也可以把一张图继续扩展到原始边界之外。',
-        content: '页面首先要回答一个很基础的问题：“这个 AI 能做什么，我应该先试哪里？” 我用 prompt、gallery 示例、图像边界和继续生成，组成用户的理解路径。',
+        title: 'Prompt 和 gallery 把陌生模型变成用户能开始的第一步。',
+        subtitle: '技术能力：从文字或图像输入生成一个视觉世界。',
+        content: '用户第一次看到 research demo 时，经常不知道应该阅读、输入、滚动还是点击。我把用户熟悉的输入方式放在研究术语前面。',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity 页面预览图，重点标注 prompt 和 gallery 入口。',
+        caption: '证据说明：这一屏应该标注入口区域、prompt/gallery 示例和生成结果区域，让读者看到第一步如何连接到模型输出。',
+        items: [
+          {
+            number: '1',
+            title: '用户问题',
+            subtitle: '不知道第一步做什么',
+            description: '用户可能不知道 NUWA-Infinity 需要文字、示例图片，还是只是被动观看。'
+          },
+          {
+            number: '2',
+            title: '设计决策',
+            subtitle: '使用已知输入方式',
+            description: '我选择 prompt 和 gallery，因为用户已经熟悉“输入一个想法”或“选择一个示例”来开始探索。'
+          },
+          {
+            number: '3',
+            title: '交互证据',
+            subtitle: '界面上应该标什么',
+            description: '标出 prompt/gallery 入口、被选中的示例和结果区域。这三个 UI 部分解释 input → output。'
+          },
+          {
+            number: '4',
+            title: '设计价值',
+            subtitle: '为什么帮助理解',
+            description: '模型不再只是一个黑盒研究名字，而变成用户可以提问、选择和检查结果的系统。'
+          }
+        ],
+        rows: [
+          {
+            action: 'Prompt 输入',
+            feedback: '输入一个想法',
+            value: '使用用户最熟悉的 text-to-image 探索方式。'
+          },
+          {
+            action: 'Gallery 示例',
+            feedback: '不用从零想 prompt',
+            value: '降低用户不知道该写什么的空白压力。'
+          },
+          {
+            action: '生成结果',
+            feedback: '检查输出',
+            value: '在进入 outpainting 前，先把输入和生成图像世界连接起来。'
+          }
+        ],
+        annotations: [
+          { x: 26, y: 31, side: 'right', label: '第一个输入动作', detail: 'Prompt 或示例选择给用户一个具体开始方式。' },
+          { x: 54, y: 58, side: 'left', label: '生成图像世界', detail: '输出区域足够大，用户能把它当成一个空间来检查。' },
+          { x: 74, y: 76, side: 'left', label: '下一步提示', detail: '页面随后可以把用户带向边界扩展。' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        layout: 'immersive',
+        category: '功能 02 / 画布扩展',
+        label: '05',
+        title: '我把 outpainting 转译成“扩大图像边界”的动作。',
+        subtitle: '技术能力：把已经生成的场景继续延展到原始画框之外。',
+        content: '这个交互的关键不是“又生成了一张图”，而是“边界”。用户需要看到模型不是替换原图，而是在原图之外继续生成新的空间。',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: '使用 NUWA-Infinity 生成图像做成的画布扩展示意图。',
+        caption: '证据说明：这一屏应该同时显示原始画框、边界线、模型继续生成的区域，以及提示用户越过边界继续探索的动作。',
+        items: [
+          {
+            number: '1',
+            title: '用户问题',
+            subtitle: 'Outpainting 不直观',
+            description: '如果页面只写 “infinite visual synthesis”，用户不一定知道模型是在原图边界之外继续生成。'
+          },
+          {
+            number: '2',
+            title: '设计决策',
+            subtitle: '使用画布扩展',
+            description: '我把图像边界作为交互模型：画框可以变大，视觉世界会继续延展到新增区域。'
+          },
+          {
+            number: '3',
+            title: '交互证据',
+            subtitle: '界面上应该标什么',
+            description: '标出原始画框、被高亮的边界，以及新生成区域，让用户看到点击扩展后到底改变了哪里。'
+          },
+          {
+            number: '4',
+            title: '设计价值',
+            subtitle: '为什么帮助理解',
+            description: '抽象 AI 能力被转成空间动作：扩展边缘、检查延展结果，再决定是否继续探索。'
+          }
+        ],
+        rows: [
+          {
+            action: '原始边界',
+            feedback: '已有内容',
+            value: '在生成改变图像前，给用户一个稳定参照。'
+          },
+          {
+            action: '扩展区域',
+            feedback: 'AI 将继续生成的位置',
+            value: '把看不见的模型运算表达成一个新增画布区域。'
+          },
+          {
+            action: '结果预览',
+            feedback: '看见变化',
+            value: '让用户把新增内容和原始画框放在一起比较。'
+          }
+        ],
+        annotations: [
+          { x: 26, y: 38, side: 'right', label: '原始画框', detail: '用户从一个可见的图像边界开始。' },
+          { x: 48, y: 38, side: 'left', label: '可扩展边界', detail: '边界变成 outpainting 的控制点。' },
+          { x: 72, y: 38, side: 'left', label: '生成延展区域', detail: '新增区域把 “infinity” 解释成可见空间。' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        layout: 'contained',
+        category: '功能 03 / 预览与选择',
+        label: '06',
+        title: '预览和对比让用户读懂生成的延展结果。',
+        subtitle: '技术能力：从同一张起始图生成多个可能的延展结果。',
+        content: '如果页面只展示一个最终结果，用户很难判断哪里是新增内容、是否符合 prompt、以及下一步该不该继续。我把 preview 设计成一个决策点：比较变化、选择方向、继续探索。',
+        fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
+        fallbackAlt: 'NUWA-Infinity 预览选择交互示意图。',
+        caption: '证据说明：这一屏应该展示 prompt → generate → expand → preview/select，并标出 before/after 如何帮助用户判断模型结果。',
+        items: [
+          {
+            number: '1',
+            title: '用户问题',
+            subtitle: '结果可能显得随机',
+            description: '如果只看到一张最终图，用户不知道哪一部分是生成的，也不知道它是否跟 prompt 有关。'
+          },
+          {
+            number: '2',
+            title: '设计决策',
+            subtitle: '使用预览和对比',
+            description: '我把生成延展当成可检查对象：展示 before/after、展示候选结果，再让用户从某个结果继续。'
+          },
+          {
+            number: '3',
+            title: '交互证据',
+            subtitle: '界面上应该标什么',
+            description: '标出预览候选、被选中的结果，以及 before/after 对比区域。'
+          },
+          {
+            number: '4',
+            title: '设计价值',
+            subtitle: '为什么帮助理解',
+            description: '页面告诉用户生成后到底变了什么，也给出继续选择的理由，因此用户会更有控制感。'
+          }
+        ],
+        rows: [
+          {
+            action: 'Before / after',
+            feedback: '变化在哪里',
+            value: '把原始画框和生成延展内容分开看。'
+          },
+          {
+            action: '候选预览',
+            feedback: '可以选择什么',
+            value: '把模型输出展示成选项，而不是一张无法解释的最终图。'
+          },
+          {
+            action: '继续探索',
+            feedback: '下一步做什么',
+            value: '让 demo 形成迭代路径：输入、生成、扩展、检查、继续。'
+          }
+        ],
+        annotations: [
+          { x: 28, y: 40, side: 'right', label: '原始结果', detail: '第一张生成结果保留下来，方便比较。' },
+          { x: 52, y: 40, side: 'left', label: '被选中的延展', detail: '被选结果展示模型在边界外新增了什么。' },
+          { x: 70, y: 76, side: 'left', label: 'Before / after', detail: '对比让 AI 改动更容易被判断。' }
+        ]
+      },
+      {
+        type: 'evidence',
+        variant: 'infinity',
+        category: 'Live Demo 交互板块',
+        label: '07',
+        title: '在原始页面里验证这些设计判断。',
+        subtitle: 'Live demo 被嵌入在 NUWA-Infinity 章节里，因为它是交互证据，不是一个独立插件。',
+        content: '右侧窗口就是一个小浏览器。读者可以点击 Enter，选择 prompt 或示例，滚动到 outpainting 区域，再检查预览和对比。如果目标网页因为安全策略不允许 iframe 嵌入，模块会显示预览图，并保留外部打开按钮。',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         fallbackImage: '/projects/nuwa-series/nuwa-infinity-cover.png',
-        fallbackAlt: 'NUWA-Infinity 网站预览图，展示生成图像世界和项目入口。',
-        buttonLabel: '打开 NUWA-Infinity',
-        caption: '证据说明：请先在 live demo 里点击 Enter。进入后看页面如何从 prompt/gallery 示例过渡到生成图像证据，再滚到 outpainting 区域，看它如何引导用户继续向原图边界之外生成。',
+        fallbackAlt: 'NUWA-Infinity live demo fallback 预览图。',
+        buttonLabel: '打开在线演示',
+        caption: '证据说明：这个嵌入式浏览器让读者验证同一条交互路径：输入 prompt → 选择示例 → 扩展边界 → 预览和对比。移动端建议使用预览图并在新标签页打开原项目。',
         items: [
           {
-            number: 'A',
-            title: '技术能力是什么',
-            subtitle: '模型能做什么',
-            description: '从文字或图像输入生成一个视觉世界，并把这个世界继续延展到原图边界之外。'
+            number: '1',
+            title: '用户问题',
+            subtitle: '静态截图不够',
+            description: '这个项目最重要的是一串动作。单张截图无法证明交互如何发生。'
           },
           {
-            number: 'B',
-            title: '用户理解难点是什么',
-            subtitle: '访客会卡在哪里',
-            description: '“Infinite visual synthesis”不是用户一看就懂的概念。访客可能不知道应该输入、点示例、比较图片，还是继续往下滚。'
+            number: '2',
+            title: '设计决策',
+            subtitle: '把 demo 作为证据嵌入',
+            description: 'Iframe 让读者可以在 case study 内操作原项目，并把真实行为和页面解释对照起来。'
           },
           {
-            number: 'C',
-            title: '我的设计判断是什么',
-            subtitle: '选择熟悉的交互模型',
-            description: '先用 prompt 和 gallery 作为入口，再展示生成示例，最后把 outpainting 表达成“扩大画布边界”。'
+            number: '3',
+            title: '交互证据',
+            subtitle: '读者应该试什么',
+            description: '进入 demo，使用 prompt/gallery 示例，找到 outpainting 区域，检查页面如何呈现边界外继续生成。'
           },
           {
-            number: 'D',
-            title: '界面上如何体现',
-            subtitle: '页面证据',
-            description: 'Hero 直接说明 NUWA-Infinity，gallery 提供可点的场景，outpainting 区域用 “beyond the horizon” 引导用户理解边界外继续生成。'
-          },
-          {
-            number: 'E',
-            title: '为什么这样有效',
-            subtitle: '降低理解成本',
-            description: '用户不需要先理解论文术语，而是通过 prompt、生成结果和扩展边界，看到图像可以继续向外生长。'
-          },
-          {
-            number: 'F',
-            title: '应该配什么图',
-            subtitle: '作品集素材方向',
-            description: '用带标注的原网页截图，加一张 prompt → 生成结果 → 扩展边界 → 预览对比的流程图。live demo 必须留在这一章里。'
+            number: '4',
+            title: 'Fallback 行为',
+            subtitle: '如果 iframe 被阻止',
+            description: '显示截图/GIF 预览，说明可能是目标网站安全策略，同时保留“打开在线演示”按钮。'
           }
         ],
         rows: [
           {
-            action: 'Prompt / 示例',
-            feedback: '第一步',
-            value: '在用户还不理解 outpainting 前，先给一个安全的开始方式。'
+            action: '1. Enter',
+            feedback: '开始舞台式 demo',
+            value: '浏览器窗口保留原网站第一步，让读者看到这是一个真实可操作网页体验。'
           },
           {
-            action: '生成场景',
-            feedback: '即时结果',
-            value: '把模型输出展示成一个可检查的图像世界，而不是孤立的 benchmark 图片。'
+            action: '2. Prompt / gallery',
+            feedback: '选择或输入',
+            value: '验证页面确实先用熟悉动作开始，而不是先抛研究术语。'
           },
           {
-            action: '画布扩展',
-            feedback: '越过图像边界',
-            value: '把 outpainting 变成具体空间操作：画框变大，图像继续延展。'
+            action: '3. Expand / preview',
+            feedback: '检查变化',
+            value: '验证核心设计 claim：outpainting 被表达成扩展可见图像边界。'
+          },
+          {
+            action: '4. External open',
+            feedback: '备用路径',
+            value: '如果 iframe 失败或读者在移动端，case study 仍然提供通向原项目的入口。'
           }
         ],
         annotations: [
-          { x: 50, y: 52, side: 'right', label: '先进入 demo', detail: '原网站先用舞台式入口开始。点击 Enter 后再检查交互路径。' },
-          { x: 24, y: 30, side: 'right', label: 'Gallery / prompt 示例', detail: '进入后，示例先给用户一个可点的第一步。' },
-          { x: 36, y: 78, side: 'right', label: '滚到 outpainting', detail: '“beyond the horizon” 区域把越过边界继续生成变成核心任务。' }
-        ]
-      },
-      {
-        type: 'evidence',
-        variant: 'xl',
-        category: '第二章 / NUWA XL',
-        label: '05',
-        title: '我把长视频生成讲成“时间结构”，而不是只放一个最终视频。',
-        subtitle: '技术能力：NUWA XL 通过组织稀疏视觉时刻，并补齐时间空隙来生成长视频。',
-        content: '如果页面只放最终视频，访客只能看到结果，却看不出模型为什么特别。我用 filmstrip、timeline、关键帧和阶段式补帧来表现结果是如何跨时间生成的。',
-        demoUrl: 'https://msra-nuwa.azurewebsites.net/#/NUWAXL',
-        fallbackImage: '/projects/nuwa-series/nuwa-xl-preview.png',
-        fallbackAlt: 'NUWA XL 页面预览图，展示长视频生成 demo。',
-        buttonLabel: '打开 NUWA XL 页面',
-        caption: '证据说明：这一章不应该只放网页截图。视觉需要标出稀疏关键帧、中间帧补齐和进度时间线，让读者看到模型如何组织时间。',
-        items: [
-          {
-            number: 'A',
-            title: '技术能力是什么',
-            subtitle: '模型能做什么',
-            description: '把视频当成跨时间的序列来生成，而不是只生成一张图或一个短片段。'
-          },
-          {
-            number: 'B',
-            title: '用户理解难点是什么',
-            subtitle: '访客会卡在哪里',
-            description: '最终视频看起来可能很酷，但它不能解释时长、连续性、关键帧，以及模型如何补齐中间时刻。'
-          },
-          {
-            number: 'C',
-            title: '我的设计判断是什么',
-            subtitle: '选择熟悉的交互模型',
-            description: '用 filmstrip 和 timeline，因为用户已经习惯把视频理解成时间线上的帧：开始、中段、结束，以及中间被补齐的画面。'
-          },
-          {
-            number: 'D',
-            title: '界面上如何体现',
-            subtitle: '页面证据',
-            description: '关键帧卡片标记稀疏时刻，时间线展示进度，密集帧序列让 coarse-to-fine 的补齐过程可见。'
-          },
-          {
-            number: 'E',
-            title: '为什么这样有效',
-            subtitle: '降低理解成本',
-            description: '用户能把“长视频”理解成被组织起来的时间，而不是只靠技术文字相信模型更强。'
-          },
-          {
-            number: 'F',
-            title: '应该配什么图',
-            subtitle: '作品集素材方向',
-            description: '做一张 keyframes → timeline → filled frames 的图解，再配一个带标注截图或短 GIF，展示从稀疏时刻到长视频预览的过程。'
-          }
-        ],
-        rows: [
-          {
-            action: '稀疏关键帧',
-            feedback: '锚点时刻',
-            value: '让用户先看到模型用哪些画面作为故事骨架。'
-          },
-          {
-            action: 'Coarse-to-fine 补齐',
-            feedback: '中间帧',
-            value: '把看不见的生成过程表达成帧序列逐渐变密。'
-          },
-          {
-            action: '时间线 / 进度',
-            feedback: '时长提示',
-            value: '帮助读者理解尺度和连续性，而不只是输出质量。'
-          }
-        ],
-        annotations: [
-          { x: 18, y: 26, side: 'right', label: '稀疏关键帧', detail: '少量锚点先让生成过程可读。' },
-          { x: 58, y: 42, side: 'left', label: '中间帧补齐', detail: '密集帧展示模型如何补完时间空隙。' },
-          { x: 74, y: 78, side: 'left', label: '时间线骨架', detail: '进度条传达时长和连续性。' }
-        ]
-      },
-      {
-        type: 'evidence',
-        variant: 'drag',
-        category: '第三章 / DragNUWA',
-        label: '06',
-        title: '我用“画轨迹”解决 prompt 很难描述运动的问题。',
-        subtitle: '技术能力：DragNUWA 用 text、image 和 trajectory path 三种输入来控制生成视频里的运动方向。',
-        content: '用户可以写“鸟飞过天空”，但很难用 prompt 精确描述路线、方向、终点或镜头运动。我把 trajectory 设计成用户直接画在场景上的控制方式。',
-        demoUrl: 'https://www.microsoft.com/en-us/research/project/dragnuwa/',
-        fallbackImage: '/projects/nuwa-series/dragnuwa-preview.png',
-        fallbackAlt: 'DragNUWA Microsoft Research 页面预览图。',
-        buttonLabel: '打开 DragNUWA 页面',
-        caption: '证据说明：图里必须清楚看到三种输入的关系：文字描述意图，图片固定场景，轨迹线告诉模型运动应该怎么走。',
-        items: [
-          {
-            number: 'A',
-            title: '技术能力是什么',
-            subtitle: '模型能做什么',
-            description: '从文字 prompt、参考图像和一条运动轨迹生成可控视频。'
-          },
-          {
-            number: 'B',
-            title: '用户理解难点是什么',
-            subtitle: '访客会卡在哪里',
-            description: '用户能用文字描述主体，但运动是空间问题。只用 prompt 等于让用户把一条路径翻译成句子，既慢又不准确。'
-          },
-          {
-            number: 'C',
-            title: '我的设计判断是什么',
-            subtitle: '选择熟悉的交互模型',
-            description: '用拖拽和绘制路径。用户不需要写很长的 prompt，而是可以在图片上直接画出运动。'
-          },
-          {
-            number: 'D',
-            title: '界面上如何体现',
-            subtitle: '页面证据',
-            description: '界面需要把 text、image 和 trajectory 同时展示出来，路径覆盖在场景上，并用终点箭头说明方向。'
-          },
-          {
-            number: 'E',
-            title: '为什么这样有效',
-            subtitle: '降低理解成本',
-            description: '用户一眼能看出 controllable video 和普通 text-to-video 不同：path 是输入，不是装饰线。'
-          },
-          {
-            number: 'F',
-            title: '应该配什么图',
-            subtitle: '作品集素材方向',
-            description: '做一张三输入关系图和一张轨迹标注图，标出起点、终点、箭头方向，以及 prompt/image/path 分别控制什么。'
-          }
-        ],
-        rows: [
-          {
-            action: 'Text',
-            feedback: '主体意图',
-            value: '说明视频大概要发生什么，但不能精准定义路线。'
-          },
-          {
-            action: 'Image',
-            feedback: '场景锚点',
-            value: '说明运动发生在什么画面、哪个对象或镜头上。'
-          },
-          {
-            action: 'Drawn path',
-            feedback: '运动路线',
-            value: '把方向和终点变成模型可以使用的可见指令。'
-          }
-        ],
-        annotations: [
-          { x: 18, y: 62, side: 'right', label: '起点', detail: '用户从对象或镜头运动的开始位置画起。' },
-          { x: 54, y: 38, side: 'left', label: '轨迹线', detail: '路径承载 prompt 很难说清的方向和节奏。' },
-          { x: 84, y: 52, side: 'left', label: '终点', detail: '箭头让最终运动意图明确。' }
-        ]
-      },
-      {
-        type: 'interaction-mapping',
-        variant: 'series',
-        category: '设计工作总结',
-        label: '07',
-        title: '我反复做的一件事：把模型术语变成用户动作和页面状态。',
-        subtitle: '这就是我的交互设计工作：先理解研究模型到底要证明什么，再选择能让这个能力被看见的页面控制和反馈。',
-        rows: [
-          {
-            action: 'NUWA-Infinity',
-            feedback: 'Prompt + gallery + 画布边界',
-            value: 'Outpainting 被组织成：选择输入、检查结果、越过边界、比较变化。'
-          },
-          {
-            action: 'NUWA XL',
-            feedback: '胶片条 + 时间线 + 关键帧',
-            value: '长视频生成被表现成可见的时间结构，而不是一个最终视频。'
-          },
-          {
-            action: 'DragNUWA',
-            feedback: 'Text + image + 画出的路径',
-            value: '运动控制变成用户可以画出来、检查出来的东西，而不是只靠文字描述。'
-          },
-          {
-            action: '我的贡献',
-            feedback: '入口、流程、状态、反馈、证据',
-            value: '网页从“展示研究结果”，变成“用户可以亲自试这个研究想法”。'
-          }
+          { x: 50, y: 52, side: 'right', label: '1. 点击 Enter', detail: '先进入原始 NUWA-Infinity 舞台，再检查流程。' },
+          { x: 24, y: 30, side: 'right', label: '2. Prompt / 示例', detail: '观察页面给非技术用户的第一条输入路径。' },
+          { x: 38, y: 78, side: 'right', label: '3. 扩展边界', detail: '滚动到 outpainting 区域，看页面如何解释继续生成。' },
+          { x: 76, y: 78, side: 'left', label: '4. 预览 / 对比', detail: '通过结果预览判断生成后发生了什么变化。' }
         ]
       },
       {
         type: 'outcomes',
         variant: 'series',
-        category: '这个 case study 要证明什么',
+        category: '设计总结',
         label: '08',
-        title: '我能在产品范式还不清楚时，为新技术设计可理解的交互。',
-        subtitle: '这个项目的价值不在于网页看起来新奇，而在于非技术用户能知道试什么、看什么、模型到底强在哪里。',
-        content: '我的设计工作是把研究能力落到入口、流程、状态、反馈和可标注的界面证据上。',
+        title: '这个 NUWA-Infinity 页面证明了我的哪些交互设计工作。',
+        subtitle: '我设计的是让非技术用户理解并控制早期生成式 AI 能力的体验层。',
+        content: '我的贡献是先理解 research model 能力，再把它转译成用户熟悉的网页动作，并提供足够清楚的界面证据，让用户不读论文也能探索。',
         items: [
           {
-            title: '理解模型能力',
-            description: '我先判断每个模型要证明什么：图像空间可以扩展、视频可以被时间组织、运动可以被直接控制。'
+            title: '读懂技术能力',
+            description: '我先判断页面需要证明什么：图像空间可以越过已有边界继续生成。'
           },
           {
-            title: '选择正确控制方式',
-            description: '我把能力对应到具体控制：outpainting 用画布扩展，长视频用时间线，trajectory control 用拖拽路径。'
+            title: '定义入口和流程',
+            description: '我把体验组织成 prompt/gallery 入口、结果检查、画布扩展、预览选择和继续探索。'
           },
           {
-            title: '设计证据',
-            description: '我让截图、demo 和图解都服务于一个明确 claim：这张图到底证明了哪个设计判断。'
+            title: '设计状态和证据',
+            description: '我让结果、边界、候选、fallback 和 live demo 都成为可见的交互逻辑证据。'
           },
           {
-            title: '把 demo 做成体验',
+            title: '把研究变成探索',
             description: '页面从“这里有一个研究成果”，变成“试这个动作，然后检查模型做了什么”。'
           }
         ]
@@ -1946,18 +2006,18 @@ export const PROJECTS_ZH: Project[] = [
     ],
     acts: {
       act1: {
-        title: 'NUWA 系列演进',
-        content: '将 NUWA-Infinity、NUWA XL 和 DragNUWA 整理成早期生成式 AI 交互问题的连续演进。'
+        title: '空间探索',
+        content: '把 case study 聚焦在 NUWA-Infinity，以及如何通过页面动作解释 infinite visual synthesis。'
       },
       act2: {
-        title: '交互体验层',
-        content: '把空间生成、长视频生成和运动控制分别落到具体网页控件上。',
-        decisionPoints: ['画布扩展', '时间线与关键帧', '画出的轨迹']
+        title: '交互转译',
+        content: '把 research capability 映射成用户熟悉的具体控件和状态。',
+        decisionPoints: ['Prompt 和 gallery 入口', '画布边界扩展', '预览与 before/after 对比']
       },
       act3: {
-        title: '可理解的 research demo',
-        content: '把文案、视觉和交互证据绑定在一起，让招聘方能看到每个 demo 背后的设计推理。',
-        impact: 'AI 交互语言'
+        title: '可理解的 Research Demo',
+        content: '把文案、截图、callout 和 live demo 行为绑定起来，让招聘方看到页面背后的设计推理。',
+        impact: '早期 AI 交互设计'
       }
     }
   },
