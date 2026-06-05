@@ -108,12 +108,12 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
             aria-label={isZh ? '在新标签页打开 NUWA Infinity 在线演示' : 'Open NUWA Infinity live demo in a new tab'}
           >
             <ExternalLink size={13} />
-            {section.buttonLabel || (isZh ? '新标签页打开' : 'Open live demo')}
+            {section.buttonLabel || (isZh ? '打开原始 demo' : 'Open full demo')}
           </a>
         )}
       </div>
 
-      <div className="relative h-[420px] bg-neutral-950 sm:h-[560px] lg:h-[640px]">
+      <div className={`relative bg-neutral-950 ${isNuwaDemo ? 'h-[520px] sm:h-[660px] lg:h-[720px]' : 'h-[420px] sm:h-[560px] lg:h-[640px]'}`}>
         {isCompactViewport && (
           <div className="absolute inset-0 bg-neutral-950">
             {section.fallbackImage && (
@@ -137,7 +137,7 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
                   className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-neutral-950 transition hover:bg-neutral-200"
                 >
                   <ExternalLink size={14} />
-                  {section.buttonLabel || (isZh ? '打开在线演示' : 'Open live demo')}
+                  {section.buttonLabel || (isZh ? '打开原始 demo' : 'Open full demo')}
                 </a>
               )}
             </div>
@@ -182,7 +182,7 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
             <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/10 bg-black/55 p-5 text-white backdrop-blur-md sm:inset-x-auto sm:left-6 sm:max-w-md">
               <p className="text-sm font-semibold">{isZh ? '在线演示可能无法嵌入' : 'The live demo may not be embeddable'}</p>
               <p className="mt-2 text-xs leading-5 text-white/62">
-                {isZh ? '这通常由目标网站的安全策略造成。你仍然可以通过预览图理解交互入口，或在新标签页打开真实项目。' : 'This is usually caused by the target site security policy. Use the preview as context, or open the real project in a new tab.'}
+                {isZh ? '原始 demo 托管在外部站点。如果无法在作品集内加载，可以新窗口打开，或观看录屏版交互 walkthrough。' : 'The original demo is hosted externally. If it does not load inside the portfolio, open it in a new tab or watch the recorded walkthrough.'}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {demoUrl && (
@@ -193,7 +193,7 @@ const LiveDemoWindow: React.FC<{ section: CaseSection; isZh: boolean }> = ({ sec
                     className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-neutral-950 transition hover:bg-neutral-200"
                   >
                     <ExternalLink size={14} />
-                    {section.buttonLabel || (isZh ? '打开在线演示' : 'Open live demo')}
+                    {section.buttonLabel || (isZh ? '打开原始 demo' : 'Open full demo')}
                   </a>
                 )}
                 <button
@@ -306,18 +306,62 @@ const NuwaCallouts: React.FC<{ section: CaseSection; accent: string }> = ({ sect
   );
 };
 
+const NuwaPins: React.FC<{ section: CaseSection; accent: string }> = ({ section, accent }) => {
+  if (!section.annotations?.length) return null;
+
+  return (
+    <div className="pointer-events-none absolute inset-0 z-20 hidden md:block">
+      {section.annotations.slice(0, 3).map((annotation, index) => {
+        const color = annotation.color || accent;
+        return (
+          <span
+            key={`${annotation.label}-${index}`}
+            className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-black/70 text-xs font-bold text-white shadow-[0_10px_28px_rgba(0,0,0,0.38)] ring-4 ring-black/25"
+            style={{ left: `${annotation.x ?? 50}%`, top: `${annotation.y}%`, boxShadow: `0 0 0 1px ${color}66, 0 10px 28px rgba(0,0,0,0.38)` }}
+          >
+            {index + 1}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+const NuwaCalloutRail: React.FC<{ section: CaseSection; accent: string; isZh: boolean }> = ({ section, accent, isZh }) => {
+  if (!section.annotations?.length) return null;
+
+  return (
+    <div className="border-t border-white/10 bg-[#111113] p-4 lg:border-l lg:border-t-0">
+      <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/38">
+        {isZh ? '看图顺序' : 'Screen notes'}
+      </p>
+      <div className="space-y-3">
+        {section.annotations.slice(0, 3).map((annotation, index) => {
+          const color = annotation.color || accent;
+          return (
+            <div key={`${annotation.label}-rail-${index}`} className="grid grid-cols-[28px_minmax(0,1fr)] gap-3">
+              <span className="grid h-6 w-6 place-items-center rounded-full text-xs font-bold text-neutral-950" style={{ backgroundColor: color }}>
+                {index + 1}
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-white">{annotation.label}</p>
+                {annotation.detail && <p className="mt-1 text-xs leading-5 text-white/54">{annotation.detail}</p>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   const isInfinity = section.variant === 'infinity' && section.demoUrl;
   const infinitySourceImage = section.fallbackImage ? assetUrl(section.fallbackImage) : '';
 
   if (isInfinity) {
-    return (
-      <div className="relative">
-        <LiveDemoWindow section={section} isZh={isZh} />
-        <NuwaCallouts section={section} accent={theme.accent} />
-      </div>
-    );
+    return <LiveDemoWindow section={section} isZh={isZh} />;
   }
 
   const renderInfinityFrame = (children: React.ReactNode) => (
@@ -332,9 +376,12 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
           <span className="block truncate">nuwa-infinity.microsoft.com/#/NUWAInfinity</span>
         </div>
       </div>
-      <div className="relative">
-        {children}
-        <NuwaCallouts section={section} accent={theme.accent} />
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_270px]">
+        <div className="relative">
+          {children}
+          <NuwaPins section={section} accent={theme.accent} />
+        </div>
+        <NuwaCalloutRail section={section} accent={theme.accent} isZh={isZh} />
       </div>
       {section.caption && (
         <div className="border-t border-white/10 px-4 py-3 text-xs leading-5 text-white/48">{section.caption}</div>
@@ -343,21 +390,14 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
   );
 
   const renderInfinityScreenshotVisual = () => renderInfinityFrame(
-    <div className="relative h-[360px] overflow-hidden bg-[#050505] sm:h-[460px]">
+    <div className="relative aspect-[16/10] overflow-hidden bg-[#050505]">
       {infinitySourceImage && (
         <img
           src={infinitySourceImage}
           alt={section.fallbackAlt || ''}
-          className="absolute inset-0 h-full w-full object-cover opacity-75"
+          className="absolute inset-0 h-full w-full object-contain"
         />
       )}
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(168,188,255,0.10)_1px,transparent_1px),linear-gradient(0deg,rgba(168,188,255,0.08)_1px,transparent_1px)] bg-[length:88px_88px]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06)_0%,rgba(5,5,5,0.72)_100%)]" />
-      <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2 text-[10px] uppercase tracking-[0.16em] text-white/62">
-        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '入口' : 'Entry'}</span>
-        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '生成结果' : 'Generated result'}</span>
-        <span className="rounded-full border border-white/12 bg-black/38 px-3 py-2 backdrop-blur-sm">{isZh ? '继续扩展' : 'Continue outward'}</span>
-      </div>
     </div>
   );
 
@@ -570,7 +610,7 @@ const SeriesTimelineSection: React.FC<{ section: CaseSection; isZh: boolean }> =
 const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   return (
-    <div className="bg-[#070707] text-white">
+    <div id={section.label === '03' ? 'nuwa-walkthrough' : undefined} className="bg-[#070707] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 sm:py-24 md:px-12 lg:grid-cols-[0.92fr_1.18fr]">
         <div>
           <div className="border-t border-white/10 pt-8">
@@ -634,6 +674,49 @@ const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ se
   );
 };
 
+const LiveDemoShowcaseSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
+  const theme = getNuwaTheme(section.variant);
+
+  return (
+    <div className="bg-[#070707] text-white">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-24 md:px-12">
+        <div className="border-t border-white/10 pt-8">
+          {section.category && (
+            <span className="mb-5 block font-serif text-sm italic tracking-wide sm:text-base" style={{ color: theme.accent }}>
+              {section.category}
+            </span>
+          )}
+          <div className="grid gap-8 lg:grid-cols-[0.28fr_0.72fr] lg:items-start">
+            <div className="lg:sticky lg:top-8">
+              <h3 className="text-3xl font-bold leading-tight sm:text-5xl">{section.title}</h3>
+              {section.subtitle && <p className="mt-5 text-sm leading-7 text-white/62 sm:text-base">{section.subtitle}</p>}
+              {section.content && <p className="mt-5 text-sm leading-7 text-white/72 sm:text-base">{section.content}</p>}
+              {section.items && (
+                <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: theme.accent }}>
+                    {isZh ? '你可以这样看' : 'Try this'}
+                  </p>
+                  <ol className="mt-4 space-y-3">
+                    {section.items.map((item, index) => (
+                      <li key={item.title} className="grid grid-cols-[26px_minmax(0,1fr)] gap-3 text-sm leading-6 text-white/72">
+                        <span className="grid h-6 w-6 place-items-center rounded-full text-xs font-bold text-neutral-950" style={{ backgroundColor: theme.accent }}>
+                          {index + 1}
+                        </span>
+                        <span>{item.title}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
+            <LiveDemoWindow section={section} isZh={isZh} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const collectReaderPages = (project: Project, language: 'en' | 'zh') => {
   const localizedSlides = project.slideSets?.[language] || project.slideSets?.zh || project.slideSets?.en;
   const directPages = localizedSlides || project.slides || project.gallery;
@@ -651,9 +734,9 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       if (section.variant === 'series') {
         return (
           <div className="relative min-h-[620px] overflow-hidden bg-[#050505] text-white">
-            {section.bgImage && <img src={assetUrl(section.bgImage)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-36" />}
+            {section.bgImage && <img src={assetUrl(section.bgImage)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.58]" />}
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[length:120px_120px]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.22)_0%,rgba(5,5,5,0.84)_78%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.82)_0%,rgba(5,5,5,0.52)_48%,rgba(5,5,5,0.18)_100%),linear-gradient(180deg,rgba(5,5,5,0.08)_0%,rgba(5,5,5,0.78)_88%)]" />
             <div className="relative z-10 mx-auto flex min-h-[620px] max-w-6xl flex-col justify-end px-6 pb-16 pt-36 sm:px-8 md:px-12">
               <span className="mb-6 font-serif text-sm italic tracking-wide text-white/58">
                 {section.title?.includes('NUWA-Infinity') ? (isZh ? 'NUWA-Infinity 案例研究' : 'NUWA-INFINITY CASE STUDY') : (isZh ? 'NUWA 系列案例研究' : 'NUWA SERIES CASE STUDY')}
@@ -665,6 +748,27 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
               )}
               <h1 className={`max-w-4xl font-serif text-white ${isZh ? 'text-[2.08rem] leading-[1.08] sm:text-5xl md:text-6xl' : 'text-4xl leading-[0.98] sm:text-6xl md:text-7xl'}`}>{section.title}</h1>
               {section.subtitle && <p className="mt-6 max-w-3xl text-base leading-8 text-white/72 sm:text-xl">{section.subtitle}</p>}
+              {section.content && <p className="mt-5 max-w-3xl text-sm leading-7 text-white/70 sm:text-base">{section.content}</p>}
+              {section.demoUrl && (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href={section.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
+                  >
+                    <ExternalLink size={16} />
+                    {section.buttonLabel || (isZh ? '打开原始 demo' : 'Try the original demo')}
+                  </a>
+                  <a
+                    href="#nuwa-walkthrough"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/22 bg-black/28 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    <ArrowRight size={16} />
+                    {isZh ? '查看交互 walkthrough' : 'View interaction walkthrough'}
+                  </a>
+                </div>
+              )}
               <div className="mt-8 flex flex-wrap gap-5 text-xs uppercase tracking-[0.18em] text-white/45">
                 {section.date && <span>{section.date}</span>}
                 {section.role && <span>{section.role}</span>}
@@ -1193,6 +1297,9 @@ const CaseSectionRenderer: React.FC<{ section: CaseSection; isZh: boolean }> = (
       return <SeriesTimelineSection section={section} isZh={isZh} />;
 
     case 'evidence':
+      if (section.variant === 'infinity' && section.demoUrl) {
+        return <LiveDemoShowcaseSection section={section} isZh={isZh} />;
+      }
       return <EvidenceSection section={section} isZh={isZh} />;
 
     case 'live-demo':
