@@ -6,6 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { assetUrl } from '../utils/assets';
 import PortfolioReader from './PortfolioReader';
 import LanguageToggle from './LanguageToggle';
+import NuwaSeriesCaseStudy from './NuwaSeriesCaseStudy';
 
 interface ProjectDetailProps {
   project: Project | null;
@@ -1631,6 +1632,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
                 onClose={onClose}
                 scrollRootRef={scrollRef}
               />
+            ) : project.id === 'p3' ? (
+              <NuwaSeriesCaseStudy isZh={isZh} />
             ) : project.caseSections && project.caseSections.length > 0 ? (
               /* Mode B: Modular Case Study — for projects built from sections */
               <>
