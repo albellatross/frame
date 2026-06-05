@@ -358,7 +358,12 @@ const NuwaCalloutRail: React.FC<{ section: CaseSection; accent: string; isZh: bo
 const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   const isInfinity = section.variant === 'infinity' && section.demoUrl;
-  const infinitySourceImage = section.fallbackImage ? assetUrl(section.fallbackImage) : '';
+  const sourceImage = section.fallbackImage ? assetUrl(section.fallbackImage) : '';
+  const sourceLabel = section.variant === 'xl'
+    ? 'microsoft.com/research/articles/nuwa-xl'
+    : section.variant === 'drag'
+      ? 'microsoft.com/research/project/dragnuwa'
+      : 'nuwa-infinity.microsoft.com/#/NUWAInfinity';
 
   if (isInfinity) {
     return <LiveDemoWindow section={section} isZh={isZh} />;
@@ -373,7 +378,7 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
           <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
         </div>
         <div className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/28 px-3 py-1.5 font-mono text-[11px] text-white/42">
-          <span className="block truncate">nuwa-infinity.microsoft.com/#/NUWAInfinity</span>
+          <span className="block truncate">{sourceLabel}</span>
         </div>
       </div>
       <div className="grid lg:grid-cols-[minmax(0,1fr)_270px]">
@@ -391,9 +396,9 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
 
   const renderInfinityScreenshotVisual = () => renderInfinityFrame(
     <div className="relative aspect-[16/10] overflow-hidden bg-[#050505]">
-      {infinitySourceImage && (
+      {sourceImage && (
         <img
-          src={infinitySourceImage}
+          src={sourceImage}
           alt={section.fallbackAlt || ''}
           className="absolute inset-0 h-full w-full object-contain"
         />
@@ -405,14 +410,14 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
     <div className="relative h-[360px] overflow-hidden bg-[#050505] sm:h-[460px]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(168,188,255,0.18),transparent_34%),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:100%_100%,64px_64px,64px_64px]" />
       <div className="absolute left-[7%] top-[16%] h-[58%] w-[40%] overflow-hidden rounded-xl border border-white/40 bg-white/8 shadow-[0_24px_64px_rgba(0,0,0,0.38)]">
-        {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-82" />}
+        {sourceImage && <img src={sourceImage} alt="" className="h-full w-full object-cover opacity-82" />}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,rgba(0,0,0,0.68)_100%)]" />
         <span className="absolute bottom-3 left-3 rounded-full bg-black/62 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white/70">
           {isZh ? '原始画面边界' : 'Original frame'}
         </span>
       </div>
       <div className="absolute left-[47%] top-[16%] h-[58%] w-[40%] overflow-hidden rounded-xl border border-dashed bg-[#10121A]/70 shadow-[0_24px_64px_rgba(0,0,0,0.25)]" style={{ borderColor: `${theme.accent}CC` }}>
-        {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-28 mix-blend-screen" />}
+        {sourceImage && <img src={sourceImage} alt="" className="h-full w-full object-cover opacity-28 mix-blend-screen" />}
         <div className="absolute inset-0" style={{ background: `linear-gradient(90deg, ${theme.accent}1F, rgba(0,0,0,0.18))` }} />
         <span className="absolute bottom-3 left-3 rounded-full border bg-black/62 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white/72" style={{ borderColor: `${theme.accent}66` }}>
           {isZh ? '模型继续生成区域' : 'Generated continuation'}
@@ -450,7 +455,7 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
           isZh ? '扩展候选 B' : 'Expanded option B'
         ].map((label, index) => (
           <div key={label} className={`relative aspect-[4/3] overflow-hidden rounded-xl border bg-white/8 ${index === 1 ? 'border-[color:var(--nuwa-accent)]' : 'border-white/12'}`} style={{ ['--nuwa-accent' as string]: theme.accent }}>
-            {infinitySourceImage && <img src={infinitySourceImage} alt="" className="h-full w-full object-cover opacity-55" style={{ objectPosition: `${48 + index * 10}% center` }} />}
+            {sourceImage && <img src={sourceImage} alt="" className="h-full w-full object-cover opacity-55" style={{ objectPosition: `${48 + index * 10}% center` }} />}
             <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_42%,rgba(0,0,0,0.78)_100%)]" />
             <span className="absolute bottom-2 left-2 right-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/72">{label}</span>
           </div>
@@ -474,6 +479,10 @@ const NuwaEvidenceVisual: React.FC<{ section: CaseSection; isZh: boolean }> = ({
   if (section.variant === 'infinity') {
     if (section.layout === 'immersive') return renderInfinityCanvasVisual();
     if (section.layout === 'contained') return renderInfinityPreviewVisual();
+    return renderInfinityScreenshotVisual();
+  }
+
+  if (section.fallbackImage) {
     return renderInfinityScreenshotVisual();
   }
 
@@ -610,7 +619,7 @@ const SeriesTimelineSection: React.FC<{ section: CaseSection; isZh: boolean }> =
 const EvidenceSection: React.FC<{ section: CaseSection; isZh: boolean }> = ({ section, isZh }) => {
   const theme = getNuwaTheme(section.variant);
   return (
-    <div id={section.label === '03' ? 'nuwa-walkthrough' : undefined} className="bg-[#070707] text-white">
+    <div id={section.label === '02' ? 'nuwa-walkthrough' : undefined} className="bg-[#070707] text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 sm:py-24 md:px-12 lg:grid-cols-[0.92fr_1.18fr]">
         <div>
           <div className="border-t border-white/10 pt-8">
