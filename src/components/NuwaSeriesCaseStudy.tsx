@@ -21,6 +21,9 @@ type EvidencePoint = {
   title: Copy;
   sequenceLabel: Copy;
   asset: string;
+  assetSource: 'original-nuwa-website' | 'needs-real-screenshot';
+  sourceUrl: string;
+  status?: 'ready' | 'needs-real-screenshot';
   alt: Copy;
   userProblem: Copy;
   designDecision: Copy;
@@ -72,7 +75,7 @@ const nuwaProjects: NuwaProject[] = [
     },
     accent: '#8FB7FF',
     secondaryAccent: '#66E4FF',
-    heroImage: '/projects/nuwa-series/evidence/infinity-05-preview.png',
+    heroImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
     sequence: [
       { en: 'Landing', zh: 'Landing' },
       { en: 'Prompt / Gallery', zh: 'Prompt / Gallery' },
@@ -85,7 +88,9 @@ const nuwaProjects: NuwaProject[] = [
         id: 'infinity-landing',
         title: { en: '01-1 / Landing: make the demo feel enterable first', zh: '01-1 / Landing：先建立舞台感，而不是马上塞满说明' },
         sequenceLabel: { en: 'Landing / Enter', zh: 'Landing / Enter' },
-        asset: '/projects/nuwa-series/evidence/infinity-01-landing.png',
+        asset: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         alt: { en: 'NUWA-Infinity landing screen with loading complete and Enter action.', zh: 'NUWA-Infinity landing 页面，显示加载完成和 Enter 入口。' },
         userProblem: {
           en: 'A first-time visitor may not know whether this is a paper page or a system they can operate.',
@@ -117,39 +122,43 @@ const nuwaProjects: NuwaProject[] = [
         id: 'infinity-prompt-gallery',
         title: { en: '01-2 / Prompt + Gallery: give users two starting points', zh: '01-2 / Prompt + Gallery：给用户两个起点' },
         sequenceLabel: { en: 'Prompt / Gallery', zh: 'Prompt / Gallery' },
-        asset: '/projects/nuwa-series/evidence/infinity-02-prompt-gallery.png',
-        alt: { en: 'NUWA-Infinity prompt and generated result screen.', zh: 'NUWA-Infinity prompt 和生成结果页面。' },
+        asset: '/projects/nuwa-series/verified/infinity-02-text-to-image-entry.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
+        alt: { en: 'NUWA-Infinity text-to-image entry screen from the original site.', zh: 'NUWA-Infinity 原站 text-to-image 入口页面。' },
         userProblem: {
-          en: 'A blank prompt can make users freeze; a gallery alone makes them passive viewers.',
-          zh: '只给空 prompt，用户不知道写什么；只给 gallery，用户又像只是在看案例。'
+          en: 'If users see only a model description, they still do not know what phrase to try first.',
+          zh: '如果用户只看到模型说明，仍然不知道第一句该输入或选择什么。'
         },
         designDecision: {
-          en: 'Prompt supports active creation; Gallery gives a low-risk example path. Both lead into generation.',
-          zh: 'Prompt 给主动创作入口，Gallery 给低风险示例入口，两者都通向后续生成流程。'
+          en: 'I exposed simple prompt chips and a visible image preview so users could start with familiar language.',
+          zh: '我把简单 prompt 选项和可见图像预览放在同一屏，让用户用熟悉的自然语言开始。'
         },
         whyItWorks: {
-          en: 'It supports two first-use mindsets: “I have an idea” and “show me what this can do.”',
-          zh: '它同时照顾两种第一次尝试状态：有人想创作，有人只是想先看系统能做什么。'
+          en: 'The prompt choices reduce the blank-page problem, while the preview keeps input and output visibly connected.',
+          zh: 'Prompt 选项降低空白输入压力，预览图让输入和结果保持可见连接。'
         },
         userBenefit: {
           en: 'Users can start without already knowing how to write a good prompt.',
           zh: '用户不需要先会写 prompt，也可以立即开始。'
         },
         caption: {
-          en: 'What to notice: Prompt gives authorship; Gallery gives a safe start.',
-          zh: '看点：Prompt 给用户创作感，Gallery 给用户安全起点。'
+          en: 'What to notice: the first creative action is a plain phrase, not a model parameter.',
+          zh: '看点：用户的第一个创作动作是一句普通短语，而不是模型参数。'
         },
         callouts: [
-          { x: 41, y: 88, label: { en: 'Prompt choices', zh: 'Prompt 选择' }, detail: { en: 'Users begin with natural phrases.', zh: '用户用熟悉短语开始。' } },
-          { x: 51, y: 45, label: { en: 'Generated image', zh: '生成图像' }, detail: { en: 'Input and output stay connected.', zh: '输入和结果保持在同一屏。' } },
-          { x: 95, y: 62, label: { en: 'Result options', zh: '结果缩略图' }, detail: { en: 'Multiple options invite comparison.', zh: '多个结果支持比较。' } }
+          { x: 22, y: 25, label: { en: 'Task label', zh: '任务标签' }, detail: { en: 'The page names the action as text to image.', zh: '页面直接说明这是 text-to-image 动作。' } },
+          { x: 47, y: 87, label: { en: 'Prompt chips', zh: 'Prompt 选项' }, detail: { en: 'Users can start from short phrases.', zh: '用户可以从短语开始。' } },
+          { x: 82, y: 38, label: { en: 'Preview image', zh: '预览图像' }, detail: { en: 'The output target stays visible.', zh: '输出目标保持可见。' } }
         ]
       },
       {
         id: 'infinity-current-image',
         title: { en: '01-3 / Image result: show the current world before extending it', zh: '01-3 / Image result：让用户先看到“当前世界”' },
         sequenceLabel: { en: 'Current image', zh: '当前图像' },
-        asset: '/projects/nuwa-series/evidence/infinity-03-current-image.png',
+        asset: '/projects/nuwa-series/verified/infinity-03-current-result.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         alt: { en: 'NUWA-Infinity current generated image on the original page.', zh: 'NUWA-Infinity 原网页中的当前生成图像。' },
         userProblem: {
           en: 'Outpainting depends on context. If users do not understand the current image, the outer expansion has no meaning.',
@@ -181,7 +190,9 @@ const nuwaProjects: NuwaProject[] = [
         id: 'infinity-boundary',
         title: { en: '01-4 / Outpainting: turn a technical term into a spatial action', zh: '01-4 / Outpainting：把技术术语变成空间动作' },
         sequenceLabel: { en: 'Boundary', zh: '扩展边界' },
-        asset: '/projects/nuwa-series/evidence/infinity-04-boundary.png',
+        asset: '/projects/nuwa-series/verified/infinity-04-outpainting-boundary.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         alt: { en: 'NUWA-Infinity image outpainting boundary screen.', zh: 'NUWA-Infinity 图像外扩边界页面。' },
         userProblem: {
           en: '“Outpainting” is a model term; users understand expanding a canvas and looking outside the edge.',
@@ -213,7 +224,9 @@ const nuwaProjects: NuwaProject[] = [
         id: 'infinity-preview',
         title: { en: '01-5 / Preview + compare: make uncertain AI results judgeable', zh: '01-5 / Preview + compare：让不确定的 AI 结果变成可判断的选择' },
         sequenceLabel: { en: 'Preview', zh: '预览对比' },
-        asset: '/projects/nuwa-series/evidence/infinity-05-preview.png',
+        asset: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
         alt: { en: 'NUWA-Infinity generated continuation and result preview strip.', zh: 'NUWA-Infinity 生成延展结果和候选预览条。' },
         userProblem: {
           en: 'If users only wait for one final output, the AI feels like a black box.',
@@ -250,7 +263,7 @@ const nuwaProjects: NuwaProject[] = [
         zh: '现在可以走同一条路径：Prompt / Gallery → 当前图像 → 边界 → Outpainting → 预览。'
       },
       url: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
-      fallbackImage: '/projects/nuwa-series/evidence/infinity-01-landing.png',
+      fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
       guideTitle: { en: 'Try this flow', zh: '你可以这样体验' },
       guideSteps: [
         { en: 'Click Enter to enter the demo', zh: '点击 Enter 进入 demo' },
@@ -268,8 +281,8 @@ const nuwaProjects: NuwaProject[] = [
     id: 'xl',
     label: { en: 'Project 02 / NUWA XL', zh: 'Project 02 / NUWA XL' },
     title: {
-      en: 'Explaining long video generation as a keyframe-to-timeline process',
-      zh: '把长视频生成讲成“从关键帧到时间线”的过程'
+      en: 'Explaining long video generation through scripts, stages, and examples',
+      zh: '用脚本、阶段和示例解释长视频生成'
     },
     theme: { en: 'Temporal structure', zh: '时间结构' },
     coreQuestion: {
@@ -278,20 +291,22 @@ const nuwaProjects: NuwaProject[] = [
     },
     accent: '#F6C65B',
     secondaryAccent: '#9C7BFF',
-    heroImage: '/projects/nuwa-series/evidence/xl-01-intro.png',
+    heroImage: '/projects/nuwa-series/verified/xl-01-intro.png',
     sequence: [
       { en: 'Intro', zh: '项目介绍' },
-      { en: 'Sparse keyframes', zh: '稀疏关键帧' },
-      { en: 'Coarse-to-fine', zh: '先粗后细' },
-      { en: 'Timeline', zh: '时间线' },
-      { en: 'Preview', zh: '视频预览' }
+      { en: 'Script prompts', zh: '脚本提示' },
+      { en: 'Generate stage', zh: '生成阶段' },
+      { en: 'Example browsing', zh: '示例浏览' },
+      { en: 'Output step', zh: '输出步骤' }
     ],
     evidence: [
       {
         id: 'xl-intro',
         title: { en: '02-1 / First impression: explain why long video is different', zh: '02-1 / First impression：先说明长视频生成和普通生成有什么不同' },
         sequenceLabel: { en: 'Intro', zh: '项目介绍' },
-        asset: '/projects/nuwa-series/evidence/xl-01-intro.png',
+        asset: '/projects/nuwa-series/verified/xl-01-intro.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
         alt: { en: 'NUWA XL original demo intro screen.', zh: 'NUWA XL 原始 demo 介绍页面。' },
         userProblem: {
           en: 'A final video alone does not show why NUWA XL matters. The hard part lives in time.',
@@ -314,160 +329,168 @@ const nuwaProjects: NuwaProject[] = [
           zh: '看点：NUWA XL 的核心不是展示一个视频，而是先说明长视频如何被组织出来。'
         },
         callouts: [
-          { x: 21, y: 8, label: { en: 'NUWA XL route', zh: 'NUWA XL 路由' }, detail: { en: 'The project is a separate demo path.', zh: '这是独立的 demo 路径。' } },
-          { x: 33, y: 50, label: { en: 'Long video example', zh: '长视频示例' }, detail: { en: 'A video frame establishes the output target.', zh: '视频画面先建立输出目标。' } },
-          { x: 77, y: 78, label: { en: 'Coarse-to-fine line', zh: 'Coarse-to-fine 描述' }, detail: { en: 'The page points users to the generation process.', zh: '页面引导用户关注生成过程。' } }
+          { x: 20, y: 10, label: { en: 'NUWA XL route', zh: 'NUWA XL 路由' }, detail: { en: 'The project is a separate demo path.', zh: '这是独立的 demo 路径。' } },
+          { x: 26, y: 48, label: { en: 'Video example', zh: '视频示例' }, detail: { en: 'The output target is visible before the explanation.', zh: '先让用户看到输出目标。' } },
+          { x: 77, y: 73, label: { en: 'Process line', zh: '过程描述' }, detail: { en: 'The copy points users to long video generation.', zh: '文案引导用户关注长视频生成。' } }
         ]
       },
       {
-        id: 'xl-sparse',
-        title: { en: '02-2 / Sparse keyframes: give users a story skeleton first', zh: '02-2 / Sparse keyframes：先给用户一个故事骨架' },
-        sequenceLabel: { en: 'Sparse keyframes', zh: '稀疏关键帧' },
-        asset: '/projects/nuwa-series/evidence/xl-02-sparse-keyframes.png',
-        alt: { en: 'NUWA XL frame showing 16 generated frames.', zh: 'NUWA XL GIF 截帧，显示 16 Frames 阶段。' },
+        id: 'xl-prompts',
+        title: { en: '02-2 / Script prompts: make long video start from readable beats', zh: '02-2 / Script prompts：让长视频从可读的剧情节点开始' },
+        sequenceLabel: { en: 'Script prompts', zh: '脚本提示' },
+        asset: '/projects/nuwa-series/verified/xl-02-input-prompts.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
+        alt: { en: 'NUWA XL original long video input prompt cards.', zh: 'NUWA XL 原站 long video input prompt 卡片。' },
         userProblem: {
-          en: 'A long video is too much to understand at once if every frame appears immediately.',
-          zh: '长视频很长，如果一开始展示完整帧序列，用户会信息过载。'
+          en: 'A long video can feel abstract if users only see a final clip without knowing what story it follows.',
+          zh: '如果用户只看到最终视频，而不知道它依据什么剧情生成，长视频会显得很抽象。'
         },
         designDecision: {
-          en: 'I used sparse keyframes as the first readable layer, like storyboard beats.',
-          zh: '我用稀疏关键帧作为第一层理解结构，像 storyboard 的主要节点。'
+          en: 'I placed script prompt cards beside the process rail so users could read the source structure first.',
+          zh: '我把脚本提示卡片放在流程旁边，让用户先读懂视频依据哪些剧情节点生成。'
         },
         whyItWorks: {
-          en: 'Animation and editing already use keyframes to summarize change over time.',
-          zh: '动画和剪辑都用关键帧概括时间变化，这是用户熟悉的结构。'
+          en: 'Script cards are easier to scan than a generated video timeline, and they explain what each segment should depict.',
+          zh: '脚本卡片比直接看时间线更容易扫读，也解释每一段视频应该表现什么。'
         },
         userBenefit: {
-          en: 'Users can scan the story before watching or interpreting thousands of frames.',
-          zh: '用户先抓住主要节点，再理解完整视频。'
+          en: 'Users can judge whether later generated frames follow the intended story.',
+          zh: '用户之后可以判断生成结果是否跟随了这些剧情提示。'
         },
         caption: {
-          en: 'What to notice: 16 frames make the long video readable before it becomes dense.',
-          zh: '看点：关键帧让长视频先变成可读的故事骨架，而不是无法扫描的结果。'
+          en: 'What to notice: the video starts from readable script cards, not from an unexplained final output.',
+          zh: '看点：长视频先从可读脚本开始，而不是直接丢给用户一个最终结果。'
         },
         callouts: [
-          { x: 8, y: 55, label: { en: '16 Frames state', zh: '16 Frames 阶段' }, detail: { en: 'The timeline shows the first sparse layer.', zh: '左侧进度展示第一层稀疏帧。' } },
-          { x: 47, y: 20, label: { en: 'Keyframe sequence', zh: '关键帧序列' }, detail: { en: 'Major moments become scannable.', zh: '主要节点变得可扫视。' } },
-          { x: 75, y: 74, label: { en: 'Missing time', zh: '待补时间空隙' }, detail: { en: 'The gaps explain what the model still needs to fill.', zh: '空隙说明模型接下来要补齐什么。' } }
+          { x: 11, y: 37, label: { en: 'Process rail', zh: '流程轨道' }, detail: { en: 'Users see where input sits in the generation path.', zh: '用户知道 input 位于生成路径的起点。' } },
+          { x: 58, y: 31, label: { en: 'Script cards', zh: '脚本卡片' }, detail: { en: 'Each card describes one video beat.', zh: '每张卡片描述一个剧情节点。' } },
+          { x: 84, y: 72, label: { en: 'Scannable grid', zh: '可扫读网格' }, detail: { en: 'The story can be read before playback.', zh: '播放前就能先读懂故事结构。' } }
         ]
       },
       {
-        id: 'xl-coarse',
-        title: { en: '02-3 / Coarse-to-fine: show “build the structure, then fill the gaps”', zh: '02-3 / Coarse-to-fine：把生成过程拆成“先搭骨架，再补细节”' },
-        sequenceLabel: { en: 'Coarse-to-fine', zh: '先粗后细' },
-        asset: '/projects/nuwa-series/evidence/xl-03-coarse-to-fine.png',
-        alt: { en: 'Official NUWA XL coarse-to-fine diagram.', zh: 'NUWA XL 官方 coarse-to-fine 示意图。' },
+        id: 'xl-generate-stage',
+        title: { en: '02-3 / Generate stage: show that long video is built in steps', zh: '02-3 / Generate stage：把长视频生成显示成分阶段过程' },
+        sequenceLabel: { en: 'Generate stage', zh: '生成阶段' },
+        asset: '/projects/nuwa-series/verified/xl-03-generate-frames-stage.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
+        alt: { en: 'NUWA XL original page with Generate frames stage selected.', zh: 'NUWA XL 原站 Generate frames 阶段选中状态。' },
         userProblem: {
-          en: '“Coarse-to-fine” is a technical phrase unless the page shows what becomes coarse and what becomes fine.',
-          zh: 'Coarse-to-fine 是技术词，如果界面不拆开，用户不知道哪里是粗、哪里是细。'
+          en: 'If the page jumps from input prompts to a final video, users cannot tell that generation happens through stages.',
+          zh: '如果页面从脚本直接跳到最终视频，用户无法看出长视频是分阶段生成的。'
         },
         designDecision: {
-          en: 'I used a two-level structure: global keyframes above, local frame completion below.',
-          zh: '我用两层结构解释：上层是全局关键帧，下层是局部补齐。'
+          en: 'I used a visible process rail with named steps so the user can follow input, generation, frame states, and output.',
+          zh: '我用可见流程轨道标出 input、generate、frame 状态和 output，让用户沿着阶段理解过程。'
         },
         whyItWorks: {
-          en: 'The visual hierarchy maps the model process to a familiar “outline then detail” reading pattern.',
-          zh: '这个视觉层级把模型过程转成用户熟悉的“先大纲、再细节”。'
+          en: 'A vertical process rail is a familiar way to read progress while staying inside the web experience.',
+          zh: '竖向流程轨道是用户熟悉的进度阅读方式，也让解释停留在网页体验内部。'
         },
         userBenefit: {
-          en: 'Users can understand the process without knowing diffusion over diffusion.',
-          zh: '用户不用懂 diffusion over diffusion，也能看懂生成逻辑。'
+          en: 'Users can explain that the page is demonstrating a generation process, not only showing a clip.',
+          zh: '用户能说清页面展示的是生成过程，而不只是一个视频片段。'
         },
         caption: {
-          en: 'What to notice: the process becomes a visible hierarchy: global structure, local completion, continuity.',
-          zh: '看点：我把 coarse-to-fine 从论文概念转成界面层级：上层看结构，下层看补齐。'
+          en: 'What to notice: the stage is shown through the original web process rail.',
+          zh: '看点：生成阶段通过原网页里的流程轨道呈现。'
         },
         callouts: [
-          { x: 40, y: 18, label: { en: 'Global structure', zh: '全局故事骨架' }, detail: { en: 'Sparse frames organize the whole duration.', zh: '稀疏帧先组织整体时长。' } },
-          { x: 45, y: 52, label: { en: 'Local completion', zh: '局部补齐' }, detail: { en: 'Intermediate frames fill nearby gaps.', zh: '中间帧补齐局部空隙。' } },
-          { x: 62, y: 78, label: { en: 'Continuity', zh: '连续性' }, detail: { en: 'Dense frames make motion readable.', zh: '密集帧让运动连续。' } }
+          { x: 12, y: 42, label: { en: 'Generate step', zh: 'Generate 阶段' }, detail: { en: 'The current step is visible in the rail.', zh: '当前阶段在流程轨道里可见。' } },
+          { x: 58, y: 30, label: { en: 'Prompt source', zh: '脚本来源' }, detail: { en: 'The script cards stay in view.', zh: '脚本卡片仍然可见。' } },
+          { x: 14, y: 70, label: { en: 'Later states', zh: '后续状态' }, detail: { en: 'Frame and output steps are previewed as next steps.', zh: '帧和输出步骤作为后续阶段出现。' } }
         ]
       },
       {
-        id: 'xl-timeline',
-        title: { en: '02-4 / Timeline: make long duration scannable', zh: '02-4 / Timeline：让长视频可以被扫描' },
-        sequenceLabel: { en: 'Timeline', zh: '时间线' },
-        asset: '/projects/nuwa-series/evidence/xl-04-timeline.png',
-        alt: { en: 'NUWA XL frame showing 3376 generated frames.', zh: 'NUWA XL GIF 截帧，显示 3376 Frames 阶段。' },
+        id: 'xl-short-video-carousel',
+        title: { en: '02-4 / Example browsing: let users compare generated video cases', zh: '02-4 / Example browsing：让用户横向比较生成视频案例' },
+        sequenceLabel: { en: 'Example browsing', zh: '示例浏览' },
+        asset: '/projects/nuwa-series/verified/xl-04-short-video-carousel.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
+        alt: { en: 'NUWA XL original short video example carousel.', zh: 'NUWA XL 原站 short video 示例横向浏览区域。' },
         userProblem: {
-          en: 'A video player hides length inside playback. Users click play but do not understand scale.',
-          zh: '播放器会把长度藏在播放里，用户只会点播放，却不理解“长”的尺度。'
+          en: 'A single generated video can look like a one-off demo, not a repeatable model capability.',
+          zh: '单个生成视频容易像一次性展示，而不是可重复的模型能力。'
         },
         designDecision: {
-          en: 'I used the timeline and dense filmstrip to make frame growth and duration visible.',
-          zh: '我用时间线和密集 filmstrip 让帧数量增长和视频跨度可见。'
+          en: 'I used a horizontal browsing area so users can compare different generated video examples quickly.',
+          zh: '我用横向示例浏览区，让用户快速比较不同生成视频案例。'
         },
         whyItWorks: {
-          en: 'Timeline is a familiar model from video editors and media players.',
-          zh: 'Timeline 来自视频编辑器和播放器，是用户熟悉的时间模型。'
+          en: 'Cards and carousel navigation are familiar, and they make variation visible directly on the page.',
+          zh: '卡片和横向浏览是熟悉模式，能直接在页面里展示生成差异。'
         },
         userBenefit: {
-          en: 'Users can scan duration, frame density, and generated coverage before watching the final output.',
-          zh: '用户能先扫视时长、帧密度和生成覆盖范围，再看最终视频。'
+          en: 'Users can see that the model supports multiple prompts and visual styles, not only one clip.',
+          zh: '用户能看到模型支持多种 prompt 和视觉风格，而不是只有一个视频。'
         },
         caption: {
-          en: 'What to notice: 3376 frames make “long video” visible as a time structure.',
-          zh: '看点：时间线让“长视频生成”从技术指标变成可浏览的时间结构。'
+          en: 'What to notice: example browsing is part of the original NUWA XL page, not an external research page.',
+          zh: '看点：示例浏览来自 NUWA XL 原站页面，不是外部 research page。'
         },
         callouts: [
-          { x: 8, y: 68, label: { en: 'Time axis', zh: '时间轴' }, detail: { en: 'Progress makes duration visible.', zh: '进度线让时长可见。' } },
-          { x: 52, y: 36, label: { en: 'Frame density', zh: '帧密度' }, detail: { en: 'The grid shows generation coverage.', zh: '帧网格展示生成覆盖范围。' } },
-          { x: 84, y: 82, label: { en: 'Scan area', zh: '可扫描区域' }, detail: { en: 'Users can read the video before playback.', zh: '用户能在播放前先读懂结构。' } }
+          { x: 21, y: 27, label: { en: 'Short video label', zh: 'Short video 标签' }, detail: { en: 'The page separates this section from long video.', zh: '页面把 short video 和 long video 区分开。' } },
+          { x: 56, y: 48, label: { en: 'Example cards', zh: '示例卡片' }, detail: { en: 'Each card is a browsable generated case.', zh: '每张卡片都是可浏览的生成案例。' } },
+          { x: 95, y: 30, label: { en: 'Carousel control', zh: '横向控制' }, detail: { en: 'Users can move through examples.', zh: '用户可以横向切换案例。' } }
         ]
       },
       {
-        id: 'xl-preview',
-        title: { en: '02-5 / Final preview: connect the process back to output', zh: '02-5 / Final preview：把过程重新连接到最终视频' },
-        sequenceLabel: { en: 'Final video', zh: '最终预览' },
-        asset: '/projects/nuwa-series/evidence/xl-05-final-preview.png',
-        alt: { en: 'NUWA XL output video preview frame.', zh: 'NUWA XL 输出视频预览截帧。' },
+        id: 'xl-output-step',
+        title: { en: '02-5 / Output step: keep the final result inside the same path', zh: '02-5 / Output step：把最终结果留在同一条流程里' },
+        sequenceLabel: { en: 'Output step', zh: '输出步骤' },
+        asset: '/projects/nuwa-series/verified/xl-05-output-step.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
+        alt: { en: 'NUWA XL original page with Output Video step selected.', zh: 'NUWA XL 原站 Output Video 阶段选中状态。' },
         userProblem: {
-          en: 'After seeing frames and timelines, users still need to connect the structure to the video result.',
-          zh: '看完帧和时间线之后，用户还需要把结构和最终视频结果连接起来。'
+          en: 'Users need to know that the final video is the last step of the same generation path, not a separate showcase.',
+          zh: '用户需要知道最终视频是同一条生成路径的最后一步，而不是另一个独立展示。'
         },
         designDecision: {
-          en: 'I kept the output preview as the final step after the timeline logic.',
-          zh: '我把输出预览放在 timeline 逻辑之后，让用户先懂过程，再看结果。'
+          en: 'I kept Output Video in the same process rail after prompts and frame-generation stages.',
+          zh: '我把 Output Video 放在同一条流程轨道里，跟在 prompts 和 frame generation 阶段之后。'
         },
         whyItWorks: {
-          en: 'The final video becomes the payoff of the previous keyframe and timeline steps.',
-          zh: '最终视频成为前面关键帧和时间线步骤的结果，而不是孤立展示。'
+          en: 'The result reads as a conclusion of the process the user has already followed.',
+          zh: '最终结果成为用户前面已经跟随过的流程结论。'
         },
         userBenefit: {
-          en: 'Users can explain why the video is impressive, not only that it looks interesting.',
-          zh: '用户能说清视频为什么强，而不只是觉得画面有趣。'
+          en: 'Users can connect the output back to the script and generation steps.',
+          zh: '用户能把最终输出和前面的脚本、生成阶段连接起来。'
         },
         caption: {
-          en: 'What to notice: the final preview is meaningful because the page has already shown how time was built.',
-          zh: '看点：最终预览之所以有意义，是因为前面已经让用户看到时间如何被组织。'
+          en: 'What to notice: the output remains part of the same process rail, so the final result does not feel disconnected from the prompts.',
+          zh: '看点：Output 仍然在同一条流程轨道里，因此最终结果不会和脚本提示脱节。'
         },
         callouts: [
-          { x: 8, y: 84, label: { en: 'Output Video state', zh: 'Output Video 状态' }, detail: { en: 'The process reaches the final step.', zh: '流程进入最终输出。' } },
-          { x: 69, y: 49, label: { en: 'Video preview', zh: '视频预览' }, detail: { en: 'The generated result becomes watchable.', zh: '生成结果变成可观看视频。' } },
-          { x: 73, y: 91, label: { en: 'Prompt connection', zh: 'Prompt 连接' }, detail: { en: 'The caption ties output to the script prompt.', zh: '字幕把输出和脚本提示连接起来。' } }
+          { x: 11, y: 78, label: { en: 'Output Video state', zh: 'Output Video 状态' }, detail: { en: 'The process reaches the final step.', zh: '流程进入最终输出。' } },
+          { x: 58, y: 31, label: { en: 'Script remains visible', zh: '脚本仍然可见' }, detail: { en: 'The result stays tied to input prompts.', zh: '输出仍然和输入提示相关联。' } },
+          { x: 12, y: 52, label: { en: 'Frame states', zh: '帧阶段' }, detail: { en: 'Intermediate states remain in the path.', zh: '中间阶段仍留在路径中。' } }
         ]
       }
     ],
     liveDemo: {
-      title: { en: 'Explore NUWA XL through timeline', zh: 'Explore NUWA XL through timeline' },
-      subtitle: { en: 'Understand long video generation through keyframes and timeline', zh: '通过关键帧和时间线理解长视频生成' },
+      title: { en: 'Explore NUWA XL through the original page', zh: 'Explore NUWA XL through the original page' },
+      subtitle: { en: 'Understand long video generation through scripts, stages, and examples', zh: '通过脚本、阶段和示例理解长视频生成' },
       connection: {
-        en: 'Now follow the same logic: Keyframes -> Coarse-to-fine fill -> Timeline -> Long video preview.',
-        zh: '现在可以沿着同一逻辑看：关键帧 → 先粗后细补齐 → 时间线 → 长视频预览。'
+        en: 'Now follow the original-page path: Intro -> Script prompts -> Generate stage -> Example browsing -> Output step.',
+        zh: '现在可以沿着原站路径看：Intro → 脚本提示 → 生成阶段 → 示例浏览 → 输出步骤。'
       },
       url: 'https://nuwa-infinity.microsoft.com/#/NUWAXL',
-      fallbackImage: '/projects/nuwa-series/evidence/xl-01-intro.png',
+      fallbackImage: '/projects/nuwa-series/verified/xl-01-intro.png',
       guideTitle: { en: 'Look for', zh: '你可以这样看' },
       guideSteps: [
         { en: 'Where the page introduces long video generation', zh: '页面如何先介绍长视频生成' },
-        { en: 'How sparse keyframes appear first', zh: '稀疏关键帧如何先出现' },
-        { en: 'How intermediate frames fill the gaps', zh: '中间帧如何补齐时间空隙' },
-        { en: 'How timeline makes video length scannable', zh: '时间线如何让长视频长度可浏览' }
+        { en: 'How script prompts define video beats', zh: '脚本提示如何定义视频节点' },
+        { en: 'How the process rail marks generation stages', zh: '流程轨道如何标记生成阶段' },
+        { en: 'How example browsing supports comparison', zh: '示例浏览如何支持比较' }
       ]
     },
     designValue: {
-      en: 'NUWA XL shows how I made time visible. Keyframes, filmstrip, and timeline turn long video generation into a readable process: structure first, gaps filled next, preview last.',
-      zh: 'NUWA XL 的设计重点不是让页面更复杂，而是让用户看懂“时间”这个能力维度：先有故事骨架，再补齐中间帧，最后形成可扫描的长时间结果。'
+      en: 'NUWA XL shows how I made long-video generation readable without relying on paper figures: script prompts define the source, the process rail shows stages, and examples let users compare generated results.',
+      zh: 'NUWA XL 的设计重点不是用论文图解释模型，而是用原站页面里的脚本提示、流程轨道和示例浏览，让用户看懂长视频生成的组织方式。'
     }
   },
   {
@@ -484,173 +507,183 @@ const nuwaProjects: NuwaProject[] = [
     },
     accent: '#FF665C',
     secondaryAccent: '#78F0A3',
-    heroImage: '/projects/nuwa-series/evidence/drag-01-intro.png',
+    heroImage: '/projects/nuwa-series/verified/drag-02-intro-video.png',
     sequence: [
-      { en: 'Intro', zh: '项目介绍' },
-      { en: 'Text', zh: '文字意图' },
-      { en: 'Image', zh: '图像上下文' },
-      { en: 'Trajectory', zh: '轨迹控制' },
-      { en: 'Preview', zh: '结果预览' }
+      { en: 'Gallery', zh: '示例入口' },
+      { en: 'Intro video', zh: '介绍视频' },
+      { en: 'Scene selection', zh: '场景选择' },
+      { en: 'Camera movement', zh: '镜头运动' },
+      { en: 'Text + image + drag', zh: 'Text + image + drag' }
     ],
     evidence: [
       {
-        id: 'drag-intro',
-        title: { en: '03-1 / First impression: show why prompt alone is not enough', zh: '03-1 / First impression：说明 prompt 为什么不够' },
-        sequenceLabel: { en: 'Intro', zh: '项目介绍' },
-        asset: '/projects/nuwa-series/evidence/drag-01-intro.png',
+        id: 'drag-gallery',
+        title: { en: '03-1 / Gallery entry: make motion control browsable first', zh: '03-1 / Gallery entry：先让运动控制变成可浏览案例' },
+        sequenceLabel: { en: 'Gallery', zh: '示例入口' },
+        asset: '/projects/nuwa-series/verified/drag-01-gallery-grid.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
         alt: { en: 'DragNUWA original demo gallery screen.', zh: 'DragNUWA 原始 demo gallery 页面。' },
         userProblem: {
           en: 'Prompt can describe a scene, but direction, path, speed, and rhythm are hard to control in words.',
           zh: 'Prompt 可以描述场景，但方向、轨迹、速度和节奏很难只靠文字精确控制。'
         },
         designDecision: {
-          en: 'I framed DragNUWA around direct motion control, not as another prompt-only video model.',
-          zh: '我把 DragNUWA 的重点放在“直接操控运动”，而不是另一个 prompt-based video model。'
+          en: 'I opened with a gallery grid so visitors could scan different motion cases before reading details.',
+          zh: '我用 gallery grid 作为入口，让用户先浏览不同运动案例，再进入详细说明。'
         },
         whyItWorks: {
-          en: 'Drawing a path combines time and space in a familiar action.',
-          zh: '画路径把时间和空间结合在一个熟悉动作里：拖拽 / 绘制路径。'
+          en: 'A grid gives non-technical visitors concrete examples of what “controllable motion” looks like.',
+          zh: '网格示例让非技术用户先看到“可控运动”具体长什么样。'
         },
         userBenefit: {
-          en: 'Users see the examples as controllable motion cases, not only gallery thumbnails.',
-          zh: '用户看到的是可控运动示例，而不只是生成结果缩略图。'
+          en: 'Users can choose a visual starting point instead of decoding the paper title first.',
+          zh: '用户可以先选择视觉起点，而不是先解读论文标题。'
         },
         caption: {
-          en: 'What to notice: DragNUWA introduces motion control through examples users can inspect.',
-          zh: '看点：DragNUWA 的关键不是多一个输入，而是让用户用更直接的方式表达运动意图。'
+          en: 'What to notice: the first screen gives users concrete motion cases before asking them to read the research context.',
+          zh: '看点：第一屏先给用户具体运动案例，再让他们进入研究背景。'
         },
         callouts: [
-          { x: 20, y: 8, label: { en: 'DragNUWA route', zh: 'DragNUWA 路由' }, detail: { en: 'The demo is separated from NUWA XL and Infinity.', zh: '这是独立的运动控制 demo。' } },
-          { x: 46, y: 42, label: { en: 'Example grid', zh: '示例网格' }, detail: { en: 'Cases show different motion contexts.', zh: '示例展示不同运动场景。' } },
-          { x: 84, y: 74, label: { en: 'Motion preview entry', zh: '运动预览入口' }, detail: { en: 'Each tile can become a controllable path case.', zh: '每个 tile 都可进入运动控制理解。' } }
+          { x: 20, y: 9, label: { en: 'DragNUWA nav', zh: 'DragNUWA 导航' }, detail: { en: 'The user is inside the original NUWA site.', zh: '用户处在 NUWA 原站中。' } },
+          { x: 50, y: 42, label: { en: 'Example grid', zh: '示例网格' }, detail: { en: 'Cases show varied motion contexts.', zh: '示例展示不同运动场景。' } },
+          { x: 82, y: 72, label: { en: 'Video tiles', zh: '视频 tile' }, detail: { en: 'Each tile suggests motion can be inspected.', zh: '每个 tile 都提示运动可被查看。' } }
         ]
       },
       {
-        id: 'drag-text',
-        title: { en: '03-2 / Text: define semantic intent first', zh: '03-2 / Text：先定义语义意图' },
-        sequenceLabel: { en: 'Text', zh: '文字意图' },
-        asset: '/projects/nuwa-series/evidence/drag-02-text.png',
-        alt: { en: 'DragNUWA prompt text captions under image examples.', zh: 'DragNUWA 图像示例下方的 prompt 文案。' },
+        id: 'drag-intro-video',
+        title: { en: '03-2 / Intro video: explain the control problem before the steps', zh: '03-2 / Intro video：先说明为什么需要直接控制运动' },
+        sequenceLabel: { en: 'Intro video', zh: '介绍视频' },
+        asset: '/projects/nuwa-series/verified/drag-02-intro-video.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
+        alt: { en: 'DragNUWA original intro video screen.', zh: 'DragNUWA 原站介绍视频页面。' },
         userProblem: {
-          en: 'Trajectory tells how something moves, but not what the scene, object, or style should be.',
-          zh: '轨迹只能说明怎么动，不能说明生成什么、场景是什么、风格是什么。'
+          en: 'Prompt alone can describe a scene, but it is weak at specifying path, direction, and camera movement.',
+          zh: 'Prompt 可以描述场景，但很难精确表达路径、方向和镜头运动。'
         },
         designDecision: {
-          en: 'I kept text as the semantic layer: it defines the scene and target before motion control.',
-          zh: '我把 text 作为语义层，让用户先表达场景、对象或风格。'
+          en: 'I used an intro video and short description to frame DragNUWA as motion control, not only video generation.',
+          zh: '我用介绍视频和简短说明，把 DragNUWA 定义为运动控制，而不只是视频生成。'
         },
         whyItWorks: {
-          en: 'Text answers “what is this?” so trajectory does not need to carry every meaning.',
-          zh: 'Text 解决“是什么”的问题，不让轨迹承担所有语义。'
+          en: 'Showing movement before the instructions helps users understand why a trajectory input is needed.',
+          zh: '在说明操作前先展示运动，用户更容易理解为什么需要 trajectory input。'
         },
         userBenefit: {
-          en: 'Users can separate semantic intent from motion control.',
-          zh: '用户能把语义意图和运动控制分开理解。'
+          en: 'Users understand the purpose of the upcoming scene and path controls.',
+          zh: '用户能理解后续场景选择和路径控制的目的。'
         },
         caption: {
-          en: 'What to notice: text carries semantic intent; it is not asked to control all motion details.',
-          zh: '看点：文字负责语义，不负责承担所有运动控制。'
+          en: 'What to notice: the original page frames the demo around text, image, and trajectory controls.',
+          zh: '看点：原站页面把 demo 明确框定为 text、image、trajectory 三种控制输入。'
         },
         callouts: [
-          { x: 37, y: 68, label: { en: 'Prompt caption', zh: 'Prompt 文案' }, detail: { en: 'Text describes the scene goal.', zh: '文字描述场景和目标。' } },
-          { x: 27, y: 30, label: { en: 'Scene target', zh: '场景目标' }, detail: { en: 'The image and text stay paired.', zh: '图像和文字保持配对。' } },
-          { x: 75, y: 73, label: { en: 'Semantic layer', zh: '语义层' }, detail: { en: 'Words define what should be generated.', zh: '文字定义要生成什么。' } }
+          { x: 32, y: 45, label: { en: 'Motion video', zh: '运动视频' }, detail: { en: 'Movement is shown before instructions.', zh: '先展示运动效果。' } },
+          { x: 72, y: 48, label: { en: 'Control framing', zh: '控制框架' }, detail: { en: 'The text names text, image, and trajectory.', zh: '文案点明三种输入。' } },
+          { x: 72, y: 73, label: { en: 'Paper link', zh: '论文入口' }, detail: { en: 'Research context stays secondary.', zh: '研究入口保留为次级。' } }
         ]
       },
       {
-        id: 'drag-image',
-        title: { en: '03-3 / Image: anchor motion in a concrete scene', zh: '03-3 / Image：用图像固定空间上下文' },
-        sequenceLabel: { en: 'Image', zh: '图像上下文' },
-        asset: '/projects/nuwa-series/evidence/drag-03-image.png',
-        alt: { en: 'DragNUWA source image examples.', zh: 'DragNUWA 源图像示例。' },
+        id: 'drag-complex-trajectories',
+        title: { en: '03-3 / Scene selection: anchor trajectory control in a concrete scene', zh: '03-3 / Scene selection：先把轨迹控制放进具体场景' },
+        sequenceLabel: { en: 'Scene selection', zh: '场景选择' },
+        asset: '/projects/nuwa-series/verified/drag-03-complex-trajectories.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
+        alt: { en: 'DragNUWA original complex trajectories scene selection screen.', zh: 'DragNUWA 原站 complex trajectories 场景选择页面。' },
         userProblem: {
-          en: 'With only text and path, users still do not know where the motion happens.',
-          zh: '如果只有文字和轨迹，用户仍然不知道运动发生在哪个空间里。'
+          en: 'A trajectory has no meaning until users know which scene and object it applies to.',
+          zh: '轨迹必须依附在具体场景和对象上，否则用户不知道它控制什么。'
         },
         designDecision: {
-          en: 'I treated the image as the spatial anchor: object, background, and composition are fixed before drawing motion.',
-          zh: '我把 image 作为空间锚点，先固定对象、背景和构图，再表达运动。'
+          en: 'I made scene selection an explicit step before drawing or interpreting trajectory.',
+          zh: '我把场景选择设计成明确步骤，让用户先确定轨迹要作用在哪个画面上。'
         },
         whyItWorks: {
-          en: 'The path becomes meaningful because it sits on a visible scene.',
-          zh: '路径之所以有意义，是因为它发生在一个具体画面里。'
+          en: 'The selected scene becomes the spatial anchor for later path and motion controls.',
+          zh: '被选中的场景成为后续路径和运动控制的空间参照。'
         },
         userBenefit: {
-          en: 'Users can judge whether a trajectory fits the object and environment.',
-          zh: '用户能判断轨迹是否适合画面里的对象和环境。'
+          en: 'Users can reason about movement relative to a visible environment.',
+          zh: '用户能基于可见环境来理解运动方向和路径。'
         },
         caption: {
-          en: 'What to notice: image gives trajectory a spatial reference.',
-          zh: '看点：图像让轨迹有了空间参照，用户知道运动发生在什么场景里。'
+          en: 'What to notice: the original interface turns trajectory control into a step-by-step task: select a scene first.',
+          zh: '看点：原站把轨迹控制拆成分步任务，第一步就是选择场景。'
         },
         callouts: [
-          { x: 27, y: 28, label: { en: 'Source image', zh: 'Source image' }, detail: { en: 'The scene is visible before motion control.', zh: '先看到运动发生的场景。' } },
-          { x: 63, y: 30, label: { en: 'Object / background', zh: '对象 / 背景' }, detail: { en: 'Context constrains the motion idea.', zh: '上下文约束运动意图。' } },
-          { x: 54, y: 78, label: { en: 'Spatial context', zh: '空间参照' }, detail: { en: 'The path will be read against this image.', zh: '轨迹会基于这张图被理解。' } }
+          { x: 22, y: 28, label: { en: 'Capability label', zh: '能力标签' }, detail: { en: 'Complex trajectories are introduced first.', zh: '先引出复杂轨迹能力。' } },
+          { x: 72, y: 20, label: { en: 'Scene gallery', zh: '场景库' }, detail: { en: 'Users choose a concrete scene.', zh: '用户选择具体场景。' } },
+          { x: 72, y: 59, label: { en: 'Selected scene', zh: '选中场景' }, detail: { en: 'This area anchors the upcoming path.', zh: '这个区域承载后续轨迹。' } }
         ]
       },
       {
-        id: 'drag-trajectory',
-        title: { en: '03-4 / Trajectory: let users draw motion directly', zh: '03-4 / Trajectory：用轨迹表达运动' },
-        sequenceLabel: { en: 'Trajectory', zh: '轨迹控制' },
-        asset: '/projects/nuwa-series/evidence/drag-04-trajectory.png',
-        alt: { en: 'DragNUWA trajectory examples with red path overlays.', zh: 'DragNUWA 带红色轨迹线的运动控制示例。' },
+        id: 'drag-camera-movement',
+        title: { en: '03-4 / Camera movement: separate movement patterns from scene choice', zh: '03-4 / Camera movement：把运动模式和场景选择分开讲清楚' },
+        sequenceLabel: { en: 'Camera movement', zh: '镜头运动' },
+        asset: '/projects/nuwa-series/verified/drag-04-camera-movement.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
+        alt: { en: 'DragNUWA original camera movement examples screen.', zh: 'DragNUWA 原站 camera movements 示例页面。' },
         userProblem: {
-          en: 'Motion combines space and time. Curves, direction, endpoint, and rhythm are hard to describe precisely.',
-          zh: '运动由时间和空间共同构成。曲线、方向、终点和节奏很难用文字精确表达。'
+          en: 'Users may confuse the scene content with the type of motion being demonstrated.',
+          zh: '用户容易把场景内容和被展示的运动类型混在一起。'
         },
         designDecision: {
-          en: 'I used trajectory as the direct control layer: start point, curve, and endpoint are drawn on the image.',
-          zh: '我用 trajectory 作为直接控制层：用户在图像上画出起点、曲线和终点。'
+          en: 'I separated camera movement examples into their own browsing area with repeated visual comparison.',
+          zh: '我把 camera movement 单独做成可浏览示例区，用重复画面对比不同运动模式。'
         },
         whyItWorks: {
-          en: 'Drawing is a lower-friction action than translating spatial motion into complex language.',
-          zh: '直接画出来，比把空间运动翻译成复杂语言更自然。'
+          en: 'Repeated examples make the motion variable easier to notice because the scene remains comparable.',
+          zh: '重复示例让用户更容易注意到变化的是运动方式，而不是场景本身。'
         },
         userBenefit: {
-          en: 'Users can express movement before seeing the generated video.',
-          zh: '用户在生成前就能表达运动意图。'
+          en: 'Users can compare motion patterns before moving into the combined input demo.',
+          zh: '用户在进入组合输入 demo 前，可以先比较不同运动模式。'
         },
         caption: {
-          en: 'What to notice: trajectory turns direction, curve, and endpoint into visible control instructions.',
-          zh: '看点：轨迹把 prompt 很难说清楚的方向、曲线和终点，变成用户可以直接画出的控制指令。'
+          en: 'What to notice: the camera movement examples let users compare motion patterns inside the same site flow.',
+          zh: '看点：camera movement 示例让用户在同一条网页流程里比较运动模式。'
         },
         callouts: [
-          { x: 18, y: 41, label: { en: 'Start point', zh: 'Start point' }, detail: { en: 'The motion starts at a visible location.', zh: '运动从明确位置开始。' } },
-          { x: 49, y: 50, label: { en: 'Path curve', zh: 'Path curve' }, detail: { en: 'The curve shows how motion changes.', zh: '曲线表达运动如何变化。' } },
-          { x: 79, y: 58, label: { en: 'End point', zh: 'End point' }, detail: { en: 'The path gives the model a target.', zh: '终点给模型一个目标。' } }
+          { x: 16, y: 18, label: { en: 'Scene strip', zh: '场景条' }, detail: { en: 'Users can compare available examples.', zh: '用户可以比较可用示例。' } },
+          { x: 46, y: 48, label: { en: 'Paired previews', zh: '并列预览' }, detail: { en: 'Repeated frames make movement comparable.', zh: '重复画面让运动差异可比较。' } },
+          { x: 13, y: 82, label: { en: 'Movement label', zh: '运动标签' }, detail: { en: 'The section names the interaction focus.', zh: '标题明确当前关注运动。' } }
         ]
       },
       {
-        id: 'drag-output',
-        title: { en: '03-5 / Output preview: connect input bundle to generated motion', zh: '03-5 / Output preview：让用户看到控制如何影响结果' },
-        sequenceLabel: { en: 'Preview', zh: '结果预览' },
-        asset: '/projects/nuwa-series/evidence/drag-05-output-preview.png',
-        alt: { en: 'DragNUWA original demo gallery as generated motion preview entry.', zh: 'DragNUWA 原始 demo gallery，作为生成运动预览入口。' },
+        id: 'drag-text-image-drag',
+        title: { en: '03-5 / Text + image + drag: show how three inputs work together', zh: '03-5 / Text + image + drag：展示三种输入如何组合' },
+        sequenceLabel: { en: 'Text + image + drag', zh: 'Text + image + drag' },
+        asset: '/projects/nuwa-series/verified/drag-05-text-image-drag.png',
+        assetSource: 'original-nuwa-website',
+        sourceUrl: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
+        alt: { en: 'DragNUWA original text image drag section.', zh: 'DragNUWA 原站 text image drag 区域。' },
         userProblem: {
-          en: 'If users draw a path but cannot inspect the resulting motion, control remains abstract.',
-          zh: '如果用户画了轨迹，却看不到它如何影响视频结果，就无法建立控制感。'
+          en: 'Users need to understand which role text, image, and drag each play in controllable video generation.',
+          zh: '用户需要理解 text、image、drag 在可控视频生成里分别承担什么角色。'
         },
         designDecision: {
-          en: 'I kept examples and previews close to the input logic so users can compare intention and result.',
-          zh: '我让示例和预览靠近输入逻辑，用户可以对照意图和生成结果。'
+          en: 'I placed the input thumbnails, path/control example, and output preview in one visual system.',
+          zh: '我把输入缩略图、路径/控制示例和输出预览放在同一个视觉系统里。'
         },
         whyItWorks: {
-          en: 'AI control becomes understandable when users see how each input role affects output.',
-          zh: '当用户看到每种输入如何影响输出，AI 控制才变得可解释。'
+          en: 'The relationship is visible: text names intent, image anchors space, and drag defines motion.',
+          zh: '三者关系变得可见：text 定义意图，image 固定空间，drag 表达运动。'
         },
         userBenefit: {
-          en: 'Users can learn which combination of text, image, and trajectory produces the motion they want.',
-          zh: '用户能理解 text、image、trajectory 的组合如何导向想要的运动。'
+          en: 'Users can understand controllable generation without reading the paper figure first.',
+          zh: '用户不用先看论文图，也能理解可控生成的输入关系。'
         },
         caption: {
-          en: 'What to notice: preview examples make motion control inspectable after the input bundle is defined.',
-          zh: '看点：输入和输出并列理解，让用户看到自己画的路径如何转化成视频运动。'
+          en: 'What to notice: text, image, and drag are shown together, so the control relationship is visible in one place.',
+          zh: '看点：text、image、drag 被放在一起，用户可以在同一处看懂控制关系。'
         },
         callouts: [
-          { x: 18, y: 36, label: { en: 'Input bundle entry', zh: '输入组合入口' }, detail: { en: 'Each example implies text, image, and motion.', zh: '每个示例都对应输入组合。' } },
-          { x: 51, y: 56, label: { en: 'Generated motion cases', zh: '生成运动案例' }, detail: { en: 'The grid shows varied motion contexts.', zh: '网格展示不同运动场景。' } },
-          { x: 86, y: 74, label: { en: 'Preview / compare', zh: '预览 / 对比' }, detail: { en: 'Users compare whether output matches intent.', zh: '用户检查结果是否符合意图。' } }
+          { x: 25, y: 32, label: { en: 'Input examples', zh: '输入示例' }, detail: { en: 'Thumbnails define starting states.', zh: '缩略图定义起始状态。' } },
+          { x: 45, y: 67, label: { en: 'Drag control', zh: 'Drag 控制' }, detail: { en: 'The control action is shown beside the result.', zh: '控制动作和结果并列出现。' } },
+          { x: 79, y: 46, label: { en: 'Output preview', zh: '输出预览' }, detail: { en: 'Users see what the combined inputs produce.', zh: '用户看到组合输入产生什么结果。' } }
         ]
       }
     ],
@@ -662,7 +695,7 @@ const nuwaProjects: NuwaProject[] = [
         zh: '现在可以沿着控制路径看：Text → Image → Trajectory → Generated motion。'
       },
       url: 'https://nuwa-infinity.microsoft.com/#/DragNUWA',
-      fallbackImage: '/projects/nuwa-series/evidence/drag-01-intro.png',
+      fallbackImage: '/projects/nuwa-series/verified/drag-01-gallery-grid.png',
       guideTitle: { en: 'Look for', zh: '你可以这样看' },
       guideSteps: [
         { en: 'How text describes intent', zh: '文字如何描述意图' },
@@ -681,9 +714,9 @@ const nuwaProjects: NuwaProject[] = [
 const themeById = (id: ThemeId) => nuwaProjects.find((project) => project.id === id)!;
 
 const projectCardImages: Record<ThemeId, string> = {
-  infinity: '/projects/nuwa-series/evidence/infinity-05-preview.png',
-  xl: '/projects/nuwa-series/evidence/xl-04-timeline.png',
-  drag: '/projects/nuwa-series/evidence/drag-04-trajectory.png'
+  infinity: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
+  xl: '/projects/nuwa-series/verified/xl-04-short-video-carousel.png',
+  drag: '/projects/nuwa-series/verified/drag-05-text-image-drag.png'
 };
 
 const BrowserEvidence: React.FC<{
@@ -693,7 +726,8 @@ const BrowserEvidence: React.FC<{
   accent: string;
   callouts?: Callout[];
   isZh: boolean;
-}> = ({ asset, alt, sourceLabel, accent, callouts = [], isZh }) => (
+  status?: EvidencePoint['status'];
+}> = ({ asset, alt, sourceLabel, accent, callouts = [], isZh, status }) => (
   <div className="overflow-hidden rounded-lg border border-white/10 bg-[#0A0A0B] shadow-[0_24px_72px_rgba(0,0,0,0.32)]">
     <div className="flex min-h-11 items-center gap-3 border-b border-white/10 bg-white/[0.04] px-4 py-2">
       <div className="flex shrink-0 items-center gap-1.5">
@@ -707,18 +741,33 @@ const BrowserEvidence: React.FC<{
     </div>
     <div className="grid lg:grid-cols-[minmax(0,1fr)_270px]">
       <div className="relative flex min-h-[280px] items-center justify-center bg-black">
-        <img src={assetUrl(asset)} alt={alt} className="block max-h-[620px] w-full object-contain" />
-        <div className="pointer-events-none absolute inset-0 hidden md:block">
-          {callouts.slice(0, 3).map((callout, index) => (
-            <span
-              key={`${callout.label.en}-${index}`}
-              className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-black/70 text-xs font-bold text-white ring-4 ring-black/25"
-              style={{ left: `${callout.x}%`, top: `${callout.y}%`, boxShadow: `0 0 0 1px ${accent}99` }}
-            >
-              {index + 1}
-            </span>
-          ))}
-        </div>
+        {status === 'needs-real-screenshot' || !asset ? (
+          <div className="grid min-h-[360px] w-full place-items-center border border-dashed border-white/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-8 text-center">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.18em]" style={{ color: accent }}>needs real screenshot</p>
+              <p className="mt-3 max-w-md text-sm leading-6 text-white/62">
+                {isZh
+                  ? '这里先保留占位，不使用论文页、外部项目页或来源不确定的图片替代真实 NUWA 网站截图。'
+                  : 'This slot is intentionally left as a placeholder until a real NUWA website screenshot is captured.'}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <img src={assetUrl(asset)} alt={alt} className="block max-h-[620px] w-full object-contain" />
+            <div className="pointer-events-none absolute inset-0 hidden md:block">
+              {callouts.slice(0, 3).map((callout, index) => (
+                <span
+                  key={`${callout.label.en}-${index}`}
+                  className="absolute grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-black/70 text-xs font-bold text-white ring-4 ring-black/25"
+                  style={{ left: `${callout.x}%`, top: `${callout.y}%`, boxShadow: `0 0 0 1px ${accent}99` }}
+                >
+                  {index + 1}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <div className="border-t border-white/10 bg-[#101012] p-4 lg:border-l lg:border-t-0">
         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/38">
@@ -893,7 +942,7 @@ const LiveDemoFrame: React.FC<{ demo: LiveDemo; accent: string; isZh: boolean }>
 
 const HeroSection: React.FC<{ isZh: boolean }> = ({ isZh }) => (
   <section className="relative min-h-[760px] overflow-hidden bg-[#050505] text-white">
-    <img src={assetUrl('/projects/nuwa-series/evidence/infinity-05-preview.png')} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
+    <img src={assetUrl('/projects/nuwa-series/verified/infinity-05-outpainting-result.png')} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.9)_0%,rgba(5,5,5,0.64)_52%,rgba(5,5,5,0.35)_100%),linear-gradient(180deg,rgba(5,5,5,0.14)_0%,rgba(5,5,5,0.95)_96%)]" />
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:110px_110px]" />
     <div className="relative z-10 mx-auto grid min-h-[760px] max-w-7xl items-end gap-12 px-6 pb-16 pt-32 sm:px-8 md:px-12 lg:grid-cols-[0.58fr_0.42fr]">
@@ -983,9 +1032,9 @@ const WhySection: React.FC<{ isZh: boolean }> = ({ isZh }) => {
           </div>
         </div>
         <BrowserEvidence
-          asset="/projects/nuwa-series/evidence/infinity-01-landing.png"
+          asset="/projects/nuwa-series/verified/infinity-01-landing-enter.png"
           alt={isZh ? 'NUWA-Infinity 初始入口页面。' : 'NUWA-Infinity entry screen.'}
-          sourceLabel="nuwa-infinity.microsoft.com/#/NUWAInfinity"
+          sourceLabel="https://nuwa-infinity.microsoft.com/#/NUWAInfinity"
           accent={project.accent}
           isZh={isZh}
           callouts={[
@@ -1058,10 +1107,11 @@ const EvidenceBlock: React.FC<{ project: NuwaProject; point: EvidencePoint; inde
         <BrowserEvidence
           asset={point.asset}
           alt={c(point.alt, isZh)}
-          sourceLabel={project.id === 'infinity' ? 'nuwa-infinity.microsoft.com/#/NUWAInfinity' : project.id === 'xl' ? 'nuwa-infinity.microsoft.com/#/NUWAXL' : 'nuwa-infinity.microsoft.com/#/DragNUWA'}
+          sourceLabel={point.sourceUrl}
           accent={project.accent}
           callouts={point.callouts}
           isZh={isZh}
+          status={point.status}
         />
         <p className="mt-3 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-xs leading-5 text-white/52">
           {c(point.caption, isZh)}
@@ -1091,7 +1141,7 @@ const ProjectSection: React.FC<{ project: NuwaProject; isZh: boolean }> = ({ pro
         <BrowserEvidence
           asset={project.heroImage}
           alt={c(project.title, isZh)}
-          sourceLabel={project.id === 'infinity' ? 'nuwa-infinity.microsoft.com/#/NUWAInfinity' : project.id === 'xl' ? 'nuwa-infinity.microsoft.com/#/NUWAXL' : 'nuwa-infinity.microsoft.com/#/DragNUWA'}
+          sourceLabel={project.id === 'infinity' ? 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity' : project.id === 'xl' ? 'https://nuwa-infinity.microsoft.com/#/NUWAXL' : 'https://nuwa-infinity.microsoft.com/#/DragNUWA'}
           accent={project.accent}
           isZh={isZh}
           callouts={[
@@ -1136,9 +1186,9 @@ const FrameworkSection: React.FC<{ isZh: boolean }> = ({ isZh }) => (
             : project.id === 'xl'
               ? {
                   model: { en: 'Generate video across a long time range.', zh: '生成跨越长时间范围的视频。' },
-                  action: { en: 'Read a timeline, scan keyframes, follow a filmstrip.', zh: '看时间线、看关键帧、扫描 filmstrip。' },
-                  path: { en: 'Task intro -> Sparse keyframes -> Frame fill -> Timeline -> Video preview', zh: '介绍任务 → 稀疏关键帧 → 中间帧补齐 → 时间线浏览 → 视频预览' },
-                  value: { en: 'Long video becomes a readable time structure.', zh: '让长视频生成从单个结果变成可理解的时间结构。' }
+                  action: { en: 'Read script cards, follow process stages, browse examples.', zh: '读脚本卡片、跟随流程阶段、浏览示例。' },
+                  path: { en: 'Task intro -> Script prompts -> Generate stage -> Example browsing -> Output step', zh: '介绍任务 → 脚本提示 → 生成阶段 → 示例浏览 → 输出步骤' },
+                  value: { en: 'Long video becomes a staged, readable web flow.', zh: '让长视频生成从单个结果变成分阶段可阅读的网页流程。' }
                 }
               : {
                   model: { en: 'Control video generation with text, image, and trajectory.', zh: '用 text、image、trajectory 控制视频生成。' },
@@ -1183,12 +1233,12 @@ const DesignWorkSection: React.FC<{ isZh: boolean }> = ({ isZh }) => {
     {
       accent: themeById('xl').accent,
       title: { en: 'I translated model capability into interface actions', zh: '我把模型能力转成界面动作' },
-      body: { en: 'Outpainting becomes boundary expansion; long video becomes timeline browsing; motion control becomes a drawn trajectory.', zh: 'NUWA-Infinity 是扩展画布，NUWA XL 是浏览时间线，DragNUWA 是画运动轨迹。' }
+      body: { en: 'Outpainting becomes boundary expansion; long video becomes script-and-stage browsing; motion control becomes text, image, and drag in one view.', zh: 'NUWA-Infinity 是扩展边界，NUWA XL 是脚本和阶段浏览，DragNUWA 是把 text、image、drag 放进同一视图。' }
     },
     {
       accent: themeById('drag').accent,
       title: { en: 'I designed around AI uncertainty', zh: '我围绕 AI 结果的不确定性设计' },
-      body: { en: 'Preview, gallery, frame sequence, and comparison give users room to judge output instead of accepting one black-box result.', zh: '通过 preview、gallery、frame sequence 和结果对比，让用户有判断和选择空间。' }
+      body: { en: 'Preview, gallery, process stages, and example browsing give users room to judge output instead of accepting one black-box result.', zh: '通过 preview、gallery、流程阶段和示例浏览，让用户有判断和选择空间。' }
     },
     {
       accent: themeById('infinity').secondaryAccent,
@@ -1198,7 +1248,7 @@ const DesignWorkSection: React.FC<{ isZh: boolean }> = ({ isZh }) => {
     {
       accent: themeById('drag').secondaryAccent,
       title: { en: 'I used playful interaction purposefully', zh: '我有目的地使用 playful interaction' },
-      body: { en: 'The playful pieces reduce unfamiliarity: canvas expansion, timeline scanning, and drawing paths are familiar actions for new AI capabilities.', zh: '这些互动不是炫技，而是降低陌生感：扩展画布、扫描时间线、画路径都是用户熟悉的动作。' }
+      body: { en: 'The playful pieces reduce unfamiliarity: canvas expansion, script cards, process rails, galleries, and drag controls are familiar actions for new AI capabilities.', zh: '这些互动不是炫技，而是降低陌生感：扩展画布、脚本卡片、流程轨道、gallery 和 drag control 都是用户熟悉的动作。' }
     }
   ];
 

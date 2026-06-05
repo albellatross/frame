@@ -472,7 +472,7 @@ export const PROJECTS_EN: Project[] = [
     year: '2022–2023',
     role: 'Interaction Designer / Web Experience Designer',
     shortDescription: 'A Microsoft Research demo series case study: translating outpainting, long-video structure, and trajectory control into web interactions users can understand and try.',
-    coverImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+    coverImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
     tags: ['Research Demo UX', 'NUWA Series', 'Image Outpainting', 'Long Video', 'Trajectory Control', 'Microsoft Research'],
     externalLinks: {
       live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
@@ -485,7 +485,7 @@ export const PROJECTS_EN: Project[] = [
         title: 'NUWA-Infinity — Turning outpainting into an interactive research demo',
         subtitle: 'Turning image outpainting into an interactive research demo',
         content: 'This case study follows three Microsoft Research demos in browsing order: NUWA-Infinity, NUWA XL, and DragNUWA. My role was to translate model capabilities into web actions people could try: spatial expansion, temporal structure, and trajectory control.',
-        bgImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+        bgImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         tags: ['NUWA-Infinity', 'NUWA XL', 'DragNUWA', 'Research Demo UX'],
         role: 'Interaction Design / Web Experience Design · Microsoft Research AI Demo Series',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
@@ -500,7 +500,7 @@ export const PROJECTS_EN: Project[] = [
         title: 'Early AI demos needed a path people could operate, not only research results to watch.',
         subtitle: 'The NUWA series introduced unfamiliar abilities: image outpainting, long-video generation, and trajectory-controlled video. First-time visitors needed to know where to start, what changed, and how to control the result.',
         content: 'I organized the web experience around concrete actions: choose an entry, generate, extend, scan time, draw motion, and compare output.',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'Original NUWA-Infinity landing screen showing the research demo stage and navigation.',
         caption: 'What to notice: the NUWA site is not treated as a paper summary. It introduces research capability through screens people can enter, scan, and try.',
         items: [
@@ -539,7 +539,7 @@ export const PROJECTS_EN: Project[] = [
         title: '01 / NUWA-Infinity: outpainting becomes “continue beyond the image.”',
         subtitle: 'A first-time visitor may not know prompt, gallery, outpainting, or infinite canvas. The interface has to show the start point and the expandable boundary.',
         content: 'I designed the flow as Prompt / Gallery → expand boundary → preview result. Prompt gives authorship, Gallery gives a safe example, and the visible boundary shows where AI continues the image.',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-outpainting-clicked.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         fallbackAlt: 'Original NUWA-Infinity outpainting result screen with generated continuation and candidate preview strip.',
         caption: 'What to notice: infinite visual synthesis becomes a user path. Visitors pick a start, inspect the edge, and compare what appears outside the original image.',
         items: [
@@ -573,8 +573,8 @@ export const PROJECTS_EN: Project[] = [
         title: '02 / NUWA XL: long video becomes a keyframe-to-timeline process.',
         subtitle: 'A final video alone does not explain why long video generation is different from one image. Users need to see how frames are organized across time.',
         content: 'I used filmstrip and timeline logic: first show sparse keyframes, then show intermediate frames being filled, so visitors can understand the generated video as a time structure.',
-        fallbackImage: '/projects/nuwa-series/nuwa-xl-coarse-fine.png',
-        fallbackAlt: 'Official NUWA XL coarse-to-fine generation diagram showing global keyframes and local interpolation.',
+        fallbackImage: '/projects/nuwa-series/verified/xl-03-generate-frames-stage.png',
+        fallbackAlt: 'Original NUWA XL page showing the generation process rail.',
         caption: 'What to notice: long-video generation is presented as a visible process. Keyframes build the structure first; local frames fill the gaps until the video becomes continuous.',
         items: [
           {
@@ -607,8 +607,8 @@ export const PROJECTS_EN: Project[] = [
         title: '03 / DragNUWA: motion control becomes a path users draw on the image.',
         subtitle: 'Prompt text is weak at specifying direction, path, and rhythm. Motion needs a control that is spatial, not only verbal.',
         content: 'I framed DragNUWA around three bound inputs: Text defines intent, Image anchors the scene, and Trajectory lets users draw how the motion should move before previewing the result.',
-        fallbackImage: '/projects/nuwa-series/dragnuwa-text-image-trajectory.png',
-        fallbackAlt: 'Official DragNUWA visual showing text prompts, image prompts, and red trajectory controls.',
+        fallbackImage: '/projects/nuwa-series/verified/drag-05-text-image-drag.png',
+        fallbackAlt: 'Original DragNUWA page showing text, image, and drag controls together.',
         caption: 'What to notice: the trajectory overlay turns hard-to-describe motion into a visible control. The user can see how text, image, and path work together.',
         items: [
           {
@@ -642,7 +642,7 @@ export const PROJECTS_EN: Project[] = [
         subtitle: 'Directly experience the web interaction I designed',
         content: 'Use the original NUWA-Infinity demo to verify the interaction path: enter the site, choose a starting point, find the image boundary, then compare the generated continuation.',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-live-entry.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'NUWA-Infinity live demo fallback preview.',
         buttonLabel: 'Open full demo',
         caption: 'The original demo is hosted externally. If it does not load inside the portfolio, open it in a new tab or watch the recorded walkthrough.',
@@ -1437,7 +1437,7 @@ export const PROJECTS_ZH: Project[] = [
     year: '2022–2023',
     role: '交互设计师 / Web 体验设计师',
     shortDescription: '展示 Microsoft Research NUWA 系列三个 demo：把图像外扩、长视频时间结构、轨迹控制转成用户能理解和操作的网页体验。',
-    coverImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+    coverImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
     tags: ['Research Demo UX', 'NUWA Series', '图像外扩', '长视频生成', '轨迹控制', 'Microsoft Research'],
     externalLinks: {
       live: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
@@ -1450,7 +1450,7 @@ export const PROJECTS_ZH: Project[] = [
         title: 'NUWA-Infinity — 把图像外扩做成可探索的网页体验',
         subtitle: 'Turning image outpainting into an interactive research demo',
         content: '这页按浏览顺序展示 NUWA-Infinity、NUWA XL、DragNUWA 三个 Microsoft Research demo。我的工作是把模型能力转成用户能亲自操作的网页动作：空间扩展、时间组织、轨迹控制。',
-        bgImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+        bgImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         tags: ['NUWA-Infinity', 'NUWA XL', 'DragNUWA', 'Research Demo UX'],
         role: 'Interaction Design / Web Experience Design · Microsoft Research AI Demo Series',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
@@ -1465,7 +1465,7 @@ export const PROJECTS_ZH: Project[] = [
         title: '早期 AI demo 的难点不是“展示结果”，而是让用户知道怎么操作。',
         subtitle: 'NUWA 系列的能力很新：图像外扩、长视频生成、轨迹控制。第一次访问的用户不一定知道从哪里开始、哪里发生变化、如何控制结果。',
         content: '我把网页体验组织成具体动作：选择入口、生成、扩展边界、扫描时间、画运动路径、比较输出。',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-main-slide-0.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'Original NUWA-Infinity landing screen showing the research demo stage and navigation.',
         caption: '看点：这里不是论文摘要页，而是把研究能力放进用户可以进入、浏览、操作和比较的网页顺序里。',
         items: [
@@ -1504,7 +1504,7 @@ export const PROJECTS_ZH: Project[] = [
         title: '01 / NUWA-Infinity：把 outpainting 变成“继续向画面外探索”',
         subtitle: '用户第一次进入时不熟悉 prompt、gallery、outpainting 和无限画布，界面必须告诉他从哪里开始、哪里会被延展。',
         content: '我把流程拆成 Prompt / Gallery → 扩展边界 → 预览结果。Prompt 给创作入口，Gallery 给安全示例，边界让用户看见 AI 在哪里继续生成。',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-outpainting-clicked.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         fallbackAlt: 'Original NUWA-Infinity outpainting result screen with generated continuation and candidate preview strip.',
         caption: '看点：infinite visual synthesis 被转成一条可操作路径。用户选择起点、检查边界，再比较画面外生成了什么。',
         items: [
@@ -1538,8 +1538,8 @@ export const PROJECTS_ZH: Project[] = [
         title: '02 / NUWA XL：把长视频生成讲成“关键帧到时间线”的过程',
         subtitle: '如果只放最终视频，用户看不到模型如何跨时间组织画面，也不理解长视频生成和单张图有什么不同。',
         content: '我用 filmstrip / timeline 的心智模型解释：先看到关键帧，再看到中间帧被补齐，最后理解长视频是一段可扫描的时间结构。',
-        fallbackImage: '/projects/nuwa-series/nuwa-xl-coarse-fine.png',
-        fallbackAlt: 'Official NUWA XL coarse-to-fine generation diagram showing global keyframes and local interpolation.',
+        fallbackImage: '/projects/nuwa-series/verified/xl-03-generate-frames-stage.png',
+        fallbackAlt: 'Original NUWA XL page showing the generation process rail.',
         caption: '看点：长视频生成被转成可观察的时间流程。先搭关键帧骨架，再补齐中间帧，用户能看懂连续视频从哪里来。',
         items: [
           {
@@ -1572,8 +1572,8 @@ export const PROJECTS_ZH: Project[] = [
         title: '03 / DragNUWA：用拖拽轨迹让用户直接控制运动',
         subtitle: 'Prompt 很难精确表达运动方向、轨迹和节奏，尤其是相机移动或物体运动。',
         content: '我把控制拆成 Text + Image + Trajectory：文字描述意图，图片提供场景，轨迹表达运动路径。用户画路径后再预览视频结果。',
-        fallbackImage: '/projects/nuwa-series/dragnuwa-text-image-trajectory.png',
-        fallbackAlt: 'Official DragNUWA visual showing text prompts, image prompts, and red trajectory controls.',
+        fallbackImage: '/projects/nuwa-series/verified/drag-05-text-image-drag.png',
+        fallbackAlt: 'Original DragNUWA page showing text, image, and drag controls together.',
         caption: '看点：轨迹线把 prompt 难以表达的运动变成可见控制。用户能看到文字、图片和路径如何共同影响生成视频。',
         items: [
           {
@@ -1607,7 +1607,7 @@ export const PROJECTS_ZH: Project[] = [
         subtitle: '直接体验我设计的网页交互',
         content: '用原始 NUWA-Infinity demo 验证这条路径：进入网页、选择起点、找到图像边界，再对比生成后的延展结果。',
         demoUrl: 'https://nuwa-infinity.microsoft.com/#/NUWAInfinity',
-        fallbackImage: '/projects/nuwa-series/captures/nuwa-live-entry.png',
+        fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'NUWA-Infinity live demo fallback 预览图。',
         buttonLabel: 'Open full demo',
         caption: '原始 demo 托管在外部站点。如果无法在作品集内加载，可以新窗口打开，或观看录屏版交互 walkthrough。',
