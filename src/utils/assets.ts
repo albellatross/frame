@@ -14,8 +14,6 @@ const PROJECT_COVER_THUMBNAILS = new Set([
   'p11', 'p12', 'p13', 'p14', 'p15', 'p16', 'p17', 'p18', 'p19',
 ]);
 
-const TIMELINE_THUMBNAILS = new Set(['c1', 'c2', 'c3', 'c4']);
-
 export function projectCoverAsset(project: { id: string; coverImage: string }): string {
   if (PROJECT_COVER_THUMBNAILS.has(project.id)) {
     return assetUrl(`/projects/cover-thumbnails/${project.id}.webp`);
@@ -25,9 +23,5 @@ export function projectCoverAsset(project: { id: string; coverImage: string }): 
 }
 
 export function timelineImageAsset(stage: { id: string; image: string }): string {
-  if (TIMELINE_THUMBNAILS.has(stage.id)) {
-    return assetUrl(`/projects/cover-thumbnails/${stage.id}.webp`);
-  }
-
   return assetUrl(stage.image);
 }
