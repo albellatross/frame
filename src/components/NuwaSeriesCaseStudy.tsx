@@ -714,41 +714,41 @@ const nuwaProjects: NuwaProject[] = [
 const themeById = (id: ThemeId) => nuwaProjects.find((project) => project.id === id)!;
 
 const projectCardImages: Record<ThemeId, string> = {
-  infinity: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
-  xl: '/projects/nuwa-series/verified/xl-04-short-video-carousel.png',
-  drag: '/projects/nuwa-series/verified/drag-05-text-image-drag.png'
+  infinity: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
+  xl: '/projects/nuwa-series/verified/xl-01-intro.png',
+  drag: '/projects/nuwa-series/verified/drag-02-intro-video.png'
 };
 
 const heroPreviewCards = [
   {
     image: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
     accent: '#8FB7FF',
-    title: { en: 'NUWA-Infinity / Project intro', zh: 'NUWA-Infinity / 项目介绍' },
+    title: { en: 'NUWA-Infinity / Spatial exploration', zh: 'NUWA-Infinity / 空间探索' },
     body: {
-      en: 'The first hero page frames the research demo as an experience users can enter.',
-      zh: '第一张 hero page 把 research demo 呈现成用户可以进入的体验。'
+      en: 'The project hero frames image outpainting as a web experience users can enter and explore.',
+      zh: '项目 hero 把图像外扩呈现成用户可以进入、探索的网页体验。'
     },
-    note: { en: 'Project hero', zh: '项目头图' }
+    note: { en: 'NUWA-Infinity hero', zh: 'NUWA-Infinity 头图' }
   },
   {
-    image: '/projects/nuwa-series/verified/infinity-hero-02-outpainting.png',
-    accent: '#66E4FF',
-    title: { en: 'Image Outpainting / Boundary action', zh: 'Image Outpainting / 边界动作' },
-    body: {
-      en: 'The outpainting page turns “extend beyond the image” into a concrete screen action.',
-      zh: 'Outpainting 页面把“向画面外延展”变成具体的屏幕动作。'
-    },
-    note: { en: 'Subpage hero', zh: '子页面头图' }
-  },
-  {
-    image: '/projects/nuwa-series/verified/infinity-hero-03-text-to-image.png',
+    image: '/projects/nuwa-series/verified/xl-01-intro.png',
     accent: '#F6C65B',
-    title: { en: 'Text to Image / Prompt entry', zh: 'Text to Image / Prompt 入口' },
+    title: { en: 'NUWA XL / Long video generation', zh: 'NUWA XL / 长视频生成' },
     body: {
-      en: 'The text-to-image page gives users a familiar prompt-based starting point.',
-      zh: 'Text-to-image 页面给用户一个熟悉的 prompt 起点。'
+      en: 'The NUWA XL hero introduces long video generation before users enter the staged walkthrough.',
+      zh: 'NUWA XL hero 先建立长视频生成主题，再让用户进入分阶段浏览。'
     },
-    note: { en: 'Subpage hero', zh: '子页面头图' }
+    note: { en: 'NUWA XL hero', zh: 'NUWA XL 头图' }
+  },
+  {
+    image: '/projects/nuwa-series/verified/drag-02-intro-video.png',
+    accent: '#FF665C',
+    title: { en: 'DragNUWA / Direct motion control', zh: 'DragNUWA / 直接运动控制' },
+    body: {
+      en: 'The DragNUWA hero sets up text, image, and trajectory as controls for generated motion.',
+      zh: 'DragNUWA hero 把 text、image、trajectory 设置成控制生成运动的入口。'
+    },
+    note: { en: 'DragNUWA hero', zh: 'DragNUWA 头图' }
   }
 ];
 
