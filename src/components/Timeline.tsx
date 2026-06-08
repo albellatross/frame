@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { CareerStage, Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { assetUrl } from '../utils/assets';
+import { projectCoverAsset, timelineImageAsset } from '../utils/assets';
 
 interface TimelineProps {
   stages: CareerStage[];
@@ -34,8 +34,10 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                     className="absolute inset-0"
                   >
                     <img 
-                      src={assetUrl(stage.image)} 
+                      src={timelineImageAsset(stage)} 
                       alt={stage.company} 
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover opacity-60" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark-brown via-transparent to-transparent" />
@@ -149,7 +151,7 @@ const TimelineItem: React.FC<{
       
       {/* Mobile-only visible visual since sticky is hidden */}
       <div className="md:hidden w-full h-48 mb-6 rounded-lg overflow-hidden relative">
-         <img src={assetUrl(stage.image)} className="w-full h-full object-cover" alt="" />
+         <img src={timelineImageAsset(stage)} className="w-full h-full object-cover" alt="" loading="lazy" decoding="async" />
          <div className="absolute inset-0 bg-black/20" />
       </div>
 
@@ -173,8 +175,10 @@ const TimelineItem: React.FC<{
               style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
             >
               <img
-                src={assetUrl(featuredProject.coverImage)}
+                src={projectCoverAsset(featuredProject)}
                 alt={featuredProject.title}
+                loading="lazy"
+                decoding="async"
                 className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-105'}`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-brown/80 via-dark-brown/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -232,8 +236,10 @@ const TimelineItem: React.FC<{
                 >
                   <div className={`relative aspect-[16/9] overflow-hidden ${shouldContainCover ? 'bg-white' : 'bg-cream'}`}>
                     <img
-                      src={assetUrl(project.coverImage)}
+                      src={projectCoverAsset(project)}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
                     />
                     <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-dark-brown opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100">

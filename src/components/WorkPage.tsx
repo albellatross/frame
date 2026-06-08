@@ -3,7 +3,7 @@ import { Project } from '../types';
 import { Plus, Check, ArrowRight } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
-import { assetUrl } from '../utils/assets';
+import { projectCoverAsset } from '../utils/assets';
 
 interface WorkPageProps {
   projects: Project[];
@@ -89,8 +89,12 @@ const WorkPage: React.FC<WorkPageProps> = ({ projects, onProjectClick, selectedP
             style={coverAspectRatio ? { aspectRatio: coverAspectRatio } : undefined}
           >
             <img
-              src={assetUrl(project.coverImage)}
+              src={projectCoverAsset(project)}
               alt={project.title}
+              loading={idx < 4 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={idx < 2 ? 'high' : 'auto'}
+              sizes={isFullWidth ? '(min-width: 768px) 1120px, calc(100vw - 48px)' : '(min-width: 768px) 540px, calc(100vw - 48px)'}
               className={`h-full w-full transition-transform duration-700 ${shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-110'}`}
             />
 

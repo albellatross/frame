@@ -10,6 +10,7 @@ const Hero: React.FC = () => {
   const [colorIndex, setColorIndex] = useState(0);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const containerRef = useRef<HTMLSpanElement>(null);
+  const heroPoster = assetUrl('/hero/frame-hero-poster.jpg');
 
   const colors = ['#5F4E41', '#8C5462'];
 
@@ -32,15 +33,25 @@ const Hero: React.FC = () => {
     <section id="hero" className="relative min-h-screen w-full overflow-hidden bg-white pt-24 sm:pt-28 md:pt-20">
       {/* Video Background */}
       <div className="absolute z-0 overflow-hidden" style={{ top: '300px', inset: 'auto 0 0 0' }}>
+        <img
+          src={heroPoster}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${isVideoReady ? 'opacity-0' : 'opacity-100'}`}
+        />
         <video
-          src={assetUrl('/hero/frame-hero-background.mp4')}
+          src={assetUrl('/hero/frame-hero-background-lite.mp4')}
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
-          onLoadedData={() => setIsVideoReady(true)}
-          className={`w-full h-full object-cover transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
+          preload="metadata"
+          poster={heroPoster}
+          onCanPlay={() => setIsVideoReady(true)}
+          className={`relative h-full w-full object-cover transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
         />
         {/* Gradient overlay - top fade only */}
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-transparent" style={{ height: '40%' }} />
@@ -199,5 +210,4 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
-
 

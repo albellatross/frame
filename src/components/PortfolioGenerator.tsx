@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '../types';
 import { X, FileText, MoveUp, MoveDown, Trash2, Download, Loader2 } from 'lucide-react';
-import { assetUrl } from '../utils/assets';
+import { projectCoverAsset } from '../utils/assets';
 
 interface GeneratorProps {
   isOpen: boolean;
@@ -98,7 +98,7 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
                       <div key={p.id} className="flex items-center gap-4 p-4 bg-white border border-neutral-100 shadow-sm rounded-lg group">
                         <span className="text-neutral-300 font-mono text-xs">{String(idx + 1).padStart(2, '0')}</span>
                         <div className="w-10 h-10 bg-neutral-100 rounded overflow-hidden">
-                          <img src={assetUrl(p.coverImage)} alt="" className="w-full h-full object-cover" />
+                          <img src={projectCoverAsset(p)} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                         </div>
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-neutral-900">{p.title}</h4>
