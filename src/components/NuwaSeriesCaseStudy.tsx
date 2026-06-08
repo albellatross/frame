@@ -75,7 +75,7 @@ const nuwaProjects: NuwaProject[] = [
     },
     accent: '#8FB7FF',
     secondaryAccent: '#66E4FF',
-    heroImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
+    heroImage: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
     sequence: [
       { en: 'Landing', zh: 'Landing' },
       { en: 'Prompt / Gallery', zh: 'Prompt / Gallery' },
@@ -719,6 +719,39 @@ const projectCardImages: Record<ThemeId, string> = {
   drag: '/projects/nuwa-series/verified/drag-05-text-image-drag.png'
 };
 
+const heroPreviewCards = [
+  {
+    image: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
+    accent: '#8FB7FF',
+    title: { en: 'NUWA-Infinity / Project intro', zh: 'NUWA-Infinity / 项目介绍' },
+    body: {
+      en: 'The first hero page frames the research demo as an experience users can enter.',
+      zh: '第一张 hero page 把 research demo 呈现成用户可以进入的体验。'
+    },
+    note: { en: 'Project hero', zh: '项目头图' }
+  },
+  {
+    image: '/projects/nuwa-series/verified/infinity-hero-02-outpainting.png',
+    accent: '#66E4FF',
+    title: { en: 'Image Outpainting / Boundary action', zh: 'Image Outpainting / 边界动作' },
+    body: {
+      en: 'The outpainting page turns “extend beyond the image” into a concrete screen action.',
+      zh: 'Outpainting 页面把“向画面外延展”变成具体的屏幕动作。'
+    },
+    note: { en: 'Subpage hero', zh: '子页面头图' }
+  },
+  {
+    image: '/projects/nuwa-series/verified/infinity-hero-03-text-to-image.png',
+    accent: '#F6C65B',
+    title: { en: 'Text to Image / Prompt entry', zh: 'Text to Image / Prompt 入口' },
+    body: {
+      en: 'The text-to-image page gives users a familiar prompt-based starting point.',
+      zh: 'Text-to-image 页面给用户一个熟悉的 prompt 起点。'
+    },
+    note: { en: 'Subpage hero', zh: '子页面头图' }
+  }
+];
+
 const BrowserEvidence: React.FC<{
   asset: string;
   alt: string;
@@ -942,7 +975,7 @@ const LiveDemoFrame: React.FC<{ demo: LiveDemo; accent: string; isZh: boolean }>
 
 const HeroSection: React.FC<{ isZh: boolean }> = ({ isZh }) => (
   <section className="relative min-h-[760px] overflow-hidden bg-[#050505] text-white">
-    <img src={assetUrl('/projects/nuwa-series/verified/infinity-05-outpainting-result.png')} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
+    <img src={assetUrl('/projects/nuwa-series/verified/infinity-hero-01-project.png')} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,5,5,0.9)_0%,rgba(5,5,5,0.64)_52%,rgba(5,5,5,0.35)_100%),linear-gradient(180deg,rgba(5,5,5,0.14)_0%,rgba(5,5,5,0.95)_96%)]" />
     <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:110px_110px]" />
     <div className="relative z-10 mx-auto grid min-h-[760px] max-w-7xl items-end gap-12 px-6 pb-16 pt-32 sm:px-8 md:px-12 lg:grid-cols-[0.58fr_0.42fr]">
@@ -978,15 +1011,15 @@ const HeroSection: React.FC<{ isZh: boolean }> = ({ isZh }) => (
         </div>
       </div>
       <div className="grid gap-4">
-        {nuwaProjects.map((project) => (
-          <div key={project.id} className="grid grid-cols-[130px_minmax(0,1fr)] gap-4 rounded-lg border border-white/10 bg-black/42 p-3 backdrop-blur-md">
+        {heroPreviewCards.map((card) => (
+          <div key={card.image} className="grid grid-cols-[130px_minmax(0,1fr)] gap-4 rounded-lg border border-white/10 bg-black/42 p-3 backdrop-blur-md">
             <div className="aspect-[4/3] overflow-hidden rounded-md bg-black">
-              <img src={assetUrl(projectCardImages[project.id])} alt="" className="h-full w-full object-cover" />
+              <img src={assetUrl(card.image)} alt="" className="h-full w-full object-cover" />
             </div>
             <div className="self-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: project.accent }}>{c(project.label, isZh)}</p>
-              <p className="mt-2 text-sm leading-6 text-white/78">{c(project.coreQuestion, isZh)}</p>
-              <p className="mt-2 text-xs text-white/42">{project.id === 'infinity' ? 'Make generation spatial' : project.id === 'xl' ? 'Make generation temporal' : 'Make generation directable'}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: card.accent }}>{c(card.title, isZh)}</p>
+              <p className="mt-2 text-sm leading-6 text-white/78">{c(card.body, isZh)}</p>
+              <p className="mt-2 text-xs text-white/42">{c(card.note, isZh)}</p>
             </div>
           </div>
         ))}
