@@ -55,10 +55,13 @@ const FIGMA_VALUE_COMPASS_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/value-compass/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
-const FIGMA_IOETE_SLIDES = Array.from(
-  { length: 1 },
-  (_, index) => `/projects/figma-portfolio/ioete-tea-shop/page-${String(index + 1).padStart(2, '0')}.png`
-);
+const FIGMA_IOETE_SLIDES = [
+  '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+  ...Array.from(
+    { length: 7 },
+    (_, index) => `/projects/figma-portfolio/ioete-tea-shop/behance-originals/behance-original-${String(index + 1).padStart(2, '0')}.jpg`
+  )
+];
 
 const FIGMA_ILLUSTRATION_SLIDES = Array.from(
   { length: 3 },
@@ -829,7 +832,7 @@ export const PROJECTS_EN: Project[] = [
     },
     tags: ['Brand Identity', 'Packaging Design', 'Visual System', 'Print Design', 'Adobe Creative Suite'],
     externalLinks: {
-      behance: 'https://www.behance.net/albellatrocb95'
+      behance: 'https://www.behance.net/gallery/207609085/ioete'
     },
     acts: {
       act1: {
@@ -1785,6 +1788,9 @@ export const PROJECTS_ZH: Project[] = [
     coverAspectRatio: 16 / 9,
     slideSets: {
       zh: FIGMA_IOETE_SLIDES,
+    },
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/207609085/ioete'
     },
     acts: {
       act1: {
