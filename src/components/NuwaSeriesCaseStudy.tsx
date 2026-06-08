@@ -1064,18 +1064,25 @@ const WhySection: React.FC<{ isZh: boolean }> = ({ isZh }) => {
             ))}
           </div>
         </div>
-        <BrowserEvidence
-          asset="/projects/nuwa-series/verified/infinity-01-landing-enter.png"
-          alt={isZh ? 'NUWA-Infinity 初始入口页面。' : 'NUWA-Infinity entry screen.'}
-          sourceLabel="https://nuwa-infinity.microsoft.com/#/NUWAInfinity"
-          accent={project.accent}
-          isZh={isZh}
-          callouts={[
-            { x: 50, y: 77, label: { en: 'First action', zh: '入口动作' }, detail: { en: 'The page tells users how to begin.', zh: '页面先回答从哪里开始。' } },
-            { x: 50, y: 58, label: { en: 'Ready state', zh: 'Ready 状态' }, detail: { en: 'Users see the demo is ready.', zh: '用户知道输入/选择之后系统已准备。' } },
-            { x: 28, y: 15, label: { en: 'Project identity', zh: '项目身份' }, detail: { en: 'Research context is present but not overwhelming.', zh: '研究身份存在，但不压过操作入口。' } }
-          ]}
-        />
+        <div className="lg:sticky lg:top-8 lg:self-start">
+          <BrowserEvidence
+            asset="/projects/nuwa-series/verified/infinity-01-landing-enter.png"
+            alt={isZh ? 'NUWA-Infinity 初始入口页面。' : 'NUWA-Infinity entry screen.'}
+            sourceLabel="https://nuwa-infinity.microsoft.com/#/NUWAInfinity"
+            accent={project.accent}
+            isZh={isZh}
+            callouts={[
+              { x: 50, y: 77, label: { en: 'First action', zh: '入口动作' }, detail: { en: 'The page tells users how to begin.', zh: '页面先回答从哪里开始。' } },
+              { x: 50, y: 58, label: { en: 'Ready state', zh: 'Ready 状态' }, detail: { en: 'Users see the demo is ready.', zh: '用户知道输入/选择之后系统已准备。' } },
+              { x: 28, y: 15, label: { en: 'Project identity', zh: '项目身份' }, detail: { en: 'Research context is present but not overwhelming.', zh: '研究身份存在，但不压过操作入口。' } }
+            ]}
+          />
+          <p className="mt-3 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-xs leading-5 text-white/52">
+            {isZh
+              ? '看点：这一屏先回答“我能不能操作、从哪里开始”，再把用户带入后面的 Prompt、Gallery、Outpainting 和 Preview 路径。'
+              : 'What to notice: this screen answers whether the demo is operable and where to begin before the page moves into Prompt, Gallery, Outpainting, and Preview.'}
+          </p>
+        </div>
       </div>
     </section>
   );
