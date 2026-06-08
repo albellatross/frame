@@ -55,13 +55,12 @@ const FIGMA_VALUE_COMPASS_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/value-compass/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
-const FIGMA_IOETE_SLIDES = [
-  '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
-  ...Array.from(
-    { length: 7 },
-    (_, index) => `/projects/figma-portfolio/ioete-tea-shop/behance-originals/behance-original-${String(index + 1).padStart(2, '0')}.jpg`
-  )
-];
+const IOETE_COVER_IMAGE = '/projects/figma-portfolio/ioete-tea-shop/behance-originals/behance-original-01.jpg';
+
+const FIGMA_IOETE_SLIDES = Array.from(
+  { length: 7 },
+  (_, index) => `/projects/figma-portfolio/ioete-tea-shop/behance-originals/behance-original-${String(index + 1).padStart(2, '0')}.jpg`
+);
 
 const FIGMA_ILLUSTRATION_SLIDES = Array.from(
   { length: 3 },
@@ -97,7 +96,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     role: 'Design Intern',
     oneLiner: 'Built brand and packaging systems for real-world retail and energy clients in Milan.',
     skills: ['Brand Identity', 'Packaging', 'Retail Visuals'],
-    image: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    image: IOETE_COVER_IMAGE,
     relatedProjectIds: ['p7']
   },
   {
@@ -141,7 +140,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     role: '设计实习生',
     oneLiner: '在米兰参与真实商业项目，将品牌识别、包装与线下视觉系统落地。',
     skills: ['品牌识别', '包装设计', '零售视觉'],
-    image: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    image: IOETE_COVER_IMAGE,
     relatedProjectIds: ['p7']
   },
   {
@@ -824,7 +823,7 @@ export const PROJECTS_EN: Project[] = [
     year: '2021',
     role: 'Brand Designer',
     shortDescription: 'Complete brand identity for Milan tea shop.',
-    coverImage: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    coverImage: IOETE_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
     slideSets: {
@@ -1783,7 +1782,7 @@ export const PROJECTS_ZH: Project[] = [
     year: '2021',
     role: '品牌设计师',
     shortDescription: '米兰茶店的完整品牌识别。',
-    coverImage: '/projects/figma-portfolio/ioete-tea-shop/page-01.png',
+    coverImage: IOETE_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
     slideSets: {
