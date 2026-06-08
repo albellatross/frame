@@ -50,10 +50,43 @@ const FIGMA_MSRA_25TH_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/msra-25th-anniversary/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
+const behanceOriginal = (projectSlug: string, index: number, extension = 'jpg') =>
+  `/projects/figma-portfolio/${projectSlug}/behance-originals/behance-original-${String(index).padStart(2, '0')}.${extension}`;
+
 const FIGMA_VALUE_COMPASS_SLIDES = Array.from(
-  { length: 7 },
-  (_, index) => `/projects/figma-portfolio/value-compass/page-${String(index + 1).padStart(2, '0')}.png`
+  { length: 14 },
+  (_, index) => behanceOriginal('value-compass', index + 1)
 );
+
+const VALUE_COMPASS_COVER_IMAGE = behanceOriginal('value-compass', 1);
+
+const SALONE_DEL_MOBILE_SLIDES = Array.from(
+  { length: 31 },
+  (_, index) => behanceOriginal('salone-del-mobile', index + 1)
+);
+
+const SALONE_DEL_MOBILE_COVER_IMAGE = behanceOriginal('salone-del-mobile', 1);
+
+const BATTERYML_VISUAL_SLIDES = Array.from(
+  { length: 14 },
+  (_, index) => behanceOriginal('batteryml-visual-design', index + 1, index === 1 ? 'gif' : 'jpg')
+);
+
+const BATTERYML_VISUAL_COVER_IMAGE = behanceOriginal('batteryml-visual-design', 1);
+
+const FERA_SLIDES = Array.from(
+  { length: 8 },
+  (_, index) => behanceOriginal('fera', index + 1)
+);
+
+const FERA_COVER_IMAGE = behanceOriginal('fera', 1);
+
+const PROFILTUBI_REBRANDING_SLIDES = Array.from(
+  { length: 51 },
+  (_, index) => behanceOriginal('profiltubi-rebranding', index + 1)
+);
+
+const PROFILTUBI_REBRANDING_COVER_IMAGE = behanceOriginal('profiltubi-rebranding', 1);
 
 const IOETE_COVER_IMAGE = '/projects/figma-portfolio/ioete-tea-shop/behance-originals/behance-original-01.jpg';
 
@@ -1098,7 +1131,7 @@ export const PROJECTS_EN: Project[] = [
     year: '2024',
     role: 'UI/UX Designer',
     shortDescription: 'AI value-alignment research interface and visual system.',
-    coverImage: '/projects/figma-portfolio/value-compass/page-01.png',
+    coverImage: VALUE_COMPASS_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
     slideSets: {
@@ -1118,8 +1151,152 @@ export const PROJECTS_EN: Project[] = [
       },
       act3: {
         title: 'Reader Delivery',
-        content: 'Displayed the complete Figma case pages as a high-resolution reader.',
-        impact: '7 Source Pages'
+        content: 'Displayed the Behance source assets as a high-resolution reader.',
+        impact: '14 Source Assets'
+      }
+    }
+  },
+  {
+    id: 'p16',
+    title: 'Salone del Mobile',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2021',
+    role: 'UI/UX Designer',
+    shortDescription: 'Art direction and mobile web concept for Salone del Mobile.',
+    coverImage: SALONE_DEL_MOBILE_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: SALONE_DEL_MOBILE_SLIDES,
+    },
+    gallery: SALONE_DEL_MOBILE_SLIDES,
+    tags: ['Art Direction', 'UI/UX', 'Mobile Web', 'Editorial Design', 'Behance Source'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/200906941/salone-del-mobile'
+    },
+    acts: {
+      act1: {
+        title: 'Event Website Direction',
+        content: 'Explored a mobile-first visual direction for an international design event experience.'
+      },
+      act2: {
+        title: 'Editorial Mobile Flow',
+        content: 'Organized the interface around strong typography, device mockups, and browsable content pages.',
+        decisionPoints: ['Mobile-first layout', 'Editorial hierarchy', 'Event identity']
+      },
+      act3: {
+        title: 'Behance Source Reader',
+        content: 'Added the original Behance source images to the Works reader.',
+        impact: '31 Source Assets'
+      }
+    }
+  },
+  {
+    id: 'p17',
+    title: 'BatteryML Visual Design',
+    category: 'B-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: 'Visual Designer',
+    shortDescription: 'Visual identity and communication design for BatteryML.',
+    coverImage: BATTERYML_VISUAL_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: BATTERYML_VISUAL_SLIDES,
+    },
+    gallery: BATTERYML_VISUAL_SLIDES,
+    tags: ['Visual Design', 'Research Communication', 'Brand Identity', 'Motion GIF', 'Behance Source'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/198104963/BatteryML-visual-design'
+    },
+    acts: {
+      act1: {
+        title: 'Research Brand Expression',
+        content: 'The project needed a distinctive visual system for explaining a technical research direction.'
+      },
+      act2: {
+        title: 'Identity and Visual Assets',
+        content: 'Built a visual language around the BatteryML mark, product imagery, and presentation-ready assets.',
+        decisionPoints: ['Technical clarity', 'Recognizable symbol', 'Animated communication']
+      },
+      act3: {
+        title: 'Behance Source Reader',
+        content: 'Added the original Behance images and GIF to the Works reader.',
+        impact: '14 Source Assets'
+      }
+    }
+  },
+  {
+    id: 'p18',
+    title: 'Fera',
+    category: 'B-Side',
+    platform: 'Print & Digital',
+    year: '2021',
+    role: 'Brand Designer',
+    shortDescription: 'Visual identity system for Fera.',
+    coverImage: FERA_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FERA_SLIDES,
+    },
+    gallery: FERA_SLIDES,
+    tags: ['Brand Identity', 'Logo Design', 'Visual System', 'Print & Digital', 'Behance Source'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/207609497/Fera'
+    },
+    acts: {
+      act1: {
+        title: 'Identity Design',
+        content: 'Created a focused identity presentation for the Fera brand.'
+      },
+      act2: {
+        title: 'System Application',
+        content: 'Extended the logo direction into visual applications and presentation mockups.',
+        decisionPoints: ['Logo clarity', 'Applied identity', 'Presentation rhythm']
+      },
+      act3: {
+        title: 'Behance Source Reader',
+        content: 'Added the original Behance source images to the Works reader.',
+        impact: '8 Source Assets'
+      }
+    }
+  },
+  {
+    id: 'p19',
+    title: 'PROFILTUBI Rebranding',
+    category: 'C-Side',
+    platform: 'Print & Digital',
+    year: '2021',
+    role: 'Brand Designer, Group Work',
+    shortDescription: 'Group rebranding competition project for PROFILTUBI.',
+    coverImage: PROFILTUBI_REBRANDING_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: PROFILTUBI_REBRANDING_SLIDES,
+    },
+    gallery: PROFILTUBI_REBRANDING_SLIDES,
+    tags: ['Rebranding', 'Group Work', 'Brand System', 'Print & Digital', 'Behance Source'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/207608603/PROFILTUBI_Rebranding-competition-(group-work)'
+    },
+    acts: {
+      act1: {
+        title: 'Rebranding Competition',
+        content: 'A group rebranding proposal for an industrial brand.'
+      },
+      act2: {
+        title: 'Identity System',
+        content: 'Organized the brand direction across logo, graphic system, applications, and presentation pages.',
+        decisionPoints: ['Industrial identity', 'System consistency', 'Application range']
+      },
+      act3: {
+        title: 'Behance Source Reader',
+        content: 'Added the original Behance source images to the Works reader.',
+        impact: '51 Source Assets'
       }
     }
   }
@@ -2051,7 +2228,7 @@ export const PROJECTS_ZH: Project[] = [
     year: '2024',
     role: 'UI/UX 设计师',
     shortDescription: 'AI 价值对齐研究项目的界面与视觉系统设计。',
-    coverImage: '/projects/figma-portfolio/value-compass/page-01.png',
+    coverImage: VALUE_COMPASS_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
     slideSets: {
@@ -2071,8 +2248,152 @@ export const PROJECTS_ZH: Project[] = [
       },
       act3: {
         title: 'Reader 呈现',
-        content: '以高分辨率阅读器展示完整 Figma 方案。',
-        impact: '7 页源文件'
+        content: '以高分辨率阅读器展示 Behance 原始素材。',
+        impact: '14 个原始素材'
+      }
+    }
+  },
+  {
+    id: 'p16',
+    title: 'Salone del Mobile',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2021',
+    role: 'UI/UX 设计师',
+    shortDescription: 'Salone del Mobile 的艺术指导与移动端网页概念。',
+    coverImage: SALONE_DEL_MOBILE_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: SALONE_DEL_MOBILE_SLIDES,
+    },
+    gallery: SALONE_DEL_MOBILE_SLIDES,
+    tags: ['艺术指导', 'UI/UX', '移动端网页', '编辑设计', 'Behance 原图'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/200906941/salone-del-mobile'
+    },
+    acts: {
+      act1: {
+        title: '展会网站方向',
+        content: '为国际设计展会体验探索移动优先的视觉方向。'
+      },
+      act2: {
+        title: '编辑式移动流程',
+        content: '围绕强字体、设备 mockup 和可浏览内容页面组织界面。',
+        decisionPoints: ['移动优先布局', '编辑层级', '展会识别']
+      },
+      act3: {
+        title: 'Behance 原图 Reader',
+        content: '将 Behance 原始图片加入 Works 阅读器。',
+        impact: '31 个原始素材'
+      }
+    }
+  },
+  {
+    id: 'p17',
+    title: 'BatteryML Visual Design',
+    category: 'B-Side',
+    platform: 'Digital',
+    year: '2024',
+    role: '视觉设计师',
+    shortDescription: 'BatteryML 的视觉识别与研究传播设计。',
+    coverImage: BATTERYML_VISUAL_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: BATTERYML_VISUAL_SLIDES,
+    },
+    gallery: BATTERYML_VISUAL_SLIDES,
+    tags: ['视觉设计', '研究传播', '品牌识别', '动图', 'Behance 原图'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/198104963/BatteryML-visual-design'
+    },
+    acts: {
+      act1: {
+        title: '研究品牌表达',
+        content: '项目需要一套清晰、有识别度的视觉系统来解释技术研究方向。'
+      },
+      act2: {
+        title: '识别与视觉素材',
+        content: '围绕 BatteryML 标识、产品意象和展示素材建立视觉语言。',
+        decisionPoints: ['技术清晰度', '可识别符号', '动态传播']
+      },
+      act3: {
+        title: 'Behance 原图 Reader',
+        content: '将 Behance 原始图片和 GIF 加入 Works 阅读器。',
+        impact: '14 个原始素材'
+      }
+    }
+  },
+  {
+    id: 'p18',
+    title: 'Fera',
+    category: 'B-Side',
+    platform: 'Print & Digital',
+    year: '2021',
+    role: '品牌设计师',
+    shortDescription: 'Fera 的视觉识别系统。',
+    coverImage: FERA_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FERA_SLIDES,
+    },
+    gallery: FERA_SLIDES,
+    tags: ['品牌识别', 'Logo 设计', '视觉系统', '印刷与数字', 'Behance 原图'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/207609497/Fera'
+    },
+    acts: {
+      act1: {
+        title: '识别设计',
+        content: '为 Fera 品牌建立聚焦的视觉识别展示。'
+      },
+      act2: {
+        title: '系统应用',
+        content: '将 logo 方向延展到视觉应用和展示 mockup 中。',
+        decisionPoints: ['Logo 清晰度', '识别应用', '展示节奏']
+      },
+      act3: {
+        title: 'Behance 原图 Reader',
+        content: '将 Behance 原始图片加入 Works 阅读器。',
+        impact: '8 个原始素材'
+      }
+    }
+  },
+  {
+    id: 'p19',
+    title: 'PROFILTUBI Rebranding',
+    category: 'C-Side',
+    platform: 'Print & Digital',
+    year: '2021',
+    role: '品牌设计师，小组项目',
+    shortDescription: 'PROFILTUBI 品牌重塑竞赛小组项目。',
+    coverImage: PROFILTUBI_REBRANDING_COVER_IMAGE,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: PROFILTUBI_REBRANDING_SLIDES,
+    },
+    gallery: PROFILTUBI_REBRANDING_SLIDES,
+    tags: ['品牌重塑', '小组项目', '品牌系统', '印刷与数字', 'Behance 原图'],
+    externalLinks: {
+      behance: 'https://www.behance.net/gallery/207608603/PROFILTUBI_Rebranding-competition-(group-work)'
+    },
+    acts: {
+      act1: {
+        title: '品牌重塑竞赛',
+        content: '为工业品牌完成的小组品牌重塑提案。'
+      },
+      act2: {
+        title: '识别系统',
+        content: '围绕 logo、图形系统、应用场景和展示页面组织品牌方向。',
+        decisionPoints: ['工业品牌识别', '系统一致性', '应用范围']
+      },
+      act3: {
+        title: 'Behance 原图 Reader',
+        content: '将 Behance 原始图片加入 Works 阅读器。',
+        impact: '51 个原始素材'
       }
     }
   }
