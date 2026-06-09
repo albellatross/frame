@@ -6,15 +6,15 @@ export const WALK_DATA = {
     // Chapter 1: Welcome
     welcome: {
       greeting: "Hi, I'm Bella.",
-      subtitle: "I'm a UI/UX designer who believes AI is the greatest magic of our time.",
+      subtitle: "I'm a UI/UX designer who still thinks AI feels a little like magic.",
       message: "",
       cta: "Start the Walk →",
     },
     // Chapter 2: AI Garden
     aiGarden: {
-      whyAI: "I love AI. I explore how it helps us create,\nunderstand, and connect — in more human ways.",
+      whyAI: "I love AI. I keep testing how it helps us create,\nunderstand, and connect with a little more warmth.",
       explorations: [
-        { label: 'AIGC Image Creation', desc: 'From ideas to visuals — exploring AI-generated art and creative expression.' },
+        { label: 'AIGC Image Creation', desc: 'From loose ideas to finished visuals, testing how AI changes creative expression.' },
         { label: 'Prompt & Template Thinking', desc: 'Writing image prompts as visual design briefs, from vague intent to executable decisions.' },
         { label: 'AI Workflow Design', desc: 'Two AI-made helper tools for batch image generation and 3:4 team review.' },
         { label: 'Vibe Coding', desc: 'Elsewhere: an independent AI template website from product idea to working demo.' },
@@ -28,8 +28,8 @@ export const WALK_DATA = {
     },
     // Chapter 3: Visual Studio / IP Corner
     visualStudio: {
-      intro: "I love visual expression.\nAI helps me refine and bring my IP characters to life.",
-      ipStory: "From avatars to banners and stickers, I keep shaping a small world that feels warm, collectible, and full of story.",
+      intro: "I love visual expression.\nAI helps me keep refining my IP characters until they feel alive.",
+      ipStory: "From avatars to banners and stickers, I keep shaping a small world that feels warm, collectible, and a bit like me.",
       characters: [
         { name: 'Bella Pig', image: '/ip/ChatGPT Image May 7, 2026, 05_08_48 PM_750x750.png', desc: 'My main IP character — soft, warm, a little magical' },
         { name: 'Lele Cat', image: '/ip/ChatGPT Image May 8, 2026, 04_58_17 PM_240x240.png', desc: 'The curious companion in my universe' },
@@ -59,7 +59,7 @@ export const WALK_DATA = {
       },
       travel: {
         title: 'Travel & Video Editing',
-        message: "Collecting moments, crafting memories.",
+        message: "Collecting small moments and cutting them into memory.",
         places: ['Italy', 'Japan', 'Iceland', 'Thailand'],
         images: ['/travel/微信图片_2026-05-20_152035_551.jpg', '/travel/微信图片_2026-05-20_152058_951.jpg', '/travel/微信图片_2026-05-20_152123_908.jpg'],
       },
@@ -82,14 +82,14 @@ export const WALK_DATA = {
   zh: {
     welcome: {
       greeting: "Hi，我是 Bella。",
-      subtitle: "我是一个相信 AI 是这个时代最大魔法的 UI/UX 设计师。",
+      subtitle: "我是一个到现在仍然觉得 AI 有点像魔法的 UI/UX 设计师。",
       message: "",
       cta: "开始这段漫游 →",
     },
     aiGarden: {
-      whyAI: "我喜欢 AI。\n我也在探索它如何帮助我们以更人的方式去创造、理解与连接。",
+      whyAI: "我喜欢 AI。\n我也一直在试，它怎样帮助我们更温柔地创造、理解与连接。",
       explorations: [
-        { label: 'AIGC 图像创作', desc: '从想法到视觉，探索 AI 生成艺术与创作表达。' },
+        { label: 'AIGC 图像创作', desc: '从松散想法到完整视觉，观察 AI 怎样改变创作表达。' },
         { label: 'Prompt 与模板思维', desc: '把图像 prompt 写成视觉设计 brief，从模糊想法变成可执行决策。' },
         { label: 'AI Workflow 设计', desc: '为批量生图和 3:4 团队筛选制作两个 AI 提效小工具。' },
         { label: 'Vibe Coding', desc: 'Elsewhere：独立完成的 AI 模板网站，从产品想法到可运行 demo。' },
@@ -102,8 +102,8 @@ export const WALK_DATA = {
       ],
     },
     visualStudio: {
-      intro: "我喜欢视觉表达。\nAI 也帮我持续打磨和带活我的 IP 角色。",
-      ipStory: "从头像、横幅到贴纸，我一直在搭建一个温暖、可收藏、也有故事感的小宇宙。",
+      intro: "我喜欢视觉表达。\nAI 也帮我继续打磨这些 IP 角色，直到它们像真的活起来。",
+      ipStory: "从头像、横幅到贴纸，我一直在搭建一个温暖、可收藏，也有一点像我的小宇宙。",
       characters: [
         { name: 'Bella 小猪', image: '/ip/ChatGPT Image May 7, 2026, 05_08_48 PM_750x750.png', desc: '我的主 IP 角色 — 柔软、温暖、带点魔法感' },
         { name: '乐乐小猫', image: '/ip/ChatGPT Image May 8, 2026, 04_58_17 PM_240x240.png', desc: '宇宙里好奇的小伙伴' },
@@ -132,7 +132,7 @@ export const WALK_DATA = {
       },
       travel: {
         title: '旅行与视频剪辑',
-        message: "收集旅途里的片刻，再把它们剪成记忆。",
+        message: "收集旅途里的小片刻，再把它们剪成记忆。",
         places: ['意大利', '日本', '冰岛', '泰国'],
         images: ['/travel/微信图片_2026-05-20_152035_551.jpg', '/travel/微信图片_2026-05-20_152058_951.jpg', '/travel/微信图片_2026-05-20_152123_908.jpg'],
       },

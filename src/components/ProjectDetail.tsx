@@ -7,6 +7,8 @@ import { assetUrl } from '../utils/assets';
 import PortfolioReader from './PortfolioReader';
 import LanguageToggle from './LanguageToggle';
 import NuwaSeriesCaseStudy from './NuwaSeriesCaseStudy';
+import RodinDiffusionCaseStudy from './RodinDiffusionCaseStudy';
+import LanternHomecomingCaseStudy from './LanternHomecomingCaseStudy';
 
 interface ProjectDetailProps {
   project: Project | null;
@@ -1634,6 +1636,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
               />
             ) : project.id === 'p3' ? (
               <NuwaSeriesCaseStudy isZh={isZh} />
+            ) : project.id === 'p20' ? (
+              <RodinDiffusionCaseStudy isZh={isZh} />
+            ) : project.id === 'p21' ? (
+              <LanternHomecomingCaseStudy isZh={isZh} />
             ) : project.caseSections && project.caseSections.length > 0 ? (
               /* Mode B: Modular Case Study — for projects built from sections */
               <>

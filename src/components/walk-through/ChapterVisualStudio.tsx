@@ -124,8 +124,8 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
 
         <div className={bottomQuoteClass}>
           {language === 'zh'
-            ? '一个带着温度与想象力的故事化世界。'
-            : 'A story-driven world, built with warmth and imagination.'}
+            ? '一个带着温度和想象力的小世界。'
+            : 'A small world with warmth, imagination, and a bit of myself in it.'}
         </div>
       </div>
 

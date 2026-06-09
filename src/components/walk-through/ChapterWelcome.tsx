@@ -97,7 +97,7 @@ const ChapterWelcome: React.FC<Props> = ({ data, onNext }) => {
         >
           {language === 'zh' ? (
             <>
-              我是一个相信 AI 是这个时代最大魔法的
+              我是一个到现在仍然觉得 AI 有点像魔法的
               <br className="hidden sm:block" />
               UI/UX 设计师。
             </>

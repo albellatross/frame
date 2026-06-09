@@ -129,8 +129,8 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
     {
       title: isZh ? '角色定位' : 'Role',
       body: isZh
-        ? '把“我”翻译成一个亲和、轻盈、能被记住的视觉角色，用在个人介绍、项目入口和社交表达里。'
-        : 'Translates “me” into a warm, lightweight, memorable character for intros, project entrances, and social moments.',
+        ? '把“我”的一些气质做成一个亲和、轻盈、容易被记住的视觉角色，用在个人介绍、项目入口和社交表达里。'
+        : 'Turns parts of me into a warm, lightweight character I can use in intros, project entrances, and social moments.',
     },
     {
       title: isZh ? '视觉规则' : 'Visual rules',
@@ -147,8 +147,8 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
     {
       title: isZh ? '使用场景' : 'Use cases',
       body: isZh
-        ? '头像、横幅、动效、团队角色、聊天表情包都来自同一个角色母体，降低后续内容生产成本。'
-        : 'Avatars, banners, motion, team characters, and chat stickers all grow from one character base.',
+        ? '头像、横幅、动效、团队角色和聊天表情包都从同一个角色母体长出来，后续延展会更稳定。'
+        : 'Avatars, banners, motion, team characters, and chat stickers all grow from one character base, so later extensions stay consistent.',
     },
   ];
   const mainIpRules = [
@@ -245,8 +245,8 @@ export const IpUniverseModal: React.FC<IpUniverseModalProps> = ({ isZh, onClose 
               </h2>
               <p className={`mt-5 max-w-xl ${bodyClass}`}>
                 {isZh
-                  ? '这个子页面展示我的主 IP、同事形象延展、动画和工作表情包。它不是单张角色图，而是一套可以用在头像、横幅、聊天、工作情绪和小动画里的视觉资产系统。'
-                  : 'This page shows my main IP, team-character extensions, motion pieces, and work stickers. It is not a single character image, but a visual asset system for avatars, banners, chat, work moods, and short animations.'}
+                  ? '这个子页面展示我的主 IP、同事形象延展、动画和工作表情包。它不是单张角色图，而是一组可以反复使用的个人视觉资产。'
+                  : 'This page shows my main IP, team-character extensions, motion pieces, and work stickers. It is more than a single character image; it is a reusable personal visual asset set.'}
               </p>
               <div className="mt-7 flex flex-wrap gap-2">
                 {[isZh ? '角色设定' : 'Character system', isZh ? '工作表情包' : 'Work stickers', isZh ? '动画延展' : 'Motion extension'].map((item) => (
@@ -594,7 +594,7 @@ export const DailySparkModal: React.FC<DailySparkModalProps> = ({ kind, title, m
       mode: isZh ? '把地点收进视觉地图' : 'Collecting places as a visual map',
       role: isZh
         ? '旅行素材不是单纯的风景照。我会收集光线、街角、距离感和偶然的构图，作为之后做叙事视觉的资料库。'
-        : 'Travel material is not just scenery. I collect light, corners, distance, and accidental compositions for later visual storytelling.',
+        : 'Travel material gives me more than scenery. I collect light, corners, distance, and accidental compositions for later visual storytelling.',
       labels: [isZh ? '城市切片' : 'City fragments', isZh ? '光线收藏' : 'Light archive', isZh ? '路线记忆' : 'Route memory', isZh ? '偶然构图' : 'Accidental frames'],
       accent: 'text-[#B67655]',
       soft: 'bg-[#B67655]/10',

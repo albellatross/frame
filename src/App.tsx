@@ -30,6 +30,7 @@ const AppContent: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [isWalkThroughOpen, setIsWalkThroughOpen] = useState(false);
+  const [workReturnTarget, setWorkReturnTarget] = useState<'timeline' | null>(null);
 
   // Re-resolve activeProject when language changes
   const resolvedProject = activeProject
@@ -52,13 +53,38 @@ const AppContent: React.FC = () => {
     if (project) setActiveProject(project);
   };
 
+  const scrollToTimeline = () => {
+    const timeline = document.getElementById('timeline');
+    if (timeline) {
+      const y = timeline.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const handleViewAllWorksFromTimeline = () => {
+    setWorkReturnTarget('timeline');
+    setCurrentPage('work');
+    window.scrollTo(0, 0);
+  };
+
+  const handleReturnToTimeline = () => {
+    setCurrentPage('home');
+    setWorkReturnTarget(null);
+    window.setTimeout(scrollToTimeline, 120);
+  };
+
+  const handleNavigate = (page: 'home' | 'work' | 'profile') => {
+    setCurrentPage(page);
+    setWorkReturnTarget(null);
+  };
+
   return (
     <>
     <Layout 
       onOpenGenerator={() => setIsGeneratorOpen(true)}
       selectedCount={selectedProjectIds.length}
       currentPage={currentPage}
-      onNavigate={setCurrentPage}
+      onNavigate={handleNavigate}
     >
       {currentPage === 'home' && (
         <>
@@ -68,6 +94,7 @@ const AppContent: React.FC = () => {
             stages={CAREER_TIMELINE}
             allProjects={WORK_PROJECTS}
             onProjectClick={handleProjectClickById}
+            onViewAllWorks={handleViewAllWorksFromTimeline}
           />
         </>
       )}
@@ -78,6 +105,7 @@ const AppContent: React.FC = () => {
           onProjectClick={handleProjectClick}
           selectedProjectIds={selectedProjectIds}
           onToggleSelect={handleProjectSelect}
+          onReturnToTimeline={workReturnTarget === 'timeline' ? handleReturnToTimeline : undefined}
         />
       )}
 

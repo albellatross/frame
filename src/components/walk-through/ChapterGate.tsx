@@ -137,8 +137,8 @@ const ChapterGate: React.FC<Props> = ({ onStart, onExploreWork, onLeftButton, on
           </h1>
           <p className={bodyClass}>
             {language === 'zh'
-              ? '选择一条路径，我会带你看设计、思考与个人宇宙。'
-              : 'Choose your path and I will guide you through a story of design and impact.'}
+              ? '选择一条路径，我会带你看作品、思考和我的小宇宙。'
+              : 'Choose a path and I will walk you through my work, my thinking, and the little worlds I make.'}
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -187,7 +187,7 @@ const ChapterGate: React.FC<Props> = ({ onStart, onExploreWork, onLeftButton, on
             <span>
               {language === 'zh'
                 ? '一个轻量、个性化的互动式自我介绍'
-                : 'A personalized, interactive introduction'}
+                : 'A lightweight interactive introduction'}
             </span>
           </div>
         </div>

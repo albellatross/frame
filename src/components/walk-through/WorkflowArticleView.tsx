@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -36,13 +36,21 @@ const sampleImages = [
 
 const evidenceImages = {
   batch: '/Frame.png',
-  board: '/projects/ai-workflow-design/figma/content-proof.png',
+  board: '/Frame-2.png',
+  boardCard: '/Frame-1.png',
 };
 
 const sectionTransition = (delay: number) => ({ duration: 0.42, delay, ease: [0.22, 1, 0.36, 1] as const });
 
 const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, project, isZh }) => {
   const [activeTool, setActiveTool] = useState<WorkflowTool>('batch');
+
+  useEffect(() => {
+    [evidenceImages.board, evidenceImages.boardCard].forEach((src) => {
+      const image = new Image();
+      image.src = assetUrl(src);
+    });
+  }, []);
 
   const labelClass = isZh
     ? 'font-zh-body text-[11px] font-medium tracking-[0.1em] text-[#8C5462]'
@@ -79,7 +87,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
       problem: isZh ? '候选图构图和尺寸不统一，其他团队很难判断哪张适合做桌面。' : 'Candidates have inconsistent framing and size, making desktop selection hard for other teams.',
       input: isZh ? '我初筛后的图片和桌面评审目标。' : 'My shortlisted images and the desktop-review target.',
       output: isZh ? '统一 3:4 的 review surface，方便团队快速比较和选择。' : 'A unified 3:4 review surface for fast team comparison and selection.',
-      image: evidenceImages.board,
+      image: evidenceImages.boardCard,
     },
   };
 
@@ -219,7 +227,14 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             </div>
 
             <figure className="mt-4 overflow-hidden rounded-[22px] bg-[#f3eadf] shadow-inner">
-              <img src={assetUrl(activeToolData.image)} alt="" className="aspect-[16/9] w-full object-cover object-top" loading="lazy" />
+              <img
+                src={assetUrl(activeToolData.image)}
+                alt=""
+                className="aspect-[16/9] w-full object-cover object-top"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+              />
             </figure>
 
             <div className="mt-4 grid gap-3 md:grid-cols-3">
@@ -269,7 +284,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             {isZh ? '提效不是口号，要能被结果证明' : 'Efficiency has to be proven by output'}
           </h3>
           <figure className="mt-5 overflow-hidden rounded-[24px] bg-white shadow-inner">
-            <img src={assetUrl(evidenceImages.board)} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
+            <img src={assetUrl(evidenceImages.board)} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" decoding="async" />
           </figure>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[

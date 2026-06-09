@@ -68,8 +68,8 @@ const ChapterFinalFrame: React.FC<Props> = ({ data, onClose, onPrev, onExploreWo
           </h2>
           <p className={introClass}>
             {language === 'zh'
-              ? '一个热爱 AI、视觉叙事，\n也想让想法真正活起来的设计师。'
-              : 'A designer who loves AI, visual storytelling,\nand making ideas feel alive.'}
+              ? '一个热爱 AI 和视觉叙事，\n也想把想法真的做出来的设计师。'
+              : 'A designer who loves AI, visual storytelling,\nand making ideas real enough to touch.'}
           </p>
         </motion.div>
 
@@ -142,7 +142,7 @@ const ChapterFinalFrame: React.FC<Props> = ({ data, onClose, onPrev, onExploreWo
             <Sprout size={15} />
           </div>
           <div>{language === 'zh' ? '设计是我理解世界的方式。' : 'Design is how I understand the world.'}</div>
-          <div>{language === 'zh' ? 'AI 帮我想象下一步会是什么。' : 'AI helps me imagine what\'s next.'}</div>
+          <div>{language === 'zh' ? 'AI 帮我多想一步，也多试一步。' : 'AI helps me imagine one more step, then try it.'}</div>
           <div className={thanksClass}>
             {language === 'zh' ? '感谢你陪我走完这一程。 ♥' : 'THANKS FOR WALKING WITH ME. ♥'}
           </div>

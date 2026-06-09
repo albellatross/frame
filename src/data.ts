@@ -100,6 +100,9 @@ const FIGMA_ILLUSTRATION_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/illustration-works/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
+const RODIN_DIFFUSION_COVER_IMAGE = '/projects/rodin-diffusion/original-site/hero-cover-01.jpg';
+const LANTERN_HOMECOMING_COVER_IMAGE = '/projects/lantern-homecoming/placeholder-cover.svg';
+
 // ===== CAREER TIMELINE - English =====
 export const CAREER_TIMELINE_EN: CareerStage[] = [
   {
@@ -120,7 +123,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Translated AI research capabilities into demos and tools for agents, multimodal generation, and research workflows.',
     skills: ['AI Agents', 'Multimodal AI', 'Research Tooling', 'AIGC UX'],
     image: '/timeline-scenes/msra-beijing-ai-research-demo-lab.webp',
-    relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p3', 'p20', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -164,7 +167,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '把 AI 研究能力转译成可操作的 demo 与工具，覆盖 Agent、多模态生成和研究工作流。',
     skills: ['AI Agent', '多模态 AI', '研究工具', 'AIGC UX'],
     image: '/timeline-scenes/msra-beijing-ai-research-demo-lab.webp',
-    relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p3', 'p20', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
     id: 'c3',
@@ -506,7 +509,7 @@ export const PROJECTS_EN: Project[] = [
     platform: 'Web',
     year: '2022–2023',
     role: 'Interaction Designer / Web Experience Designer',
-    shortDescription: 'A Microsoft Research demo series case study: translating outpainting, long-video structure, and trajectory control into web interactions users can understand and try.',
+    shortDescription: 'A Microsoft Research demo series case study: turning outpainting, long video, and trajectory control into web actions people could actually try.',
     coverImage: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
     tags: ['Research Demo UX', 'NUWA Series', 'Image Outpainting', 'Long Video', 'Trajectory Control', 'Microsoft Research'],
     externalLinks: {
@@ -517,9 +520,9 @@ export const PROJECTS_EN: Project[] = [
       {
         type: 'hero',
         variant: 'series',
-        title: 'NUWA-Infinity — Turning outpainting into an interactive research demo',
+        title: 'NUWA-Infinity — Making outpainting feel like extending a picture by hand',
         subtitle: 'Turning image outpainting into an interactive research demo',
-        content: 'This case study follows three Microsoft Research demos in browsing order: NUWA-Infinity, NUWA XL, and DragNUWA. My role was to translate model capabilities into web actions people could try: spatial expansion, temporal structure, and trajectory control.',
+        content: 'This case study follows three Microsoft Research demos in browsing order: NUWA-Infinity, NUWA XL, and DragNUWA. My work was to understand what the models could do, then turn those behaviors into actions on the page: extend an image, follow time in a video, and draw motion on a picture.',
         bgImage: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
         tags: ['NUWA-Infinity', 'NUWA XL', 'DragNUWA', 'Research Demo UX'],
         role: 'Interaction Design / Web Experience Design · Microsoft Research AI Demo Series',
@@ -532,17 +535,17 @@ export const PROJECTS_EN: Project[] = [
         variant: 'infinity',
         category: 'Project Background / Design Challenge',
         label: '01',
-        title: 'Early AI demos needed a path people could operate, not only research results to watch.',
-        subtitle: 'The NUWA series introduced unfamiliar abilities: image outpainting, long-video generation, and trajectory-controlled video. First-time visitors needed to know where to start, what changed, and how to control the result.',
-        content: 'I organized the web experience around concrete actions: choose an entry, generate, extend, scan time, draw motion, and compare output.',
+        title: 'Early AI demos needed to answer a basic question: what can I do here?',
+        subtitle: 'The NUWA series introduced unfamiliar behaviors: image outpainting, long video generation, and trajectory-controlled video. A first-time visitor might not know what to type, where the image extends, why a timeline matters, or what a trajectory controls.',
+        content: 'I organized the experience around actions users already knew: choose an entry, generate, extend an edge, read a timeline, draw a motion path, and compare output.',
         fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'Original NUWA-Infinity landing screen showing the research demo stage and navigation.',
-        caption: 'What to notice: the NUWA site is not treated as a paper summary. It introduces research capability through screens people can enter, scan, and try.',
+        caption: 'The NUWA site works best when it is read as a demo users can enter, scan, and try, rather than a paper summary.',
         items: [
           {
             number: '?',
             title: 'Where do I start?',
-            description: 'Prompt and Gallery need to carry the first-use path, not sit as decorative options.'
+            description: 'Prompt and Gallery carry the first step instead of acting as decorative options.'
           },
           {
             number: '?',
@@ -571,12 +574,12 @@ export const PROJECTS_EN: Project[] = [
         variant: 'infinity',
         category: 'Interaction walkthrough',
         label: '02',
-        title: '01 / NUWA-Infinity: outpainting becomes “continue beyond the image.”',
-        subtitle: 'A first-time visitor may not know prompt, gallery, outpainting, or infinite canvas. The interface has to show the start point and the expandable boundary.',
-        content: 'I designed the flow as Prompt / Gallery → expand boundary → preview result. Prompt gives authorship, Gallery gives a safe example, and the visible boundary shows where AI continues the image.',
+        title: '01 / NUWA-Infinity: outpainting becomes “continue past this edge.”',
+        subtitle: 'A first-time visitor may not know how to start or which part of the image will extend. The interface has to show both the entry point and the edge.',
+        content: 'I designed the flow as Prompt / Gallery → current image → boundary → preview. Prompt keeps the user in control, Gallery gives a safe example, and the visible edge shows where the model continues the scene.',
         fallbackImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         fallbackAlt: 'Original NUWA-Infinity outpainting result screen with generated continuation and candidate preview strip.',
-        caption: 'What to notice: infinite visual synthesis becomes a user path. Visitors pick a start, inspect the edge, and compare what appears outside the original image.',
+        caption: 'Infinite visual synthesis becomes a concrete path: pick a start, inspect the edge, then compare what appears outside the original image.',
         items: [
           {
             number: '1',
@@ -605,12 +608,12 @@ export const PROJECTS_EN: Project[] = [
         variant: 'xl',
         category: 'Interaction walkthrough',
         label: '03',
-        title: '02 / NUWA XL: long video becomes a keyframe-to-timeline process.',
-        subtitle: 'A final video alone does not explain why long video generation is different from one image. Users need to see how frames are organized across time.',
-        content: 'I used filmstrip and timeline logic: first show sparse keyframes, then show intermediate frames being filled, so visitors can understand the generated video as a time structure.',
+        title: '02 / NUWA XL: long video becomes scripts, stages, and output.',
+        subtitle: 'A final video alone does not show why long video generation is hard. Users need to see how prompts, frames, and stages hold the video together over time.',
+        content: 'I used script cards, a process rail, and example browsing so visitors could read the plan before treating the final video as proof.',
         fallbackImage: '/projects/nuwa-series/verified/xl-03-generate-frames-stage.png',
         fallbackAlt: 'Original NUWA XL page showing the generation process rail.',
-        caption: 'What to notice: long-video generation is presented as a visible process. Keyframes build the structure first; local frames fill the gaps until the video becomes continuous.',
+        caption: 'Long video generation becomes a visible process: read the prompt beats, follow the stage, then compare the output.',
         items: [
           {
             number: '1',
@@ -639,12 +642,12 @@ export const PROJECTS_EN: Project[] = [
         variant: 'drag',
         category: 'Interaction walkthrough',
         label: '04',
-        title: '03 / DragNUWA: motion control becomes a path users draw on the image.',
-        subtitle: 'Prompt text is weak at specifying direction, path, and rhythm. Motion needs a control that is spatial, not only verbal.',
-        content: 'I framed DragNUWA around three bound inputs: Text defines intent, Image anchors the scene, and Trajectory lets users draw how the motion should move before previewing the result.',
+        title: '03 / DragNUWA: motion control becomes a path users draw.',
+        subtitle: 'Prompt text can describe a scene, but it is weak at direction, path, speed, and camera behavior.',
+        content: 'I framed DragNUWA around three connected inputs: Text says intent, Image fixes the scene, and Trajectory shows how the motion should move before users review the generated video.',
         fallbackImage: '/projects/nuwa-series/verified/drag-05-text-image-drag.png',
         fallbackAlt: 'Original DragNUWA page showing text, image, and drag controls together.',
-        caption: 'What to notice: the trajectory overlay turns hard-to-describe motion into a visible control. The user can see how text, image, and path work together.',
+        caption: 'The trajectory overlay turns hard-to-describe motion into something users can point to and judge.',
         items: [
           {
             number: '1',
@@ -710,16 +713,16 @@ export const PROJECTS_EN: Project[] = [
         category: 'My design work',
         label: '06',
         title: 'What This Project Shows About My Design Work',
-        subtitle: 'The work was not visual packaging. I translated early AI research into operable paths for first-time visitors.',
-        content: 'Across the series, I defined how people enter, understand, control, and judge model output across space, time, and motion.',
+        subtitle: 'The work was not visual packaging. I turned early AI research into page-level actions first-time visitors could follow.',
+        content: 'Across the series, I designed how people enter the demo, understand the model behavior, control the input, and judge the output across space, time, and motion.',
         items: [
           {
             title: 'Defined first-use paths',
             description: 'Prompt / Gallery → Generate → Expand → Preview gives NUWA-Infinity a clear first visit path.'
           },
           {
-            title: 'Translated model capability into interface actions',
-            description: 'Space becomes boundary expansion, time becomes timeline scanning, and motion becomes a drawn trajectory.'
+            title: 'Mapped model behavior to interface actions',
+            description: 'Space becomes an extendable edge, time becomes stages and examples, and motion becomes a drawn trajectory.'
           },
           {
             title: 'Designed user control moments',
@@ -727,7 +730,7 @@ export const PROJECTS_EN: Project[] = [
           },
           {
             title: 'Made a research demo explorable',
-            description: 'Non-technical visitors can understand the research capability by operating the page, not by reading a paper.'
+            description: 'Non-technical visitors can understand the research by operating the page before reading the paper.'
           }
         ]
       }
@@ -739,13 +742,86 @@ export const PROJECTS_EN: Project[] = [
       },
       act2: {
         title: 'Model-to-Interaction Translation',
-        content: 'Mapped model capabilities to concrete controls across space, time, and motion.',
+        content: 'Mapped model behavior to concrete controls across space, time, and motion.',
         decisionPoints: ['Prompt / Gallery entry', 'Canvas boundary expansion', 'Keyframes and timeline', 'Text / image / trajectory control']
       },
       act3: {
         title: 'Understandable Research Demo',
         content: 'Connected copy, screenshots, callouts, and live demo behavior so hiring readers can see the design decisions behind each interface.',
         impact: 'Early AI Interaction Design'
+      }
+    }
+  },
+  {
+    id: 'p20',
+    title: 'RODIN Diffusion',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2022',
+    role: 'Interaction Designer / Web Experience Designer / Front-end Developer',
+    shortDescription: 'A Microsoft Research case study for turning 3D avatar generation into a readable, explorable web demo.',
+    coverImage: RODIN_DIFFUSION_COVER_IMAGE,
+    coverDisplay: 'cover',
+    coverAspectRatio: 1,
+    tags: ['Microsoft Research', '3D Avatar', 'Diffusion Model', 'Research Demo UX', 'Front-end'],
+    externalLinks: {
+      live: 'https://3d-avatar-diffusion.microsoft.com/'
+    },
+    caseSections: [
+      {
+        type: 'text',
+        title: 'RODIN Diffusion'
+      }
+    ],
+    acts: {
+      act1: {
+        title: 'Research Demo Entry',
+        content: 'Started the page from visible 3D avatar results, then guided readers into portrait input, text prompts, viewer behavior, and semantic editing.'
+      },
+      act2: {
+        title: 'Interaction Translation',
+        content: 'Mapped a complex 3D generation model into familiar web actions: choose an input, inspect a turntable, compare mesh, and click edit chips.',
+        decisionPoints: ['Result-first hero', 'Portrait / text entry modes', '3D viewer evidence', 'Text-guided editing chips']
+      },
+      act3: {
+        title: 'Portfolio Case Study',
+        content: 'Rebuilt the case around real official assets and a precomputed demo simulator so hiring readers can see the interaction logic without running the model.',
+        impact: '3D AI Research Demo'
+      }
+    }
+  },
+  {
+    id: 'p21',
+    title: 'From Spring Festival Homecoming to Lantern Night Return',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: 'Product Designer / UI Designer / Vibe Coding Collaborator',
+    shortDescription: 'A festival mini game case study about translating a Spring Festival homecoming concept into a Lantern Festival story experience.',
+    coverImage: LANTERN_HOMECOMING_COVER_IMAGE,
+    coverDisplay: 'cover',
+    coverAspectRatio: 4 / 3,
+    tags: ['Vibe Coding', 'Festival H5', 'Mini Game', 'Theme Translation', 'UI Design', 'Share Card'],
+    caseSections: [
+      {
+        type: 'text',
+        title: 'From Spring Festival Homecoming to Lantern Night Return'
+      }
+    ],
+    acts: {
+      act1: {
+        title: 'Theme Pivot',
+        content: 'Kept the emotional core of homecoming, journey, and reunion when the activity timing moved from Spring Festival to Lantern Festival.'
+      },
+      act2: {
+        title: 'Game Flow Design',
+        content: 'Restructured the experience from a simple holiday challenge into story selection, quiz rounds, ending collection, and Train Ticket sharing.',
+        decisionPoints: ['Story card entry', 'Lantern progress feedback', 'Ending collection', 'Ticket-style sharing result']
+      },
+      act3: {
+        title: 'Vibe Coding to Product Experience',
+        content: 'Used Vibe Coding for a runnable prototype, then refined theme, visuals, components, and multi-device presentation through design judgment.',
+        impact: 'Festival Story Game'
       }
     }
   },
@@ -1615,7 +1691,7 @@ export const PROJECTS_ZH: Project[] = [
     platform: 'Web',
     year: '2022–2023',
     role: '交互设计师 / Web 体验设计师',
-    shortDescription: '展示 Microsoft Research NUWA 系列三个 demo：把图像外扩、长视频时间结构、轨迹控制转成用户能理解和操作的网页体验。',
+    shortDescription: '展示 Microsoft Research NUWA 系列三个 demo：把图像外扩、长视频和轨迹控制做成用户真的能操作的网页体验。',
     coverImage: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
     tags: ['Research Demo UX', 'NUWA Series', '图像外扩', '长视频生成', '轨迹控制', 'Microsoft Research'],
     externalLinks: {
@@ -1626,9 +1702,9 @@ export const PROJECTS_ZH: Project[] = [
       {
         type: 'hero',
         variant: 'series',
-        title: 'NUWA-Infinity — 把图像外扩做成可探索的网页体验',
+        title: 'NUWA-Infinity — 把 outpainting 做成“亲手把画面往外扩”',
         subtitle: 'Turning image outpainting into an interactive research demo',
-        content: '这页按浏览顺序展示 NUWA-Infinity、NUWA XL、DragNUWA 三个 Microsoft Research demo。我的工作是把模型能力转成用户能亲自操作的网页动作：空间扩展、时间组织、轨迹控制。',
+        content: '这页按浏览顺序展示 NUWA-Infinity、NUWA XL、DragNUWA 三个 Microsoft Research demo。我的工作是先理解模型到底能做什么，再把这些行为变成页面上的动作：往画面外扩、沿时间看视频、在图上画运动路径。',
         bgImage: '/projects/nuwa-series/verified/infinity-hero-01-project.png',
         tags: ['NUWA-Infinity', 'NUWA XL', 'DragNUWA', 'Research Demo UX'],
         role: 'Interaction Design / Web Experience Design · Microsoft Research AI Demo Series',
@@ -1641,17 +1717,17 @@ export const PROJECTS_ZH: Project[] = [
         variant: 'infinity',
         category: 'Project Background / Design Challenge',
         label: '01',
-        title: '早期 AI demo 的难点不是“展示结果”，而是让用户知道怎么操作。',
-        subtitle: 'NUWA 系列的能力很新：图像外扩、长视频生成、轨迹控制。第一次访问的用户不一定知道从哪里开始、哪里发生变化、如何控制结果。',
-        content: '我把网页体验组织成具体动作：选择入口、生成、扩展边界、扫描时间、画运动路径、比较输出。',
+        title: '早期 AI demo 需要先回答一个问题：我能做什么？',
+        subtitle: 'NUWA 系列的行为很陌生：图像外扩、长视频生成、轨迹控制。第一次访问的用户不一定知道 prompt 怎么写、图像在哪里延展、为什么需要时间线，或者 trajectory 到底控制什么。',
+        content: '我把体验组织成用户已经熟悉的动作：选择入口、生成、扩展边缘、读时间线、画运动路径、比较输出。',
         fallbackImage: '/projects/nuwa-series/verified/infinity-01-landing-enter.png',
         fallbackAlt: 'Original NUWA-Infinity landing screen showing the research demo stage and navigation.',
-        caption: '看点：这里不是论文摘要页，而是把研究能力放进用户可以进入、浏览、操作和比较的网页顺序里。',
+        caption: 'NUWA 不是论文摘要页，而是用户可以进入、浏览、操作和比较的 demo。',
         items: [
           {
             number: '?',
             title: '我从哪里开始？',
-            description: 'Prompt 和 Gallery 需要承担第一次探索入口。'
+            description: 'Prompt 和 Gallery 承担第一次探索入口，而不是装饰选项。'
           },
           {
             number: '?',
@@ -1680,12 +1756,12 @@ export const PROJECTS_ZH: Project[] = [
         variant: 'infinity',
         category: 'Interaction walkthrough',
         label: '02',
-        title: '01 / NUWA-Infinity：把 outpainting 变成“继续向画面外探索”',
-        subtitle: '用户第一次进入时不熟悉 prompt、gallery、outpainting 和无限画布，界面必须告诉他从哪里开始、哪里会被延展。',
-        content: '我把流程拆成 Prompt / Gallery → 扩展边界 → 预览结果。Prompt 给创作入口，Gallery 给安全示例，边界让用户看见 AI 在哪里继续生成。',
+        title: '01 / NUWA-Infinity：把 outpainting 变成“从这条边继续往外看”',
+        subtitle: '第一次访问的用户不一定知道从哪里开始，也不知道画面哪一部分会被延展。界面必须同时说明入口和边界。',
+        content: '我把流程拆成 Prompt / Gallery → 当前图像 → 边界 → 预览。Prompt 保留用户控制感，Gallery 给安全示例，可见边缘说明模型会从哪里继续生成。',
         fallbackImage: '/projects/nuwa-series/verified/infinity-05-outpainting-result.png',
         fallbackAlt: 'Original NUWA-Infinity outpainting result screen with generated continuation and candidate preview strip.',
-        caption: '看点：infinite visual synthesis 被转成一条可操作路径。用户选择起点、检查边界，再比较画面外生成了什么。',
+        caption: 'Infinite visual synthesis 被转成一条具体路径：选择起点、检查边界，再比较画面外生成了什么。',
         items: [
           {
             number: '1',
@@ -1714,12 +1790,12 @@ export const PROJECTS_ZH: Project[] = [
         variant: 'xl',
         category: 'Interaction walkthrough',
         label: '03',
-        title: '02 / NUWA XL：把长视频生成讲成“关键帧到时间线”的过程',
-        subtitle: '如果只放最终视频，用户看不到模型如何跨时间组织画面，也不理解长视频生成和单张图有什么不同。',
-        content: '我用 filmstrip / timeline 的心智模型解释：先看到关键帧，再看到中间帧被补齐，最后理解长视频是一段可扫描的时间结构。',
+        title: '02 / NUWA XL：把长视频生成讲成脚本、阶段和输出',
+        subtitle: '如果只放最终视频，用户看不到模型如何跨时间组织画面，也不理解长视频生成难在哪里。',
+        content: '我用脚本卡片、流程轨道和示例浏览，让用户先读懂计划和阶段，再把最终视频当成验证结果。',
         fallbackImage: '/projects/nuwa-series/verified/xl-03-generate-frames-stage.png',
         fallbackAlt: 'Original NUWA XL page showing the generation process rail.',
-        caption: '看点：长视频生成被转成可观察的时间流程。先搭关键帧骨架，再补齐中间帧，用户能看懂连续视频从哪里来。',
+        caption: '长视频生成被转成可观察的过程：先读 prompt 节点，再跟随阶段，最后比较输出。',
         items: [
           {
             number: '1',
@@ -1748,12 +1824,12 @@ export const PROJECTS_ZH: Project[] = [
         variant: 'drag',
         category: 'Interaction walkthrough',
         label: '04',
-        title: '03 / DragNUWA：用拖拽轨迹让用户直接控制运动',
-        subtitle: 'Prompt 很难精确表达运动方向、轨迹和节奏，尤其是相机移动或物体运动。',
-        content: '我把控制拆成 Text + Image + Trajectory：文字描述意图，图片提供场景，轨迹表达运动路径。用户画路径后再预览视频结果。',
+        title: '03 / DragNUWA：让用户画出运动路径',
+        subtitle: 'Prompt 可以描述场景，但很难精确表达方向、路径、速度和镜头变化。',
+        content: '我把控制拆成三种输入：Text 说意图，Image 固定场景，Trajectory 说明怎么动。用户画完路径后，再看生成视频有没有跟上。',
         fallbackImage: '/projects/nuwa-series/verified/drag-05-text-image-drag.png',
         fallbackAlt: 'Original DragNUWA page showing text, image, and drag controls together.',
-        caption: '看点：轨迹线把 prompt 难以表达的运动变成可见控制。用户能看到文字、图片和路径如何共同影响生成视频。',
+        caption: '轨迹线把 prompt 难以表达的运动变成用户可以指出、也可以判断的控制。',
         items: [
           {
             number: '1',
@@ -1819,16 +1895,16 @@ export const PROJECTS_ZH: Project[] = [
         category: '我的设计工作',
         label: '06',
         title: 'What This Project Shows About My Design Work',
-        subtitle: '我做的不是视觉包装，而是把早期 AI research demo 转成第一次访问者能操作的路径。',
-        content: '这组项目展示了我如何设计用户进入、理解、控制和判断模型输出的过程：空间、时间、运动都对应到具体界面动作。',
+        subtitle: '我做的不是视觉包装，而是把早期 AI research demo 转成第一次访问者能跟住的页面动作。',
+        content: '这组项目展示了我如何设计用户进入 demo、理解模型行为、控制输入并判断输出：空间、时间、运动都对应到具体界面动作。',
         items: [
           {
             title: '定义第一次访问路径',
             description: 'Prompt / Gallery → 生成 → 扩展 → 预览，让用户知道每一步做什么。'
           },
           {
-            title: '把模型能力转成直觉操作',
-            description: '空间用边界扩展，时间用 timeline，运动用轨迹路径。'
+            title: '把模型行为映射成界面动作',
+            description: '空间变成可扩展边界，时间变成阶段和示例，运动变成可画出的轨迹。'
           },
           {
             title: '设计用户控制流程',
@@ -1836,7 +1912,7 @@ export const PROJECTS_ZH: Project[] = [
           },
           {
             title: '把研究变成可探索体验',
-            description: '非技术用户不读论文，也能通过操作理解模型强在哪里。'
+            description: '非技术用户可以先通过操作理解研究，再决定是否去读论文。'
           }
         ]
       }
@@ -1855,6 +1931,79 @@ export const PROJECTS_ZH: Project[] = [
         title: '可操作的 Research Demo',
         content: '把文案、截图、callout 和 live demo 绑定到具体界面，让招聘方看到每个设计判断。',
         impact: '早期 AI 交互设计'
+      }
+    }
+  },
+  {
+    id: 'p20',
+    title: 'RODIN Diffusion',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2022',
+    role: '交互设计师 / Web 体验设计师 / 前端开发',
+    shortDescription: '把 Microsoft Research 的 3D avatar generation 研究整理成可读、可浏览、可交互的网页 demo。',
+    coverImage: RODIN_DIFFUSION_COVER_IMAGE,
+    coverDisplay: 'cover',
+    coverAspectRatio: 1,
+    tags: ['Microsoft Research', '3D Avatar', 'Diffusion Model', 'Research Demo UX', '前端实现'],
+    externalLinks: {
+      live: 'https://3d-avatar-diffusion.microsoft.com/'
+    },
+    caseSections: [
+      {
+        type: 'text',
+        title: 'RODIN Diffusion'
+      }
+    ],
+    acts: {
+      act1: {
+        title: 'Research Demo 入口',
+        content: '页面先展示可见的 3D avatar 结果，再引导读者进入 portrait input、text prompt、viewer 和 semantic editing。'
+      },
+      act2: {
+        title: '把模型能力转成界面动作',
+        content: '把复杂的 3D 生成能力映射成用户熟悉的网页动作：选择输入、检查转台、对比 mesh、点击编辑 chip。',
+        decisionPoints: ['结果先行的 hero', 'Portrait / Text 双入口', '3D viewer 证据', '语义编辑 chip']
+      },
+      act3: {
+        title: 'Portfolio Case Study',
+        content: '用官网真实素材和预生成 demo simulator 重构作品集页面，让招聘方不运行模型也能看到交互逻辑。',
+        impact: '3D AI Research Demo'
+      }
+    }
+  },
+  {
+    id: 'p21',
+    title: '从春节回家路到元宵夜归人',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: '产品设计师 / UI 设计师 / Vibe Coding 协作',
+    shortDescription: '一个节日剧情小游戏 case study：把春节“回家路”的核心情绪转译成元宵“夜归人”的互动体验。',
+    coverImage: LANTERN_HOMECOMING_COVER_IMAGE,
+    coverDisplay: 'cover',
+    coverAspectRatio: 4 / 3,
+    tags: ['Vibe Coding', '节日 H5', '小游戏', '主题转译', 'UI 设计', '票根分享'],
+    caseSections: [
+      {
+        type: 'text',
+        title: '从春节回家路到元宵夜归人'
+      }
+    ],
+    acts: {
+      act1: {
+        title: '主题转译',
+        content: '当活动节点从春节调整到元宵，我保留了回家、归途、团圆的核心情绪。'
+      },
+      act2: {
+        title: '小游戏流程设计',
+        content: '把原本偏节日闯关的体验重构成故事选择、问答闯关、结局收集和 Train Ticket 票根分享。',
+        decisionPoints: ['故事卡入口', '灯笼进度反馈', '结局收集', '票根式分享结果']
+      },
+      act3: {
+        title: '从 Vibe Coding 到完整体验',
+        content: '用 Vibe Coding 快速跑通原型，再通过设计判断调整主题、视觉、组件和多端展示。',
+        impact: '节日剧情小游戏'
       }
     }
   },
