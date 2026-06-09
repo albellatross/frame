@@ -14,6 +14,7 @@ import {
   Wand2,
 } from 'lucide-react';
 import { Project } from '../../types';
+import { assetUrl } from '../../utils/assets';
 import { WorkflowArticleContent } from './workflowArticles';
 
 interface WorkflowArticleViewProps {
@@ -25,12 +26,12 @@ interface WorkflowArticleViewProps {
 type WorkflowTool = 'batch' | 'board';
 
 const sampleImages = [
-  '/AI images/20251010%20Images%20for%20Creator%20Gallery%20-%20Halloween__image16.png',
-  '/AI images/20251211%20Images%20for%20Imagine%20-Christmas__image30.png',
-  '/AI images/20251117%20Images%20for%20Imagine%20-thanksgiving__image23.png',
-  '/AI images/20250829%20Images%20for%20Creator%20Gallery__image31.png',
-  '/AI images/20250826%20Images%20for%20Creator%20Gallery__image42.png',
-  '/AI images/20250820%20Images%20for%20Creator%20Gallery__image12.png',
+  '/AI images/20251010 Images for Creator Gallery - Halloween__image16.webp',
+  '/AI images/20251211 Images for Imagine -Christmas__image30.webp',
+  '/AI images/20251117 Images for Imagine -thanksgiving(1)__image23.webp',
+  '/AI images/20250829 Images for Creator Gallery__image31.webp',
+  '/AI images/20250826 Images for Creator Gallery__image42.webp',
+  '/AI images/20250820 Images for Creator Gallery__image12.webp',
 ];
 
 const evidenceImages = {
@@ -218,7 +219,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             </div>
 
             <figure className="mt-4 overflow-hidden rounded-[22px] bg-[#f3eadf] shadow-inner">
-              <img src={activeToolData.image} alt="" className="aspect-[16/9] w-full object-cover object-top" loading="lazy" />
+              <img src={assetUrl(activeToolData.image)} alt="" className="aspect-[16/9] w-full object-cover object-top" loading="lazy" />
             </figure>
 
             <div className="mt-4 grid gap-3 md:grid-cols-3">
@@ -268,7 +269,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
             {isZh ? '提效不是口号，要能被结果证明' : 'Efficiency has to be proven by output'}
           </h3>
           <figure className="mt-5 overflow-hidden rounded-[24px] bg-white shadow-inner">
-            <img src={evidenceImages.board} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
+            <img src={assetUrl(evidenceImages.board)} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />
           </figure>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[

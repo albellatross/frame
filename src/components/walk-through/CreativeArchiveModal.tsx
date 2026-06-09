@@ -27,6 +27,7 @@ import {
   Trophy,
   X,
 } from 'lucide-react';
+import { assetUrl } from '../../utils/assets';
 import { DAILY_SPARK_ASSETS, DailySparkKind, IP_UNIVERSE_ASSETS, READING_EXCERPTS } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
 
@@ -63,10 +64,12 @@ const MediaTile: React.FC<{
   imgClassName?: string;
   controls?: boolean;
 }> = ({ src, className = '', imgClassName = mediaClass, controls = false }) => {
+  const mediaSrc = assetUrl(src);
+
   if (isVideo(src)) {
     return (
       <video
-        src={src}
+        src={mediaSrc}
         autoPlay={!controls}
         loop
         muted
@@ -77,7 +80,7 @@ const MediaTile: React.FC<{
     );
   }
 
-  return <img src={src} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
+  return <img src={mediaSrc} alt="" className={`${imgClassName} ${className}`} loading="lazy" />;
 };
 
 const EmptyVisualShelf: React.FC<{ isZh: boolean; kind: DailySparkKind }> = ({ isZh, kind }) => {

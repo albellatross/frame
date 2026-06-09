@@ -19,12 +19,11 @@ export const WALK_DATA = {
         { label: 'AI Workflow Design', desc: 'Two AI-made helper tools for batch image generation and 3:4 team review.' },
         { label: 'Vibe Coding', desc: 'Elsewhere: an independent AI template website from product idea to working demo.' },
       ],
-      // Replace with real AIGC artwork paths
       artworks: [
-        '/projects/walk-through/aigc-01.png',
-        '/projects/walk-through/aigc-02.png',
-        '/projects/walk-through/aigc-03.png',
-        '/projects/walk-through/aigc-04.png',
+        '/AI images/20250812 Images for Creator Gallery__image1.webp',
+        '/AI images/20250820 Images for Creator Gallery__image12.webp',
+        '/AI images/20251010 Images for Creator Gallery - Halloween__image16.webp',
+        '/AI images/20251211 Images for Imagine -Christmas__image30.webp',
       ],
     },
     // Chapter 3: Visual Studio / IP Corner
@@ -32,13 +31,13 @@ export const WALK_DATA = {
       intro: "I love visual expression.\nAI helps me refine and bring my IP characters to life.",
       ipStory: "From avatars to banners and stickers, I keep shaping a small world that feels warm, collectible, and full of story.",
       characters: [
-        { name: 'Bella Pig', image: '/projects/walk-through/ip-bella-pig.png', desc: 'My main IP character — soft, warm, a little magical' },
-        { name: 'Lele Cat', image: '/projects/walk-through/ip-lele-cat.png', desc: 'The curious companion in my universe' },
+        { name: 'Bella Pig', image: '/ip/ChatGPT Image May 7, 2026, 05_08_48 PM_750x750.png', desc: 'My main IP character — soft, warm, a little magical' },
+        { name: 'Lele Cat', image: '/ip/ChatGPT Image May 8, 2026, 04_58_17 PM_240x240.png', desc: 'The curious companion in my universe' },
       ],
       applications: [
-        '/projects/walk-through/ip-app-01.png',
-        '/projects/walk-through/ip-app-02.png',
-        '/projects/walk-through/ip-app-03.png',
+        '/ip/showcase/uiux-banner.png',
+        '/ip/showcase/work-banner.png',
+        '/ip/showcase/emotion-sheet.png',
       ],
     },
     // Chapter 4: Hobbies
@@ -46,7 +45,7 @@ export const WALK_DATA = {
       drawing: {
         title: 'Drawing',
         message: "Sketching what I see and feel.",
-        images: ['/projects/walk-through/draw-01.png', '/projects/walk-through/draw-02.png', '/projects/walk-through/draw-03.png'],
+        images: ['/draw/01.orange.jpg', '/draw/orange.jpg', '/draw/A-case-of-orange.jpg'],
       },
       reading: {
         title: 'Reading',
@@ -62,7 +61,7 @@ export const WALK_DATA = {
         title: 'Travel & Video Editing',
         message: "Collecting moments, crafting memories.",
         places: ['Italy', 'Japan', 'Iceland', 'Thailand'],
-        images: ['/projects/walk-through/travel-01.png', '/projects/walk-through/travel-02.png', '/projects/walk-through/travel-03.png'],
+        images: ['/travel/微信图片_2026-05-20_152035_551.jpg', '/travel/微信图片_2026-05-20_152058_951.jpg', '/travel/微信图片_2026-05-20_152123_908.jpg'],
       },
     },
     // Chapter 5: Final Frame
@@ -96,30 +95,30 @@ export const WALK_DATA = {
         { label: 'Vibe Coding', desc: 'Elsewhere：独立完成的 AI 模板网站，从产品想法到可运行 demo。' },
       ],
       artworks: [
-        '/projects/walk-through/aigc-01.png',
-        '/projects/walk-through/aigc-02.png',
-        '/projects/walk-through/aigc-03.png',
-        '/projects/walk-through/aigc-04.png',
+        '/AI images/20250812 Images for Creator Gallery__image1.webp',
+        '/AI images/20250820 Images for Creator Gallery__image12.webp',
+        '/AI images/20251010 Images for Creator Gallery - Halloween__image16.webp',
+        '/AI images/20251211 Images for Imagine -Christmas__image30.webp',
       ],
     },
     visualStudio: {
       intro: "我喜欢视觉表达。\nAI 也帮我持续打磨和带活我的 IP 角色。",
       ipStory: "从头像、横幅到贴纸，我一直在搭建一个温暖、可收藏、也有故事感的小宇宙。",
       characters: [
-        { name: 'Bella 小猪', image: '/projects/walk-through/ip-bella-pig.png', desc: '我的主 IP 角色 — 柔软、温暖、带点魔法感' },
-        { name: '乐乐小猫', image: '/projects/walk-through/ip-lele-cat.png', desc: '宇宙里好奇的小伙伴' },
+        { name: 'Bella 小猪', image: '/ip/ChatGPT Image May 7, 2026, 05_08_48 PM_750x750.png', desc: '我的主 IP 角色 — 柔软、温暖、带点魔法感' },
+        { name: '乐乐小猫', image: '/ip/ChatGPT Image May 8, 2026, 04_58_17 PM_240x240.png', desc: '宇宙里好奇的小伙伴' },
       ],
       applications: [
-        '/projects/walk-through/ip-app-01.png',
-        '/projects/walk-through/ip-app-02.png',
-        '/projects/walk-through/ip-app-03.png',
+        '/ip/showcase/uiux-banner.png',
+        '/ip/showcase/work-banner.png',
+        '/ip/showcase/emotion-sheet.png',
       ],
     },
     hobbies: {
       drawing: {
         title: '画画',
         message: "把我看到和感受到的东西画下来。",
-        images: ['/projects/walk-through/draw-01.png', '/projects/walk-through/draw-02.png', '/projects/walk-through/draw-03.png'],
+        images: ['/draw/01.orange.jpg', '/draw/orange.jpg', '/draw/A-case-of-orange.jpg'],
       },
       reading: {
         title: '阅读',
@@ -135,7 +134,7 @@ export const WALK_DATA = {
         title: '旅行与视频剪辑',
         message: "收集旅途里的片刻，再把它们剪成记忆。",
         places: ['意大利', '日本', '冰岛', '泰国'],
-        images: ['/projects/walk-through/travel-01.png', '/projects/walk-through/travel-02.png', '/projects/walk-through/travel-03.png'],
+        images: ['/travel/微信图片_2026-05-20_152035_551.jpg', '/travel/微信图片_2026-05-20_152058_951.jpg', '/travel/微信图片_2026-05-20_152123_908.jpg'],
       },
     },
     finalFrame: {

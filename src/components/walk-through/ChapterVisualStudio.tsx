@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { assetUrl } from '../../utils/assets';
 import { IpUniverseModal } from './CreativeArchiveModal';
 import { IP_UNIVERSE_ASSETS } from './creativeArchiveAssets';
 import { zhWalkthroughType } from './typography';
@@ -97,7 +98,7 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
       transition={{ duration: 0.6 }}
       className="relative h-full w-full overflow-hidden"
     >
-      <video src="/background/05.mp4" autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
+      <video src={assetUrl('/background/05.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,250,242,0.7),rgba(255,250,242,0.16)_38%,rgba(59,35,14,0.18)_82%,rgba(59,35,14,0.26)_100%)]" />
 
       <div className="relative z-10 h-full w-full px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pt-32">

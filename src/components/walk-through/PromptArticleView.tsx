@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Project } from '../../types';
+import { assetUrl } from '../../utils/assets';
 import { ExplorationArticleContent } from './explorationArticles';
 
 interface PromptArticleViewProps {
@@ -133,7 +134,7 @@ const PromptArticleView: React.FC<PromptArticleViewProps> = ({ content, project,
     <figure className="prompt-visual">
       <div className="prompt-visual-media relative aspect-[16/9] overflow-hidden rounded-[20px] bg-[#f7efe3] shadow-[0_14px_32px_rgba(42,26,10,0.07)]">
         <img
-          src={visual.image}
+          src={assetUrl(visual.image)}
           alt={visual.alt}
           className="h-full w-full object-cover opacity-100 mix-blend-normal"
           loading={loading}
@@ -159,7 +160,7 @@ const PromptArticleView: React.FC<PromptArticleViewProps> = ({ content, project,
   const renderComparisonLogo = (title: string, provider?: string, image?: string) => {
     const logoSrc = provider ? modelLogoImages[provider] : undefined;
     if (logoSrc || image) {
-      return <img src={logoSrc || image} alt={provider || title} className="h-[104px] w-full rounded-[16px] object-cover" loading="lazy" />;
+      return <img src={assetUrl(logoSrc || image || '')} alt={provider || title} className="h-[104px] w-full rounded-[16px] object-cover" loading="lazy" />;
     }
 
     const theme = modelLogoThemes[provider || ''] || {
