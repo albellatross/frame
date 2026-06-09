@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { CareerStage, Project } from '../types';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -16,24 +16,40 @@ const getTimelineVisualMeta = (stage: CareerStage, language: 'en' | 'zh') => {
     c1: {
       title: 'Microsoft STCA',
       label: language === 'zh' ? '北京微软 / 产品体验' : 'Beijing Microsoft / Product UX',
+      cueTitle: language === 'zh' ? 'Office 全家桶 + Copilot' : 'Office ecosystem + Copilot',
+      cues: ['Word', 'Excel', 'PowerPoint', 'Outlook', 'Copilot'],
     },
     c2: {
       title: 'MSRA',
       label: language === 'zh' ? '微软亚洲研究院 / 研究型 AI UX' : 'Microsoft Research Asia / Research AI UX',
+      cueTitle: language === 'zh' ? 'AI 研究 Demo 与工具' : 'AI research demos and tools',
+      cues: language === 'zh'
+        ? ['Agent', '多模态生成', '视频生成', '研究工具']
+        : ['Agents', 'Multimodal AI', 'Video generation', 'Research tools'],
     },
     c3: {
       title: 'FOM Studio',
       label: language === 'zh' ? '米兰品牌与包装工作室' : 'Milan brand & packaging studio',
+      cueTitle: language === 'zh' ? '品牌与包装落地' : 'Brand and packaging delivery',
+      cues: language === 'zh'
+        ? ['包装', '零售视觉', '品牌系统']
+        : ['Packaging', 'Retail visuals', 'Brand systems'],
     },
     c4: {
       title: 'NABA Milano',
       label: language === 'zh' ? '米兰新美院 / 视觉传达' : 'Milan design academy / Visual communication',
+      cueTitle: language === 'zh' ? '设计学院工作室训练' : 'Design academy studio training',
+      cues: language === 'zh'
+        ? ['Studio', '设计评图', '作品集', '视觉系统']
+        : ['Studio', 'Critique', 'Portfolio', 'Visual systems'],
     },
   } as const;
 
   return meta[stage.id as keyof typeof meta] ?? {
     title: stage.company,
     label: stage.role,
+    cueTitle: '',
+    cues: [],
   };
 };
 
@@ -48,23 +64,23 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
         
         {/* Left Panel: Sticky Visuals (Desktop Only) */}
         <div className="hidden md:block md:w-2/5 h-screen sticky top-0 overflow-hidden bg-brown">
-          <AnimatePresence mode="wait">
-             {stages.map((stage) => {
+             {stages.map((stage, index) => {
                 const visualMeta = getTimelineVisualMeta(stage, language);
+                const isActive = stage.id === activeStageId;
 
-                return stage.id === activeStageId && (
+                return (
                   <motion.div
                     key={stage.id}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.7 }}
+                    initial={false}
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.04 }}
+                    transition={{ duration: 0.55, ease: 'easeOut' }}
                     className="absolute inset-0"
+                    aria-hidden={!isActive}
                   >
                     <img 
                       src={timelineImageAsset(stage)} 
                       alt={stage.company} 
-                      loading="lazy"
+                      loading={index === 0 ? 'eager' : 'lazy'}
                       decoding="async"
                       className="w-full h-full object-cover opacity-75" 
                     />
@@ -76,6 +92,23 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                       <p className="font-serif text-3xl leading-tight text-white drop-shadow-sm lg:text-4xl">
                         {visualMeta.title}
                       </p>
+                      {visualMeta.cues.length > 0 && (
+                        <div className="mt-5">
+                          <p className="mb-3 text-[10px] font-mono uppercase tracking-[0.2em] text-white/55">
+                            {visualMeta.cueTitle}
+                          </p>
+                          <div className="flex max-w-[18rem] flex-wrap gap-2">
+                            {visualMeta.cues.map((cue) => (
+                              <span
+                                key={cue}
+                                className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.12em] text-white/80 backdrop-blur-md"
+                              >
+                                {cue}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Atmospheric Text */}
@@ -86,7 +119,6 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                   </motion.div>
                 );
              })}
-          </AnimatePresence>
         </div>
 
         {/* Right Panel: Scrolling Content */}
