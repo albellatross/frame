@@ -109,7 +109,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     role: 'UI/UX Designer',
     oneLiner: 'Designing Copilot voice, creator, and education experiences that turn AI into controllable product flows.',
     skills: ['Copilot Voice', 'Generative AI', 'Creator Tools', 'Education UX'],
-    image: '/timeline-scenes/stca-beijing-microsoft-campus.webp',
+    image: '/timeline-scenes/stca-beijing-product-office.webp',
     relatedProjectIds: ['p1']
   },
   {
@@ -119,7 +119,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     role: 'UI/UX Designer, Graphic Designer',
     oneLiner: 'Led AI-native product design across research tooling, agents, cognitive companionship, and visual systems.',
     skills: ['AI Agents', 'Research Tooling', 'AIGC UX', 'Visual Systems'],
-    image: '/timeline-scenes/msra-beijing-research-campus.webp',
+    image: '/timeline-scenes/msra-beijing-research-homepage.webp',
     relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
@@ -139,7 +139,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     role: 'Visual Communication Design',
     oneLiner: "Master's degree in Italy, grounding product thinking in branding, visual systems, and illustration.",
     skills: ['Visual Design', 'Branding', 'User Research', 'Illustration'],
-    image: '/timeline-scenes/naba-milan-design-lab.webp',
+    image: '/timeline-scenes/naba-milan-campus-atelier.webp',
     relatedProjectIds: []
   }
 ];
@@ -153,7 +153,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     role: 'UI/UX 设计师',
     oneLiner: '围绕 Copilot 语音、创作者工具与教育场景，把 AI 能力转化为用户可控的产品流程。',
     skills: ['Copilot Voice', '生成式 AI', '创作者工具', '教育 UX'],
-    image: '/timeline-scenes/stca-beijing-microsoft-campus.webp',
+    image: '/timeline-scenes/stca-beijing-product-office.webp',
     relatedProjectIds: ['p1']
   },
   {
@@ -163,7 +163,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     role: 'UI/UX 设计师, 平面设计师',
     oneLiner: '主导多个 AI-native 产品体验，覆盖研究工具、Agent、认知陪伴与视觉系统。',
     skills: ['AI Agent', '研究工具', 'AIGC UX', '视觉系统'],
-    image: '/timeline-scenes/msra-beijing-research-campus.webp',
+    image: '/timeline-scenes/msra-beijing-research-homepage.webp',
     relatedProjectIds: ['p3', 'p5', 'p13', 'p15', 'p4', 'p6']
   },
   {
@@ -183,7 +183,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     role: '视觉传达设计',
     oneLiner: '在意大利完成视觉传达硕士训练，以品牌、视觉系统与插画建立设计底盘。',
     skills: ['视觉设计', '品牌设计', '用户研究', '插画'],
-    image: '/timeline-scenes/naba-milan-design-lab.webp',
+    image: '/timeline-scenes/naba-milan-campus-atelier.webp',
     relatedProjectIds: []
   }
 ];

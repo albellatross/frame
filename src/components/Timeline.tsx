@@ -11,10 +11,36 @@ interface TimelineProps {
   onProjectClick: (projectId: string) => void;
 }
 
+const getTimelineVisualMeta = (stage: CareerStage, language: 'en' | 'zh') => {
+  const meta = {
+    c1: {
+      title: 'Microsoft STCA',
+      label: language === 'zh' ? '北京微软 / 产品体验' : 'Beijing Microsoft / Product UX',
+    },
+    c2: {
+      title: 'MSRA',
+      label: language === 'zh' ? '微软亚洲研究院 / 研究型 AI UX' : 'Microsoft Research Asia / Research AI UX',
+    },
+    c3: {
+      title: 'FOM Studio',
+      label: language === 'zh' ? '米兰品牌与包装工作室' : 'Milan brand & packaging studio',
+    },
+    c4: {
+      title: 'NABA Milano',
+      label: language === 'zh' ? '米兰新美院 / 视觉传达' : 'Milan design academy / Visual communication',
+    },
+  } as const;
+
+  return meta[stage.id as keyof typeof meta] ?? {
+    title: stage.company,
+    label: stage.role,
+  };
+};
+
 const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStageId, setActiveStageId] = useState<string>(stages[0].id);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <section ref={containerRef} id="timeline" className="relative bg-dark-brown text-white py-24 md:py-0">
@@ -23,8 +49,10 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
         {/* Left Panel: Sticky Visuals (Desktop Only) */}
         <div className="hidden md:block md:w-2/5 h-screen sticky top-0 overflow-hidden bg-brown">
           <AnimatePresence mode="wait">
-             {stages.map((stage) => (
-                stage.id === activeStageId && (
+             {stages.map((stage) => {
+                const visualMeta = getTimelineVisualMeta(stage, language);
+
+                return stage.id === activeStageId && (
                   <motion.div
                     key={stage.id}
                     initial={{ opacity: 0, scale: 1.1 }}
@@ -38,9 +66,17 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                       alt={stage.company} 
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover opacity-60" 
+                      className="w-full h-full object-cover opacity-75" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-brown via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-brown via-dark-brown/20 to-black/10" />
+                    <div className="absolute left-8 top-56 max-w-[20rem] lg:left-12">
+                      <span className="mb-3 inline-flex rounded-full border border-white/25 bg-black/20 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.18em] text-white/75 backdrop-blur-sm">
+                        {visualMeta.label}
+                      </span>
+                      <p className="font-serif text-3xl leading-tight text-white drop-shadow-sm lg:text-4xl">
+                        {visualMeta.title}
+                      </p>
+                    </div>
                     
                     {/* Atmospheric Text */}
                     <div className="absolute bottom-12 lg:bottom-24 left-8 lg:left-12 max-w-sm lg:max-w-md">
@@ -48,8 +84,8 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                        <p className="text-lg lg:text-2xl font-light text-white/90 italic">"{stage.oneLiner}"</p>
                     </div>
                   </motion.div>
-                )
-             ))}
+                );
+             })}
           </AnimatePresence>
         </div>
 
