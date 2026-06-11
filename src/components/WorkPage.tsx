@@ -1207,8 +1207,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
             {isZh
-              ? '和作品集 Agent 说说你在找的职位、能力或项目类型，我会用项目元数据帮你找到最匹配的案例。'
-              : 'Chat with the portfolio agent about a role, capability, or project type. It will match the most relevant work from the project library.'}
+              ? '和我说说你在找什么，我会帮你挑出最相关的项目。'
+              : "Tell me what you're looking for, and I'll pull together the most relevant projects."}
           </p>
         </div>
 
