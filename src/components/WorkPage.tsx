@@ -421,6 +421,34 @@ const intentBoosters = [
   },
 ];
 
+const phraseIntentBoosters = [
+  {
+    terms: ['microsoft product ux', 'office', '微软产品', '微软设计师', '语音'],
+    ids: ['p1', 'p3', 'p20', 'p5', 'p13'],
+    weight: 8,
+  },
+  {
+    terms: ['research demo', 'model capability', '研究 demo', '模型能力', '技术 demo'],
+    ids: ['p5', 'p3', 'p20', 'p13', 'p15'],
+    weight: 6.5,
+  },
+  {
+    terms: ['b2b ai platform', 'enterprise ai', 'complex interface', '企业级 ai', '复杂界面'],
+    ids: ['p12', 'p5', 'p13', 'p14'],
+    weight: 7,
+  },
+];
+
+const namedProjectBoosters = [
+  { terms: ['copilot', 'read aloud', 'office voice', '朗读', '语音阅读'], id: 'p1', weight: 24 },
+  { terms: ['rd-agent', 'rd agent', 'research workflow', '科研工作流'], id: 'p5', weight: 20 },
+  { terms: ['nuwa', 'outpainting', 'trajectory'], id: 'p3', weight: 20 },
+  { terms: ['rodin', '3d avatar', '3d ai'], id: 'p20', weight: 20 },
+  { terms: ['taskmatrix', 'taskmatrix.ai', 'agent workflow'], id: 'p13', weight: 18 },
+  { terms: ['batteryml', 'battery ml'], id: 'p17', weight: 18 },
+  { terms: ['msra 25th', 'anniversary', '微软亚洲研究院'], id: 'p6', weight: 18 },
+];
+
 const coverFamilyMeta: Record<CoverFamily, { label: string; frame: string; inner: string; imageOutline: string }> = {
   aiProduct: {
     label: 'AI UX',
@@ -579,6 +607,20 @@ const scoreProject = (project: Project, query: string, activeSuggestionId: strin
     const triggered = booster.terms.some((term) => normalizedQuery.includes(normalize(term)));
     if (triggered && booster.ids.includes(project.id)) {
       score += 5.5 - booster.ids.indexOf(project.id) * 0.25;
+    }
+  });
+
+  phraseIntentBoosters.forEach((booster) => {
+    const triggered = booster.terms.some((term) => normalizedQuery.includes(normalize(term)));
+    if (triggered && booster.ids.includes(project.id)) {
+      score += booster.weight - booster.ids.indexOf(project.id) * 0.45;
+    }
+  });
+
+  namedProjectBoosters.forEach((booster) => {
+    const triggered = booster.terms.some((term) => normalizedQuery.includes(normalize(term)));
+    if (triggered && booster.id === project.id) {
+      score += booster.weight;
     }
   });
 
@@ -878,31 +920,31 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个方向`
       : `${projects.length} reader-ready works across ${archiveTrackCount} tracks`,
     formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
-    agentTitle: isZh ? 'Ask Agent' : 'Ask Agent',
+    agentTitle: isZh ? 'Agent' : 'Agent',
     agentBody: isZh
       ? '输入职位、能力或项目类型，获得一组更相关的作品。'
       : 'Describe a role, capability, or project type and get a curated set of matching works.',
-    archiveTitle: isZh ? 'Browse Archive' : 'Browse Archive',
+    archiveTitle: isZh ? '项目库' : 'Project Library',
     archiveBody: isZh
       ? '直接浏览完整项目库，按能力方向、时间和项目类型扫读。'
       : 'Browse the full archive by track, year, and project type.',
     agentKicker: isZh ? 'AGENT MATCH' : 'AGENT MATCH',
-    agentHeading: isZh ? '你在找什么类型的设计师？' : 'What kind of designer are you looking for?',
+    agentHeading: isZh ? '今天想看哪类项目？' : 'What should we dive into today?',
     agentSubheading: isZh
       ? '描述角色、能力或项目类型。这里使用本地项目元数据做前端匹配，不伪装成实时 AI 后端。'
       : 'Describe a role, capability, or project type. This uses local project metadata, not a live AI backend.',
     placeholder: isZh
-      ? '例如：我需要一位能把复杂研究转成可用 demo 的 AI 产品设计师…'
-      : 'Example: I need an AI product designer who can translate complex research into usable demos…',
-    submit: isZh ? 'Match Work' : 'Match Work',
+      ? '告诉我你在找的职位、能力或项目类型…'
+      : 'Tell me the role, capability, or project type you are looking for…',
+    submit: isZh ? '发送' : 'Send',
     clear: isZh ? '清空输入' : 'Clear input',
     promptLabel: isZh ? 'Suggested prompts' : 'Suggested prompts',
-    agentResultsDefault: isZh ? 'Agent 推荐起点' : 'Agent Recommended Set',
-    agentResultsMatched: isZh ? '匹配作品' : 'Matched Works',
+    agentResultsDefault: isZh ? '可以先从这些项目看起' : 'Start with these works',
+    agentResultsMatched: isZh ? '我找到了这些匹配项目' : 'I found these matching projects',
     noResults: isZh ? '暂时没有完全匹配的项目。试试输入能力、公司、工具或项目类型。' : 'No exact match yet. Try a skill, company, tool, or project type.',
     why: isZh ? '原因' : 'Why',
     archiveKicker: isZh ? 'PROJECT ARCHIVE' : 'PROJECT ARCHIVE',
-    archiveHeading: isZh ? '完整项目档案' : 'Full Project Archive',
+    archiveHeading: isZh ? '项目库' : 'Project Library',
     archiveBodyLong: isZh
       ? '正式案例、研究 demo、视觉系统、品牌项目和练习被组织成更密集的浏览结构。'
       : 'Formal case studies, research demos, visual systems, branding, and practice work in a denser archive structure.',
@@ -1004,6 +1046,220 @@ const WorkPage: React.FC<WorkPageProps> = ({
     animate: { opacity: 1, y: 0 },
     transition: { delay: reduceMotion ? 0 : Math.min(idx * 0.035, 0.18), duration: reduceMotion ? 0 : 0.32 },
   });
+
+  const TopModeToggle = () => (
+    <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="min-w-0">
+        <p className="font-mono text-[11px] text-[var(--work-muted)]">{isZh ? 'WORKS' : 'WORKS'}</p>
+        <p className="mt-1 text-sm text-[var(--work-muted)]">{archiveSummary}</p>
+      </div>
+      <div className="relative flex shrink-0 items-center rounded-full bg-white p-1 shadow-[var(--work-shadow-border)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
+        <span
+          className={cn(
+            'absolute bottom-1 top-1 w-[96px] rounded-full bg-[var(--work-ink)] transition-transform duration-200 ease-out',
+            viewMode === 'archive' ? 'translate-x-[96px]' : 'translate-x-0'
+          )}
+          aria-hidden="true"
+        />
+        <button
+          type="button"
+          onClick={() => setViewMode('agent')}
+          className={cn(
+            'relative z-10 inline-flex h-10 w-24 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+            viewMode === 'agent' ? 'text-white' : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+          )}
+          aria-pressed={viewMode === 'agent'}
+        >
+          <Bot size={15} aria-hidden="true" />
+          Agent
+        </button>
+        <button
+          type="button"
+          onClick={() => setViewMode('archive')}
+          className={cn(
+            'relative z-10 inline-flex h-10 w-24 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+            viewMode === 'archive' ? 'text-white' : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+          )}
+          aria-pressed={viewMode === 'archive'}
+        >
+          <LibraryBig size={15} aria-hidden="true" />
+          Library
+        </button>
+      </div>
+    </div>
+  );
+
+  const ComposerResultCard: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
+    const project = item.project;
+    const isSelected = selectedProjectIds.includes(project.id);
+
+    return (
+      <motion.article layout {...cardMotion(idx, 8)}>
+        <div className="group relative rounded-[14px] bg-white p-2 shadow-[var(--work-shadow-border)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
+          <button
+            type="button"
+            onClick={() => onProjectClick(project)}
+            className="absolute inset-0 z-10 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            aria-label={`${copy.viewCase}: ${project.title}`}
+          />
+          <div className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">
+            <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
+            <div className="relative z-20 flex min-w-0 flex-col justify-between py-1 pr-1">
+              <div>
+                <div className="mb-1.5 flex flex-wrap items-center gap-2 text-[11px] text-[var(--work-muted)]">
+                  <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
+                  <span>{project.year}</span>
+                  <span className="h-1 w-1 rounded-full bg-[var(--work-line-strong)]" aria-hidden="true" />
+                  <span>{getProjectKind(project, isZh)}</span>
+                </div>
+                <h3 className="font-sans text-lg font-semibold leading-tight text-[var(--work-ink)] text-balance">{getProjectTitle(project, isZh)}</h3>
+                <p className="mt-2 line-clamp-2 text-sm leading-5 text-[var(--work-muted)]">
+                  <span className="font-semibold text-[var(--work-ink)]">{copy.why}: </span>
+                  {getAgentReason(project, isZh)}
+                </p>
+              </div>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--work-ink)] opacity-80 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100">
+                  {copy.viewCase}
+                  <ArrowRight size={13} aria-hidden="true" />
+                </span>
+                <AddToPdfButton
+                  project={project}
+                  isSelected={isSelected}
+                  onToggleSelect={onToggleSelect}
+                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
+                  surface="light"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    );
+  };
+
+  const AgentComposer = () => (
+    <section className="flex min-h-[calc(100vh-220px)] flex-col items-center justify-center py-10">
+      <div className="w-full max-w-[980px]">
+        <div className="text-center">
+          <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
+            {isZh ? 'Hi 格里，今天想看哪类项目？' : 'Hi Geli, what should we dive into today?'}
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
+            {isZh
+              ? '和作品集 Agent 说说你在找的职位、能力或项目类型，我会用项目元数据帮你找到最匹配的案例。'
+              : 'Chat with the portfolio agent about a role, capability, or project type. It will match the most relevant work from the project library.'}
+          </p>
+        </div>
+
+        {submittedQuery ? (
+          <div className="mx-auto mt-8 max-w-[820px] space-y-4">
+            <div className="flex justify-end">
+              <div className="max-w-[720px] rounded-[22px] bg-[var(--work-ink)] px-4 py-3 text-sm leading-6 text-white shadow-[0_12px_30px_rgba(23,20,18,0.14)]">
+                {submittedQuery}
+              </div>
+            </div>
+            <div className="rounded-[22px] bg-white/74 p-4 shadow-[var(--work-shadow-border)]">
+              <div className="mb-4 flex items-start gap-3">
+                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--work-ink)] text-white">
+                  <Bot size={16} aria-hidden="true" />
+                </span>
+                <div>
+                  <h2 className="font-sans text-lg font-semibold text-[var(--work-ink)]">{copy.agentResultsMatched}</h2>
+                  <p className="mt-1 text-sm leading-6 text-[var(--work-muted)]">
+                    {isZh
+                      ? `我找到了 ${scoredMatches.length} 个相关项目。你可以继续改写需求，或直接打开案例。`
+                      : `I found ${scoredMatches.length} relevant ${scoredMatches.length === 1 ? 'project' : 'projects'}. Refine the brief or open a case directly.`}
+                  </p>
+                </div>
+              </div>
+              {scoredMatches.length > 0 ? (
+                <div className="space-y-3">
+                  {scoredMatches.map((item, idx) => (
+                    <ComposerResultCard key={item.project.id} item={item} idx={idx} />
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-[14px] border border-dashed border-[var(--work-line)] px-4 py-8 text-center text-sm text-[var(--work-muted)]">
+                  {copy.noResults}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : null}
+
+        <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-[820px]">
+          <label htmlFor="work-agent-query" className="sr-only">
+            {copy.agentHeading}
+          </label>
+          <div className="rounded-[28px] bg-white p-4 shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]">
+            <textarea
+              id="work-agent-query"
+              name="portfolio-agent-query"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setActiveSuggestionId(null);
+              }}
+              placeholder={copy.placeholder}
+              rows={3}
+              spellCheck={false}
+              autoComplete="off"
+              className="min-h-[88px] w-full resize-none bg-transparent px-1 py-1 text-[17px] leading-7 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]"
+            />
+            <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--work-line)] pt-3">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  aria-label={isZh ? '添加更多需求' : 'Add more context'}
+                  title={isZh ? '添加更多需求' : 'Add more context'}
+                >
+                  <FilePlus2 size={17} aria-hidden="true" />
+                </button>
+                <span className="inline-flex h-10 items-center rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]">
+                  Portfolio Agent
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {query || submittedQuery ? (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                    aria-label={copy.clear}
+                    title={copy.clear}
+                  >
+                    <X size={17} aria-hidden="true" />
+                  </button>
+                ) : null}
+                <button
+                  type="submit"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                >
+                  {copy.submit}
+                  <ArrowRight size={15} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div className="mx-auto mt-5 flex max-w-[820px] flex-wrap justify-center gap-2">
+          {capabilitySuggestions.map((suggestion) => (
+            <button
+              key={suggestion.id}
+              type="button"
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="min-h-10 rounded-full border border-[var(--work-line)] bg-white/60 px-4 py-2 text-sm font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+            >
+              {getLocalized(suggestion.label, isZh)}
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 
   const WorkHero = () => (
     <section className="grid gap-8 border-b border-[var(--work-line)] pb-10 lg:grid-cols-[minmax(0,0.78fr)_minmax(420px,1fr)] lg:items-end lg:pb-12">
@@ -1179,7 +1435,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
       <motion.article
         layout
         {...cardMotion(idx, 10)}
-        style={{ contentVisibility: 'auto', containIntrinsicSize: '280px' } as React.CSSProperties}
       >
         <div className="group relative h-full rounded-[12px] bg-[var(--work-surface)] p-2 shadow-[var(--work-shadow-border)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
           <button
@@ -1550,7 +1805,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       transition={{ duration: reduceMotion ? 0 : 0.28 }}
       className="work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 pb-16 pt-28 font-sans text-[var(--work-ink)] sm:px-7 sm:pb-24 sm:pt-32"
     >
-      <div className="mx-auto max-w-[1280px]">
+      <div className="mx-auto max-w-[1180px]">
         {onReturnToTimeline ? (
           <button
             type="button"
@@ -1562,9 +1817,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </button>
         ) : null}
 
-        <WorkHero />
-        <ModeSwitch />
-        {viewMode === 'agent' ? <AgentMatchPanel /> : <ArchiveSection />}
+        <TopModeToggle />
+        {viewMode === 'agent' ? <AgentComposer /> : <ArchiveSection />}
       </div>
     </motion.div>
   );
