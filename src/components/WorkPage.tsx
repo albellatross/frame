@@ -1007,43 +1007,59 @@ const WorkPage: React.FC<WorkPageProps> = ({
   });
 
   const TopModeToggle = () => (
-    <div className="mb-6 flex items-center justify-between gap-4">
-      <div className="min-w-0">
-        <p className="font-mono text-[11px] text-[var(--work-muted)]">{isZh ? 'WORKS' : 'WORKS'}</p>
-        <p className="mt-1 text-sm text-[var(--work-muted)]">{archiveSummary}</p>
-      </div>
-      <div className="relative flex shrink-0 items-center rounded-full bg-white p-1 shadow-[var(--work-shadow-border)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
-        <span
-          className={cn(
-            'absolute bottom-1 top-1 w-[96px] rounded-full bg-[var(--work-ink)] transition-transform duration-200 ease-out',
-            viewMode === 'archive' ? 'translate-x-[96px]' : 'translate-x-0'
-          )}
-          aria-hidden="true"
-        />
+    <div className="mb-8 flex justify-center">
+      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-white/58 px-2 py-1.5 text-sm shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_10px_30px_rgba(23,20,18,0.035)] backdrop-blur-sm sm:gap-3 sm:px-3">
+        <div className="hidden min-w-0 items-center gap-2 sm:flex">
+          <span className="font-mono text-[10px] uppercase tracking-normal text-[var(--work-muted)]">Works</span>
+          <span className="h-3 w-px bg-[var(--work-line)]" aria-hidden="true" />
+          <span className="text-xs text-[var(--work-muted)]">
+            {isZh ? `${projects.length} 个项目 · ${archiveTrackCount} 个方向` : `${projects.length} works · ${archiveTrackCount} tracks`}
+          </span>
+        </div>
+        <div className="flex items-center rounded-full bg-[var(--work-bg)] p-0.5 shadow-[inset_0_0_0_1px_rgba(23,20,18,0.06)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
         <button
           type="button"
           onClick={() => setViewMode('agent')}
           className={cn(
-            'relative z-10 inline-flex h-10 w-24 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
-            viewMode === 'agent' ? 'text-white' : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+              'inline-flex h-8 min-w-[82px] items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+              viewMode === 'agent'
+                ? 'bg-white text-[var(--work-ink)] shadow-[0_1px_8px_rgba(23,20,18,0.08)]'
+                : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'agent'}
         >
-          <Bot size={15} aria-hidden="true" />
+            <span
+              className={cn(
+                'h-1.5 w-1.5 rounded-full transition-colors duration-200 ease-out',
+                viewMode === 'agent' ? 'bg-[var(--work-accent)]' : 'bg-[var(--work-line-strong)]'
+              )}
+              aria-hidden="true"
+            />
+          <Bot size={14} aria-hidden="true" />
           Agent
         </button>
         <button
           type="button"
           onClick={() => setViewMode('archive')}
           className={cn(
-            'relative z-10 inline-flex h-10 w-24 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
-            viewMode === 'archive' ? 'text-white' : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+              'inline-flex h-8 min-w-[86px] items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+              viewMode === 'archive'
+                ? 'bg-white text-[var(--work-ink)] shadow-[0_1px_8px_rgba(23,20,18,0.08)]'
+                : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'archive'}
         >
-          <LibraryBig size={15} aria-hidden="true" />
+            <span
+              className={cn(
+                'h-1.5 w-1.5 rounded-full transition-colors duration-200 ease-out',
+                viewMode === 'archive' ? 'bg-[var(--work-accent)]' : 'bg-[var(--work-line-strong)]'
+              )}
+              aria-hidden="true"
+            />
+          <LibraryBig size={14} aria-hidden="true" />
           Library
         </button>
+        </div>
       </div>
     </div>
   );
