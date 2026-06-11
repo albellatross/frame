@@ -110,40 +110,40 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     period: 'Feb 2025 - Present',
     company: 'Microsoft STCA',
     role: 'UI/UX Designer',
-    oneLiner: 'Designing Microsoft 365, Office, and Copilot experiences across voice, creator, and education workflows.',
-    skills: ['Office UX', 'Copilot Voice', 'Microsoft 365', 'Education UX'],
+    oneLiner: 'Designing Copilot and interaction prototypes across Office voice UX and lightweight H5 experiences.',
+    skills: ['Copilot Voice', 'Office UX', 'Interaction Prototype', 'H5 Flow'],
     image: '/timeline-scenes/stca-beijing-office-copilot-product-wall.webp',
-    relatedProjectIds: ['p1']
+    relatedProjectIds: ['p1', 'p21']
   },
   {
     id: 'c2',
     period: 'Jun 2022 - Feb 2025',
     company: 'Microsoft Research Asia',
     role: 'UI/UX Designer, Graphic Designer',
-    oneLiner: 'Translated AI research capabilities into demos and tools for agents, multimodal generation, and research workflows.',
-    skills: ['AI Agents', 'Multimodal AI', 'Research Tooling', 'AIGC UX'],
+    oneLiner: 'Translated AI research capabilities into demos, agent workflows, visual systems, and research communication.',
+    skills: ['AI Agents', 'Research Demos', 'Visual Systems', 'AIGC UX'],
     image: '/timeline-scenes/msra-beijing-ai-research-demo-lab.webp',
-    relatedProjectIds: ['p3', 'p20', 'p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p5', 'p3']
   },
   {
     id: 'c3',
     period: 'Aug 2021 - Dec 2021',
     company: 'FOM Studio Milan',
     role: 'Design Intern',
-    oneLiner: 'Built brand and packaging systems for real-world retail and energy clients in Milan.',
-    skills: ['Brand Identity', 'Packaging', 'Retail Visuals'],
+    oneLiner: 'Built brand identity and commercial visual systems for studio clients in Milan.',
+    skills: ['Brand Identity', 'Retail Visuals', 'Logo System'],
     image: '/timeline-scenes/fom-milan-packaging-studio.webp',
-    relatedProjectIds: ['p7']
+    relatedProjectIds: ['p7', 'p18']
   },
   {
     id: 'c4',
     period: '2020 - 2021',
     company: 'NABA Milan & Study in Italy',
     role: 'Visual Communication Design',
-    oneLiner: "Master's training at a Milan design academy, grounding product thinking in critique, portfolio craft, and visual systems.",
-    skills: ['Design Academy', 'Visual Systems', 'Branding', 'Illustration'],
+    oneLiner: "Master's training at a Milan design academy, grounding visual communication in critique, brand systems, and editorial web.",
+    skills: ['Design Academy', 'Brand Systems', 'Editorial Web'],
     image: '/timeline-scenes/naba-milan-design-academy-editorial.webp',
-    relatedProjectIds: []
+    relatedProjectIds: ['p19', 'p16']
   }
 ];
 
@@ -154,40 +154,40 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     period: '2025年2月 - 至今',
     company: 'Microsoft STCA',
     role: 'UI/UX 设计师',
-    oneLiner: '围绕 Microsoft 365、Office 全家桶与 Copilot，设计语音、创作者工具和教育场景的产品体验。',
-    skills: ['Office UX', 'Copilot Voice', 'Microsoft 365', '教育 UX'],
+    oneLiner: '围绕 Copilot、Office 语音体验和轻量 H5 交互原型推进产品设计。',
+    skills: ['Copilot Voice', 'Office UX', '交互原型', 'H5 流程'],
     image: '/timeline-scenes/stca-beijing-office-copilot-product-wall.webp',
-    relatedProjectIds: ['p1']
+    relatedProjectIds: ['p1', 'p21']
   },
   {
     id: 'c2',
     period: '2022年6月 - 2025年2月',
     company: 'Microsoft Research Asia',
     role: 'UI/UX 设计师, 平面设计师',
-    oneLiner: '把 AI 研究能力转译成可操作的 demo 与工具，覆盖 Agent、多模态生成和研究工作流。',
-    skills: ['AI Agent', '多模态 AI', '研究工具', 'AIGC UX'],
+    oneLiner: '把 AI 研究能力转译成 demo、Agent 工作流、视觉系统和研究传播项目。',
+    skills: ['AI Agent', '研究 Demo', '视觉系统', 'AIGC UX'],
     image: '/timeline-scenes/msra-beijing-ai-research-demo-lab.webp',
-    relatedProjectIds: ['p3', 'p20', 'p5', 'p13', 'p15', 'p4', 'p6']
+    relatedProjectIds: ['p5', 'p3']
   },
   {
     id: 'c3',
     period: '2021年8月 - 2021年12月',
     company: 'FOM Studio Milan',
     role: '设计实习生',
-    oneLiner: '在米兰参与真实商业项目，将品牌识别、包装与线下视觉系统落地。',
-    skills: ['品牌识别', '包装设计', '零售视觉'],
+    oneLiner: '在米兰工作室参与商业品牌项目，将品牌识别和应用视觉系统落地。',
+    skills: ['品牌识别', '零售视觉', 'Logo 系统'],
     image: '/timeline-scenes/fom-milan-packaging-studio.webp',
-    relatedProjectIds: ['p7']
+    relatedProjectIds: ['p7', 'p18']
   },
   {
     id: 'c4',
     period: '2020 - 2021',
     company: 'NABA 米兰与意大利留学',
     role: '视觉传达设计',
-    oneLiner: '在米兰设计学院完成视觉传达训练，通过评图、作品集与视觉系统建立设计底盘。',
-    skills: ['设计学院', '视觉系统', '品牌设计', '插画'],
+    oneLiner: '在米兰设计学院完成视觉传达训练，用评图、品牌系统和编辑式网页建立设计底盘。',
+    skills: ['设计学院', '品牌系统', '编辑式网页'],
     image: '/timeline-scenes/naba-milan-design-academy-editorial.webp',
-    relatedProjectIds: []
+    relatedProjectIds: ['p19', 'p16']
   }
 ];
 
@@ -1201,12 +1201,12 @@ export const PROJECTS_EN: Project[] = [
   },
   {
     id: 'p15',
-    title: 'Value Compass',
+    title: 'Value Compass & Visual System Web',
     category: 'B-Side',
     platform: 'Web',
     year: '2024',
     role: 'UI/UX Designer',
-    shortDescription: 'AI value-alignment research interface and visual system.',
+    shortDescription: 'AI value-alignment research interface plus a companion web design in the same visual system.',
     coverImage: VALUE_COMPASS_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
@@ -1214,16 +1214,16 @@ export const PROJECTS_EN: Project[] = [
       zh: FIGMA_VALUE_COMPASS_SLIDES,
     },
     gallery: FIGMA_VALUE_COMPASS_SLIDES,
-    tags: ['AI Research', 'Value Alignment', 'Visual System', 'Figma'],
+    tags: ['AI Research', 'Value Alignment', 'Visual System', 'Web Design', 'Figma'],
     acts: {
       act1: {
         title: 'Research Communication',
-        content: 'The project needed a concise visual system for communicating AI value-alignment research.'
+        content: 'The project needed a concise visual system for communicating AI value-alignment research across interface and web surfaces.'
       },
       act2: {
         title: 'Interface & System',
-        content: 'Exported the source pages from Figma to preserve the research narrative and visual direction.',
-        decisionPoints: ['Research clarity', 'Interface structure', 'Visual consistency']
+        content: 'Preserved the research interface and companion web design as one connected visual-system case.',
+        decisionPoints: ['Research clarity', 'Interface structure', 'Web visual system']
       },
       act3: {
         title: 'Reader Delivery',
@@ -2371,12 +2371,12 @@ export const PROJECTS_ZH: Project[] = [
   },
   {
     id: 'p15',
-    title: 'Value Compass',
+    title: 'Value Compass 与视觉系统网页',
     category: 'B-Side',
     platform: 'Web',
     year: '2024',
     role: 'UI/UX 设计师',
-    shortDescription: 'AI 价值对齐研究项目的界面与视觉系统设计。',
+    shortDescription: 'AI 价值对齐研究界面，以及同一视觉系统下的网页设计。',
     coverImage: VALUE_COMPASS_COVER_IMAGE,
     coverDisplay: 'contain',
     coverAspectRatio: 16 / 9,
@@ -2384,16 +2384,16 @@ export const PROJECTS_ZH: Project[] = [
       zh: FIGMA_VALUE_COMPASS_SLIDES,
     },
     gallery: FIGMA_VALUE_COMPASS_SLIDES,
-    tags: ['AI 研究', '价值对齐', '视觉系统', 'Figma'],
+    tags: ['AI 研究', '价值对齐', '视觉系统', '网页设计', 'Figma'],
     acts: {
       act1: {
         title: '研究表达',
-        content: '项目需要用清晰的视觉系统传达 AI 价值对齐研究。'
+        content: '项目需要用清晰的视觉系统，在界面和网页两个载体上传达 AI 价值对齐研究。'
       },
       act2: {
         title: '界面与系统',
-        content: '以 Figma 原始页面保留研究叙事和视觉方向。',
-        decisionPoints: ['研究清晰度', '界面结构', '视觉一致性']
+        content: '把研究界面和同视觉系统的网页设计作为一个连续案例保留。',
+        decisionPoints: ['研究清晰度', '界面结构', '网页视觉系统']
       },
       act3: {
         title: 'Reader 呈现',

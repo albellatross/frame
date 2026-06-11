@@ -30,11 +30,11 @@ const getTimelineVisualMeta = (stage: CareerStage, language: 'en' | 'zh') => {
     },
     c3: {
       title: 'FOM Studio',
-      label: language === 'zh' ? '米兰品牌与包装工作室' : 'Milan brand & packaging studio',
-      cueTitle: language === 'zh' ? '品牌与包装落地' : 'Brand and packaging delivery',
+      label: language === 'zh' ? '米兰品牌系统工作室' : 'Milan brand systems studio',
+      cueTitle: language === 'zh' ? '品牌识别与商业视觉系统' : 'Brand identity and commercial visual systems',
       cues: language === 'zh'
-        ? ['包装', '零售视觉', '品牌系统']
-        : ['Packaging', 'Retail visuals', 'Brand systems'],
+        ? ['品牌识别', '零售视觉', 'Logo 系统']
+        : ['Brand identity', 'Retail visuals', 'Logo system'],
     },
     c4: {
       title: 'NABA Milano',
@@ -166,7 +166,7 @@ const TimelineItem: React.FC<{
   total: number;
 }> = ({ stage, projects, onProjectClick, onViewAllWorks, onInView, t, index, total }) => {
   const ref = useRef(null);
-  const visibleProjects = projects.slice(0, 3);
+  const visibleProjects = projects.slice(0, 2);
   const hiddenProjectCount = Math.max(projects.length - visibleProjects.length, 0);
   const featuredProject = visibleProjects[0];
   const supportingProjects = visibleProjects.slice(1);

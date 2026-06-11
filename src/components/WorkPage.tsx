@@ -44,10 +44,9 @@ interface ArchiveTrack {
   title: string;
   subtitle: string;
   projectIds: string[];
-  tone: CoverFamily;
 }
 
-const practiceProjectIds = new Set(['p2']);
+const practiceProjectIds = new Set(['p2', 'p12', 'p14']);
 
 const featuredProjectOrder = [
   'p1',
@@ -166,6 +165,30 @@ const projectSearchHints: Record<string, string[]> = {
   p21: ['lantern night return', 'spring festival', 'lantern festival', 'h5 game', 'vibe coding', 'frontend prototype', '元宵', '春节', '小游戏'],
 };
 
+const projectContextHints: Record<string, string[]> = {
+  p1: ['stca', 'stac', 'microsoft stca', 'copilot', 'office', '微软 stca', '微软产品'],
+  p21: ['stca', 'stac', 'microsoft stca', 'lantern night return', 'h5', 'prototype', '元宵夜归人', '节日 h5'],
+  p3: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
+  p4: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
+  p5: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
+  p6: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
+  p8: ['msra', 'microsoft research asia', '微软亚洲研究院', 'illustration', '插画', '研究院项目'],
+  p13: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
+  p15: ['msra', 'microsoft research asia', 'value compass', 'visual system web', '微软亚洲研究院', '视觉系统网页'],
+  p17: ['msra', 'microsoft research asia', 'batteryml', '微软亚洲研究院', '研究院项目'],
+  p20: ['msra', 'microsoft research asia', 'rodin', '微软亚洲研究院', '研究院项目'],
+  p2: ['design test', 'test exercise', 'product design test', '测试题', '练习', '产品设计测试'],
+  p12: ['design test', 'test exercise', 'product design test', '测试题', '企业平台测试'],
+  p14: ['design test', 'test exercise', 'product design test', '测试题', '教育产品测试'],
+  p7: ['fom', 'fom studio', 'milan studio', 'brand studio', '米兰工作室', '品牌工作室'],
+  p18: ['fom', 'fom studio', 'milan studio', 'brand studio', '米兰工作室', '品牌工作室'],
+  p9: ['hand drawing', 'drawing', 'illustration', 'packaging drawing', '手绘', '绘画', '包装绘画'],
+  p11: ['hand drawing', 'drawing', 'poster drawing', '手绘', '绘画', '海报绘画'],
+  p10: ['naba', 'naba milano', 'school project', 'design academy', '学校项目', '米兰新美院'],
+  p16: ['naba', 'naba milano', 'school project', 'design academy', '学校项目', '米兰新美院'],
+  p19: ['naba', 'naba milano', 'school project', 'design academy', '学校项目', '米兰新美院'],
+};
+
 const projectKinds: Record<string, LocalizedText> = {
   p1: { en: 'AI Product UX', zh: 'AI 产品 UX' },
   p2: { en: 'Flow Analysis Practice', zh: '流程分析练习' },
@@ -255,8 +278,8 @@ const projectTeasers: Record<string, LocalizedText> = {
     zh: '围绕学习节奏和 AI 入口重组教育首页。',
   },
   p15: {
-    en: 'Connects value-alignment research with interface and visual system craft.',
-    zh: '连接价值对齐研究、界面和视觉系统能力。',
+    en: 'Connects value-alignment research with interface and web visual system craft.',
+    zh: '连接价值对齐研究、界面和网页视觉系统能力。',
   },
   p16: {
     en: 'Uses editorial pacing to shape a mobile design-event experience.',
@@ -306,8 +329,8 @@ const agentReasons: Record<string, LocalizedText> = {
     zh: '适合证明 Agent 工作流思考和技术叙事能力。',
   },
   p15: {
-    en: 'Connects research communication with a polished visual system.',
-    zh: '把研究沟通和完整视觉系统连接起来。',
+    en: 'Connects research communication with interface and companion web-system design.',
+    zh: '把研究沟通、界面和配套网页视觉系统连接起来。',
   },
   p17: {
     en: 'Strong when the brief asks for research-facing visual systems.',
@@ -485,6 +508,7 @@ const getProjectSearchText = (project: Project) =>
       project.shortDescription,
       ...(project.tags || []),
       ...(projectSearchHints[project.id] || []),
+      ...(projectContextHints[project.id] || []),
       project.acts.act1.title,
       project.acts.act1.content,
       project.acts.act2.title,
@@ -673,49 +697,52 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const archiveTracks = useMemo<ArchiveTrack[]>(
     () => [
       {
-        id: 'ai-research',
-        title: isZh ? 'AI 产品与研究 Demo' : 'AI Product & Research Demos',
+        id: 'stca',
+        title: 'Microsoft STCA',
         subtitle: isZh
-          ? '微软产品 UX、研究模型 demo、Agent 工作流和技术转译。'
-          : 'Microsoft product UX, research demos, agent workflows, and technical translation.',
-        projectIds: ['p1', 'p5', 'p3', 'p20', 'p13'],
-        tone: 'research',
+          ? 'Copilot 语音阅读体验和 STCA 阶段的交互原型项目。'
+          : 'Copilot voice UX and interaction prototypes from the STCA stage.',
+        projectIds: ['p1', 'p21'],
       },
       {
-        id: 'visual-systems',
-        title: isZh ? '视觉系统与研究传播' : 'Visual Systems & Research Communication',
+        id: 'msra',
+        title: 'Microsoft Research Asia',
         subtitle: isZh
-          ? '研究传播、技术品牌、活动视觉和信息设计系统。'
-          : 'Research-facing identity, technical branding, event visuals, and information systems.',
-        projectIds: ['p17', 'p15', 'p6'],
-        tone: 'visualSystem',
+          ? '研究 Demo、Agent 工作流、AI 伴侣、视觉系统、周年视觉和插画项目。'
+          : 'Research demos, agent workflows, AI companion work, visual systems, anniversary visuals, and illustration.',
+        projectIds: ['p5', 'p3', 'p13', 'p20', 'p17', 'p15', 'p6', 'p4', 'p8'],
       },
       {
-        id: 'product-flows',
-        title: isZh ? '产品流程与 B2B 平台' : 'Product Flows & B2B Platforms',
+        id: 'design-tests',
+        title: isZh ? '产品设计测试题' : 'Product Design Tests',
         subtitle: isZh
-          ? '企业级 AI、教育入口、移动端路径和复杂产品层级。'
-          : 'Enterprise AI, education entry points, mobile paths, and complex product hierarchy.',
-        projectIds: ['p12', 'p14', 'p4'],
-        tone: 'aiProduct',
+          ? 'Keeta、小度学习机和百度智能云等测试题，单独放置，避免和正式工作经历混在一起。'
+          : 'Keeta, Xiaodu Learning Tablet, and Baidu AI Cloud test exercises kept separate from formal work.',
+        projectIds: ['p2', 'p14', 'p12'],
       },
       {
-        id: 'brand-campaign',
-        title: isZh ? '品牌、插画与活动 Campaign' : 'Branding, Illustration & Campaigns',
+        id: 'fom-studio',
+        title: 'FOM Studio',
         subtitle: isZh
-          ? '品牌识别、包装、展览网页、节日 H5 和图形表达。'
-          : 'Identity, packaging, exhibition web, festival H5, and graphic expression.',
-        projectIds: ['p21', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8', 'p10'],
-        tone: 'brand',
+          ? '米兰 FOM Studio 期间的品牌识别和商业视觉系统项目。'
+          : 'Brand identity and commercial visual system work from FOM Studio in Milan.',
+        projectIds: ['p7', 'p18'],
       },
       {
-        id: 'practice',
-        title: isZh ? '练习与实验' : 'Practice & Experiments',
+        id: 'hand-drawing',
+        title: isZh ? '手绘与包装绘画' : 'Hand Drawing & Packaging Illustration',
         subtitle: isZh
-          ? '测试题、小型分析和个人探索放在后段，和正式项目区分。'
-          : 'Tests, smaller analysis work, and self-initiated explorations stay visible but secondary.',
-        projectIds: ['p2'],
-        tone: 'practice',
+          ? '白象汤好喝和心相印包装设计归为手绘绘画项目。'
+          : 'White Elephant and Heart Printing packaging work grouped as hand-drawing and illustration projects.',
+        projectIds: ['p11', 'p9'],
+      },
+      {
+        id: 'naba',
+        title: isZh ? 'NABA 学校项目' : 'NABA School Projects',
+        subtitle: isZh
+          ? '米兰新美院阶段的品牌、展览网页和 IP 视觉项目。'
+          : 'Branding, exhibition web, and IP visual projects from NABA Milano.',
+        projectIds: ['p19', 'p16', 'p10'],
       },
     ],
     [isZh]
@@ -756,8 +783,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ? '我把复杂技术转成可使用、可探索、也能被团队清楚讨论的产品体验。'
       : 'I turn complex technology into usable, explorable experiences that teams can read, test, and discuss.',
     archiveStat: isZh
-      ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个方向`
-      : `${projects.length} reader-ready works across ${archiveTrackCount} tracks`,
+      ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个来源`
+      : `${projects.length} reader-ready works across ${archiveTrackCount} contexts`,
     formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
     agentTitle: isZh ? 'Agent' : 'Agent',
     agentBody: isZh
@@ -765,8 +792,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
       : 'Describe a role, capability, or project type and get a curated set of matching works.',
     archiveTitle: isZh ? '项目库' : 'Project Library',
     archiveBody: isZh
-      ? '直接浏览完整项目库，按能力方向、时间和项目类型扫读。'
-      : 'Browse the full archive by track, year, and project type.',
+      ? '直接浏览完整项目库，按工作来源、时间和项目类型扫读。'
+      : 'Browse the full archive by work context, year, and project type.',
     agentKicker: isZh ? 'AGENT MATCH' : 'AGENT MATCH',
     agentHeading: 'Hi',
     agentSubheading: isZh
@@ -785,8 +812,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
     archiveKicker: isZh ? 'PROJECT ARCHIVE' : 'PROJECT ARCHIVE',
     archiveHeading: isZh ? '项目库' : 'Project Library',
     archiveBodyLong: isZh
-      ? '正式案例、研究 demo、视觉系统、品牌项目和练习被组织成更密集的浏览结构。'
-      : 'Formal case studies, research demos, visual systems, branding, and practice work in a denser archive structure.',
+      ? '按 STCA、MSRA、测试题、FOM Studio、手绘绘画和 NABA 学校项目重新整理，避免不同来源混在同一层级里。'
+      : 'Grouped by STCA, MSRA, design tests, FOM Studio, hand-drawing work, and NABA school projects.',
     featuredHeading: isZh ? '代表性案例' : 'Featured Case Studies',
     featuredBody: isZh ? '先展示最能代表能力主线的项目。' : 'A sharper layer for the strongest evidence.',
     indexHeading: isZh ? '项目索引' : 'Project Index',
@@ -802,8 +829,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const archiveSummary = isZh
-    ? `${projects.length} 个项目 · ${archiveTrackCount} 个方向 · ${formalProjects.length} 个正式项目`
-    : `${projects.length} works across ${archiveTrackCount} tracks · ${formalProjects.length} formal works`;
+    ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源 · ${formalProjects.length} 个正式项目`
+    : `${projects.length} works across ${archiveTrackCount} contexts · ${formalProjects.length} formal works`;
 
   const scoredMatches = useMemo<ScoredProject[]>(() => {
     const effectiveQuery = submittedQuery.trim();
@@ -820,7 +847,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         }));
     }
 
-    return formalProjects
+    return projects
       .map((project) => {
         const rawScore = scoreProject(project, effectiveQuery, activeSuggestionId);
         return {
@@ -836,7 +863,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         return a.rank - b.rank;
       })
       .slice(0, 5);
-  }, [activeSuggestionId, formalProjects, submittedQuery, projectById]);
+  }, [activeSuggestionId, projects, submittedQuery, projectById]);
 
   const featuredProjects = archiveFeaturedIds
     .map(getProjectById)
@@ -891,7 +918,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <span className="font-mono text-[10px] uppercase tracking-normal text-[var(--work-muted)]">Works</span>
           <span className="h-3 w-px bg-[var(--work-line)]" aria-hidden="true" />
           <span className="text-xs text-[var(--work-muted)]">
-            {isZh ? `${projects.length} 个项目 · ${archiveTrackCount} 个方向` : `${projects.length} works · ${archiveTrackCount} tracks`}
+            {isZh ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源` : `${projects.length} works · ${archiveTrackCount} contexts`}
           </span>
         </div>
         <div className="flex items-center rounded-full bg-[var(--work-bg)] p-0.5 shadow-[inset_0_0_0_1px_rgba(23,20,18,0.06)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
@@ -1166,7 +1193,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </div>
           <div className="py-4 pl-4 sm:border-r sm:border-[var(--work-line)] sm:pr-4">
             <p className="font-mono text-xs text-[var(--work-ink)]">{archiveTrackCount}</p>
-            <p>{isZh ? '项目方向' : 'project tracks'}</p>
+            <p>{isZh ? '项目来源' : 'project contexts'}</p>
           </div>
           <div className="col-span-2 border-t border-[var(--work-line)] py-4 sm:col-span-1 sm:border-t-0 sm:pl-4">
             <p className="font-mono text-xs text-[var(--work-ink)]">{formalProjects.length}</p>
@@ -1644,7 +1671,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
               subtitle: isZh ? '未归入主分类但仍保留在完整作品库中。' : 'Projects kept visible outside the main track taxonomy.',
               projectIds: untrackedProjects.map((project) => project.id),
               projects: untrackedProjects,
-              tone: 'practice',
             }}
             offset={90}
           />
