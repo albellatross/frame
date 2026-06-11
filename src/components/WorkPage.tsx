@@ -890,7 +890,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ? '直接浏览完整项目库，按能力方向、时间和项目类型扫读。'
       : 'Browse the full archive by track, year, and project type.',
     agentKicker: isZh ? 'AGENT MATCH' : 'AGENT MATCH',
-    agentHeading: isZh ? '今天想看哪类项目？' : 'What should we dive into today?',
+    agentHeading: 'Hi',
     agentSubheading: isZh
       ? '描述角色、能力或项目类型。这里使用本地项目元数据做前端匹配，不伪装成实时 AI 后端。'
       : 'Describe a role, capability, or project type. This uses local project metadata, not a live AI backend.',
@@ -1203,7 +1203,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       <div className="w-full max-w-[980px]">
         <div className="text-center">
           <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
-            {isZh ? 'Hi 格里，今天想看哪类项目？' : 'Hi Geli, what should we dive into today?'}
+            Hi
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
             {isZh
