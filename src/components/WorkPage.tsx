@@ -5,7 +5,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Bot,
-  Check,
   FilePlus2,
   LibraryBig,
   Search,
@@ -18,8 +17,6 @@ import { projectCoverAsset } from '../utils/assets';
 interface WorkPageProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
-  selectedProjectIds: string[];
-  onToggleSelect: (id: string) => void;
   onReturnToTimeline?: () => void;
 }
 
@@ -777,45 +774,9 @@ const CoverFrame: React.FC<{
   );
 };
 
-const AddToPdfButton: React.FC<{
-  project: Project;
-  isSelected: boolean;
-  onToggleSelect: (id: string) => void;
-  labels: { add: string; added: string };
-  surface: 'light' | 'dark';
-  labelMode?: 'icon' | 'responsive';
-}> = ({ project, isSelected, onToggleSelect, labels, surface, labelMode = 'responsive' }) => (
-  <button
-    type="button"
-    onClick={(event) => {
-      event.stopPropagation();
-      onToggleSelect(project.id);
-    }}
-    className={cn(
-      'relative z-20 inline-flex h-10 min-w-10 items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-      labelMode === 'icon' ? 'w-10 px-0' : 'px-3',
-      surface === 'dark'
-        ? 'border border-white/14 bg-white/8 text-white/82 hover:bg-white/14 focus-visible:ring-[#8FA3FF] focus-visible:ring-offset-[#15110E]'
-        : 'border border-[var(--work-line)] bg-white/74 text-[var(--work-ink)] hover:border-[var(--work-ink)] hover:bg-white focus-visible:ring-[var(--work-accent)] focus-visible:ring-offset-[var(--work-surface)]',
-      isSelected
-        ? surface === 'dark'
-          ? 'border-[#8FA3FF] bg-[#315CFF] text-white'
-          : 'border-[var(--work-accent)] bg-[var(--work-accent)] text-white'
-        : ''
-    )}
-    aria-label={`${isSelected ? labels.added : labels.add}: ${project.title}`}
-    title={isSelected ? labels.added : labels.add}
-  >
-    {isSelected ? <Check size={14} strokeWidth={2.5} aria-hidden="true" /> : <FilePlus2 size={14} aria-hidden="true" />}
-    <span className={labelMode === 'icon' ? 'sr-only' : 'hidden sm:inline'}>{isSelected ? labels.added : labels.add}</span>
-  </button>
-);
-
 const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
-  selectedProjectIds,
-  onToggleSelect,
   onReturnToTimeline,
 }) => {
   const { language, t } = useLanguage();
@@ -953,8 +914,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
     indexHeading: isZh ? '项目索引' : 'Project Index',
     indexBody: isZh ? '用 Year / Project / Track / Role 的方式保留完整数量感。' : 'A compact Year / Project / Track / Role view of the full body of work.',
     viewCase: isZh ? '查看案例' : 'View case',
-    addPdf: isZh ? '加入 PDF' : 'Add PDF',
-    addedPdf: isZh ? '已加入' : 'Added',
     recent: isZh ? '近期' : 'Recent',
     localMatch: isZh ? 'Local metadata match' : 'Local metadata match',
     tableYear: isZh ? 'Year' : 'Year',
@@ -1091,7 +1050,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const ComposerResultCard: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
     const project = item.project;
-    const isSelected = selectedProjectIds.includes(project.id);
 
     return (
       <motion.article layout {...cardMotion(idx, 8)}>
@@ -1123,13 +1081,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   {copy.viewCase}
                   <ArrowRight size={13} aria-hidden="true" />
                 </span>
-                <AddToPdfButton
-                  project={project}
-                  isSelected={isSelected}
-                  onToggleSelect={onToggleSelect}
-                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
-                  surface="light"
-                />
               </div>
             </div>
           </div>
@@ -1367,7 +1318,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const FeaturedProjectCard: React.FC<{ project: Project; idx: number; variant: 'lead' | 'standard' }> = ({ project, idx, variant }) => {
-    const isSelected = selectedProjectIds.includes(project.id);
     const chips = (projectSkillChips[project.id] || []).slice(0, 2);
 
     return (
@@ -1412,13 +1362,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   {copy.viewCase}
                   <ArrowRight size={14} aria-hidden="true" />
                 </span>
-                <AddToPdfButton
-                  project={project}
-                  isSelected={isSelected}
-                  onToggleSelect={onToggleSelect}
-                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
-                  surface="light"
-                />
               </div>
             </div>
           </div>
@@ -1428,7 +1371,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const CompactProjectCard: React.FC<{ project: Project; idx: number }> = ({ project, idx }) => {
-    const isSelected = selectedProjectIds.includes(project.id);
     const chips = (projectSkillChips[project.id] || (project.tags || []).map((tag) => ({ en: tag, zh: tag }))).slice(0, 2);
 
     return (
@@ -1443,16 +1385,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
             className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
             aria-label={`${copy.viewCase}: ${project.title}`}
           />
-          <div className="absolute right-3 top-3 z-20">
-            <AddToPdfButton
-              project={project}
-              isSelected={isSelected}
-              onToggleSelect={onToggleSelect}
-              labels={{ add: copy.addPdf, added: copy.addedPdf }}
-              surface="light"
-              labelMode="icon"
-            />
-          </div>
           <CoverFrame project={project} idx={idx} isZh={isZh} density="compact" />
           <div className="relative z-20 px-1 pb-2 pt-3">
             <div className="mb-2 flex min-w-0 flex-wrap items-center gap-2 text-[11px] text-[var(--work-muted)]">
@@ -1483,7 +1415,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const AgentResultRow: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
     const project = item.project;
-    const isSelected = selectedProjectIds.includes(project.id);
     const chips = (projectSkillChips[project.id] || [{ en: getProjectKind(project, false), zh: getProjectKind(project, true) }]).slice(0, 3);
 
     return (
@@ -1523,13 +1454,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   {copy.viewCase}
                   <ArrowRight size={13} aria-hidden="true" />
                 </span>
-                <AddToPdfButton
-                  project={project}
-                  isSelected={isSelected}
-                  onToggleSelect={onToggleSelect}
-                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
-                  surface="dark"
-                />
               </div>
             </div>
           </div>

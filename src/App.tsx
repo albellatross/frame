@@ -10,7 +10,6 @@ import Timeline from './components/Timeline';
 import ResumePage from './components/ResumePage';
 import WorkPage from './components/WorkPage';
 import ProjectDetail from './components/ProjectDetail';
-import PortfolioGenerator from './components/PortfolioGenerator';
 import WalkThrough from './components/walk-through';
 
 const hasPortfolioReaderPages = (project: Project) =>
@@ -26,9 +25,7 @@ const AppContent: React.FC = () => {
 
   // State
   const [currentPage, setCurrentPage] = useState<'home' | 'work' | 'profile'>('home');
-  const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [isWalkThroughOpen, setIsWalkThroughOpen] = useState(false);
   const [workReturnTarget, setWorkReturnTarget] = useState<'timeline' | null>(null);
 
@@ -38,12 +35,6 @@ const AppContent: React.FC = () => {
     : null;
 
   // Handlers
-  const handleProjectSelect = (id: string) => {
-    setSelectedProjectIds(prev => 
-      prev.includes(id) ? prev.filter(pid => pid !== id) : [...prev, id]
-    );
-  };
-
   const handleProjectClick = (project: Project) => {
     setActiveProject(project);
   };
@@ -81,8 +72,6 @@ const AppContent: React.FC = () => {
   return (
     <>
     <Layout 
-      onOpenGenerator={() => setIsGeneratorOpen(true)}
-      selectedCount={selectedProjectIds.length}
       currentPage={currentPage}
       onNavigate={handleNavigate}
     >
@@ -103,8 +92,6 @@ const AppContent: React.FC = () => {
         <WorkPage 
           projects={WORK_PROJECTS}
           onProjectClick={handleProjectClick}
-          selectedProjectIds={selectedProjectIds}
-          onToggleSelect={handleProjectSelect}
           onReturnToTimeline={workReturnTarget === 'timeline' ? handleReturnToTimeline : undefined}
         />
       )}
@@ -122,14 +109,6 @@ const AppContent: React.FC = () => {
           />
         )}
       </AnimatePresence>
-
-      <PortfolioGenerator
-        isOpen={isGeneratorOpen}
-        onClose={() => setIsGeneratorOpen(false)}
-        selectedIds={selectedProjectIds}
-        projects={WORK_PROJECTS}
-        onRemove={handleProjectSelect}
-      />
     </Layout>
 
     {/* Walk Through — rendered outside Layout to avoid z-index stacking context */}

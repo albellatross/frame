@@ -131,9 +131,4 @@ export interface CareerStage {
   relatedProjectIds: string[];
 }
 
-export interface PortfolioState {
-  selectedProjectIds: string[];
-  isGeneratorOpen: boolean;
-}
-
 export type SectionId = 'hero' | 'timeline' | 'work' | 'profile' | 'contact';

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Linkedin, Mail, FileText, X, ArrowUpRight, Github, Twitter, Globe } from 'lucide-react';
+import { Linkedin, Mail, X, ArrowUpRight, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 
 interface LayoutProps {
   children: React.ReactNode;
-  onOpenGenerator: () => void;
-  selectedCount: number;
   currentPage: 'home' | 'work' | 'profile';
   onNavigate: (page: 'home' | 'work' | 'profile') => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCount, currentPage, onNavigate }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { language, toggleLanguage, t } = useLanguage();
+  const { t } = useLanguage();
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -143,47 +141,6 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
                ? 'bg-neutral-200'
                : 'bg-white/90 backdrop-blur-md shadow-sm border border-neutral-200/50'}
            />
-
-           {/* PDF Builder Button - Only show on home or work view */}
-           <div className={`transition-all duration-300 ${currentPage === 'profile' ? 'opacity-0 pointer-events-none w-0 overflow-hidden' : 'opacity-100 w-auto'}`}>
-             <motion.button
-               onClick={onOpenGenerator}
-               disabled={isMenuOpen}
-               whileHover={{ scale: 1.05 }}
-               whileTap={{ scale: 0.96 }}
-               className={`relative group flex items-center justify-center gap-2 w-[106px] sm:w-[118px] h-10 rounded-full text-sm font-medium transition-[background-color,box-shadow,transform,opacity] duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-2 ${
-                 isMenuOpen
-                   ? 'opacity-0 pointer-events-none translate-x-10'
-                   : 'opacity-100 translate-x-0 bg-[#171412] text-white shadow-button hover:bg-[#315CFF] hover:shadow-button-hover'
-               }`}
-               aria-label={t('nav.generate')}
-             >
-               <div className="absolute inset-0 bg-[#315CFF] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-               <div className="relative flex items-center gap-2">
-                  <FileText size={14} className="text-white/70 group-hover:text-white transition-colors flex-shrink-0" />
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={language + '-generate'}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {t('nav.generate')}
-                    </motion.span>
-                  </AnimatePresence>
-                  {selectedCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="ml-1 bg-white text-neutral-900 text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold"
-                    >
-                      {selectedCount}
-                    </motion.span>
-                  )}
-               </div>
-             </motion.button>
-           </div>
 
            {/* Hamburger Toggle */}
            <motion.button

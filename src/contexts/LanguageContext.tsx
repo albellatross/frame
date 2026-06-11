@@ -17,7 +17,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.profile': 'Profile',
     'nav.navigation': 'Navigation',
     'nav.connect': 'Connect',
-    'nav.generate': 'Build PDF',
     
     // Hero
     'hero.subtitle': 'The Narrative Portfolio',
@@ -95,26 +94,6 @@ const translations: Record<Language, Record<string, string>> = {
     'project.end': 'End of Case Study',
     'project.back': 'Back to Timeline',
     
-    // Portfolio Generator
-    'generator.title': 'Build PDF Portfolio',
-    'generator.description': 'Curate a specific PDF version of this portfolio tailored to your recruitment needs.',
-    'generator.coverStyle': 'Cover Style',
-    'generator.minimal': 'Minimal',
-    'generator.bold': 'Bold',
-    'generator.typographic': 'Typographic',
-    'generator.image': 'Image',
-    'generator.cancel': 'Cancel and Close',
-    'generator.included': 'Included Projects',
-    'generator.reorder': 'Drag to reorder (Simulated)',
-    'generator.empty': 'No projects selected. Add them from the Work section.',
-    'generator.generating': 'Building PDF...',
-    'generator.generate': 'Build PDF',
-    'generator.ready': 'Portfolio Ready',
-    'generator.success': 'Your curated portfolio has been generated successfully with',
-    'generator.projects': 'projects.',
-    'generator.edit': 'Edit Selection',
-    'generator.download': 'Download PDF',
-    
     // Footer
     'footer.title': "Let's Frame",
     'footer.title2': 'the Future.',
@@ -134,7 +113,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.profile': '简介',
     'nav.navigation': '导航',
     'nav.connect': '联系',
-    'nav.generate': 'Build PDF',
     
     // Hero
     'hero.subtitle': '叙事作品集',
@@ -211,26 +189,6 @@ const translations: Record<Language, Record<string, string>> = {
     'project.impact': '核心指标影响',
     'project.end': '案例结束',
     'project.back': '返回时间线',
-    
-    // Portfolio Generator
-    'generator.title': '构建 PDF 作品集',
-    'generator.description': '为您的招聘需求定制一份专属的 PDF 作品集。',
-    'generator.coverStyle': '封面风格',
-    'generator.minimal': '极简',
-    'generator.bold': '大胆',
-    'generator.typographic': '字体',
-    'generator.image': '图片',
-    'generator.cancel': '取消并关闭',
-    'generator.included': '已选项目',
-    'generator.reorder': '拖拽排序（模拟）',
-    'generator.empty': '未选择项目。请从作品区添加。',
-    'generator.generating': '正在构建 PDF...',
-    'generator.generate': '构建 PDF',
-    'generator.ready': '作品集已就绪',
-    'generator.success': '您的定制作品集已成功生成，包含',
-    'generator.projects': '个项目。',
-    'generator.edit': '编辑选择',
-    'generator.download': '下载 PDF',
     
     // Footer
     'footer.title': '让我们一起',
