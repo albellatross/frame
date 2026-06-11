@@ -22,7 +22,6 @@ interface WorkPageProps {
 
 type ViewMode = 'agent' | 'archive';
 type LocalizedText = { en: string; zh: string };
-type CoverFamily = 'aiProduct' | 'research' | 'visualSystem' | 'brand' | 'practice';
 type CoverDensity = 'wall' | 'agent' | 'compact' | 'featured' | 'lead';
 
 interface CapabilitySuggestion {
@@ -363,30 +362,6 @@ const projectSkillChips: Record<string, LocalizedText[]> = {
   ],
 };
 
-const projectCoverFamilies: Record<string, CoverFamily> = {
-  p1: 'aiProduct',
-  p4: 'aiProduct',
-  p12: 'aiProduct',
-  p13: 'aiProduct',
-  p14: 'aiProduct',
-  p3: 'research',
-  p5: 'research',
-  p15: 'research',
-  p20: 'research',
-  p6: 'visualSystem',
-  p17: 'visualSystem',
-  p7: 'brand',
-  p8: 'brand',
-  p9: 'brand',
-  p10: 'brand',
-  p11: 'brand',
-  p16: 'brand',
-  p18: 'brand',
-  p19: 'brand',
-  p21: 'brand',
-  p2: 'practice',
-};
-
 const intentBoosters = [
   {
     terms: ['ai', 'aigc', 'generative', 'research', 'multimodal', 'model', 'demo', '生成式', '人工智能', '多模态', '研究', '模型'],
@@ -446,52 +421,11 @@ const namedProjectBoosters = [
   { terms: ['msra 25th', 'anniversary', '微软亚洲研究院'], id: 'p6', weight: 18 },
 ];
 
-const coverFamilyMeta: Record<CoverFamily, { label: string; frame: string; inner: string; imageOutline: string }> = {
-  aiProduct: {
-    label: 'AI UX',
-    frame: 'from-[#F8FAFF] via-[#FFFFFF] to-[#E9EEF9] text-[#315CFF]',
-    inner: 'bg-white',
-    imageOutline: 'outline-black/10',
-  },
-  research: {
-    label: 'DEMO',
-    frame: 'from-[#111217] via-[#1A1D24] to-[#28364A] text-[#8FA3FF]',
-    inner: 'bg-[#0F1117]',
-    imageOutline: 'outline-white/10',
-  },
-  visualSystem: {
-    label: 'SYSTEM',
-    frame: 'from-[#FBF8F0] via-[#FFFFFF] to-[#E7EDF8] text-[#394958]',
-    inner: 'bg-white',
-    imageOutline: 'outline-black/10',
-  },
-  brand: {
-    label: 'BRAND',
-    frame: 'from-[#F9F6EF] via-[#FFFFFF] to-[#EFE7DA] text-[#4E4A43]',
-    inner: 'bg-[#FFFDF8]',
-    imageOutline: 'outline-black/10',
-  },
-  practice: {
-    label: 'LAB',
-    frame: 'from-[#F3F0EA] via-[#FFFFFF] to-[#E5E0D8] text-[#756E66]',
-    inner: 'bg-[#FAF8F4]',
-    imageOutline: 'outline-black/10',
-  },
-};
-
-const densityClasses: Record<CoverDensity, string> = {
-  wall: 'rounded-[10px] p-1',
-  agent: 'rounded-[12px] p-1.5',
-  compact: 'rounded-[12px] p-2',
-  featured: 'rounded-[14px] p-2.5',
-  lead: 'rounded-[16px] p-3',
-};
-
-const innerRadiusClasses: Record<CoverDensity, string> = {
-  wall: 'rounded-[6px]',
-  agent: 'rounded-[8px]',
-  compact: 'rounded-[8px]',
-  featured: 'rounded-[10px]',
+const coverRadiusClasses: Record<CoverDensity, string> = {
+  wall: 'rounded-[8px]',
+  agent: 'rounded-[10px]',
+  compact: 'rounded-[10px]',
+  featured: 'rounded-[12px]',
   lead: 'rounded-[12px]',
 };
 
@@ -653,35 +587,21 @@ const getAgentReason = (project: Project, isZh: boolean) =>
 
 const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
 
-const getCoverFit = (project: Project, family: CoverFamily) => {
-  if (project.coverDisplay === 'cover') return 'cover';
-  if (project.coverDisplay === 'contain' || project.slideSets || project.slides || project.caseSections) return 'contain';
-  return family === 'brand' ? 'cover' : 'contain';
-};
-
-const AbstractCover: React.FC<{ project: Project; family: CoverFamily; isZh: boolean }> = ({ project, family, isZh }) => (
+const AbstractCover: React.FC<{ project: Project; isZh: boolean }> = ({ project, isZh }) => (
   <div
     role="img"
     aria-label={`${getProjectTitle(project, isZh)} cover placeholder`}
-    className={cn(
-      'flex h-full w-full flex-col justify-between overflow-hidden p-3',
-      family === 'research' ? 'text-white' : 'text-[var(--work-ink)]'
-    )}
+    className="relative flex h-full w-full flex-col justify-end overflow-hidden bg-white p-3 text-[var(--work-ink)]"
   >
-    <div className="grid grid-cols-4 gap-1.5 opacity-70" aria-hidden="true">
-      {Array.from({ length: 8 }).map((_, index) => (
+    <div className="absolute inset-0 grid grid-cols-4 gap-1.5 p-3 opacity-50" aria-hidden="true">
+      {Array.from({ length: 12 }).map((_, index) => (
         <span
           key={index}
-          className={cn(
-            'h-5 rounded-sm',
-            family === 'research' ? 'bg-white/12' : 'bg-black/8',
-            index % 3 === 0 ? 'col-span-2' : ''
-          )}
+          className={cn('h-5 rounded-sm bg-black/8', index % 4 === 0 ? 'col-span-2' : '')}
         />
       ))}
     </div>
-    <div>
-      <p className="font-mono text-[10px] uppercase text-current/55">{coverFamilyMeta[family].label}</p>
+    <div className="relative">
       <p className="mt-1 line-clamp-2 text-sm font-semibold leading-tight">{getProjectTitle(project, isZh)}</p>
     </div>
   </div>
@@ -690,15 +610,12 @@ const AbstractCover: React.FC<{ project: Project; family: CoverFamily; isZh: boo
 const ProjectImage: React.FC<{
   project: Project;
   idx: number;
-  family: CoverFamily;
   isZh: boolean;
-  fit: 'cover' | 'contain';
-  outlineClass: string;
-}> = ({ project, idx, family, isZh, fit, outlineClass }) => {
+}> = ({ project, idx, isZh }) => {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
-    return <AbstractCover project={project} family={family} isZh={isZh} />;
+    return <AbstractCover project={project} isZh={isZh} />;
   }
 
   return (
@@ -712,11 +629,7 @@ const ProjectImage: React.FC<{
       fetchPriority={idx < 2 ? 'high' : 'auto'}
       onError={() => setHasError(true)}
       sizes="(min-width: 1200px) 360px, (min-width: 768px) 45vw, calc(100vw - 48px)"
-      className={cn(
-        'h-full w-full bg-transparent outline outline-1 -outline-offset-1 transition-transform duration-300 ease-out group-hover:scale-[1.02]',
-        fit === 'cover' ? 'object-cover' : 'object-contain',
-        outlineClass
-      )}
+      className="h-full w-full bg-white object-cover object-top outline outline-1 -outline-offset-1 outline-black/10"
     />
   );
 };
@@ -727,49 +640,14 @@ const CoverFrame: React.FC<{
   isZh: boolean;
   density: CoverDensity;
 }> = ({ project, idx, isZh, density }) => {
-  const family = projectCoverFamilies[project.id] || 'brand';
-  const meta = coverFamilyMeta[family];
-  const fit = getCoverFit(project, family);
-  const isDark = family === 'research';
-
   return (
     <div
       className={cn(
-        'relative aspect-[16/10] overflow-hidden bg-gradient-to-br shadow-[var(--work-cover-shadow)]',
-        densityClasses[density],
-        meta.frame
+        'relative aspect-video overflow-hidden bg-white shadow-[var(--work-cover-shadow)]',
+        coverRadiusClasses[density]
       )}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-80 [background-image:linear-gradient(135deg,rgba(255,255,255,0.45)_0_1px,transparent_1px_28px)]"
-        aria-hidden="true"
-      />
-      <div
-        className={cn(
-          'pointer-events-none absolute left-2 top-2 z-10 rounded-full px-2 py-0.5 font-mono text-[9px] font-medium tracking-normal',
-          isDark ? 'bg-white/10 text-white/70' : 'bg-white/75 text-current shadow-[0_0_0_1px_rgba(0,0,0,0.05)]'
-        )}
-        aria-hidden="true"
-      >
-        {meta.label}
-      </div>
-      <div
-        className={cn(
-          'relative h-full overflow-hidden shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]',
-          innerRadiusClasses[density],
-          meta.inner,
-          isDark ? 'shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]' : ''
-        )}
-      >
-        <ProjectImage project={project} idx={idx} family={family} isZh={isZh} fit={fit} outlineClass={meta.imageOutline} />
-      </div>
-      <div
-        className={cn(
-          'pointer-events-none absolute bottom-2 right-2 h-8 w-16 rounded-full blur-2xl',
-          family === 'aiProduct' ? 'bg-[#315CFF]/25' : family === 'research' ? 'bg-[#7C8BFF]/24' : 'bg-black/8'
-        )}
-        aria-hidden="true"
-      />
+      <ProjectImage project={project} idx={idx} isZh={isZh} />
     </div>
   );
 };
