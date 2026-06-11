@@ -1105,8 +1105,101 @@ const WorkPage: React.FC<WorkPageProps> = ({
     );
   };
 
+  const PromptChips = () => (
+    <div className="mx-auto mt-5 flex max-w-[820px] flex-wrap justify-center gap-2">
+      {capabilitySuggestions.map((suggestion) => (
+        <button
+          key={suggestion.id}
+          type="button"
+          onClick={() => handleSuggestionClick(suggestion)}
+          className="min-h-10 shrink-0 rounded-full border border-[var(--work-line)] bg-white/70 px-4 py-2 text-sm font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+        >
+          {getLocalized(suggestion.label, isZh)}
+        </button>
+      ))}
+    </div>
+  );
+
+  const AgentInputComposer: React.FC<{ placement: 'center' | 'dock' }> = ({ placement }) => {
+    const isDock = placement === 'dock';
+
+    return (
+      <form onSubmit={handleSubmit} className={cn('mx-auto max-w-[820px]', isDock ? 'w-full' : 'mt-8')}>
+        <label htmlFor="work-agent-query" className="sr-only">
+          {copy.agentHeading}
+        </label>
+        <div
+          className={cn(
+            'bg-white shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]',
+            isDock ? 'rounded-[24px] p-3 sm:p-3.5' : 'rounded-[28px] p-4'
+          )}
+        >
+          <textarea
+            id="work-agent-query"
+            name="portfolio-agent-query"
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setActiveSuggestionId(null);
+            }}
+            placeholder={copy.placeholder}
+            rows={isDock ? 2 : 3}
+            spellCheck={false}
+            autoComplete="off"
+            className={cn(
+              'w-full resize-none bg-transparent px-1 py-1 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]',
+              isDock ? 'min-h-[52px] max-h-[150px] text-base leading-6' : 'min-h-[88px] text-[17px] leading-7'
+            )}
+          />
+          <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--work-line)] pt-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <button
+                type="button"
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                aria-label={isZh ? '添加更多需求' : 'Add more context'}
+                title={isZh ? '添加更多需求' : 'Add more context'}
+              >
+                <FilePlus2 size={17} aria-hidden="true" />
+              </button>
+              <span className="inline-flex h-10 min-w-0 items-center truncate rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]">
+                Portfolio Agent
+              </span>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              {query || submittedQuery ? (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  aria-label={copy.clear}
+                  title={copy.clear}
+                >
+                  <X size={17} aria-hidden="true" />
+                </button>
+              ) : null}
+              <button
+                type="submit"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+              >
+                {copy.submit}
+                <ArrowRight size={15} aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    );
+  };
+
   const AgentComposer = () => (
-    <section className="flex min-h-[calc(100vh-220px)] flex-col items-center justify-center py-10">
+    <section
+      className={cn(
+        'relative',
+        submittedQuery
+          ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-8 sm:pb-[200px]'
+          : 'flex min-h-[calc(100vh-220px)] flex-col items-center justify-center py-10'
+      )}
+    >
       <div className="w-full max-w-[980px]">
         <div className="text-center">
           <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
@@ -1155,76 +1248,21 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </div>
         ) : null}
 
-        <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-[820px]">
-          <label htmlFor="work-agent-query" className="sr-only">
-            {copy.agentHeading}
-          </label>
-          <div className="rounded-[28px] bg-white p-4 shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]">
-            <textarea
-              id="work-agent-query"
-              name="portfolio-agent-query"
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setActiveSuggestionId(null);
-              }}
-              placeholder={copy.placeholder}
-              rows={3}
-              spellCheck={false}
-              autoComplete="off"
-              className="min-h-[88px] w-full resize-none bg-transparent px-1 py-1 text-[17px] leading-7 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]"
-            />
-            <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--work-line)] pt-3">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-                  aria-label={isZh ? '添加更多需求' : 'Add more context'}
-                  title={isZh ? '添加更多需求' : 'Add more context'}
-                >
-                  <FilePlus2 size={17} aria-hidden="true" />
-                </button>
-                <span className="inline-flex h-10 items-center rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]">
-                  Portfolio Agent
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                {query || submittedQuery ? (
-                  <button
-                    type="button"
-                    onClick={handleClear}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-                    aria-label={copy.clear}
-                    title={copy.clear}
-                  >
-                    <X size={17} aria-hidden="true" />
-                  </button>
-                ) : null}
-                <button
-                  type="submit"
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-                >
-                  {copy.submit}
-                  <ArrowRight size={15} aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <div className="mx-auto mt-5 flex max-w-[820px] flex-wrap justify-center gap-2">
-          {capabilitySuggestions.map((suggestion) => (
-            <button
-              key={suggestion.id}
-              type="button"
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="min-h-10 rounded-full border border-[var(--work-line)] bg-white/60 px-4 py-2 text-sm font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-            >
-              {getLocalized(suggestion.label, isZh)}
-            </button>
-          ))}
-        </div>
+        {submittedQuery ? null : (
+          <>
+            <AgentInputComposer placement="center" />
+            <PromptChips />
+          </>
+        )}
       </div>
+
+      {submittedQuery ? (
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/95 to-transparent px-4 pb-4 pt-8 sm:px-6 sm:pb-6">
+          <div className="pointer-events-auto mx-auto max-w-[900px]">
+            <AgentInputComposer placement="dock" />
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 
