@@ -83,7 +83,11 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
       >
         {/* Logo */}
         <div className="z-50 relative">
-          <button onClick={() => handleNavClick('hero', 'scroll')} className="text-left group outline-none">
+          <button
+            onClick={() => handleNavClick('hero', 'scroll')}
+            className="text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-4"
+            aria-label="Go to home"
+          >
             <span className={`block text-xl font-bold tracking-tighter transition-colors duration-300 ${isMenuOpen ? 'text-neutral-900' : 'text-neutral-900'}`}>
               FRAME.
             </span>
@@ -140,20 +144,21 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
                : 'bg-white/90 backdrop-blur-md shadow-sm border border-neutral-200/50'}
            />
 
-           {/* Generate Button - Only show on home or work view */}
+           {/* PDF Builder Button - Only show on home or work view */}
            <div className={`transition-all duration-300 ${currentPage === 'profile' ? 'opacity-0 pointer-events-none w-0 overflow-hidden' : 'opacity-100 w-auto'}`}>
              <motion.button
                onClick={onOpenGenerator}
                disabled={isMenuOpen}
                whileHover={{ scale: 1.05 }}
-               whileTap={{ scale: 0.95 }}
-               className={`relative group flex items-center justify-center gap-2 w-[100px] sm:w-[110px] h-10 rounded-full text-sm font-medium transition-all duration-300 overflow-hidden ${
+               whileTap={{ scale: 0.96 }}
+               className={`relative group flex items-center justify-center gap-2 w-[106px] sm:w-[118px] h-10 rounded-full text-sm font-medium transition-[background-color,box-shadow,transform,opacity] duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-2 ${
                  isMenuOpen
                    ? 'opacity-0 pointer-events-none translate-x-10'
-                   : 'opacity-100 translate-x-0 bg-dark-brown text-white shadow-button hover:shadow-button-hover'
+                   : 'opacity-100 translate-x-0 bg-[#171412] text-white shadow-button hover:bg-[#315CFF] hover:shadow-button-hover'
                }`}
+               aria-label={t('nav.generate')}
              >
-               <div className="absolute inset-0 bg-gradient-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+               <div className="absolute inset-0 bg-[#315CFF] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
                <div className="relative flex items-center gap-2">
                   <FileText size={14} className="text-white/70 group-hover:text-white transition-colors flex-shrink-0" />
                   <AnimatePresence mode="wait">
@@ -184,10 +189,12 @@ const Layout: React.FC<LayoutProps> = ({ children, onOpenGenerator, selectedCoun
            <motion.button
              onClick={() => setIsMenuOpen(!isMenuOpen)}
              whileHover={{ scale: 1.05 }}
-             whileTap={{ scale: 0.95 }}
+             whileTap={{ scale: 0.96 }}
              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group ${
                isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100/80'
              }`}
+             aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
+             aria-expanded={isMenuOpen}
            >
              {isMenuOpen ? (
                <X size={24} className="text-neutral-900" />

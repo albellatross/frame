@@ -17,7 +17,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.profile': 'Profile',
     'nav.navigation': 'Navigation',
     'nav.connect': 'Connect',
-    'nav.generate': 'Generate',
+    'nav.generate': 'Build PDF',
     
     // Hero
     'hero.subtitle': 'The Narrative Portfolio',
@@ -96,7 +96,7 @@ const translations: Record<Language, Record<string, string>> = {
     'project.back': 'Back to Timeline',
     
     // Portfolio Generator
-    'generator.title': 'Generate Portfolio',
+    'generator.title': 'Build PDF Portfolio',
     'generator.description': 'Curate a specific PDF version of this portfolio tailored to your recruitment needs.',
     'generator.coverStyle': 'Cover Style',
     'generator.minimal': 'Minimal',
@@ -107,8 +107,8 @@ const translations: Record<Language, Record<string, string>> = {
     'generator.included': 'Included Projects',
     'generator.reorder': 'Drag to reorder (Simulated)',
     'generator.empty': 'No projects selected. Add them from the Work section.',
-    'generator.generating': 'Generating PDF...',
-    'generator.generate': 'Generate Portfolio',
+    'generator.generating': 'Building PDF...',
+    'generator.generate': 'Build PDF',
     'generator.ready': 'Portfolio Ready',
     'generator.success': 'Your curated portfolio has been generated successfully with',
     'generator.projects': 'projects.',
@@ -134,7 +134,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.profile': '简介',
     'nav.navigation': '导航',
     'nav.connect': '联系',
-    'nav.generate': '生成',
+    'nav.generate': 'Build PDF',
     
     // Hero
     'hero.subtitle': '叙事作品集',
@@ -213,7 +213,7 @@ const translations: Record<Language, Record<string, string>> = {
     'project.back': '返回时间线',
     
     // Portfolio Generator
-    'generator.title': '生成作品集',
+    'generator.title': '构建 PDF 作品集',
     'generator.description': '为您的招聘需求定制一份专属的 PDF 作品集。',
     'generator.coverStyle': '封面风格',
     'generator.minimal': '极简',
@@ -224,8 +224,8 @@ const translations: Record<Language, Record<string, string>> = {
     'generator.included': '已选项目',
     'generator.reorder': '拖拽排序（模拟）',
     'generator.empty': '未选择项目。请从作品区添加。',
-    'generator.generating': '正在生成 PDF...',
-    'generator.generate': '生成作品集',
+    'generator.generating': '正在构建 PDF...',
+    'generator.generate': '构建 PDF',
     'generator.ready': '作品集已就绪',
     'generator.success': '您的定制作品集已成功生成，包含',
     'generator.projects': '个项目。',

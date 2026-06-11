@@ -1,7 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import { Project } from '../types';
-import { ArrowLeft, ArrowRight, Check, Search, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Bot,
+  Check,
+  FilePlus2,
+  LibraryBig,
+  Search,
+  X,
+} from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { projectCoverAsset } from '../utils/assets';
 
@@ -13,9 +23,10 @@ interface WorkPageProps {
   onReturnToTimeline?: () => void;
 }
 
-type ViewMode = 'archive' | 'agent';
+type ViewMode = 'agent' | 'archive';
 type LocalizedText = { en: string; zh: string };
 type CoverFamily = 'aiProduct' | 'research' | 'visualSystem' | 'brand' | 'practice';
+type CoverDensity = 'wall' | 'agent' | 'compact' | 'featured' | 'lead';
 
 interface CapabilitySuggestion {
   id: string;
@@ -32,36 +43,45 @@ interface ScoredProject {
   rank: number;
 }
 
+interface ArchiveTrack {
+  id: string;
+  title: string;
+  subtitle: string;
+  projectIds: string[];
+  tone: CoverFamily;
+}
+
 const practiceProjectIds = new Set(['p2']);
 
 const featuredProjectOrder = [
   'p1',
-  'p21',
-  'p3',
-  'p20',
   'p5',
+  'p3',
   'p13',
+  'p20',
+  'p21',
+  'p17',
   'p15',
   'p12',
-  'p17',
   'p6',
+  'p14',
+  'p4',
   'p7',
-  'p16',
   'p18',
   'p19',
-  'p4',
-  'p14',
+  'p16',
   'p11',
   'p9',
   'p8',
+  'p10',
   'p2',
 ];
 
 const priorityRank = new Map(featuredProjectOrder.map((id, index) => [id, index]));
-const featuredProjectIds = new Set(['p1', 'p21', 'p3', 'p20', 'p5', 'p15', 'p17']);
-const coreCapabilityProjectIds = new Set(['p1', 'p3', 'p20', 'p21', 'p5', 'p13', 'p15', 'p17', 'p12']);
+const featuredProjectIds = new Set(['p1', 'p5', 'p3', 'p13', 'p20', 'p17', 'p15']);
+const coreCapabilityProjectIds = new Set(['p1', 'p3', 'p5', 'p13', 'p20', 'p21', 'p17', 'p15', 'p12']);
 const archiveFeaturedIds = ['p1', 'p5', 'p3', 'p13'];
-const agentDefaultIds = ['p1', 'p5', 'p3', 'p20', 'p13'];
+const agentDefaultIds = ['p1', 'p5', 'p3', 'p20'];
 
 const capabilitySuggestions: CapabilitySuggestion[] = [
   {
@@ -71,17 +91,17 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'AI interaction designer with Microsoft product UX and research demo experience',
       zh: '会做 AI 交互、微软产品 UX 和研究 demo 的设计师',
     },
-    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p15'],
+    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p12'],
     keywords: ['ai', 'aigc', 'research', 'multimodal', 'interaction', 'copilot', '生成式', '多模态', '研究', '交互', '微软'],
   },
   {
     id: 'research-demo',
-    label: { en: 'Research demos', zh: '研究 Demo' },
+    label: { en: 'Research demo', zh: '研究 Demo' },
     query: {
       en: 'research demo designer who can translate model capability into clear web interaction',
       zh: '能把研究模型能力转成清晰网页交互的设计师',
     },
-    projectIds: ['p3', 'p20', 'p5', 'p13', 'p15', 'p17'],
+    projectIds: ['p5', 'p3', 'p20', 'p13', 'p15', 'p17'],
     keywords: ['research', 'demo', 'model', 'technical', 'ai', '研究', '模型', '技术', 'demo'],
   },
   {
@@ -96,71 +116,49 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
   },
   {
     id: 'visual-system',
-    label: { en: 'Visual systems', zh: '视觉系统' },
+    label: { en: 'Visual system', zh: '视觉系统' },
     query: {
-      en: 'visual designer with branding, packaging, identity, and polished system craft',
-      zh: '有品牌、包装、视觉系统和精修能力的视觉设计师',
+      en: 'visual designer with branding, research communication, and polished system craft',
+      zh: '有品牌、研究传播和完整视觉系统能力的视觉设计师',
     },
-    projectIds: ['p17', 'p15', 'p6', 'p7', 'p16', 'p18', 'p19', 'p11', 'p9'],
+    projectIds: ['p17', 'p15', 'p6', 'p18', 'p19', 'p7', 'p16'],
     keywords: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', '视觉', '品牌', '包装', '平面'],
   },
   {
-    id: 'mobile-flow',
-    label: { en: 'Mobile flow', zh: '移动端流程' },
+    id: 'b2b-platform',
+    label: { en: 'B2B platform', zh: 'B2B 平台' },
     query: {
-      en: 'mobile product designer who can analyze app logic, user flow, and interaction hierarchy',
-      zh: '能分析移动端用户流程、产品逻辑和交互层级的设计师',
+      en: 'product designer who can structure B2B AI platform flows and complex interface hierarchy',
+      zh: '能梳理 B2B AI 平台流程和复杂界面层级的产品设计师',
     },
-    projectIds: ['p4', 'p14', 'p2', 'p21'],
-    keywords: ['mobile', 'app', 'flow', 'journey', 'analysis', '移动端', '流程', '路径', '分析'],
+    projectIds: ['p12', 'p5', 'p13', 'p14', 'p2'],
+    keywords: ['b2b', 'platform', 'enterprise', 'workflow', 'hierarchy', 'flow', '企业', '平台', '流程', '层级'],
+  },
+  {
+    id: 'microsoft',
+    label: { en: 'Microsoft experience', zh: '微软经验' },
+    query: {
+      en: 'designer with Microsoft product and research experience across Copilot, Office, and MSRA demos',
+      zh: '有 Copilot、Office 和 MSRA 研究 demo 经验的微软设计师',
+    },
+    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12'],
+    keywords: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '研究院', 'office'],
   },
 ];
 
 const projectSearchHints: Record<string, string[]> = {
-  p1: [
-    'copilot read aloud',
-    'word',
-    'office',
-    'voice ux',
-    'conversation design',
-    'accessibility',
-    'real time voice',
-    'microsoft',
-    '微软',
-    '语音交互',
-    '朗读',
-    '对话设计',
-    '可访问性',
-  ],
-  p2: ['keeta', 'user flow', 'mobile app analysis', 'test exercise', 'personal practice', '流程分析', '移动端', '测试题', '个人练习'],
-  p3: [
-    'nuwa',
-    'nuwa infinity',
-    'nuwa xl',
-    'dragnuwa',
-    'multimodal ai',
-    'generative ai',
-    'research demo',
-    'outpainting',
-    'timeline',
-    'trajectory',
-    'ai interaction',
-    '多模态',
-    '生成式 ai',
-    '研究 demo',
-    '图像外扩',
-    '长视频生成',
-    '轨迹控制',
-    '交互转译',
-  ],
-  p4: ['reme', 'ai companion', 'consumer app', 'companion ux', 'ai 陪伴', 'c 端', '用户体验'],
+  p1: ['copilot read aloud', 'word', 'office', 'voice ux', 'conversation design', 'accessibility', 'microsoft', '微软', '语音交互', '朗读'],
+  p2: ['keeta', 'user flow', 'mobile app analysis', 'test exercise', 'personal practice', '流程分析', '移动端', '测试题', '练习'],
+  p3: ['nuwa', 'outpainting', 'long video', 'trajectory', 'multimodal ai', 'generative ai', 'research demo', '多模态', '生成式 ai', '研究 demo'],
+  p4: ['reme', 'ai companion', 'consumer app', 'memory', 'empathy', 'ai 陪伴', 'c 端', '用户体验'],
   p5: ['rd-agent', 'agent', 'research workflow', 'internal tool', '科研工作流', '智能体', '研究工具'],
   p6: ['msra 25th anniversary', 'event visual', 'microsoft research asia', 'anniversary', 'visual design', '微软亚洲研究院', '周年', '活动视觉'],
-  p7: ['ioete tea shop', 'tea shop', 'fom studio', 'brand identity', 'packaging', '茶店', '品牌', '包装'],
+  p7: ['ioete tea shop', 'tea shop', 'brand identity', 'packaging', 'retail', '茶店', '品牌', '包装'],
   p8: ['illustration', 'graphic', 'editorial', 'visual exploration', '插画', '平面', '个人视觉'],
   p9: ['heart printing', 'packaging', 'graphic', 'print', '包装', '印刷', '视觉'],
+  p10: ['palette of the dreamer', 'ip design', 'character', 'campaign', 'ip', '角色', '视觉'],
   p11: ['white elephant', 'poster', 'packaging', 'contest', '白象', '海报', '包装', '视觉'],
-  p12: ['baidu ai cloud', 'ai cloud', 'enterprise', 'system', '百度智能云', '企业工具', '系统'],
+  p12: ['baidu ai cloud', 'ai cloud', 'enterprise', 'system', 'b2b', '百度智能云', '企业工具', '系统'],
   p13: ['taskmatrix.ai', 'agent', 'ai system', 'research demo', 'automation', '任务矩阵', '智能体', '研究 demo'],
   p14: ['xiaodu learning tablet', 'education', 'iot', 'children', 'learning', '小度', '教育', '学习机', '儿童'],
   p15: ['value compass', 'visual system', 'information design', 'branding', '价值指南针', '视觉系统', '信息设计'],
@@ -168,34 +166,36 @@ const projectSearchHints: Record<string, string[]> = {
   p17: ['batteryml', 'visual design', 'ai research', 'system', 'data visualization', '电池', '机器学习', '视觉系统'],
   p18: ['fera', 'branding', 'identity', 'visual design', '品牌', '识别', '视觉'],
   p19: ['profiltubi', 'rebranding', 'group work', 'identity', 'brand system', '品牌重塑', '视觉识别'],
-  p20: ['rodin diffusion', '3d avatar', '3d generation', 'microsoft research', 'research demo', 'ai interaction', '3d 头像', '三维生成', '研究 demo', '微软研究院'],
-  p21: ['lantern night return', 'spring festival', 'lantern festival', 'h5 game', 'vibe coding', 'theme translation', 'ticket sharing', '元宵夜归人', '春节回家路', '节日小游戏', '主题转译', '票根分享', '结局收集'],
+  p20: ['rodin diffusion', '3d avatar', '3d generation', 'microsoft research', 'research demo', 'ai interaction', '3d 头像', '三维生成', '研究 demo'],
+  p21: ['lantern night return', 'spring festival', 'lantern festival', 'h5 game', 'vibe coding', 'frontend prototype', '元宵', '春节', '小游戏'],
 };
 
 const projectKinds: Record<string, LocalizedText> = {
-  p1: { en: 'AI product UX', zh: 'AI 产品 UX' },
-  p2: { en: 'Flow analysis practice', zh: '流程分析练习' },
-  p3: { en: 'AI research demo', zh: 'AI 研究 Demo' },
-  p4: { en: 'Mobile AI app', zh: '移动端 AI' },
-  p5: { en: 'Research workflow', zh: '科研工作流' },
-  p6: { en: 'Event identity', zh: '活动视觉' },
-  p7: { en: 'Brand identity', zh: '品牌识别' },
+  p1: { en: 'AI Product UX', zh: 'AI 产品 UX' },
+  p2: { en: 'Flow Analysis Practice', zh: '流程分析练习' },
+  p3: { en: 'AI Research Demo', zh: 'AI 研究 Demo' },
+  p4: { en: 'Mobile AI App', zh: '移动端 AI' },
+  p5: { en: 'Research Workflow', zh: '科研工作流' },
+  p6: { en: 'Event Visual System', zh: '活动视觉系统' },
+  p7: { en: 'Brand Identity', zh: '品牌识别' },
   p8: { en: 'Illustration', zh: '插画' },
   p9: { en: 'Packaging', zh: '包装设计' },
-  p11: { en: 'Poster / packaging', zh: '海报 / 包装' },
-  p12: { en: 'Enterprise AI', zh: '企业级 AI' },
-  p13: { en: 'AI agent workflow', zh: 'AI Agent 工作流' },
+  p10: { en: 'IP Visual Design', zh: 'IP 视觉设计' },
+  p11: { en: 'Poster / Packaging', zh: '海报 / 包装' },
+  p12: { en: 'Enterprise AI Platform', zh: '企业级 AI 平台' },
+  p13: { en: 'AI Agent Workflow', zh: 'AI Agent 工作流' },
   p14: { en: 'Education UX', zh: '教育 UX' },
-  p15: { en: 'Visual system', zh: '视觉系统' },
-  p16: { en: 'Editorial web', zh: '编辑式网页' },
-  p17: { en: 'Research visual', zh: '研究视觉' },
-  p18: { en: 'Brand identity', zh: '品牌识别' },
+  p15: { en: 'Research Visual System', zh: '研究视觉系统' },
+  p16: { en: 'Editorial Web', zh: '编辑式网页' },
+  p17: { en: 'Research Visual Identity', zh: '研究视觉识别' },
+  p18: { en: 'Brand Identity', zh: '品牌识别' },
   p19: { en: 'Rebranding', zh: '品牌重塑' },
-  p20: { en: '3D AI demo', zh: '3D AI Demo' },
-  p21: { en: 'H5 game flow', zh: 'H5 小游戏' },
+  p20: { en: '3D AI Demo', zh: '3D AI Demo' },
+  p21: { en: 'H5 Game Flow', zh: 'H5 小游戏流程' },
 };
 
 const projectDisplayTitles: Record<string, LocalizedText> = {
+  p2: { en: 'Keeta User Flow', zh: 'Keeta 用户流程' },
   p12: { en: 'Baidu AI Cloud', zh: '百度智能云' },
   p14: { en: 'Xiaodu Learning Tablet', zh: '小度学习机' },
   p21: { en: 'Lantern Night Return', zh: '元宵夜归人' },
@@ -203,115 +203,123 @@ const projectDisplayTitles: Record<string, LocalizedText> = {
 
 const projectTeasers: Record<string, LocalizedText> = {
   p1: {
-    en: 'Copilot reading UX for interruption, listening, answering, and resume states.',
-    zh: '为 Copilot 朗读设计打断、倾听、回答和恢复状态。',
+    en: 'Turns Copilot voice control into a readable Office workflow.',
+    zh: '把 Copilot 语音控制转成清晰的 Office 工作流。',
   },
   p2: {
-    en: 'A mobile ordering-flow analysis exercise, separated from shipped work.',
-    zh: '移动端下单流程分析练习，和正式项目分开展示。',
+    en: 'Maps ordering friction into a tighter mobile service flow.',
+    zh: '把下单摩擦整理成更清楚的移动服务流程。',
   },
   p3: {
-    en: 'Web interactions for outpainting, long video, and path-controlled generation.',
-    zh: '把图像外扩、长视频和轨迹控制做成可尝试的网页交互。',
+    en: 'Makes outpainting, long video, and trajectory control explorable.',
+    zh: '让图像外扩、长视频和轨迹控制变得可探索。',
   },
   p4: {
-    en: 'A consumer AI companion case around memory, empathy, and mobile framing.',
-    zh: '围绕记忆、陪伴和移动端结构的 AI companion 体验。',
+    en: 'Frames AI companionship through memory, empathy, and mobile rhythm.',
+    zh: '用记忆、共情和移动节奏组织 AI 陪伴体验。',
   },
   p5: {
-    en: 'AI-assisted research workflow for hypothesis generation and tool usability.',
-    zh: '面向科研假设生成的 AI 工作流和工具可用性设计。',
+    en: 'Shapes agentic research work into a scannable product system.',
+    zh: '把 Agent 科研流程整理成可扫读的产品系统。',
   },
   p6: {
-    en: 'Microsoft Research anniversary visuals across event and communication surfaces.',
-    zh: 'Microsoft Research 周年活动视觉与传播物料。',
+    en: 'Extends an anniversary identity across event communication surfaces.',
+    zh: '把周年主视觉扩展到活动传播触点。',
   },
   p7: {
-    en: 'A tea shop brand system from identity to packaging and retail touchpoints.',
-    zh: '茶店品牌系统，从识别到包装与零售触点。',
+    en: 'Builds a tea retail identity from mark to packaging system.',
+    zh: '从标志到包装建立茶饮零售识别系统。',
   },
   p8: {
-    en: 'Commercial illustration and character work extending the visual range.',
-    zh: '商业插画与角色视觉作品，补充图形表达范围。',
+    en: 'Collects illustration work that broadens the visual vocabulary.',
+    zh: '收录插画作品，扩展图形表达范围。',
   },
   p9: {
-    en: 'Packaging-focused visual work with print and shelf-facing outcomes.',
-    zh: '以印刷和货架结果物为核心的包装视觉项目。',
+    en: 'Uses print structure and shelf presence to clarify packaging value.',
+    zh: '用印刷结构和货架效果说明包装价值。',
+  },
+  p10: {
+    en: 'Explores character-driven IP through a compact visual system.',
+    zh: '用紧凑视觉系统探索角色型 IP。',
   },
   p11: {
-    en: 'A food-brand poster and packaging concept with focused visual storytelling.',
-    zh: '食品品牌海报与包装概念，强调清晰视觉叙事。',
+    en: 'Turns a food-brand brief into a focused poster and pack story.',
+    zh: '把食品品牌 brief 转成聚焦的海报与包装叙事。',
   },
   p12: {
-    en: 'Enterprise AI cloud visual upgrade for hierarchy and platform polish.',
-    zh: '企业级 AI 云平台视觉升级，聚焦层级和平台完成度。',
+    en: 'Clarifies enterprise AI hierarchy through platform visual polish.',
+    zh: '通过平台视觉升级梳理企业级 AI 层级。',
   },
   p13: {
-    en: 'Agent workflow storytelling through source design pages and interaction structure.',
-    zh: 'AI Agent 工作流叙事，展示设计稿和交互结构。',
+    en: 'Explains agent orchestration through workflow and story structure.',
+    zh: '用工作流和叙事结构解释 Agent 编排。',
   },
   p14: {
-    en: 'Learning tablet homepage redesign around study rhythm and AI entry points.',
-    zh: '学习机首页重构，围绕学习节奏和 AI 入口。',
+    en: 'Reorganizes education entry points around study rhythm and AI access.',
+    zh: '围绕学习节奏和 AI 入口重组教育首页。',
   },
   p15: {
-    en: 'A value-alignment research interface with visual system craft.',
-    zh: '价值对齐研究界面与视觉系统设计。',
+    en: 'Connects value-alignment research with interface and visual system craft.',
+    zh: '连接价值对齐研究、界面和视觉系统能力。',
   },
   p16: {
-    en: 'A Milan design-event concept with editorial rhythm and mobile art direction.',
-    zh: '米兰设计展移动网页概念，强调编辑节奏与艺术指导。',
+    en: 'Uses editorial pacing to shape a mobile design-event experience.',
+    zh: '用编辑节奏组织移动端设计展体验。',
   },
   p17: {
-    en: 'Research-facing visual identity for BatteryML and technical communication.',
-    zh: 'BatteryML 研究传播视觉识别与技术表达。',
+    en: 'Packages BatteryML research as a technical identity system.',
+    zh: '把 BatteryML 研究包装成技术识别系统。',
   },
   p18: {
-    en: 'A concise identity system with logo direction and applications.',
-    zh: '简洁的品牌识别系统，包含 logo 与应用展示。',
+    en: 'Defines a concise identity from logo direction to applications.',
+    zh: '从 logo 方向到应用定义简洁识别。',
   },
   p19: {
-    en: 'A group rebranding proposal for an industrial identity system.',
-    zh: '工业品牌重塑小组提案，从识别到应用系统。',
+    en: 'Reframes an industrial brand through identity and application boards.',
+    zh: '通过识别和应用板重塑工业品牌。',
   },
   p20: {
-    en: 'A public demo structure for reading and testing 3D avatar generation.',
-    zh: '把 3D avatar 模型整理成可浏览、可验证的公开 demo。',
+    en: 'Makes 3D avatar generation readable through demo states and controls.',
+    zh: '用 demo 状态和控制面板讲清 3D 头像生成。',
   },
   p21: {
-    en: 'A theme translation from Spring Festival homecoming to Lantern Festival play.',
-    zh: '从春节回家路转译到元宵夜归人的剧情小游戏。',
+    en: 'Translates a festival journey into a playable H5 prototype.',
+    zh: '把节日回家路转译成可玩的 H5 原型。',
   },
 };
 
 const agentReasons: Record<string, LocalizedText> = {
   p1: {
-    en: 'Strong match for Microsoft AI product UX: voice control, recovery states, and Office context.',
-    zh: '匹配微软 AI 产品 UX：语音控制、恢复状态和 Office 场景都很直接。',
+    en: 'Direct evidence for Copilot voice UX, recovery states, and Office context.',
+    zh: '直接证明 Copilot 语音 UX、恢复状态和 Office 场景能力。',
   },
   p3: {
-    en: 'Shows how model capability became prompt, gallery, canvas, timeline, and trajectory interactions.',
-    zh: '展示如何把模型能力转成 prompt、gallery、画布、时间线和轨迹交互。',
+    en: 'Turns model capability into prompt, gallery, canvas, timeline, and trajectory actions.',
+    zh: '把模型能力转成 prompt、gallery、画布、时间线和轨迹动作。',
   },
   p5: {
-    en: 'Useful for research workflow roles: complex AI logic is organized into a tool people can scan.',
-    zh: '适合科研工作流方向：把复杂 AI 逻辑整理成可浏览的工具结构。',
+    en: 'Organizes agent research logic into a workflow people can scan.',
+    zh: '把 Agent 科研逻辑整理成可扫读的工作流。',
+  },
+  p12: {
+    en: 'Shows enterprise AI hierarchy, platform polish, and B2B interface structure.',
+    zh: '展示企业级 AI 层级、平台质感和 B2B 界面结构。',
   },
   p13: {
-    en: 'Good evidence for agent workflow thinking and technical storytelling.',
-    zh: '能证明 Agent 工作流思考和技术叙事能力。',
+    en: 'Useful for agent workflow thinking and technical storytelling.',
+    zh: '适合证明 Agent 工作流思考和技术叙事能力。',
   },
   p15: {
-    en: 'Connects technical communication with a polished visual system.',
-    zh: '把技术沟通和完整视觉系统连接起来。',
+    en: 'Connects research communication with a polished visual system.',
+    zh: '把研究沟通和完整视觉系统连接起来。',
   },
   p17: {
-    en: 'Useful when the brief asks for research-facing visual systems.',
+    en: 'Strong when the brief asks for research-facing visual systems.',
     zh: '适合展示面向研究传播的视觉系统能力。',
   },
   p20: {
-    en: 'Shows 3D AI output through a public demo instead of a raw model screenshot.',
-    zh: '展示如何把 3D AI 输出组织成公开 demo，而不是只放模型截图。',
+    en: 'Frames 3D AI output through controls, preview states, and demo reading.',
+    zh: '用控制、预览状态和 demo 阅读方式组织 3D AI 输出。',
   },
   p21: {
     en: 'Relevant for H5, frontend prototyping, mobile flow, and campaign storytelling.',
@@ -322,27 +330,27 @@ const agentReasons: Record<string, LocalizedText> = {
 const projectSkillChips: Record<string, LocalizedText[]> = {
   p1: [
     { en: 'Microsoft', zh: '微软' },
-    { en: 'AI UX', zh: 'AI UX' },
-    { en: 'Voice', zh: '语音' },
+    { en: 'Voice UX', zh: '语音 UX' },
   ],
   p3: [
     { en: 'Research demo', zh: '研究 Demo' },
-    { en: 'Web interaction', zh: '网页交互' },
     { en: 'AIGC', zh: 'AIGC' },
   ],
   p5: [
     { en: 'Agent workflow', zh: 'Agent 工作流' },
     { en: 'Research tooling', zh: '科研工具' },
-    { en: 'UX hierarchy', zh: 'UX 层级' },
+  ],
+  p12: [
+    { en: 'Enterprise AI', zh: '企业 AI' },
+    { en: 'Platform UX', zh: '平台 UX' },
   ],
   p13: [
     { en: 'AI agent', zh: 'AI Agent' },
     { en: 'Workflow', zh: '工作流' },
-    { en: 'Prototype', zh: '原型' },
   ],
   p15: [
     { en: 'Visual system', zh: '视觉系统' },
-    { en: 'Technical story', zh: '技术叙事' },
+    { en: 'Research comms', zh: '研究传播' },
   ],
   p17: [
     { en: 'Research visual', zh: '研究视觉' },
@@ -351,12 +359,10 @@ const projectSkillChips: Record<string, LocalizedText[]> = {
   p20: [
     { en: '3D AI demo', zh: '3D AI Demo' },
     { en: 'MSRA', zh: 'MSRA' },
-    { en: 'Interaction', zh: '交互' },
   ],
   p21: [
     { en: 'H5 game', zh: 'H5 小游戏' },
-    { en: 'Vibe coding', zh: 'Vibe Coding' },
-    { en: 'Mobile flow', zh: '移动流程' },
+    { en: 'Prototype', zh: '原型' },
   ],
 };
 
@@ -375,6 +381,7 @@ const projectCoverFamilies: Record<string, CoverFamily> = {
   p7: 'brand',
   p8: 'brand',
   p9: 'brand',
+  p10: 'brand',
   p11: 'brand',
   p16: 'brand',
   p18: 'brand',
@@ -398,7 +405,11 @@ const intentBoosters = [
   },
   {
     terms: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', 'poster', '视觉', '品牌', '包装', '平面', '海报'],
-    ids: ['p7', 'p15', 'p17', 'p16', 'p18', 'p19', 'p11', 'p9', 'p6', 'p8'],
+    ids: ['p17', 'p15', 'p6', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8'],
+  },
+  {
+    terms: ['b2b', 'enterprise', 'platform', 'dashboard', 'workflow', '企业', '平台', '后台', '工作流'],
+    ids: ['p12', 'p5', 'p13', 'p14'],
   },
   {
     terms: ['vibe', 'coding', 'frontend', 'h5', 'game', 'festival', 'lantern', 'spring', '前端', '小游戏', '节日', '元宵', '春节'],
@@ -409,6 +420,55 @@ const intentBoosters = [
     ids: ['p2', 'p4', 'p14', 'p21'],
   },
 ];
+
+const coverFamilyMeta: Record<CoverFamily, { label: string; frame: string; inner: string; imageOutline: string }> = {
+  aiProduct: {
+    label: 'AI UX',
+    frame: 'from-[#F8FAFF] via-[#FFFFFF] to-[#E9EEF9] text-[#315CFF]',
+    inner: 'bg-white',
+    imageOutline: 'outline-black/10',
+  },
+  research: {
+    label: 'DEMO',
+    frame: 'from-[#111217] via-[#1A1D24] to-[#28364A] text-[#8FA3FF]',
+    inner: 'bg-[#0F1117]',
+    imageOutline: 'outline-white/10',
+  },
+  visualSystem: {
+    label: 'SYSTEM',
+    frame: 'from-[#FBF8F0] via-[#FFFFFF] to-[#E7EDF8] text-[#394958]',
+    inner: 'bg-white',
+    imageOutline: 'outline-black/10',
+  },
+  brand: {
+    label: 'BRAND',
+    frame: 'from-[#F9F6EF] via-[#FFFFFF] to-[#EFE7DA] text-[#4E4A43]',
+    inner: 'bg-[#FFFDF8]',
+    imageOutline: 'outline-black/10',
+  },
+  practice: {
+    label: 'LAB',
+    frame: 'from-[#F3F0EA] via-[#FFFFFF] to-[#E5E0D8] text-[#756E66]',
+    inner: 'bg-[#FAF8F4]',
+    imageOutline: 'outline-black/10',
+  },
+};
+
+const densityClasses: Record<CoverDensity, string> = {
+  wall: 'rounded-[10px] p-1',
+  agent: 'rounded-[12px] p-1.5',
+  compact: 'rounded-[12px] p-2',
+  featured: 'rounded-[14px] p-2.5',
+  lead: 'rounded-[16px] p-3',
+};
+
+const innerRadiusClasses: Record<CoverDensity, string> = {
+  wall: 'rounded-[6px]',
+  agent: 'rounded-[8px]',
+  compact: 'rounded-[8px]',
+  featured: 'rounded-[10px]',
+  lead: 'rounded-[12px]',
+};
 
 const normalize = (value: string) =>
   value
@@ -552,6 +612,163 @@ const getAgentReason = (project: Project, isZh: boolean) =>
     isZh
   );
 
+const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
+
+const getCoverFit = (project: Project, family: CoverFamily) => {
+  if (project.coverDisplay === 'cover') return 'cover';
+  if (project.coverDisplay === 'contain' || project.slideSets || project.slides || project.caseSections) return 'contain';
+  return family === 'brand' ? 'cover' : 'contain';
+};
+
+const AbstractCover: React.FC<{ project: Project; family: CoverFamily; isZh: boolean }> = ({ project, family, isZh }) => (
+  <div
+    role="img"
+    aria-label={`${getProjectTitle(project, isZh)} cover placeholder`}
+    className={cn(
+      'flex h-full w-full flex-col justify-between overflow-hidden p-3',
+      family === 'research' ? 'text-white' : 'text-[var(--work-ink)]'
+    )}
+  >
+    <div className="grid grid-cols-4 gap-1.5 opacity-70" aria-hidden="true">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <span
+          key={index}
+          className={cn(
+            'h-5 rounded-sm',
+            family === 'research' ? 'bg-white/12' : 'bg-black/8',
+            index % 3 === 0 ? 'col-span-2' : ''
+          )}
+        />
+      ))}
+    </div>
+    <div>
+      <p className="font-mono text-[10px] uppercase text-current/55">{coverFamilyMeta[family].label}</p>
+      <p className="mt-1 line-clamp-2 text-sm font-semibold leading-tight">{getProjectTitle(project, isZh)}</p>
+    </div>
+  </div>
+);
+
+const ProjectImage: React.FC<{
+  project: Project;
+  idx: number;
+  family: CoverFamily;
+  isZh: boolean;
+  fit: 'cover' | 'contain';
+  outlineClass: string;
+}> = ({ project, idx, family, isZh, fit, outlineClass }) => {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return <AbstractCover project={project} family={family} isZh={isZh} />;
+  }
+
+  return (
+    <img
+      src={projectCoverAsset(project)}
+      alt={`${getProjectTitle(project, isZh)} cover`}
+      width={1200}
+      height={750}
+      loading={idx < 6 ? 'eager' : 'lazy'}
+      decoding="async"
+      fetchPriority={idx < 2 ? 'high' : 'auto'}
+      onError={() => setHasError(true)}
+      sizes="(min-width: 1200px) 360px, (min-width: 768px) 45vw, calc(100vw - 48px)"
+      className={cn(
+        'h-full w-full bg-transparent outline outline-1 -outline-offset-1 transition-transform duration-300 ease-out group-hover:scale-[1.02]',
+        fit === 'cover' ? 'object-cover' : 'object-contain',
+        outlineClass
+      )}
+    />
+  );
+};
+
+const CoverFrame: React.FC<{
+  project: Project;
+  idx: number;
+  isZh: boolean;
+  density: CoverDensity;
+}> = ({ project, idx, isZh, density }) => {
+  const family = projectCoverFamilies[project.id] || 'brand';
+  const meta = coverFamilyMeta[family];
+  const fit = getCoverFit(project, family);
+  const isDark = family === 'research';
+
+  return (
+    <div
+      className={cn(
+        'relative aspect-[16/10] overflow-hidden bg-gradient-to-br shadow-[var(--work-cover-shadow)]',
+        densityClasses[density],
+        meta.frame
+      )}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-80 [background-image:linear-gradient(135deg,rgba(255,255,255,0.45)_0_1px,transparent_1px_28px)]"
+        aria-hidden="true"
+      />
+      <div
+        className={cn(
+          'pointer-events-none absolute left-2 top-2 z-10 rounded-full px-2 py-0.5 font-mono text-[9px] font-medium tracking-normal',
+          isDark ? 'bg-white/10 text-white/70' : 'bg-white/75 text-current shadow-[0_0_0_1px_rgba(0,0,0,0.05)]'
+        )}
+        aria-hidden="true"
+      >
+        {meta.label}
+      </div>
+      <div
+        className={cn(
+          'relative h-full overflow-hidden shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)]',
+          innerRadiusClasses[density],
+          meta.inner,
+          isDark ? 'shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]' : ''
+        )}
+      >
+        <ProjectImage project={project} idx={idx} family={family} isZh={isZh} fit={fit} outlineClass={meta.imageOutline} />
+      </div>
+      <div
+        className={cn(
+          'pointer-events-none absolute bottom-2 right-2 h-8 w-16 rounded-full blur-2xl',
+          family === 'aiProduct' ? 'bg-[#315CFF]/25' : family === 'research' ? 'bg-[#7C8BFF]/24' : 'bg-black/8'
+        )}
+        aria-hidden="true"
+      />
+    </div>
+  );
+};
+
+const AddToPdfButton: React.FC<{
+  project: Project;
+  isSelected: boolean;
+  onToggleSelect: (id: string) => void;
+  labels: { add: string; added: string };
+  surface: 'light' | 'dark';
+  labelMode?: 'icon' | 'responsive';
+}> = ({ project, isSelected, onToggleSelect, labels, surface, labelMode = 'responsive' }) => (
+  <button
+    type="button"
+    onClick={(event) => {
+      event.stopPropagation();
+      onToggleSelect(project.id);
+    }}
+    className={cn(
+      'relative z-20 inline-flex h-10 min-w-10 items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      labelMode === 'icon' ? 'w-10 px-0' : 'px-3',
+      surface === 'dark'
+        ? 'border border-white/14 bg-white/8 text-white/82 hover:bg-white/14 focus-visible:ring-[#8FA3FF] focus-visible:ring-offset-[#15110E]'
+        : 'border border-[var(--work-line)] bg-white/74 text-[var(--work-ink)] hover:border-[var(--work-ink)] hover:bg-white focus-visible:ring-[var(--work-accent)] focus-visible:ring-offset-[var(--work-surface)]',
+      isSelected
+        ? surface === 'dark'
+          ? 'border-[#8FA3FF] bg-[#315CFF] text-white'
+          : 'border-[var(--work-accent)] bg-[var(--work-accent)] text-white'
+        : ''
+    )}
+    aria-label={`${isSelected ? labels.added : labels.add}: ${project.title}`}
+    title={isSelected ? labels.added : labels.add}
+  >
+    {isSelected ? <Check size={14} strokeWidth={2.5} aria-hidden="true" /> : <FilePlus2 size={14} aria-hidden="true" />}
+    <span className={labelMode === 'icon' ? 'sr-only' : 'hidden sm:inline'}>{isSelected ? labels.added : labels.add}</span>
+  </button>
+);
+
 const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
@@ -561,54 +778,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
 }) => {
   const { language, t } = useLanguage();
   const isZh = language === 'zh';
-  const [viewMode, setViewMode] = useState<ViewMode>('archive');
+  const reduceMotion = useReducedMotion();
+  const [viewMode, setViewMode] = useState<ViewMode>('agent');
   const [query, setQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
 
-  const copy = {
-    pageBadge: isZh ? '作品' : 'WORKS',
-    pageTitle: isZh ? 'AI 产品体验、研究 Demo 与视觉系统。' : 'AI product UX, research demos, and visual systems.',
-    pageSubtitle: isZh
-      ? '我把复杂技术、产品路径和视觉表达整理成用户能理解、能操作、也愿意继续探索的体验。'
-      : 'I organize complex technology, product paths, and visual systems into experiences people can understand, use, and keep exploring.',
-    agentTitle: isZh ? '找匹配项目' : 'Agent Match',
-    agentBody: isZh
-      ? '告诉我你在找什么角色、能力或项目类型，我会推荐最相关的案例并解释匹配原因。'
-      : 'Tell me the role, capability, or project type you care about. I will recommend a focused set and explain why.',
-    archiveTitle: isZh ? '浏览全部项目' : 'Project Archive',
-    archiveBody: isZh
-      ? '按能力方向浏览完整作品库，看到项目跨度、时间线和正式项目与练习的关系。'
-      : 'Browse the full archive by track, with featured cases, compact cards, and a dense project index.',
-    agentKicker: isZh ? '作品集向导' : 'PORTFOLIO CONCIERGE',
-    agentHeading: isZh ? '你在找什么类型的设计师？' : 'What kind of designer are you looking for?',
-    agentSubheading: isZh
-      ? '输入角色、能力、工具或项目类型。这里不是普通筛选器，而是根据需求把最相关的作品推到前面。'
-      : 'Describe a role, capability, tool, or project type. This is a guided match, not just a filter.',
-    placeholder: isZh ? '试试输入“会做 AI 交互、微软产品 UX 和前端原型的设计师”' : 'Try "AI interaction designer with Microsoft product UX and frontend prototyping experience"',
-    submit: isZh ? '查找作品' : 'Find projects',
-    clear: isZh ? '清空' : 'Clear',
-    agentResultsDefault: isZh ? '先从这些代表项目看起' : 'Start with these representative works',
-    agentResultsMatched: isZh ? '根据你的需求，先看这些项目' : 'Based on your brief, start with these works',
-    noResults: isZh ? '暂时没有完全匹配的项目。试试输入能力、工具、公司或项目类型。' : 'No exact match yet. Try describing a skill, tool, company, or project type.',
-    why: isZh ? '匹配原因' : 'Why this matches',
-    archiveKicker: isZh ? '完整作品索引' : 'PROJECT ARCHIVE',
-    featuredHeading: isZh ? '代表性案例' : 'Featured case studies',
-    featuredBody: isZh ? '先展示最能代表当前能力主线的项目，再进入更完整的项目库。' : 'A short curated layer before the full archive.',
-    indexHeading: isZh ? '项目索引' : 'Project index',
-    indexBody: isZh ? '用更高密度呈现完整作品，不把所有项目都做成同一种大卡片。' : 'A denser view of the full body of work without turning every project into a large card.',
-    viewCase: isZh ? '查看案例' : 'View case',
-    select: isZh ? '加入生成' : 'Add to PDF',
-    selected: isZh ? '已加入' : 'Added',
-    featured: isZh ? '重点' : 'Featured',
-    recent: isZh ? '近期' : 'Recent',
-    practice: isZh ? '练习' : 'Practice',
-  };
+  const projectById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [projects]);
+  const getProjectById = (id: string) => projectById.get(id);
 
-  const getProjectById = (id: string) => projects.find((project) => project.id === id);
-  const formalProjects = projects.filter((project) => !practiceProjectIds.has(project.id));
+  const formalProjects = useMemo(() => projects.filter((project) => !practiceProjectIds.has(project.id)), [projects]);
 
-  const archiveTracks = useMemo(
+  const archiveTracks = useMemo<ArchiveTrack[]>(
     () => [
       {
         id: 'ai-research',
@@ -616,48 +797,134 @@ const WorkPage: React.FC<WorkPageProps> = ({
         subtitle: isZh
           ? '微软产品 UX、研究模型 demo、Agent 工作流和技术转译。'
           : 'Microsoft product UX, research demos, agent workflows, and technical translation.',
-        projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p12', 'p15'],
+        projectIds: ['p1', 'p5', 'p3', 'p20', 'p13'],
+        tone: 'research',
       },
       {
         id: 'visual-systems',
         title: isZh ? '视觉系统与研究传播' : 'Visual Systems & Research Communication',
         subtitle: isZh
-          ? '研究传播、品牌系统、活动视觉和技术内容的视觉组织。'
-          : 'Research-facing identity, brand systems, event visuals, and technical communication.',
-        projectIds: ['p17', 'p6', 'p18', 'p19'],
+          ? '研究传播、技术品牌、活动视觉和信息设计系统。'
+          : 'Research-facing identity, technical branding, event visuals, and information systems.',
+        projectIds: ['p17', 'p15', 'p6'],
+        tone: 'visualSystem',
+      },
+      {
+        id: 'product-flows',
+        title: isZh ? '产品流程与 B2B 平台' : 'Product Flows & B2B Platforms',
+        subtitle: isZh
+          ? '企业级 AI、教育入口、移动端路径和复杂产品层级。'
+          : 'Enterprise AI, education entry points, mobile paths, and complex product hierarchy.',
+        projectIds: ['p12', 'p14', 'p4'],
+        tone: 'aiProduct',
       },
       {
         id: 'brand-campaign',
-        title: isZh ? '品牌、活动与编辑式体验' : 'Brand, Campaign & Editorial Experiences',
+        title: isZh ? '品牌、插画与活动 Campaign' : 'Branding, Illustration & Campaigns',
         subtitle: isZh
-          ? '品牌、包装、展览网页、节日 H5 和更具编辑感的视觉项目。'
-          : 'Branding, packaging, exhibition web, festival H5, and editorial visual work.',
-        projectIds: ['p21', 'p7', 'p16', 'p11', 'p9', 'p8'],
-      },
-      {
-        id: 'product-mobile',
-        title: isZh ? '移动端与产品流程' : 'Mobile & Product Flows',
-        subtitle: isZh
-          ? '移动端产品结构、教育硬件入口、AI companion 和用户路径。'
-          : 'Mobile product structure, education hardware entry points, AI companions, and user paths.',
-        projectIds: ['p4', 'p14'],
+          ? '品牌识别、包装、展览网页、节日 H5 和图形表达。'
+          : 'Identity, packaging, exhibition web, festival H5, and graphic expression.',
+        projectIds: ['p21', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8', 'p10'],
+        tone: 'brand',
       },
       {
         id: 'practice',
-        title: isZh ? '个人练习与测试题' : 'Practice & Experiments',
+        title: isZh ? '练习与实验' : 'Practice & Experiments',
         subtitle: isZh
-          ? '个人练习、测试题和小型探索放在后段，不和正式项目抢层级。'
-          : 'Smaller exercises and tests are visible, but kept below formal work.',
+          ? '测试题、小型分析和个人探索放在后段，和正式项目区分。'
+          : 'Tests, smaller analysis work, and self-initiated explorations stay visible but secondary.',
         projectIds: ['p2'],
-        practice: true,
+        tone: 'practice',
       },
     ],
     [isZh]
   );
 
+  const visibleArchiveTracks = useMemo(
+    () =>
+      archiveTracks
+        .map((track) => ({
+          ...track,
+          projects: track.projectIds.map(getProjectById).filter((project): project is Project => Boolean(project)),
+        }))
+        .filter((track) => track.projects.length > 0),
+    [archiveTracks, projectById]
+  );
+
+  const trackedProjectIds = useMemo(() => new Set(archiveTracks.flatMap((track) => track.projectIds)), [archiveTracks]);
+  const untrackedProjects = useMemo(
+    () => projects.filter((project) => !trackedProjectIds.has(project.id)).sort((a, b) => (priorityRank.get(a.id) ?? 999) - (priorityRank.get(b.id) ?? 999)),
+    [projects, trackedProjectIds]
+  );
+
+  const projectTrackById = useMemo(() => {
+    const map = new Map<string, string>();
+    visibleArchiveTracks.forEach((track) => {
+      track.projects.forEach((project) => map.set(project.id, track.title));
+    });
+    untrackedProjects.forEach((project) => map.set(project.id, isZh ? '补充项目' : 'Additional Archive'));
+    return map;
+  }, [visibleArchiveTracks, untrackedProjects, isZh]);
+
+  const archiveTrackCount = visibleArchiveTracks.length + (untrackedProjects.length > 0 ? 1 : 0);
+
+  const copy = {
+    pageBadge: isZh ? '精选作品' : 'SELECTED WORKS',
+    pageTitle: isZh ? 'AI 产品 UX、研究 Demo 与视觉系统。' : 'AI product UX, research demos, and visual systems.',
+    pageSubtitle: isZh
+      ? '我把复杂技术转成可使用、可探索、也能被团队清楚讨论的产品体验。'
+      : 'I turn complex technology into usable, explorable experiences that teams can read, test, and discuss.',
+    archiveStat: isZh
+      ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个方向`
+      : `${projects.length} reader-ready works across ${archiveTrackCount} tracks`,
+    formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
+    agentTitle: isZh ? 'Ask Agent' : 'Ask Agent',
+    agentBody: isZh
+      ? '输入职位、能力或项目类型，获得一组更相关的作品。'
+      : 'Describe a role, capability, or project type and get a curated set of matching works.',
+    archiveTitle: isZh ? 'Browse Archive' : 'Browse Archive',
+    archiveBody: isZh
+      ? '直接浏览完整项目库，按能力方向、时间和项目类型扫读。'
+      : 'Browse the full archive by track, year, and project type.',
+    agentKicker: isZh ? 'AGENT MATCH' : 'AGENT MATCH',
+    agentHeading: isZh ? '你在找什么类型的设计师？' : 'What kind of designer are you looking for?',
+    agentSubheading: isZh
+      ? '描述角色、能力或项目类型。这里使用本地项目元数据做前端匹配，不伪装成实时 AI 后端。'
+      : 'Describe a role, capability, or project type. This uses local project metadata, not a live AI backend.',
+    placeholder: isZh
+      ? '例如：我需要一位能把复杂研究转成可用 demo 的 AI 产品设计师…'
+      : 'Example: I need an AI product designer who can translate complex research into usable demos…',
+    submit: isZh ? 'Match Work' : 'Match Work',
+    clear: isZh ? '清空输入' : 'Clear input',
+    promptLabel: isZh ? 'Suggested prompts' : 'Suggested prompts',
+    agentResultsDefault: isZh ? 'Agent 推荐起点' : 'Agent Recommended Set',
+    agentResultsMatched: isZh ? '匹配作品' : 'Matched Works',
+    noResults: isZh ? '暂时没有完全匹配的项目。试试输入能力、公司、工具或项目类型。' : 'No exact match yet. Try a skill, company, tool, or project type.',
+    why: isZh ? '原因' : 'Why',
+    archiveKicker: isZh ? 'PROJECT ARCHIVE' : 'PROJECT ARCHIVE',
+    archiveHeading: isZh ? '完整项目档案' : 'Full Project Archive',
+    archiveBodyLong: isZh
+      ? '正式案例、研究 demo、视觉系统、品牌项目和练习被组织成更密集的浏览结构。'
+      : 'Formal case studies, research demos, visual systems, branding, and practice work in a denser archive structure.',
+    featuredHeading: isZh ? '代表性案例' : 'Featured Case Studies',
+    featuredBody: isZh ? '先展示最能代表能力主线的项目。' : 'A sharper layer for the strongest evidence.',
+    indexHeading: isZh ? '项目索引' : 'Project Index',
+    indexBody: isZh ? '用 Year / Project / Track / Role 的方式保留完整数量感。' : 'A compact Year / Project / Track / Role view of the full body of work.',
+    viewCase: isZh ? '查看案例' : 'View case',
+    addPdf: isZh ? '加入 PDF' : 'Add PDF',
+    addedPdf: isZh ? '已加入' : 'Added',
+    recent: isZh ? '近期' : 'Recent',
+    localMatch: isZh ? 'Local metadata match' : 'Local metadata match',
+    tableYear: isZh ? 'Year' : 'Year',
+    tableProject: isZh ? 'Project' : 'Project',
+    tableTrack: isZh ? 'Track' : 'Track',
+    tableRole: isZh ? 'Role / Type' : 'Role / Type',
+    tableLink: isZh ? 'Link' : 'Link',
+  };
+
   const archiveSummary = isZh
-    ? `${projects.length} 个项目 · ${archiveTracks.length} 个方向 · ${formalProjects.length} 个正式项目`
-    : `${projects.length} works across ${archiveTracks.length} tracks · ${formalProjects.length} formal projects`;
+    ? `${projects.length} 个项目 · ${archiveTrackCount} 个方向 · ${formalProjects.length} 个正式项目`
+    : `${projects.length} works across ${archiveTrackCount} tracks · ${formalProjects.length} formal works`;
 
   const scoredMatches = useMemo<ScoredProject[]>(() => {
     const effectiveQuery = submittedQuery.trim();
@@ -689,19 +956,25 @@ const WorkPage: React.FC<WorkPageProps> = ({
         if (b.score !== a.score) return b.score - a.score;
         return a.rank - b.rank;
       })
-      .slice(0, 6);
-  }, [activeSuggestionId, formalProjects, submittedQuery, projects]);
+      .slice(0, 5);
+  }, [activeSuggestionId, formalProjects, submittedQuery, projectById]);
 
   const featuredProjects = archiveFeaturedIds
     .map(getProjectById)
     .filter((project): project is Project => Boolean(project));
 
-  const indexProjects = [...projects].sort((a, b) => {
-    const aPractice = practiceProjectIds.has(a.id) ? 1 : 0;
-    const bPractice = practiceProjectIds.has(b.id) ? 1 : 0;
-    if (aPractice !== bPractice) return aPractice - bPractice;
-    return (priorityRank.get(a.id) ?? 999) - (priorityRank.get(b.id) ?? 999);
-  });
+  const indexProjects = useMemo(
+    () =>
+      [...projects].sort((a, b) => {
+        const aPractice = practiceProjectIds.has(a.id) ? 1 : 0;
+        const bPractice = practiceProjectIds.has(b.id) ? 1 : 0;
+        if (aPractice !== bPractice) return aPractice - bPractice;
+        return (priorityRank.get(a.id) ?? 999) - (priorityRank.get(b.id) ?? 999);
+      }),
+    [projects]
+  );
+
+  const wallProjects = useMemo(() => indexProjects.slice(0, 18), [indexProjects]);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -726,224 +999,171 @@ const WorkPage: React.FC<WorkPageProps> = ({
     setActiveSuggestionId(null);
   };
 
-  const SelectionLink: React.FC<{ project: Project }> = ({ project }) => {
-    const isSelected = selectedProjectIds.includes(project.id);
-    return (
-      <button
-        type="button"
-        onClick={(event) => {
-          event.stopPropagation();
-          onToggleSelect(project.id);
-        }}
-        className={`relative z-20 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition ${
-          isSelected
-            ? 'border-[#3B230E] bg-[#3B230E] text-white'
-            : 'border-[#E2D0BD] bg-white/70 text-[#5C412B] hover:border-[#B99071] hover:bg-white'
-        }`}
-        aria-label={isSelected ? copy.selected : copy.select}
-      >
-        {isSelected ? <Check size={12} strokeWidth={3} /> : null}
-        {isSelected ? copy.selected : copy.select}
-      </button>
-    );
-  };
+  const cardMotion = (idx: number, y = 12) => ({
+    initial: reduceMotion ? false : { opacity: 0, y },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: reduceMotion ? 0 : Math.min(idx * 0.035, 0.18), duration: reduceMotion ? 0 : 0.32 },
+  });
 
-  const ProjectImage: React.FC<{ project: Project; idx: number }> = ({ project, idx }) => {
-    const shouldContainCover = project.coverDisplay === 'contain' || Boolean(project.slideSets || project.slides);
-    return (
-      <img
-        src={projectCoverAsset(project)}
-        alt={project.title}
-        loading={idx < 4 ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchPriority={idx < 2 ? 'high' : 'auto'}
-        sizes="(min-width: 1200px) 440px, (min-width: 768px) 45vw, calc(100vw - 40px)"
-        className={`h-full w-full transition-transform duration-700 ${
-          shouldContainCover ? 'object-contain' : 'object-cover group-hover:scale-[1.025]'
-        }`}
-      />
-    );
-  };
-
-  const CoverFrame: React.FC<{ project: Project; idx: number; compact?: boolean }> = ({ project, idx, compact = false }) => {
-    const family = projectCoverFamilies[project.id] || 'brand';
-    const familyClasses: Record<CoverFamily, string> = {
-      aiProduct: 'from-[#F8FBFF] via-[#FFFFFF] to-[#EAE4D8] border-[#D7C7B5]',
-      research: 'from-[#151B19] via-[#22312D] to-[#5F4B38] border-[#2F332E]',
-      visualSystem: 'from-[#FFF8E6] via-[#FFFDF8] to-[#E3D4BF] border-[#DCC8AE]',
-      brand: 'from-[#FAF2E8] via-[#FFFDF9] to-[#E8D3BB] border-[#DFCAB5]',
-      practice: 'from-[#EFE8DF] via-[#FFFDF9] to-[#D8C7B6] border-[#D8C7B6]',
-    };
-    const innerIsDark = family === 'research';
-
-    return (
-      <div
-        className={`relative aspect-[16/10] overflow-hidden rounded-[18px] border bg-gradient-to-br ${familyClasses[family]} ${
-          compact ? 'p-2 shadow-[0_10px_24px_rgba(73,45,24,0.06)]' : 'p-3 shadow-[0_18px_42px_rgba(73,45,24,0.09)]'
-        }`}
-      >
-        <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.72),transparent_34%),linear-gradient(135deg,rgba(59,35,14,0.05)_0_1px,transparent_1px_34px)]" />
-        <div
-          className={`relative h-full overflow-hidden rounded-[14px] border ${
-            innerIsDark ? 'border-white/12 bg-[#111813]' : 'border-white/80 bg-white'
-          }`}
-        >
-          <ProjectImage project={project} idx={idx} />
+  const WorkHero = () => (
+    <section className="grid gap-8 border-b border-[var(--work-line)] pb-10 lg:grid-cols-[minmax(0,0.78fr)_minmax(420px,1fr)] lg:items-end lg:pb-12">
+      <div className="max-w-3xl">
+        <div className="mb-5 inline-flex items-center gap-2 border border-[var(--work-line)] bg-white/62 px-3 py-1.5 font-mono text-[11px] text-[var(--work-muted)] shadow-[var(--work-shadow-border)]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--work-accent)]" aria-hidden="true" />
+          {copy.pageBadge}
         </div>
-      </div>
-    );
-  };
-
-  const ModeCard: React.FC<{ mode: ViewMode; title: string; body: string; meta: string }> = ({ mode, title, body, meta }) => {
-    const isActive = viewMode === mode;
-    return (
-      <button
-        type="button"
-        onClick={() => setViewMode(mode)}
-        className={`group rounded-[24px] border p-5 text-left transition sm:p-6 ${
-          isActive
-            ? 'border-[#3B230E] bg-[#FFFDF9] shadow-[0_18px_50px_rgba(73,45,24,0.10)]'
-            : 'border-[#DDCCBA] bg-white/48 hover:border-[#B99071] hover:bg-white/70'
-        }`}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-[#9A8068]">{meta}</p>
-            <h2 className="mt-3 font-serif text-2xl leading-tight text-[#352010]">{title}</h2>
+        <h1 className="max-w-[760px] font-serif text-[2.8rem] leading-[0.96] text-[var(--work-ink)] text-balance sm:text-[4.5rem] lg:text-[5.4rem]">
+          {copy.pageTitle}
+        </h1>
+        <p className="mt-6 max-w-2xl text-base leading-7 text-[var(--work-muted)] text-pretty sm:text-lg">
+          {copy.pageSubtitle}
+        </p>
+        <div className="mt-8 grid max-w-xl grid-cols-2 border-y border-[var(--work-line)] text-sm text-[var(--work-muted)] sm:grid-cols-[1fr_1fr_auto]">
+          <div className="border-r border-[var(--work-line)] py-4 pr-4">
+            <p className="font-mono text-xs text-[var(--work-ink)]">{projects.length}</p>
+            <p>{isZh ? '可阅读项目' : 'reader-ready works'}</p>
           </div>
-          <span className={`mt-1 inline-flex h-10 w-10 items-center justify-center rounded-full transition ${
-            isActive ? 'bg-[#3B230E] text-white' : 'bg-[#F4E9DD] text-[#5C412B] group-hover:bg-[#3B230E] group-hover:text-white'
-          }`}>
-            <ArrowRight size={17} />
-          </span>
-        </div>
-        <p className="mt-4 max-w-xl text-sm leading-6 text-[#6B5948]">{body}</p>
-      </button>
-    );
-  };
-
-  const FeaturedCaseCard: React.FC<{ project: Project; idx: number; wide?: boolean }> = ({ project, idx, wide = false }) => (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: idx * 0.045, duration: 0.42 }}
-      className={wide ? 'lg:col-span-2' : ''}
-    >
-      <div className="group relative h-full rounded-[24px] border border-[#D8C5B2] bg-[#FFFDF9] p-3 shadow-[0_18px_48px_rgba(73,45,24,0.08)] transition hover:-translate-y-0.5 hover:border-[#B99071] hover:shadow-[0_22px_60px_rgba(73,45,24,0.12)]">
-        <button type="button" onClick={() => onProjectClick(project)} className="absolute inset-0 z-10" aria-label={`${copy.viewCase}: ${project.title}`} />
-        <CoverFrame project={project} idx={idx} />
-        <div className="relative z-20 p-3 pt-5 sm:p-4">
-          <div className="mb-3 flex flex-wrap items-center gap-2 text-[11px] font-medium text-[#806A56]">
-            <span>{project.year}</span>
-            <span className="h-1 w-1 rounded-full bg-[#BDA995]" />
-            <span>{getProjectKind(project, isZh)}</span>
-            {isRecentProject(project) ? (
-              <span className="rounded-full border border-[#E2D0BD] px-2 py-0.5 text-[#7B4E29]">{copy.recent}</span>
-            ) : null}
+          <div className="py-4 pl-4 sm:border-r sm:border-[var(--work-line)] sm:pr-4">
+            <p className="font-mono text-xs text-[var(--work-ink)]">{archiveTrackCount}</p>
+            <p>{isZh ? '项目方向' : 'project tracks'}</p>
           </div>
-          <h3 className="font-serif text-[1.85rem] leading-[1.03] text-[#352010] sm:text-[2.2rem]">
-            {getProjectTitle(project, isZh)}
-          </h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-[#665544]">{getProjectTeaser(project, isZh)}</p>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#3B230E]">
-              {copy.viewCase}
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-            </span>
-            <SelectionLink project={project} />
+          <div className="col-span-2 border-t border-[var(--work-line)] py-4 sm:col-span-1 sm:border-t-0 sm:pl-4">
+            <p className="font-mono text-xs text-[var(--work-ink)]">{formalProjects.length}</p>
+            <p>{isZh ? '正式项目' : 'formal works'}</p>
           </div>
         </div>
       </div>
-    </motion.article>
+
+      <div className="rounded-[16px] bg-[var(--work-surface)] p-2 shadow-[var(--work-shadow-border)]">
+        <div className="mb-2 flex items-center justify-between px-2 py-1.5">
+          <p className="font-mono text-[11px] text-[var(--work-muted)]">CONTACT SHEET</p>
+          <p className="font-mono text-[11px] text-[var(--work-muted)]">{copy.archiveStat}</p>
+        </div>
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 xl:grid-cols-6">
+          {wallProjects.map((project, idx) => (
+            <button
+              key={project.id}
+              type="button"
+              onClick={() => onProjectClick(project)}
+              className="group min-h-10 rounded-[11px] text-left transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--work-surface)]"
+              aria-label={`${copy.viewCase}: ${project.title}`}
+            >
+              <CoverFrame project={project} idx={idx} isZh={isZh} density="wall" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 
-  const CompactProjectCard: React.FC<{ project: Project; idx: number }> = ({ project, idx }) => {
-    const chips = (projectSkillChips[project.id] || []).slice(0, 2);
+  const ModeSwitch = () => {
+    const modes: Array<{ mode: ViewMode; number: string; title: string; body: string; action: string; icon: React.ReactNode }> = [
+      {
+        mode: 'agent',
+        number: '01',
+        title: copy.agentTitle,
+        body: copy.agentBody,
+        action: isZh ? '进入 Agent' : 'Ask Agent',
+        icon: <Bot size={18} aria-hidden="true" />,
+      },
+      {
+        mode: 'archive',
+        number: '02',
+        title: copy.archiveTitle,
+        body: copy.archiveBody,
+        action: isZh ? '打开档案库' : 'Open Archive',
+        icon: <LibraryBig size={18} aria-hidden="true" />,
+      },
+    ];
+
     return (
-      <motion.article
-        layout
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: Math.min(idx * 0.018, 0.16), duration: 0.32 }}
-        style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' } as React.CSSProperties}
-      >
-        <div className="group relative h-full rounded-[18px] border border-[#DDCCBA] bg-[#FFFDF9]/82 p-2.5 transition hover:-translate-y-0.5 hover:border-[#B99071] hover:bg-white hover:shadow-[0_18px_42px_rgba(73,45,24,0.08)]">
-          <button type="button" onClick={() => onProjectClick(project)} className="absolute inset-0 z-10" aria-label={`${copy.viewCase}: ${project.title}`} />
-          <CoverFrame project={project} idx={idx} compact />
-          <div className="relative z-20 px-1.5 pb-2 pt-3.5">
-            <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px] text-[#806A56]">
-              <span>{project.year}</span>
-              <span className="h-1 w-1 rounded-full bg-[#BDA995]" />
-              <span>{getProjectKind(project, isZh)}</span>
-            </div>
-            <h3 className="font-serif text-[1.28rem] leading-tight text-[#352010]">{getProjectTitle(project, isZh)}</h3>
-            <p className="mt-2 line-clamp-2 text-[13px] leading-5 text-[#6B5948]">{getProjectTeaser(project, isZh)}</p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {chips.length > 0
-                ? chips.map((chip) => (
-                    <span key={chip.en} className="rounded-full border border-[#E5D4C1] px-2 py-1 text-[10px] font-medium text-[#715A45]">
-                      {getLocalized(chip, isZh)}
-                    </span>
-                  ))
-                : (project.tags || []).slice(0, 2).map((tag) => (
-                    <span key={tag} className="rounded-full border border-[#E5D4C1] px-2 py-1 text-[10px] font-medium text-[#715A45]">
-                      {tag}
-                    </span>
-                  ))}
-            </div>
-            <div className="mt-4 flex items-center gap-3 border-t border-[#E6D7C7] pt-3">
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3B230E]">
-                {copy.viewCase}
-                <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+      <section className="mt-8 overflow-hidden border-y border-[var(--work-line)]">
+        {modes.map((item) => {
+          const isActive = viewMode === item.mode;
+          return (
+            <button
+              key={item.mode}
+              type="button"
+              onClick={() => setViewMode(item.mode)}
+              className={cn(
+                'group grid w-full grid-cols-[44px_minmax(0,1fr)] gap-4 border-b border-[var(--work-line)] px-0 py-5 text-left transition-[background-color,color] duration-200 ease-out last:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)] sm:grid-cols-[72px_minmax(0,1fr)_180px]',
+                isActive ? 'bg-white/70' : 'hover:bg-white/44'
+              )}
+              aria-pressed={isActive}
+            >
+              <span className="font-mono text-sm text-[var(--work-muted)]">{item.number}</span>
+              <span className="min-w-0">
+                <span className="flex items-center gap-2 text-lg font-semibold text-[var(--work-ink)]">
+                  {item.icon}
+                  {item.title}
+                </span>
+                <span className="mt-1 block max-w-2xl text-sm leading-6 text-[var(--work-muted)]">{item.body}</span>
               </span>
-            </div>
-          </div>
-        </div>
-      </motion.article>
+              <span className="col-start-2 inline-flex items-center gap-2 text-sm font-semibold text-[var(--work-ink)] sm:col-start-auto sm:justify-end">
+                {item.action}
+                <ArrowRight size={15} className="transition-transform duration-200 ease-out group-hover:translate-x-1" aria-hidden="true" />
+              </span>
+            </button>
+          );
+        })}
+      </section>
     );
   };
 
-  const AgentResultCard: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
-    const project = item.project;
-    const chips = (projectSkillChips[project.id] || [{ en: getProjectKind(project, false), zh: getProjectKind(project, true) }]).slice(0, 3);
+  const FeaturedProjectCard: React.FC<{ project: Project; idx: number; variant: 'lead' | 'standard' }> = ({ project, idx, variant }) => {
+    const isSelected = selectedProjectIds.includes(project.id);
+    const chips = (projectSkillChips[project.id] || []).slice(0, 2);
+
     return (
       <motion.article
         layout
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: idx * 0.04, duration: 0.3 }}
-        className="group relative rounded-[18px] border border-[#DCCBB8] bg-[#FFFDF9] p-3 transition hover:border-[#B99071] hover:shadow-[0_16px_36px_rgba(73,45,24,0.08)]"
+        {...cardMotion(idx, 14)}
+        className={cn(variant === 'lead' ? 'lg:col-span-2' : '', 'min-w-0')}
       >
-        <button type="button" onClick={() => onProjectClick(project)} className="absolute inset-0 z-10" aria-label={`${copy.viewCase}: ${project.title}`} />
-        <div className="grid gap-4 sm:grid-cols-[160px_minmax(0,1fr)]">
-          <CoverFrame project={project} idx={idx} compact />
-          <div className="relative z-20 flex min-w-0 flex-col justify-between py-1">
-            <div>
-              <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px] text-[#806A56]">
-                <span>{project.year}</span>
-                <span className="h-1 w-1 rounded-full bg-[#BDA995]" />
-                <span>{getProjectKind(project, isZh)}</span>
+        <div className="group relative h-full rounded-[14px] bg-[var(--work-surface)] p-3 shadow-[var(--work-shadow-border)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
+          <button
+            type="button"
+            onClick={() => onProjectClick(project)}
+            className="absolute inset-0 z-10 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            aria-label={`${copy.viewCase}: ${project.title}`}
+          />
+          <div className={cn('grid gap-4', variant === 'lead' ? 'lg:grid-cols-[minmax(0,0.98fr)_minmax(220px,0.78fr)] lg:items-center' : '')}>
+            <CoverFrame project={project} idx={idx} isZh={isZh} density={variant === 'lead' ? 'lead' : 'featured'} />
+            <div className="relative z-20 flex min-w-0 flex-col justify-between px-1 pb-1 pt-1">
+              <div>
+                <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-[var(--work-muted)]">
+                  <span className="font-mono tabular-nums">{project.year}</span>
+                  <span className="h-1 w-1 rounded-full bg-[var(--work-line-strong)]" aria-hidden="true" />
+                  <span>{getProjectKind(project, isZh)}</span>
+                  {isRecentProject(project) ? (
+                    <span className="border border-[var(--work-line)] bg-[var(--work-bg)] px-2 py-0.5 text-[11px] text-[var(--work-muted)]">
+                      {copy.recent}
+                    </span>
+                  ) : null}
+                </div>
+                <h3 className={cn('font-sans font-semibold leading-tight text-[var(--work-ink)] text-balance', variant === 'lead' ? 'text-3xl sm:text-[2.25rem]' : 'text-2xl')}>
+                  {getProjectTitle(project, isZh)}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--work-muted)] text-pretty">{getProjectTeaser(project, isZh)}</p>
               </div>
-              <h3 className="font-serif text-2xl leading-tight text-[#352010]">{getProjectTitle(project, isZh)}</h3>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <div className="mt-5 flex flex-wrap items-center gap-2">
                 {chips.map((chip) => (
-                  <span key={chip.en} className="rounded-full border border-[#E2D0BD] bg-[#F8F1E8] px-2.5 py-1 text-[11px] font-medium text-[#5C412B]">
+                  <span key={chip.en} className="border border-[var(--work-line)] px-2.5 py-1 text-xs font-medium text-[var(--work-muted)]">
                     {getLocalized(chip, isZh)}
                   </span>
                 ))}
+                <span className="ml-auto inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--work-ink)] opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-within:opacity-100">
+                  {copy.viewCase}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </span>
+                <AddToPdfButton
+                  project={project}
+                  isSelected={isSelected}
+                  onToggleSelect={onToggleSelect}
+                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
+                  surface="light"
+                />
               </div>
-              <p className="mt-3 text-sm leading-6 text-[#6B5948]">
-                <span className="font-semibold text-[#3B230E]">{copy.why}: </span>
-                {getAgentReason(project, isZh)}
-              </p>
-            </div>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#3B230E]">
-                {copy.viewCase}
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </span>
-              <SelectionLink project={project} />
             </div>
           </div>
         </div>
@@ -951,225 +1171,400 @@ const WorkPage: React.FC<WorkPageProps> = ({
     );
   };
 
-  const ArchiveSection: React.FC = () => (
-    <section className="mt-12">
-      <div className="mb-7 flex flex-col gap-3 border-b border-[#D9C7B4] pb-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A8068]">{copy.archiveKicker}</p>
-          <h2 className="mt-3 font-serif text-4xl leading-tight text-[#352010] sm:text-5xl">{copy.archiveTitle}</h2>
+  const CompactProjectCard: React.FC<{ project: Project; idx: number }> = ({ project, idx }) => {
+    const isSelected = selectedProjectIds.includes(project.id);
+    const chips = (projectSkillChips[project.id] || (project.tags || []).map((tag) => ({ en: tag, zh: tag }))).slice(0, 2);
+
+    return (
+      <motion.article
+        layout
+        {...cardMotion(idx, 10)}
+        style={{ contentVisibility: 'auto', containIntrinsicSize: '280px' } as React.CSSProperties}
+      >
+        <div className="group relative h-full rounded-[12px] bg-[var(--work-surface)] p-2 shadow-[var(--work-shadow-border)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
+          <button
+            type="button"
+            onClick={() => onProjectClick(project)}
+            className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            aria-label={`${copy.viewCase}: ${project.title}`}
+          />
+          <div className="absolute right-3 top-3 z-20">
+            <AddToPdfButton
+              project={project}
+              isSelected={isSelected}
+              onToggleSelect={onToggleSelect}
+              labels={{ add: copy.addPdf, added: copy.addedPdf }}
+              surface="light"
+              labelMode="icon"
+            />
+          </div>
+          <CoverFrame project={project} idx={idx} isZh={isZh} density="compact" />
+          <div className="relative z-20 px-1 pb-2 pt-3">
+            <div className="mb-2 flex min-w-0 flex-wrap items-center gap-2 text-[11px] text-[var(--work-muted)]">
+              <span className="font-mono tabular-nums">{project.year}</span>
+              <span className="h-1 w-1 rounded-full bg-[var(--work-line-strong)]" aria-hidden="true" />
+              <span className="min-w-0 truncate">{getProjectKind(project, isZh)}</span>
+            </div>
+            <h3 className="min-h-[44px] font-sans text-[1.05rem] font-semibold leading-[1.25] text-[var(--work-ink)] text-balance">
+              {getProjectTitle(project, isZh)}
+            </h3>
+            <p className="mt-2 line-clamp-2 min-h-[40px] text-[13px] leading-5 text-[var(--work-muted)]">{getProjectTeaser(project, isZh)}</p>
+            <div className="mt-3 flex min-h-[26px] flex-wrap gap-1.5">
+              {chips.map((chip) => (
+                <span key={chip.en} className="border border-[var(--work-line)] px-2 py-0.5 text-[10px] font-medium text-[var(--work-muted)]">
+                  {getLocalized(chip, isZh)}
+                </span>
+              ))}
+            </div>
+            <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--work-ink)] opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-within:opacity-100">
+              {copy.viewCase}
+              <ArrowRight size={13} aria-hidden="true" />
+            </span>
+          </div>
         </div>
-        <p className="max-w-lg text-sm leading-6 text-[#6B5948] lg:text-right">{archiveSummary}</p>
+      </motion.article>
+    );
+  };
+
+  const AgentResultRow: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
+    const project = item.project;
+    const isSelected = selectedProjectIds.includes(project.id);
+    const chips = (projectSkillChips[project.id] || [{ en: getProjectKind(project, false), zh: getProjectKind(project, true) }]).slice(0, 3);
+
+    return (
+      <motion.article layout {...cardMotion(idx, 8)}>
+        <div className="group relative rounded-[12px] bg-white/[0.045] p-2 shadow-[0_0_0_1px_rgba(255,255,255,0.09)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-white/[0.07] hover:shadow-[0_0_0_1px_rgba(143,163,255,0.42)]">
+          <button
+            type="button"
+            onClick={() => onProjectClick(project)}
+            className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8FA3FF]"
+            aria-label={`${copy.viewCase}: ${project.title}`}
+          />
+          <div className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">
+            <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
+            <div className="relative z-20 flex min-w-0 flex-col justify-between py-1 pr-1">
+              <div>
+                <div className="mb-1.5 flex flex-wrap items-center gap-2 text-[11px] text-white/52">
+                  <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
+                  <span>{project.year}</span>
+                  <span className="h-1 w-1 rounded-full bg-white/24" aria-hidden="true" />
+                  <span>{getProjectKind(project, isZh)}</span>
+                </div>
+                <h3 className="font-sans text-lg font-semibold leading-tight text-white text-balance">{getProjectTitle(project, isZh)}</h3>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {chips.map((chip) => (
+                    <span key={chip.en} className="border border-white/12 bg-white/6 px-2 py-0.5 text-[10px] font-medium text-white/70">
+                      {getLocalized(chip, isZh)}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/68">
+                  <span className="font-semibold text-white/88">{copy.why}: </span>
+                  {getAgentReason(project, isZh)}
+                </p>
+              </div>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white opacity-80 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100">
+                  {copy.viewCase}
+                  <ArrowRight size={13} aria-hidden="true" />
+                </span>
+                <AddToPdfButton
+                  project={project}
+                  isSelected={isSelected}
+                  onToggleSelect={onToggleSelect}
+                  labels={{ add: copy.addPdf, added: copy.addedPdf }}
+                  surface="dark"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    );
+  };
+
+  const AgentMatchPanel = () => (
+    <section className="mt-10 rounded-[16px] bg-[var(--work-agent-bg)] p-4 text-white shadow-[var(--work-agent-shadow)] sm:p-6 lg:p-7">
+      <div className="grid gap-6 lg:grid-cols-[minmax(300px,0.92fr)_minmax(0,1.08fr)]">
+        <div className="min-w-0">
+          <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/10 pb-5">
+            <div>
+              <p className="font-mono text-[11px] text-[#8FA3FF]">{copy.agentKicker}</p>
+              <h2 className="mt-3 max-w-xl font-sans text-3xl font-semibold leading-tight text-white text-balance sm:text-4xl">
+                {copy.agentHeading}
+              </h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-white/68 text-pretty">{copy.agentSubheading}</p>
+            </div>
+            <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#315CFF] text-white shadow-[0_12px_30px_rgba(49,92,255,0.32)] sm:inline-flex">
+              <Bot size={19} aria-hidden="true" />
+            </span>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="work-agent-query" className="mb-2 block text-xs font-semibold text-white/76">
+              {copy.agentHeading}
+            </label>
+            <div className="rounded-[12px] bg-[#1C1D22] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.10)] focus-within:shadow-[0_0_0_2px_rgba(143,163,255,0.70)]">
+              <div className="flex items-start gap-3">
+                <Search size={18} className="mt-2.5 shrink-0 text-white/52" aria-hidden="true" />
+                <textarea
+                  id="work-agent-query"
+                  name="portfolio-agent-query"
+                  value={query}
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setActiveSuggestionId(null);
+                  }}
+                  placeholder={copy.placeholder}
+                  rows={5}
+                  spellCheck={false}
+                  autoComplete="off"
+                  className="min-h-[128px] flex-1 resize-none bg-transparent py-1.5 text-[15px] leading-6 text-white outline-none placeholder:text-white/58"
+                />
+                {query || submittedQuery ? (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white/56 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/10 hover:text-white active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8FA3FF]"
+                    aria-label={copy.clear}
+                    title={copy.clear}
+                  >
+                    <X size={16} aria-hidden="true" />
+                  </button>
+                ) : null}
+              </div>
+              <div className="mt-3 flex flex-col gap-2 border-t border-white/8 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                <span className="font-mono text-[10px] text-white/64">{copy.localMatch}</span>
+                <button
+                  type="submit"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#315CFF] pl-4 pr-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(49,92,255,0.32)] transition-[background-color,transform,box-shadow] duration-200 ease-out hover:bg-[#5B5CFF] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEBBFF]"
+                >
+                  {copy.submit}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div className="mt-5">
+            <p className="mb-2 text-xs font-semibold text-white/64">{copy.promptLabel}</p>
+            <div className="flex flex-wrap gap-2">
+              {capabilitySuggestions.map((suggestion) => {
+                const isActive = activeSuggestionId === suggestion.id;
+                return (
+                  <button
+                    key={suggestion.id}
+                    type="button"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className={cn(
+                      'min-h-10 rounded-full border px-3 py-1.5 text-xs font-medium transition-[background-color,border-color,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8FA3FF]',
+                      isActive
+                        ? 'border-[#8FA3FF] bg-[#315CFF] text-white'
+                        : 'border-white/14 bg-white/[0.03] text-white/72 hover:border-white/28 hover:bg-white/[0.08] hover:text-white'
+                    )}
+                  >
+                    {getLocalized(suggestion.label, isZh)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="min-w-0 rounded-[14px] bg-[#0F1014] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] sm:p-4">
+          <div className="mb-4 flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="font-mono text-[11px] text-white/58">
+                {submittedQuery ? (isZh ? 'MATCHED WORKS' : 'MATCHED WORKS') : isZh ? 'RECOMMENDED SET' : 'RECOMMENDED SET'}
+              </p>
+              <h3 className="mt-1 font-sans text-2xl font-semibold leading-tight text-white text-balance">
+                {submittedQuery ? copy.agentResultsMatched : copy.agentResultsDefault}
+              </h3>
+            </div>
+            <p className="font-mono text-xs text-white/58">
+              {scoredMatches.length} {isZh ? '个项目' : scoredMatches.length === 1 ? 'work' : 'works'}
+            </p>
+          </div>
+
+          {submittedQuery ? (
+            <div className="mb-4 rounded-[10px] bg-white/[0.045] px-3 py-2 text-sm leading-6 text-white/66 shadow-[0_0_0_1px_rgba(255,255,255,0.07)]">
+              {isZh ? 'Brief: ' : 'Brief: '}
+              <span className="font-medium text-white">"{submittedQuery}"</span>
+            </div>
+          ) : null}
+
+          {scoredMatches.length > 0 ? (
+            <div className="space-y-3">
+              {scoredMatches.map((item, idx) => (
+                <AgentResultRow key={item.project.id} item={item} idx={idx} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex min-h-[220px] items-center justify-center rounded-[12px] border border-dashed border-white/14 px-5 text-center text-sm leading-6 text-white/58">
+              {copy.noResults}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+
+  const ProjectTrackSection: React.FC<{ track: ArchiveTrack & { projects: Project[] }; offset: number }> = ({ track, offset }) => (
+    <section className="border-t border-[var(--work-line)] pt-7">
+      <div className="mb-5 grid gap-3 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)_auto] lg:items-end">
+        <div>
+          <p className="font-mono text-[11px] text-[var(--work-muted)]">{track.id.toUpperCase()}</p>
+          <h3 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance">{track.title}</h3>
+        </div>
+        <p className="max-w-2xl text-sm leading-6 text-[var(--work-muted)]">{track.subtitle}</p>
+        <span className="font-mono text-xs text-[var(--work-muted)]">
+          {track.projects.length} {isZh ? '个项目' : track.projects.length === 1 ? 'work' : 'works'}
+        </span>
+      </div>
+      <div className={cn('grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4', track.projects.length === 1 ? 'max-w-[360px] sm:grid-cols-1 xl:grid-cols-1' : '')}>
+        {track.projects.map((project, idx) => (
+          <CompactProjectCard key={`${track.id}-${project.id}`} project={project} idx={offset + idx} />
+        ))}
+      </div>
+    </section>
+  );
+
+  const ProjectIndex = () => (
+    <section className="mt-14 rounded-[14px] bg-[var(--work-surface)] p-4 shadow-[var(--work-shadow-border)] sm:p-5">
+      <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="font-mono text-[11px] text-[var(--work-muted)]">INDEX</p>
+          <h3 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)]">{copy.indexHeading}</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--work-muted)]">{copy.indexBody}</p>
+        </div>
+        <span className="font-mono text-xs text-[var(--work-muted)]">
+          {projects.length} {isZh ? '个条目' : 'entries'}
+        </span>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-[760px] w-full border-collapse text-left">
+          <caption className="sr-only">{copy.indexHeading}</caption>
+          <thead>
+            <tr className="border-y border-[var(--work-line)] font-mono text-[11px] text-[var(--work-muted)]">
+              <th scope="col" className="w-[90px] py-3 pr-4 font-medium">{copy.tableYear}</th>
+              <th scope="col" className="py-3 pr-4 font-medium">{copy.tableProject}</th>
+              <th scope="col" className="w-[250px] py-3 pr-4 font-medium">{copy.tableTrack}</th>
+              <th scope="col" className="w-[190px] py-3 pr-4 font-medium">{copy.tableRole}</th>
+              <th scope="col" className="w-[90px] py-3 text-right font-medium">{copy.tableLink}</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[var(--work-line)]">
+            {indexProjects.map((project) => (
+              <tr key={project.id} className="group">
+                <td className="py-3 pr-4 font-mono text-xs tabular-nums text-[var(--work-muted)]">{project.year}</td>
+                <td className="py-3 pr-4">
+                  <button
+                    type="button"
+                    onClick={() => onProjectClick(project)}
+                    className="max-w-[280px] text-left font-sans text-sm font-semibold leading-tight text-[var(--work-ink)] transition-colors duration-200 ease-out hover:text-[var(--work-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  >
+                    {getProjectTitle(project, isZh)}
+                  </button>
+                </td>
+                <td className="py-3 pr-4 text-sm text-[var(--work-muted)]">{projectTrackById.get(project.id) || getProjectKind(project, isZh)}</td>
+                <td className="py-3 pr-4 text-sm text-[var(--work-muted)]">{project.role || getProjectKind(project, isZh)}</td>
+                <td className="py-3 text-right">
+                  <button
+                    type="button"
+                    onClick={() => onProjectClick(project)}
+                    className="inline-flex min-h-10 items-center justify-end gap-1.5 text-sm font-semibold text-[var(--work-ink)] transition-colors duration-200 ease-out hover:text-[var(--work-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  >
+                    {copy.viewCase}
+                    <ArrowUpRight size={13} aria-hidden="true" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+
+  const ArchiveSection = () => (
+    <section className="mt-10" id="project-archive">
+      <div className="mb-8 grid gap-4 border-b border-[var(--work-line)] pb-7 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_auto] lg:items-end">
+        <div>
+          <p className="font-mono text-[11px] text-[var(--work-muted)]">{copy.archiveKicker}</p>
+          <h2 className="mt-3 font-sans text-4xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
+            {copy.archiveHeading}
+          </h2>
+        </div>
+        <p className="max-w-2xl text-sm leading-6 text-[var(--work-muted)]">{copy.archiveBodyLong}</p>
+        <span className="font-mono text-xs text-[var(--work-muted)]">{archiveSummary}</span>
       </div>
 
       <section>
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h3 className="font-serif text-3xl leading-tight text-[#352010]">{copy.featuredHeading}</h3>
-            <p className="mt-2 text-sm text-[#7B6856]">{copy.featuredBody}</p>
+            <p className="font-mono text-[11px] text-[var(--work-muted)]">FEATURED</p>
+            <h3 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)]">{copy.featuredHeading}</h3>
+            <p className="mt-2 text-sm text-[var(--work-muted)]">{copy.featuredBody}</p>
           </div>
-          <span className="rounded-full border border-[#DCCBB8] bg-white/60 px-3 py-1.5 text-xs font-semibold text-[#5C412B]">
+          <span className="font-mono text-xs text-[var(--work-muted)]">
             {featuredProjects.length} {isZh ? '个重点案例' : 'featured cases'}
           </span>
         </div>
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-4">
           {featuredProjects.map((project, idx) => (
-            <FeaturedCaseCard key={project.id} project={project} idx={idx} />
+            <FeaturedProjectCard key={project.id} project={project} idx={idx} variant={idx === 0 ? 'lead' : 'standard'} />
           ))}
         </div>
       </section>
 
       <div className="mt-14 space-y-12">
-        {archiveTracks.map((track) => {
-          const trackProjects = track.projectIds.map(getProjectById).filter((project): project is Project => Boolean(project));
-          if (!trackProjects.length) return null;
-          return (
-            <section key={track.id} className={track.practice ? 'rounded-[24px] border border-dashed border-[#D6C4B2] bg-white/38 p-5 sm:p-6' : ''}>
-              <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h3 className="font-serif text-[2rem] leading-tight text-[#352010]">{track.title}</h3>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6B5948]">{track.subtitle}</p>
-                </div>
-                <span className="text-sm font-medium text-[#8B735E]">
-                  {trackProjects.length} {isZh ? '个项目' : trackProjects.length === 1 ? 'work' : 'works'}
-                </span>
-              </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {trackProjects.map((project, idx) => (
-                  <CompactProjectCard key={`${track.id}-${project.id}`} project={project} idx={idx + 4} />
-                ))}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+        {visibleArchiveTracks.map((track, trackIndex) => (
+          <ProjectTrackSection key={track.id} track={track} offset={trackIndex * 10 + 4} />
+        ))}
 
-      <section className="mt-14 rounded-[24px] border border-[#DCCBB8] bg-[#FFFDF9]/72 p-5 shadow-[0_16px_44px_rgba(73,45,24,0.06)] sm:p-6">
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h3 className="font-serif text-3xl leading-tight text-[#352010]">{copy.indexHeading}</h3>
-            <p className="mt-2 text-sm leading-6 text-[#6B5948]">{copy.indexBody}</p>
-          </div>
-          <span className="text-sm font-semibold text-[#5C412B]">
-            {projects.length} {isZh ? '个条目' : 'entries'}
-          </span>
-        </div>
-        <div className="divide-y divide-[#E5D6C7] overflow-hidden rounded-[18px] border border-[#E5D6C7] bg-white/70">
-          {indexProjects.map((project) => (
-            <button
-              key={project.id}
-              type="button"
-              onClick={() => onProjectClick(project)}
-              className="grid w-full gap-2 px-4 py-3 text-left transition hover:bg-[#F8F1E8] sm:grid-cols-[92px_minmax(0,1fr)_220px_96px] sm:items-center"
-            >
-              <span className="text-xs font-semibold text-[#8A735F]">{project.year}</span>
-              <span className="font-serif text-lg leading-tight text-[#352010]">{getProjectTitle(project, isZh)}</span>
-              <span className="text-sm text-[#6B5948]">{getProjectKind(project, isZh)}</span>
-              <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#3B230E] sm:justify-end">
-                {copy.viewCase}
-                <ArrowRight size={13} />
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-    </section>
-  );
-
-  const AgentSection: React.FC = () => (
-    <section className="mt-12 grid gap-6 lg:grid-cols-[minmax(320px,0.86fr)_minmax(0,1.14fr)]">
-      <div className="rounded-[28px] border border-[#DCCBB8] bg-[#FFFDF9]/76 p-5 shadow-[0_18px_52px_rgba(73,45,24,0.08)] sm:p-7 lg:sticky lg:top-28 lg:self-start">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A8068]">{copy.agentKicker}</p>
-        <h2 className="mt-4 font-serif text-4xl leading-tight text-[#352010]">{copy.agentHeading}</h2>
-        <p className="mt-3 text-sm leading-6 text-[#6B5948]">{copy.agentSubheading}</p>
-
-        <form onSubmit={handleSubmit} className="mt-6">
-          <label htmlFor="work-agent-query" className="sr-only">
-            {copy.agentHeading}
-          </label>
-          <div className="rounded-[24px] border border-[#DCCBB8] bg-white p-3 shadow-[0_12px_30px_rgba(73,45,24,0.06)]">
-            <div className="flex items-start gap-3">
-              <Search size={18} className="mt-3 text-[#8C7762]" />
-              <textarea
-                id="work-agent-query"
-                value={query}
-                onChange={(event) => {
-                  setQuery(event.target.value);
-                  setActiveSuggestionId(null);
-                }}
-                placeholder={copy.placeholder}
-                rows={5}
-                className="min-h-[132px] flex-1 resize-none bg-transparent py-2 text-[15px] leading-6 text-[#3B230E] outline-none placeholder:text-[#A08B77]"
-              />
-              {query || submittedQuery ? (
-                <button type="button" onClick={handleClear} className="mt-2 rounded-full p-2 text-[#8C7762] transition hover:bg-[#F8F1E8] hover:text-[#3B230E]" aria-label={copy.clear} title={copy.clear}>
-                  <X size={16} />
-                </button>
-              ) : null}
-            </div>
-            <div className="mt-3 flex justify-end">
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 rounded-full bg-[#3B230E] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(74,45,24,0.16)] transition hover:bg-[#68401F]"
-              >
-                {copy.submit}
-                <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
-        </form>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {capabilitySuggestions.map((suggestion) => (
-            <button
-              key={suggestion.id}
-              type="button"
-              onClick={() => handleSuggestionClick(suggestion)}
-              className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                activeSuggestionId === suggestion.id
-                  ? 'border-[#3B230E] bg-[#3B230E] text-white'
-                  : 'border-[#DCCBB8] bg-transparent text-[#5B3A22] hover:border-[#B99071] hover:bg-white'
-              }`}
-            >
-              {getLocalized(suggestion.label, isZh)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="min-w-0">
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A8068]">
-              {submittedQuery ? (isZh ? '匹配结果' : 'MATCHED RESULTS') : isZh ? '推荐起点' : 'RECOMMENDED START'}
-            </p>
-            <h2 className="mt-2 font-serif text-3xl leading-tight text-[#352010] sm:text-4xl">
-              {submittedQuery ? copy.agentResultsMatched : copy.agentResultsDefault}
-            </h2>
-          </div>
-          <p className="text-sm text-[#7B6856]">
-            {scoredMatches.length} {isZh ? '个项目' : scoredMatches.length === 1 ? 'project' : 'projects'}
-          </p>
-        </div>
-
-        {submittedQuery ? (
-          <div className="mb-5 rounded-[18px] border border-[#DCCBB8] bg-white/50 px-4 py-3 text-sm leading-6 text-[#6B5948]">
-            {isZh ? '你正在寻找：' : 'You asked for: '}
-            <span className="font-semibold text-[#3B230E]">"{submittedQuery}"</span>
-          </div>
+        {untrackedProjects.length > 0 ? (
+          <ProjectTrackSection
+            track={{
+              id: 'additional',
+              title: isZh ? '补充项目' : 'Additional Archive',
+              subtitle: isZh ? '未归入主分类但仍保留在完整作品库中。' : 'Projects kept visible outside the main track taxonomy.',
+              projectIds: untrackedProjects.map((project) => project.id),
+              projects: untrackedProjects,
+              tone: 'practice',
+            }}
+            offset={90}
+          />
         ) : null}
-
-        {scoredMatches.length > 0 ? (
-          <div className="space-y-4">
-            {scoredMatches.map((item, idx) => (
-              <AgentResultCard key={item.project.id} item={item} idx={idx} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-[22px] border border-dashed border-[#DCCDBC] bg-white/56 px-6 py-16 text-center text-[#756352] shadow-sm">
-            {copy.noResults}
-          </div>
-        )}
       </div>
+
+      <ProjectIndex />
     </section>
   );
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-[#F8F1E8] px-5 pb-16 pt-28 sm:px-7 sm:pb-24 sm:pt-32"
+      transition={{ duration: reduceMotion ? 0 : 0.28 }}
+      className="work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 pb-16 pt-28 font-sans text-[var(--work-ink)] sm:px-7 sm:pb-24 sm:pt-32"
     >
-      <div className="mx-auto max-w-[1240px]">
+      <div className="mx-auto max-w-[1280px]">
         {onReturnToTimeline ? (
           <button
             type="button"
             onClick={onReturnToTimeline}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#DCCBB8] bg-white/62 px-4 py-2.5 text-sm font-medium text-[#4A2D18] shadow-sm transition hover:border-[#B99071] hover:bg-white"
+            className="mb-8 inline-flex min-h-10 items-center gap-2 rounded-full bg-white/70 pl-3.5 pr-4 text-sm font-medium text-[var(--work-ink)] shadow-[var(--work-shadow-border)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:bg-white hover:shadow-[var(--work-shadow-border-hover)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={16} aria-hidden="true" />
             {t('work.backToTimeline')}
           </button>
         ) : null}
 
-        <section className="mx-auto max-w-5xl text-center">
-          <div className="mb-5 inline-flex items-center rounded-full border border-[#D9C7B4] bg-white/54 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7B6551]">
-            {copy.pageBadge}
-          </div>
-          <h1 className="mx-auto max-w-4xl font-serif text-[2.55rem] leading-[0.98] text-[#352010] sm:text-6xl lg:text-[4.7rem]">
-            {copy.pageTitle}
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#675444] sm:text-lg">
-            {copy.pageSubtitle}
-          </p>
-        </section>
-
-        <section className="mt-10 grid gap-4 lg:grid-cols-2">
-          <ModeCard mode="agent" title={copy.agentTitle} body={copy.agentBody} meta={isZh ? '按需求找作品' : 'CASE FINDER'} />
-          <ModeCard mode="archive" title={copy.archiveTitle} body={copy.archiveBody} meta={archiveSummary} />
-        </section>
-
-        {viewMode === 'agent' ? <AgentSection /> : <ArchiveSection />}
+        <WorkHero />
+        <ModeSwitch />
+        {viewMode === 'agent' ? <AgentMatchPanel /> : <ArchiveSection />}
       </div>
     </motion.div>
   );

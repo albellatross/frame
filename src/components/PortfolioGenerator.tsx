@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Project } from '../types';
 import { X, FileText, MoveUp, MoveDown, Trash2, Download, Loader2 } from 'lucide-react';
 import { projectCoverAsset } from '../utils/assets';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface GeneratorProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface GeneratorProps {
 const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selectedIds, projects, onRemove }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const { t } = useLanguage();
   
   // Filter selected projects and maintain order (in a real app, we'd have reordering state)
   const selectedProjects = projects.filter(p => selectedIds.includes(p.id));
@@ -43,8 +45,12 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
           className="fixed inset-x-0 bottom-0 z-40 bg-white border-t border-neutral-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] h-[85vh] md:h-[600px] flex flex-col md:flex-row"
         >
           {/* Close Button Mobile */}
-          <button onClick={onClose} className="md:hidden absolute top-4 right-4 p-2 text-neutral-400">
-            <X size={24} />
+          <button
+            onClick={onClose}
+            className="md:hidden absolute top-4 right-4 p-2 text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]"
+            aria-label={t('generator.cancel')}
+          >
+            <X size={24} aria-hidden="true" />
           </button>
 
           {/* Left Panel: Controls */}
@@ -55,26 +61,26 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
                    <FileText size={14} className="sm:hidden" />
                    <FileText size={16} className="hidden sm:block" />
                 </div>
-                <h2 className="text-lg sm:text-xl font-serif">Generate Portfolio</h2>
+                <h2 className="text-lg sm:text-xl font-serif">{t('generator.title')}</h2>
               </div>
               <p className="text-xs sm:text-sm text-neutral-500 mb-6 sm:mb-8">
-                Curate a specific PDF version of this portfolio tailored to your recruitment needs.
+                {t('generator.description')}
               </p>
 
               <div className="space-y-4">
-                <label className="block text-xs font-bold uppercase text-neutral-400">Cover Style</label>
+                <label className="block text-xs font-bold uppercase text-neutral-400">{t('generator.coverStyle')}</label>
                 <div className="grid grid-cols-2 gap-2">
-                  <button className="h-16 border-2 border-accent bg-white rounded flex items-center justify-center text-xs font-medium text-accent">Minimal</button>
-                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400">Bold</button>
-                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400">Typographic</button>
-                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400">Image</button>
+                  <button className="h-16 border-2 border-[#315CFF] bg-white rounded flex items-center justify-center text-xs font-medium text-[#315CFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">{t('generator.minimal')}</button>
+                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">{t('generator.bold')}</button>
+                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">{t('generator.typographic')}</button>
+                  <button className="h-16 border border-neutral-200 bg-neutral-100 rounded flex items-center justify-center text-xs text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">{t('generator.image')}</button>
                 </div>
               </div>
             </div>
 
             <div className="hidden md:block">
-               <button onClick={onClose} className="text-sm text-neutral-500 hover:text-neutral-900 underline">
-                 Cancel and Close
+               <button onClick={onClose} className="text-sm text-neutral-500 hover:text-neutral-900 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">
+                 {t('generator.cancel')}
                </button>
             </div>
           </div>
@@ -84,30 +90,30 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
             {!isDone ? (
               <>
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-4 sm:mb-6">
-                  <h3 className="text-sm sm:text-base font-medium text-neutral-900">Included Projects ({selectedProjects.length})</h3>
-                  <span className="text-[10px] sm:text-xs text-neutral-400">Drag to reorder (Simulated)</span>
+                  <h3 className="text-sm sm:text-base font-medium text-neutral-900">{t('generator.included')} ({selectedProjects.length})</h3>
+                  <span className="text-[10px] sm:text-xs text-neutral-400">{t('generator.reorder')}</span>
                 </div>
 
                 <div className="flex-1 overflow-y-auto space-y-3 pr-2">
                   {selectedProjects.length === 0 ? (
                      <div className="h-40 flex items-center justify-center border-2 border-dashed border-neutral-200 rounded-lg text-neutral-400 text-sm">
-                       No projects selected. Add them from the Work section.
+                       {t('generator.empty')}
                      </div>
                   ) : (
                     selectedProjects.map((p, idx) => (
                       <div key={p.id} className="flex items-center gap-4 p-4 bg-white border border-neutral-100 shadow-sm rounded-lg group">
                         <span className="text-neutral-300 font-mono text-xs">{String(idx + 1).padStart(2, '0')}</span>
                         <div className="w-10 h-10 bg-neutral-100 rounded overflow-hidden">
-                          <img src={projectCoverAsset(p)} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                          <img src={projectCoverAsset(p)} alt="" width={80} height={80} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                         </div>
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-neutral-900">{p.title}</h4>
                           <span className="text-xs text-neutral-500">{p.category}</span>
                         </div>
                         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                           <button className="p-2 hover:bg-neutral-100 rounded text-neutral-500"><MoveUp size={14} /></button>
-                           <button className="p-2 hover:bg-neutral-100 rounded text-neutral-500"><MoveDown size={14} /></button>
-                           <button onClick={() => onRemove(p.id)} className="p-2 hover:bg-red-50 rounded text-red-500"><Trash2 size={14} /></button>
+                           <button className="p-2 hover:bg-neutral-100 rounded text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]" aria-label={`Move ${p.title} up`}><MoveUp size={14} aria-hidden="true" /></button>
+                           <button className="p-2 hover:bg-neutral-100 rounded text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]" aria-label={`Move ${p.title} down`}><MoveDown size={14} aria-hidden="true" /></button>
+                           <button onClick={() => onRemove(p.id)} className="p-2 hover:bg-red-50 rounded text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500" aria-label={`Remove ${p.title}`}><Trash2 size={14} aria-hidden="true" /></button>
                         </div>
                       </div>
                     ))
@@ -118,13 +124,13 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
                    <button 
                      disabled={selectedProjects.length === 0 || isGenerating}
                      onClick={handleGenerate}
-                     className={`px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 transition-all ${
+                     className={`px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 transition-[background-color,transform,opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] ${
                        selectedProjects.length === 0 
                        ? 'bg-neutral-300 cursor-not-allowed' 
-                       : 'bg-neutral-900 hover:bg-accent'
+                       : 'bg-neutral-900 hover:bg-[#315CFF] active:scale-[0.96]'
                      }`}
                    >
-                     {isGenerating ? <><Loader2 className="animate-spin" size={18} /> Generating PDF...</> : 'Generate Portfolio'}
+                     {isGenerating ? <><Loader2 className="animate-spin" size={18} aria-hidden="true" /> {t('generator.generating')}</> : t('generator.generate')}
                    </button>
                 </div>
               </>
@@ -138,16 +144,16 @@ const PortfolioGenerator: React.FC<GeneratorProps> = ({ isOpen, onClose, selecte
                    <Download size={24} className="sm:hidden" />
                    <Download size={32} className="hidden sm:block" />
                  </motion.div>
-                 <h3 className="text-xl sm:text-2xl font-serif text-neutral-900 mb-2">Portfolio Ready</h3>
+                 <h3 className="text-xl sm:text-2xl font-serif text-neutral-900 mb-2">{t('generator.ready')}</h3>
                  <p className="text-sm sm:text-base text-neutral-500 max-w-md mb-6 sm:mb-8">
-                   Your curated portfolio "Portfolio_2024_v1.pdf" has been generated successfully with {selectedProjects.length} projects.
+                   {t('generator.success')} {selectedProjects.length} {t('generator.projects')}
                  </p>
                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
-                   <button onClick={handleReset} className="px-6 py-2.5 sm:py-2 border border-neutral-200 rounded-full text-sm hover:bg-neutral-50 order-2 sm:order-1">
-                     Edit Selection
+                   <button onClick={handleReset} className="px-6 py-2.5 sm:py-2 border border-neutral-200 rounded-full text-sm hover:bg-neutral-50 order-2 sm:order-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">
+                     {t('generator.edit')}
                    </button>
-                   <button className="px-6 py-2.5 sm:py-2 bg-neutral-900 text-white rounded-full text-sm hover:bg-neutral-800 order-1 sm:order-2">
-                     Download PDF
+                   <button className="px-6 py-2.5 sm:py-2 bg-neutral-900 text-white rounded-full text-sm hover:bg-neutral-800 order-1 sm:order-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF]">
+                     {t('generator.download')}
                    </button>
                  </div>
               </div>

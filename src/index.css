@@ -18,6 +18,75 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --work-bg: #f7f5f0;
+  --work-surface: #fffdf8;
+  --work-surface-clean: #ffffff;
+  --work-ink: #171412;
+  --work-muted: #6f6a63;
+  --work-soft: #8a837b;
+  --work-line: #ded8cf;
+  --work-line-strong: #c9c1b8;
+  --work-accent: #315cff;
+  --work-accent-2: #6c5cff;
+  --work-agent-bg: #111217;
+  --work-agent-panel: #161719;
+  --work-radius-section: 16px;
+  --work-radius-card: 12px;
+  --work-radius-media: 8px;
+  --work-shadow-border:
+    0 0 0 1px rgba(23, 20, 18, 0.075),
+    0 1px 2px -1px rgba(23, 20, 18, 0.08),
+    0 10px 28px -24px rgba(23, 20, 18, 0.22);
+  --work-shadow-border-hover:
+    0 0 0 1px rgba(23, 20, 18, 0.14),
+    0 2px 4px -2px rgba(23, 20, 18, 0.12),
+    0 18px 42px -28px rgba(23, 20, 18, 0.34);
+  --work-cover-shadow:
+    0 0 0 1px rgba(23, 20, 18, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --work-agent-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 28px 80px -40px rgba(17, 18, 23, 0.9);
+  --work-motion-fast: 160ms;
+  --work-motion: 220ms;
+  --work-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.work-page {
+  -webkit-tap-highlight-color: rgba(49, 92, 255, 0.12);
+}
+
+.work-page * {
+  letter-spacing: 0;
+}
+
+.work-page h1,
+.work-page h2,
+.work-page h3 {
+  text-wrap: balance;
+}
+
+.work-page p {
+  text-wrap: pretty;
+}
+
+.work-page button,
+.work-page textarea {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-page *,
+  .work-page *::before,
+  .work-page *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* Hide scrollbar globally but keep scroll */
 ::-webkit-scrollbar {
   display: none;
