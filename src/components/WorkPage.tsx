@@ -1534,7 +1534,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           {track.projects.length} {isZh ? '个项目' : track.projects.length === 1 ? 'work' : 'works'}
         </span>
       </div>
-      <div className={cn('grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4', track.projects.length === 1 ? 'max-w-[360px] sm:grid-cols-1 xl:grid-cols-1' : '')}>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {track.projects.map((project, idx) => (
           <CompactProjectCard key={`${track.id}-${project.id}`} project={project} idx={offset + idx} />
         ))}
