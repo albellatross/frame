@@ -1196,24 +1196,26 @@ const WorkPage: React.FC<WorkPageProps> = ({
       className={cn(
         'relative',
         submittedQuery
-          ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-8 sm:pb-[200px]'
+          ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-4 sm:pb-[200px] sm:pt-6'
           : 'flex min-h-[calc(100vh-220px)] flex-col items-center justify-center py-10'
       )}
     >
       <div className="w-full max-w-[980px]">
-        <div className="text-center">
-          <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
-            Hi
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
-            {isZh
-              ? '和我说说你在找什么，我会帮你挑出最相关的项目。'
-              : "Tell me what you're looking for, and I'll pull together the most relevant projects."}
-          </p>
-        </div>
+        {submittedQuery ? null : (
+          <div className="text-center">
+            <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
+              Hi
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
+              {isZh
+                ? '和我说说你在找什么，我会帮你挑出最相关的项目。'
+                : "Tell me what you're looking for, and I'll pull together the most relevant projects."}
+            </p>
+          </div>
+        )}
 
         {submittedQuery ? (
-          <div className="mx-auto mt-8 max-w-[820px] space-y-4">
+          <div className="mx-auto max-w-[820px] space-y-5" role="log" aria-live="polite">
             <div className="flex justify-end">
               <div className="max-w-[720px] rounded-[22px] bg-[var(--work-ink)] px-4 py-3 text-sm leading-6 text-white shadow-[0_12px_30px_rgba(23,20,18,0.14)]">
                 {submittedQuery}
