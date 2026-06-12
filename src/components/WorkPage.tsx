@@ -912,24 +912,24 @@ const WorkPage: React.FC<WorkPageProps> = ({
   });
 
   const TopModeToggle = () => (
-    <div className="mb-8 flex justify-center">
-      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-white/58 px-2 py-1.5 text-sm shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_10px_30px_rgba(23,20,18,0.035)] backdrop-blur-sm sm:gap-3 sm:px-3">
-        <div className="hidden min-w-0 items-center gap-2 sm:flex">
-          <span className="font-mono text-[10px] uppercase tracking-normal text-[var(--work-muted)]">Works</span>
+    <div className="mb-14 border-y border-[var(--work-line)] py-3 sm:mb-16">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-2.5 text-[11px] text-[var(--work-muted)]">
+          <span className="font-mono uppercase tracking-normal">Works</span>
           <span className="h-3 w-px bg-[var(--work-line)]" aria-hidden="true" />
-          <span className="text-xs text-[var(--work-muted)]">
+          <span className="truncate tabular-nums">
             {isZh ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源` : `${projects.length} works · ${archiveTrackCount} contexts`}
           </span>
         </div>
-        <div className="flex items-center rounded-full bg-[var(--work-bg)] p-0.5 shadow-[inset_0_0_0_1px_rgba(23,20,18,0.06)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
+        <div className="flex w-full items-center gap-1 border-t border-[var(--work-line)] pt-3 sm:w-auto sm:border-t-0 sm:pt-0" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
         <button
           type="button"
           onClick={() => setViewMode('agent')}
           className={cn(
-              'inline-flex h-8 min-w-[82px] items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+              'inline-flex h-9 flex-1 items-center justify-center gap-1.5 border-b px-2 text-xs font-semibold transition-[border-color,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] sm:flex-none sm:px-3',
               viewMode === 'agent'
-                ? 'bg-white text-[var(--work-ink)] shadow-[0_1px_8px_rgba(23,20,18,0.08)]'
-                : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+                ? 'border-[var(--work-ink)] text-[var(--work-ink)]'
+                : 'border-transparent text-[var(--work-muted)] hover:border-[var(--work-line-strong)] hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'agent'}
         >
@@ -940,17 +940,17 @@ const WorkPage: React.FC<WorkPageProps> = ({
               )}
               aria-hidden="true"
             />
-          <Bot size={14} aria-hidden="true" />
+          <Bot size={13} aria-hidden="true" />
           Agent
         </button>
         <button
           type="button"
           onClick={() => setViewMode('archive')}
           className={cn(
-              'inline-flex h-8 min-w-[86px] items-center justify-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
+              'inline-flex h-9 flex-1 items-center justify-center gap-1.5 border-b px-2 text-xs font-semibold transition-[border-color,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] sm:flex-none sm:px-3',
               viewMode === 'archive'
-                ? 'bg-white text-[var(--work-ink)] shadow-[0_1px_8px_rgba(23,20,18,0.08)]'
-                : 'text-[var(--work-muted)] hover:text-[var(--work-ink)]'
+                ? 'border-[var(--work-ink)] text-[var(--work-ink)]'
+                : 'border-transparent text-[var(--work-muted)] hover:border-[var(--work-line-strong)] hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'archive'}
         >
@@ -961,7 +961,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
               )}
               aria-hidden="true"
             />
-          <LibraryBig size={14} aria-hidden="true" />
+          <LibraryBig size={13} aria-hidden="true" />
           Library
         </button>
         </div>
