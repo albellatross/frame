@@ -214,9 +214,26 @@ const projectKinds: Record<string, LocalizedText> = {
 };
 
 const projectDisplayTitles: Record<string, LocalizedText> = {
+  p1: { en: 'Copilot Read Aloud', zh: 'Copilot 朗读体验' },
   p2: { en: 'Keeta User Flow', zh: 'Keeta 用户流程' },
+  p3: { en: 'NUWA Series', zh: 'NUWA 系列研究 Demo' },
+  p4: { en: 'ReMe - AI Companion', zh: 'ReMe AI 陪伴' },
+  p5: { en: 'RD-Agent', zh: 'RD-Agent 科研工作流' },
+  p6: { en: 'MSRA 25th Anniversary', zh: '微软亚洲研究院 25 周年' },
+  p7: { en: 'Ioete Tea Shop', zh: 'Ioete 茶店品牌' },
+  p8: { en: 'Illustration Works', zh: '插画作品' },
+  p9: { en: '"Heart Printing" Packaging', zh: '心相印包装设计' },
+  p10: { en: 'Palette of the Dreamer', zh: 'Palette of the Dreamer IP 视觉' },
+  p11: { en: '"White Elephant Soup Tastes Good"', zh: '白象汤好喝海报与包装' },
   p12: { en: 'Baidu AI Cloud', zh: '百度智能云' },
+  p13: { en: 'TaskMatrix.AI Storytelling Agent', zh: 'TaskMatrix.AI Storytelling Agent' },
   p14: { en: 'Xiaodu Learning Tablet', zh: '小度学习机' },
+  p15: { en: 'Value Compass & Visual System Web', zh: 'Value Compass 视觉系统网页' },
+  p16: { en: 'Salone del Mobile', zh: '米兰国际家具展移动网页' },
+  p17: { en: 'BatteryML Visual Design', zh: 'BatteryML 视觉设计' },
+  p18: { en: 'Fera', zh: 'Fera 品牌识别' },
+  p19: { en: 'PROFILTUBI Rebranding', zh: 'PROFILTUBI 品牌重塑' },
+  p20: { en: 'RODIN Diffusion', zh: 'RODIN Diffusion 3D AI Demo' },
   p21: { en: 'Lantern Night Return', zh: '元宵夜归人' },
 };
 
@@ -387,32 +404,36 @@ const projectSkillChips: Record<string, LocalizedText[]> = {
 
 const intentBoosters = [
   {
-    terms: ['ai', 'aigc', 'generative', 'research', 'multimodal', 'model', 'demo', '生成式', '人工智能', '多模态', '研究', '模型'],
+    terms: ['ai', 'aigc', 'generative', 'research', 'multimodal', 'model', 'demo', 'ai product', 'ai产品', '生成式', '生成式 ai', '人工智能', '多模态', '研究', '研究 demo', '研究demo', '技术 demo', '模型', '模型能力'],
     ids: ['p3', 'p20', 'p5', 'p13', 'p15', 'p17', 'p1', 'p12'],
   },
   {
-    terms: ['interaction', 'ux', 'product', 'flow', 'prototype', 'control', '交互', '产品体验', '流程', '原型', '控制'],
+    terms: ['interaction', 'ux', 'product', 'flow', 'prototype', 'control', 'writing', 'communication', '交互', '用户体验', '产品体验', '体验', '流程', '原型', '控制', '输入', '书写', '交流'],
     ids: ['p1', 'p3', 'p20', 'p21', 'p5', 'p13', 'p12', 'p14', 'p4'],
   },
   {
-    terms: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '研究院', '亚洲研究院', '语音'],
+    terms: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '微软经验', '微软项目', '研究院', '亚洲研究院', '语音'],
     ids: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12'],
   },
   {
-    terms: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', 'poster', '视觉', '品牌', '包装', '平面', '海报'],
+    terms: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', 'poster', '视觉', '视觉系统', '设计系统', '品牌', '包装', '平面', '海报'],
     ids: ['p17', 'p15', 'p6', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8'],
   },
   {
-    terms: ['b2b', 'enterprise', 'platform', 'dashboard', 'workflow', '企业', '平台', '后台', '工作流'],
+    terms: ['b2b', 'enterprise', 'platform', 'dashboard', 'workflow', '企业', '企业级', '平台', '后台', '复杂系统', '复杂界面', '工作流'],
     ids: ['p12', 'p5', 'p13', 'p14'],
   },
   {
-    terms: ['vibe', 'coding', 'frontend', 'h5', 'game', 'festival', 'lantern', 'spring', '前端', '小游戏', '节日', '元宵', '春节'],
+    terms: ['vibe', 'coding', 'frontend', 'h5', 'game', 'festival', 'lantern', 'spring', '前端', '可运行', '互动原型', '小游戏', '节日', '元宵', '春节'],
     ids: ['p21', 'p20', 'p3', 'p5'],
   },
   {
     terms: ['mobile', 'app', 'journey', 'analysis', 'exercise', 'test', '移动端', '路径', '分析', '测试题', '练习'],
     ids: ['p2', 'p4', 'p14', 'p21'],
+  },
+  {
+    terms: ['chinese', 'bilingual', 'writing', 'communication', 'storytelling', '中文', '中英', '中英文', '中文交流', '写作', '文案', '沟通', '叙事', '讲述'],
+    ids: ['p1', 'p13', 'p15', 'p17', 'p3', 'p5'],
   },
 ];
 
@@ -444,6 +465,81 @@ const namedProjectBoosters = [
   { terms: ['msra 25th', 'anniversary', '微软亚洲研究院'], id: 'p6', weight: 18 },
 ];
 
+const queryTermAliases = [
+  'ai',
+  'aigc',
+  'b2b',
+  'copilot',
+  'h5',
+  'msra',
+  'office',
+  'stca',
+  '3d',
+  'agent',
+  '中文',
+  '中英',
+  '中英文',
+  '中文交流',
+  '写作',
+  '文案',
+  '沟通',
+  '产品体验',
+  '用户体验',
+  '交互',
+  '语音',
+  '朗读',
+  '微软',
+  '微软亚洲研究院',
+  '研究院',
+  '研究',
+  '科研',
+  '研究 demo',
+  '研究demo',
+  '技术 demo',
+  '模型能力',
+  '生成式',
+  '多模态',
+  '智能体',
+  '工作流',
+  '编排',
+  '平台',
+  '企业',
+  '复杂界面',
+  '层级',
+  '流程',
+  '前端',
+  '原型',
+  '可运行',
+  '小游戏',
+  '移动端',
+  '教育',
+  '学习机',
+  '品牌',
+  '视觉',
+  '视觉系统',
+  '设计系统',
+  '包装',
+  '插画',
+  '平面',
+  '手绘',
+  'ip',
+  '头像',
+  '陪伴',
+  '情感',
+  '无障碍',
+  '可访问性',
+  'nuwa',
+  'rodin',
+  'rd-agent',
+  'taskmatrix',
+  'batteryml',
+  '百度',
+  '小度',
+  'keeta',
+  '元宵',
+  '春节',
+];
+
 const coverRadiusClasses: Record<CoverDensity, string> = {
   wall: 'rounded-[8px]',
   agent: 'rounded-[10px]',
@@ -460,6 +556,7 @@ const normalize = (value: string) =>
     .trim();
 
 const getLocalized = (text: LocalizedText, isZh: boolean) => (isZh ? text.zh : text.en);
+const containsChinese = (value: string) => /[\u3400-\u9FFF]/.test(value);
 
 const queryStopWords = new Set([
   'and',
@@ -520,14 +617,19 @@ const getProjectSearchText = (project: Project) =>
     ].join(' ')
   );
 
-const getTerms = (query: string) =>
-  Array.from(
+const getTerms = (query: string) => {
+  const normalizedQuery = normalize(query);
+  const aliasTerms = queryTermAliases
+    .map((term) => normalize(term))
+    .filter((term) => term.length > 1 && normalizedQuery.includes(term));
+
+  return Array.from(
     new Set(
-      normalize(query)
-        .split(' ')
+      [...normalizedQuery.split(' '), ...aliasTerms]
         .filter((term) => term.length > 1 && !queryStopWords.has(term))
     )
   );
+};
 
 const getPrimaryYear = (project: Project) => Number(project.year.match(/\d{4}/)?.[0] || 0);
 const isRecentProject = (project: Project) => getPrimaryYear(project) >= 2024;
@@ -689,6 +791,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
   const composerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const agentRespondsInZh = isZh || containsChinese(query) || containsChinese(submittedQuery);
 
   const projectById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [projects]);
   const getProjectById = (id: string) => projectById.get(id);
@@ -802,7 +905,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       : 'Describe a role, capability, or project type. This uses local project metadata, not a live AI backend.',
     placeholder: isZh
       ? '告诉我你在找的职位、能力或项目类型…'
-      : 'Tell me the role, capability, or project type you are looking for…',
+      : 'Tell me in English or Chinese what role, capability, or project type you are looking for…',
     submit: isZh ? '发送' : 'Send',
     clear: isZh ? '清空输入' : 'Clear input',
     promptLabel: isZh ? 'Suggested prompts' : 'Suggested prompts',
@@ -827,6 +930,32 @@ const WorkPage: React.FC<WorkPageProps> = ({
     tableTrack: isZh ? 'Track' : 'Track',
     tableRole: isZh ? 'Role / Type' : 'Role / Type',
     tableLink: isZh ? 'Link' : 'Link',
+  };
+
+  const agentCopy = {
+    greeting: agentRespondsInZh ? '你好' : 'Hi',
+    inputLabel: agentRespondsInZh ? '作品 Agent 输入' : 'Portfolio Agent input',
+    placeholder: agentRespondsInZh
+      ? '可以直接用中文描述：职位、能力、项目类型、公司或技术方向…'
+      : copy.placeholder,
+    submit: agentRespondsInZh ? '发送' : 'Send',
+    clear: agentRespondsInZh ? '清空输入' : 'Clear input',
+    promptLabel: agentRespondsInZh ? '可直接点击，也可以用中文改写' : 'Suggested prompts',
+    agentName: agentRespondsInZh ? '作品 Agent' : 'Portfolio Agent',
+    addContext: agentRespondsInZh ? '添加更多需求' : 'Add more context',
+    intro: agentRespondsInZh
+      ? '可以用中文告诉我你在找什么，我会按能力、项目类型和工作背景帮你挑出相关作品。'
+      : "Tell me what you're looking for, and I'll pull together the most relevant projects.",
+    matchedHeading: agentRespondsInZh ? '我找到了这些匹配项目' : 'I found these matching projects',
+    matchedSummary: (count: number) =>
+      agentRespondsInZh
+        ? `我找到了 ${count} 个相关项目。你可以继续用中文改写需求，或直接打开案例。`
+        : `I found ${count} relevant ${count === 1 ? 'project' : 'projects'}. Refine the brief or open a case directly.`,
+    noResults: agentRespondsInZh
+      ? '暂时没有完全匹配的项目。你可以继续用中文描述能力、公司、工具、项目类型或想看的案例方向。'
+      : 'No exact match yet. Try a skill, company, tool, or project type.',
+    why: agentRespondsInZh ? '原因' : 'Why',
+    viewCase: agentRespondsInZh ? '查看案例' : 'View case',
   };
 
   const archiveSummary = isZh
@@ -898,7 +1027,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: CapabilitySuggestion) => {
-    const nextQuery = getLocalized(suggestion.query, isZh);
+    const nextQuery = getLocalized(suggestion.query, agentRespondsInZh);
     setQuery(nextQuery);
     setSubmittedQuery(nextQuery);
     setActiveSuggestionId(suggestion.id);
@@ -985,7 +1114,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             type="button"
             onClick={() => onProjectClick(project)}
             className="absolute inset-0 z-10 rounded-[16px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
-            aria-label={`${copy.viewCase}: ${project.title}`}
+            aria-label={`${agentCopy.viewCase}: ${getProjectTitle(project, agentRespondsInZh)}`}
           />
           <div className="grid gap-4 sm:grid-cols-[176px_minmax(0,1fr)_auto] sm:items-center">
             <div className="min-w-0">
@@ -997,18 +1126,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
                   <span>{project.year}</span>
                   <span className="h-1 w-1 rounded-full bg-[var(--work-line-strong)]" aria-hidden="true" />
-                  <span>{getProjectKind(project, isZh)}</span>
+                  <span>{getProjectKind(project, agentRespondsInZh)}</span>
                 </div>
-                <h3 className="font-sans text-lg font-semibold leading-tight text-[var(--work-ink)] text-balance">{getProjectTitle(project, isZh)}</h3>
+                <h3 className="font-sans text-lg font-semibold leading-tight text-[var(--work-ink)] text-balance">{getProjectTitle(project, agentRespondsInZh)}</h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-5 text-[var(--work-muted)] text-pretty">
-                  <span className="font-semibold text-[var(--work-ink)]">{copy.why}: </span>
-                  {getAgentReason(project, isZh)}
+                  <span className="font-semibold text-[var(--work-ink)]">{agentCopy.why}: </span>
+                  {getAgentReason(project, agentRespondsInZh)}
                 </p>
               </div>
             </div>
             <div className="relative z-20 flex items-center justify-start sm:justify-end">
               <span className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3.5 text-xs font-semibold text-[var(--work-ink)] shadow-[0_8px_24px_rgba(23,20,18,0.04)] transition-[background-color,border-color,transform] duration-200 ease-out group-hover:border-[var(--work-ink)] group-hover:bg-white group-hover:translate-x-0.5">
-                {copy.viewCase}
+                {agentCopy.viewCase}
                 <ArrowRight size={13} aria-hidden="true" />
               </span>
             </div>
@@ -1027,7 +1156,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           onClick={() => handleSuggestionClick(suggestion)}
           className="min-h-10 shrink-0 rounded-full border border-[var(--work-line)] bg-white/70 px-4 py-2 text-sm font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
         >
-          {getLocalized(suggestion.label, isZh)}
+          {getLocalized(suggestion.label, agentRespondsInZh)}
         </button>
       ))}
     </div>
@@ -1039,7 +1168,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     return (
       <form onSubmit={handleSubmit} className={cn('mx-auto max-w-[820px]', isDock ? 'w-full' : 'mt-8')}>
         <label htmlFor="work-agent-query" className="sr-only">
-          {copy.agentHeading}
+          {agentCopy.inputLabel}
         </label>
         <div
           onClick={(event) => {
@@ -1061,7 +1190,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
               setQuery(event.target.value);
               setActiveSuggestionId(null);
             }}
-            placeholder={copy.placeholder}
+            placeholder={agentCopy.placeholder}
+            lang={agentRespondsInZh ? 'zh-CN' : 'en'}
+            dir="auto"
             rows={isDock ? 2 : 3}
             spellCheck={false}
             autoComplete="off"
@@ -1081,13 +1212,13 @@ const WorkPage: React.FC<WorkPageProps> = ({
               <button
                 type="button"
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-                aria-label={isZh ? '添加更多需求' : 'Add more context'}
-                title={isZh ? '添加更多需求' : 'Add more context'}
+                aria-label={agentCopy.addContext}
+                title={agentCopy.addContext}
               >
                 <FilePlus2 size={17} aria-hidden="true" />
               </button>
               <span className="inline-flex h-10 min-w-0 items-center truncate rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]">
-                Portfolio Agent
+                {agentCopy.agentName}
               </span>
             </div>
             <div className="flex shrink-0 items-center gap-2">
@@ -1096,8 +1227,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   type="button"
                   onClick={handleClear}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-                  aria-label={copy.clear}
-                  title={copy.clear}
+                  aria-label={agentCopy.clear}
+                  title={agentCopy.clear}
                 >
                   <X size={17} aria-hidden="true" />
                 </button>
@@ -1106,7 +1237,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 type="submit"
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
               >
-                {copy.submit}
+                {agentCopy.submit}
                 <ArrowRight size={15} aria-hidden="true" />
               </button>
             </div>
@@ -1129,12 +1260,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
         {submittedQuery ? null : (
           <div className="text-center">
             <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
-              Hi
+              {agentCopy.greeting}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
-              {isZh
-                ? '和我说说你在找什么，我会帮你挑出最相关的项目。'
-                : "Tell me what you're looking for, and I'll pull together the most relevant projects."}
+              {agentCopy.intro}
             </p>
           </div>
         )}
@@ -1142,21 +1271,19 @@ const WorkPage: React.FC<WorkPageProps> = ({
         {submittedQuery ? (
           <div className="mx-auto max-w-[820px] space-y-5" role="log" aria-live="polite">
             <div className="flex justify-end">
-              <div className="max-w-[720px] rounded-[22px] bg-[var(--work-ink)] px-4 py-3 text-sm leading-6 text-white shadow-[0_12px_30px_rgba(23,20,18,0.14)]">
+              <div className="max-w-[720px] rounded-[22px] bg-[var(--work-ink)] px-4 py-3 text-sm leading-6 text-white shadow-[0_12px_30px_rgba(23,20,18,0.14)]" lang={agentRespondsInZh ? 'zh-CN' : 'en'} dir="auto">
                 {submittedQuery}
               </div>
             </div>
-            <div className="rounded-[22px] bg-white/74 p-4 shadow-[var(--work-shadow-border)]">
+            <div className="rounded-[22px] bg-white/74 p-4 shadow-[var(--work-shadow-border)]" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
               <div className="mb-4 flex items-start gap-3">
                 <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--work-ink)] text-white">
                   <Bot size={16} aria-hidden="true" />
                 </span>
                 <div>
-                  <h2 className="font-sans text-lg font-semibold text-[var(--work-ink)]">{copy.agentResultsMatched}</h2>
+                  <h2 className="font-sans text-lg font-semibold text-[var(--work-ink)]">{agentCopy.matchedHeading}</h2>
                   <p className="mt-1 text-sm leading-6 text-[var(--work-muted)]">
-                    {isZh
-                      ? `我找到了 ${scoredMatches.length} 个相关项目。你可以继续改写需求，或直接打开案例。`
-                      : `I found ${scoredMatches.length} relevant ${scoredMatches.length === 1 ? 'project' : 'projects'}. Refine the brief or open a case directly.`}
+                    {agentCopy.matchedSummary(scoredMatches.length)}
                   </p>
                 </div>
               </div>
@@ -1168,7 +1295,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 </div>
               ) : (
                 <div className="rounded-[14px] border border-dashed border-[var(--work-line)] px-4 py-8 text-center text-sm text-[var(--work-muted)]">
-                  {copy.noResults}
+                  {agentCopy.noResults}
                 </div>
               )}
             </div>
@@ -1405,7 +1532,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             type="button"
             onClick={() => onProjectClick(project)}
             className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8FA3FF]"
-            aria-label={`${copy.viewCase}: ${project.title}`}
+            aria-label={`${agentCopy.viewCase}: ${getProjectTitle(project, agentRespondsInZh)}`}
           />
           <div className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">
             <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
@@ -1415,24 +1542,24 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
                   <span>{project.year}</span>
                   <span className="h-1 w-1 rounded-full bg-white/24" aria-hidden="true" />
-                  <span>{getProjectKind(project, isZh)}</span>
+                  <span>{getProjectKind(project, agentRespondsInZh)}</span>
                 </div>
-                <h3 className="font-sans text-lg font-semibold leading-tight text-white text-balance">{getProjectTitle(project, isZh)}</h3>
+                <h3 className="font-sans text-lg font-semibold leading-tight text-white text-balance">{getProjectTitle(project, agentRespondsInZh)}</h3>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {chips.map((chip) => (
                     <span key={chip.en} className="border border-white/12 bg-white/6 px-2 py-0.5 text-[10px] font-medium text-white/70">
-                      {getLocalized(chip, isZh)}
+                      {getLocalized(chip, agentRespondsInZh)}
                     </span>
                   ))}
                 </div>
                 <p className="mt-2 line-clamp-2 text-xs leading-5 text-white/68">
-                  <span className="font-semibold text-white/88">{copy.why}: </span>
-                  {getAgentReason(project, isZh)}
+                  <span className="font-semibold text-white/88">{agentCopy.why}: </span>
+                  {getAgentReason(project, agentRespondsInZh)}
                 </p>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white opacity-80 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100">
-                  {copy.viewCase}
+                  {agentCopy.viewCase}
                   <ArrowRight size={13} aria-hidden="true" />
                 </span>
               </div>
@@ -1451,9 +1578,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
             <div>
               <p className="font-mono text-[11px] text-[#8FA3FF]">{copy.agentKicker}</p>
               <h2 className="mt-3 max-w-xl font-sans text-3xl font-semibold leading-tight text-white text-balance sm:text-4xl">
-                {copy.agentHeading}
+                {agentCopy.greeting}
               </h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-white/68 text-pretty">{copy.agentSubheading}</p>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-white/68 text-pretty">{agentCopy.intro}</p>
             </div>
             <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#315CFF] text-white shadow-[0_12px_30px_rgba(49,92,255,0.32)] sm:inline-flex">
               <Bot size={19} aria-hidden="true" />
@@ -1462,7 +1589,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
           <form onSubmit={handleSubmit}>
             <label htmlFor="work-agent-query" className="mb-2 block text-xs font-semibold text-white/76">
-              {copy.agentHeading}
+              {agentCopy.inputLabel}
             </label>
             <div className="rounded-[12px] bg-[#1C1D22] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.10)] focus-within:shadow-[0_0_0_2px_rgba(143,163,255,0.70)]">
               <div className="flex items-start gap-3">
@@ -1475,7 +1602,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
                     setQuery(event.target.value);
                     setActiveSuggestionId(null);
                   }}
-                  placeholder={copy.placeholder}
+                  placeholder={agentCopy.placeholder}
+                  lang={agentRespondsInZh ? 'zh-CN' : 'en'}
+                  dir="auto"
                   rows={5}
                   spellCheck={false}
                   autoComplete="off"
@@ -1486,20 +1615,20 @@ const WorkPage: React.FC<WorkPageProps> = ({
                     type="button"
                     onClick={handleClear}
                     className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white/56 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/10 hover:text-white active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8FA3FF]"
-                    aria-label={copy.clear}
-                    title={copy.clear}
+                    aria-label={agentCopy.clear}
+                    title={agentCopy.clear}
                   >
                     <X size={16} aria-hidden="true" />
                   </button>
                 ) : null}
               </div>
               <div className="mt-3 flex flex-col gap-2 border-t border-white/8 pt-3 sm:flex-row sm:items-center sm:justify-between">
-                <span className="font-mono text-[10px] text-white/64">{copy.localMatch}</span>
+                <span className="font-mono text-[10px] text-white/64">{agentRespondsInZh ? '本地项目元数据匹配' : copy.localMatch}</span>
                 <button
                   type="submit"
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#315CFF] pl-4 pr-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(49,92,255,0.32)] transition-[background-color,transform,box-shadow] duration-200 ease-out hover:bg-[#5B5CFF] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEBBFF]"
                 >
-                  {copy.submit}
+                  {agentCopy.submit}
                   <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </div>
@@ -1507,7 +1636,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </form>
 
           <div className="mt-5">
-            <p className="mb-2 text-xs font-semibold text-white/64">{copy.promptLabel}</p>
+            <p className="mb-2 text-xs font-semibold text-white/64">{agentCopy.promptLabel}</p>
             <div className="flex flex-wrap gap-2">
               {capabilitySuggestions.map((suggestion) => {
                 const isActive = activeSuggestionId === suggestion.id;
@@ -1523,7 +1652,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                         : 'border-white/14 bg-white/[0.03] text-white/72 hover:border-white/28 hover:bg-white/[0.08] hover:text-white'
                     )}
                   >
-                    {getLocalized(suggestion.label, isZh)}
+                    {getLocalized(suggestion.label, agentRespondsInZh)}
                   </button>
                 );
               })}
@@ -1535,20 +1664,20 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <div className="mb-4 flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="font-mono text-[11px] text-white/58">
-                {submittedQuery ? (isZh ? 'MATCHED WORKS' : 'MATCHED WORKS') : isZh ? 'RECOMMENDED SET' : 'RECOMMENDED SET'}
+                {submittedQuery ? (agentRespondsInZh ? '匹配项目' : 'MATCHED WORKS') : agentRespondsInZh ? '推荐项目' : 'RECOMMENDED SET'}
               </p>
               <h3 className="mt-1 font-sans text-2xl font-semibold leading-tight text-white text-balance">
-                {submittedQuery ? copy.agentResultsMatched : copy.agentResultsDefault}
+                {submittedQuery ? agentCopy.matchedHeading : agentRespondsInZh ? '可以先从这些项目看起' : copy.agentResultsDefault}
               </h3>
             </div>
             <p className="font-mono text-xs text-white/58">
-              {scoredMatches.length} {isZh ? '个项目' : scoredMatches.length === 1 ? 'work' : 'works'}
+              {scoredMatches.length} {agentRespondsInZh ? '个项目' : scoredMatches.length === 1 ? 'work' : 'works'}
             </p>
           </div>
 
           {submittedQuery ? (
-            <div className="mb-4 rounded-[10px] bg-white/[0.045] px-3 py-2 text-sm leading-6 text-white/66 shadow-[0_0_0_1px_rgba(255,255,255,0.07)]">
-              {isZh ? 'Brief: ' : 'Brief: '}
+            <div className="mb-4 rounded-[10px] bg-white/[0.045] px-3 py-2 text-sm leading-6 text-white/66 shadow-[0_0_0_1px_rgba(255,255,255,0.07)]" lang={agentRespondsInZh ? 'zh-CN' : 'en'} dir="auto">
+              {agentRespondsInZh ? '需求：' : 'Brief: '}
               <span className="font-medium text-white">"{submittedQuery}"</span>
             </div>
           ) : null}
@@ -1561,7 +1690,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             </div>
           ) : (
             <div className="flex min-h-[220px] items-center justify-center rounded-[12px] border border-dashed border-white/14 px-5 text-center text-sm leading-6 text-white/58">
-              {copy.noResults}
+              {agentCopy.noResults}
             </div>
           )}
         </div>
