@@ -68,6 +68,7 @@ const featuredProjectOrder = [
   'p11',
   'p9',
   'p8',
+  'p22',
   'p10',
   'p2',
 ];
@@ -116,7 +117,7 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'visual designer with branding, research communication, and polished system craft',
       zh: '有品牌、研究传播和完整视觉系统能力的视觉设计师',
     },
-    projectIds: ['p17', 'p15', 'p6', 'p18', 'p19', 'p7', 'p16'],
+    projectIds: ['p17', 'p15', 'p6', 'p18', 'p19', 'p7', 'p16', 'p22'],
     keywords: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', '视觉', '品牌', '包装', '平面'],
   },
   {
@@ -136,7 +137,7 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'designer with Microsoft product and research experience across Copilot, Office, and MSRA demos',
       zh: '有 Copilot、Office 和 MSRA 研究 demo 经验的微软设计师',
     },
-    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12'],
+    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
     keywords: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '研究院', 'office'],
   },
 ];
@@ -163,6 +164,7 @@ const projectSearchHints: Record<string, string[]> = {
   p19: ['profiltubi', 'rebranding', 'group work', 'identity', 'brand system', '品牌重塑', '视觉识别'],
   p20: ['rodin diffusion', '3d avatar', '3d generation', 'microsoft research', 'research demo', 'ai interaction', '3d 头像', '三维生成', '研究 demo'],
   p21: ['lantern night return', 'spring festival', 'lantern festival', 'h5 game', 'vibe coding', 'frontend prototype', '元宵', '春节', '小游戏'],
+  p22: ['probts', 'time series', 'probabilistic time series', 'visual identity', 'logo guideline', 'research brand', 'msra', '概率时间序列', '视觉识别', 'logo 规范', '研究品牌'],
 };
 
 const projectContextHints: Record<string, string[]> = {
@@ -177,6 +179,7 @@ const projectContextHints: Record<string, string[]> = {
   p15: ['msra', 'microsoft research asia', 'value compass', 'visual system web', '微软亚洲研究院', '视觉系统网页'],
   p17: ['msra', 'microsoft research asia', 'batteryml', '微软亚洲研究院', '研究院项目'],
   p20: ['msra', 'microsoft research asia', 'rodin', '微软亚洲研究院', '研究院项目'],
+  p22: ['msra', 'microsoft research asia', 'probts', 'visual identity', 'early brand exploration', '微软亚洲研究院', '早期品牌探索', '研究院项目'],
   p2: ['design test', 'test exercise', 'product design test', '测试题', '练习', '产品设计测试'],
   p12: ['design test', 'test exercise', 'product design test', '测试题', '企业平台测试'],
   p14: ['design test', 'test exercise', 'product design test', '测试题', '教育产品测试'],
@@ -211,6 +214,7 @@ const projectKinds: Record<string, LocalizedText> = {
   p19: { en: 'Rebranding', zh: '品牌重塑' },
   p20: { en: '3D AI Demo', zh: '3D AI Demo' },
   p21: { en: 'H5 Game Flow', zh: 'H5 小游戏流程' },
+  p22: { en: 'Early Research Identity', zh: '早期研究视觉识别' },
 };
 
 const projectDisplayTitles: Record<string, LocalizedText> = {
@@ -235,6 +239,7 @@ const projectDisplayTitles: Record<string, LocalizedText> = {
   p19: { en: 'PROFILTUBI Rebranding', zh: 'PROFILTUBI 品牌重塑' },
   p20: { en: 'RODIN Diffusion', zh: 'RODIN Diffusion 3D AI Demo' },
   p21: { en: 'Lantern Night Return', zh: '元宵夜归人' },
+  p22: { en: 'ProbTS Visual Identity', zh: 'ProbTS 视觉识别探索' },
 };
 
 const projectTeasers: Record<string, LocalizedText> = {
@@ -322,6 +327,10 @@ const projectTeasers: Record<string, LocalizedText> = {
     en: 'Translates a festival journey into a playable H5 prototype.',
     zh: '把节日回家路转译成可玩的 H5 原型。',
   },
+  p22: {
+    en: 'Keeps an early MSRA research-brand exploration in the archive layer.',
+    zh: '把一组早期 MSRA 研究品牌探索放在归档层。',
+  },
 };
 
 const agentReasons: Record<string, LocalizedText> = {
@@ -360,6 +369,10 @@ const agentReasons: Record<string, LocalizedText> = {
   p21: {
     en: 'Relevant for H5, frontend prototyping, mobile flow, and campaign storytelling.',
     zh: '适合 H5、前端原型、移动流程和活动叙事方向。',
+  },
+  p22: {
+    en: 'A smaller archive item for logo guidelines and research communication.',
+    zh: '作为较轻量的归档项目，展示 Logo 规范和研究传播能力。',
   },
 };
 
@@ -400,6 +413,10 @@ const projectSkillChips: Record<string, LocalizedText[]> = {
     { en: 'H5 game', zh: 'H5 小游戏' },
     { en: 'Prototype', zh: '原型' },
   ],
+  p22: [
+    { en: 'Research brand', zh: '研究品牌' },
+    { en: 'Logo system', zh: 'Logo 系统' },
+  ],
 };
 
 const intentBoosters = [
@@ -413,11 +430,11 @@ const intentBoosters = [
   },
   {
     terms: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '微软经验', '微软项目', '研究院', '亚洲研究院', '语音'],
-    ids: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12'],
+    ids: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
   },
   {
     terms: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', 'poster', '视觉', '视觉系统', '设计系统', '品牌', '包装', '平面', '海报'],
-    ids: ['p17', 'p15', 'p6', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8'],
+    ids: ['p17', 'p15', 'p6', 'p7', 'p18', 'p19', 'p16', 'p11', 'p9', 'p8', 'p22'],
   },
   {
     terms: ['b2b', 'enterprise', 'platform', 'dashboard', 'workflow', '企业', '企业级', '平台', '后台', '复杂系统', '复杂界面', '工作流'],
@@ -462,6 +479,7 @@ const namedProjectBoosters = [
   { terms: ['rodin', '3d avatar', '3d ai'], id: 'p20', weight: 20 },
   { terms: ['taskmatrix', 'taskmatrix.ai', 'agent workflow'], id: 'p13', weight: 18 },
   { terms: ['batteryml', 'battery ml'], id: 'p17', weight: 18 },
+  { terms: ['probts', 'prob ts', 'probabilistic time series', '概率时间序列'], id: 'p22', weight: 18 },
   { terms: ['msra 25th', 'anniversary', '微软亚洲研究院'], id: 'p6', weight: 18 },
 ];
 
@@ -533,6 +551,7 @@ const queryTermAliases = [
   'rd-agent',
   'taskmatrix',
   'batteryml',
+  'probts',
   '百度',
   '小度',
   'keeta',
@@ -814,7 +833,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         subtitle: isZh
           ? '研究 Demo、Agent 工作流、AI 伴侣、视觉系统、周年视觉和插画项目。'
           : 'Research demos, agent workflows, AI companion work, visual systems, anniversary visuals, and illustration.',
-        projectIds: ['p5', 'p3', 'p13', 'p20', 'p17', 'p15', 'p6', 'p4', 'p8'],
+        projectIds: ['p5', 'p3', 'p13', 'p20', 'p17', 'p15', 'p6', 'p4', 'p8', 'p22'],
       },
       {
         id: 'design-tests',

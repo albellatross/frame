@@ -50,6 +50,11 @@ const FIGMA_MSRA_25TH_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/msra-25th-anniversary/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
+const FIGMA_PROBTS_SLIDES = Array.from(
+  { length: 7 },
+  (_, index) => `/projects/figma-portfolio/probts/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
 const behanceOriginal = (projectSlug: string, index: number, extension = 'jpg') =>
   `/projects/figma-portfolio/${projectSlug}/behance-originals/behance-original-${String(index).padStart(2, '0')}.${extension}`;
 
@@ -1305,6 +1310,39 @@ export const PROJECTS_EN: Project[] = [
     }
   },
   {
+    id: 'p22',
+    title: 'ProbTS Visual Identity',
+    category: 'System',
+    platform: 'Digital',
+    year: '2024',
+    role: 'Visual Designer',
+    shortDescription: 'An early-stage visual identity exploration for a probabilistic time-series research project at MSRA.',
+    coverImage: '/projects/figma-portfolio/probts/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_PROBTS_SLIDES,
+    },
+    gallery: FIGMA_PROBTS_SLIDES,
+    tags: ['MSRA', 'Visual Identity', 'Research Communication', 'Logo Guidelines', 'Time Series'],
+    acts: {
+      act1: {
+        title: 'Research Brand Context',
+        content: 'ProbTS needed a lightweight identity direction for presenting probabilistic time-series research.'
+      },
+      act2: {
+        title: 'Early Visual Exploration',
+        content: 'Explored logo structure, color rules, auxiliary graphics, and application examples as a compact brand guideline draft.',
+        decisionPoints: ['Research-facing identity', 'Logo and color rules', 'Presentation-ready diagrams']
+      },
+      act3: {
+        title: 'Archive Placement',
+        content: 'Kept as supporting evidence of MSRA research-brand work, with intentionally modest positioning after the more mature MSRA projects.',
+        impact: '7 Source Pages'
+      }
+    }
+  },
+  {
     id: 'p18',
     title: 'Fera',
     category: 'B-Side',
@@ -2471,6 +2509,39 @@ export const PROJECTS_ZH: Project[] = [
         title: 'Behance 原图 Reader',
         content: '将 Behance 原始图片和 GIF 加入 Works 阅读器。',
         impact: '14 个原始素材'
+      }
+    }
+  },
+  {
+    id: 'p22',
+    title: 'ProbTS 视觉识别探索',
+    category: 'System',
+    platform: 'Digital',
+    year: '2024',
+    role: '视觉设计师',
+    shortDescription: 'MSRA 期间为概率时间序列研究项目做的一组早期视觉识别探索。',
+    coverImage: '/projects/figma-portfolio/probts/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_PROBTS_SLIDES,
+    },
+    gallery: FIGMA_PROBTS_SLIDES,
+    tags: ['MSRA', '视觉识别', '研究传播', 'Logo 规范', '时间序列'],
+    acts: {
+      act1: {
+        title: '研究品牌语境',
+        content: 'ProbTS 需要一套轻量的识别方向，用来承载概率时间序列研究的展示与传播。'
+      },
+      act2: {
+        title: '早期视觉探索',
+        content: '围绕 Logo 结构、标准色、辅助图形和应用示例整理成一版紧凑的品牌规范草案。',
+        decisionPoints: ['面向研究传播的识别', 'Logo 与色彩规则', '可用于展示的技术图形']
+      },
+      act3: {
+        title: '归档定位',
+        content: '作为 MSRA 研究品牌工作的补充材料保留，并放在更成熟的 MSRA 项目之后。',
+        impact: '7 张源页面'
       }
     }
   },
