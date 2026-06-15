@@ -1047,7 +1047,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   });
 
   const TopModeToggle = () => (
-    <div className="mb-14 border-y border-[var(--work-line)] py-3 sm:mb-16">
+    <div className="mb-8 border-y border-[var(--work-line)] py-3 sm:mb-10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-center gap-2.5 text-[11px] text-[var(--work-muted)]">
           <span className="font-mono uppercase tracking-normal">Works</span>
@@ -1253,7 +1253,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         'relative',
         submittedQuery
           ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-4 sm:pb-[200px] sm:pt-6'
-          : 'flex min-h-[calc(100vh-340px)] flex-col items-center justify-center py-8 sm:min-h-[calc(100vh-360px)] sm:py-10'
+          : 'flex min-h-[calc(100vh-420px)] flex-col items-center justify-start pb-10 pt-6 sm:min-h-[calc(100vh-500px)] sm:pb-12 sm:pt-8 lg:min-h-[calc(100vh-520px)] lg:pt-10'
       )}
     >
       <div className="w-full max-w-[980px]">
