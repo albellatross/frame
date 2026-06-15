@@ -26,3 +26,6 @@ dist-ssr
 # Large media files (excluded to stay under GitHub 2GB limit)
 public/draw/RPReplay_Final1638447471.MP4
 public/ambient-bgm.flac
+
+# Timeline source photos are kept locally; optimized WebP files are deployed.
+public/timeline-scenes/*.png
