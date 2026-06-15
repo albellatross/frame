@@ -1189,7 +1189,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     const textareaRef = isDock ? dockComposerTextareaRef : centerComposerTextareaRef;
 
     return (
-      <form onSubmit={handleSubmit} className={cn('mx-auto max-w-[820px]', isDock ? 'w-full' : 'mt-8')}>
+      <form onSubmit={handleSubmit} className={cn('mx-auto', isDock ? 'w-full max-w-none' : 'mt-8 max-w-[820px]')}>
         <label htmlFor={inputId} className="sr-only">
           {agentCopy.inputLabel}
         </label>
@@ -1223,7 +1223,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             placeholder={agentCopy.placeholder}
             lang={agentRespondsInZh ? 'zh-CN' : 'en'}
             dir="auto"
-            rows={isDock ? 2 : 3}
+            rows={isDock ? 1 : 3}
             spellCheck={false}
             autoComplete="off"
             onKeyDown={(event) => {
@@ -1238,20 +1238,20 @@ const WorkPage: React.FC<WorkPageProps> = ({
             }}
             className={cn(
               'w-full resize-none bg-transparent px-1 py-1 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]',
-              isDock ? 'min-h-[52px] max-h-[150px] text-base leading-6' : 'min-h-[88px] text-[17px] leading-7'
+              isDock ? 'min-h-[38px] max-h-[96px] text-[15px] leading-6' : 'min-h-[88px] text-[17px] leading-7'
             )}
           />
-          <div className="mt-3 flex items-center justify-between gap-3 border-t border-[var(--work-line)] pt-3">
+          <div className={cn('flex items-center justify-between gap-3 border-t border-[var(--work-line)]', isDock ? 'mt-2 pt-2' : 'mt-3 pt-3')}>
             <div className="flex min-w-0 items-center gap-2">
               <button
                 type="button"
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                className={cn('inline-flex shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
                 aria-label={agentCopy.addContext}
                 title={agentCopy.addContext}
               >
                 <FilePlus2 size={17} aria-hidden="true" />
               </button>
-              <span className="inline-flex h-10 min-w-0 items-center truncate rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]">
+              <span className={cn('inline-flex min-w-0 items-center truncate rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]', isDock ? 'h-9' : 'h-10')}>
                 {agentCopy.agentName}
               </span>
             </div>
@@ -1260,7 +1260,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  className={cn('inline-flex items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
                   aria-label={agentCopy.clear}
                   title={agentCopy.clear}
                 >
@@ -1269,7 +1269,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
               ) : null}
               <button
                 type="submit"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                className={cn('inline-flex items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9' : 'h-10')}
               >
                 {agentCopy.submit}
                 <ArrowRight size={15} aria-hidden="true" />
@@ -1286,11 +1286,11 @@ const WorkPage: React.FC<WorkPageProps> = ({
       className={cn(
         'relative',
         submittedQuery
-          ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-4 sm:pb-[200px] sm:pt-6'
+          ? 'min-h-[calc(100vh-220px)] pb-[150px] pt-5 sm:pb-[165px] sm:pt-7 lg:pb-[155px] lg:pt-8'
           : 'flex min-h-[calc(100vh-420px)] flex-col items-center justify-start pb-10 pt-6 sm:min-h-[calc(100vh-500px)] sm:pb-12 sm:pt-8 lg:min-h-[calc(100vh-520px)] lg:pt-10'
       )}
     >
-      <div className="w-full max-w-[980px]">
+      <div className={cn('w-full', submittedQuery ? 'max-w-none' : 'max-w-[980px]')}>
         {submittedQuery ? null : (
           <div className="text-center">
             <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
@@ -1303,24 +1303,46 @@ const WorkPage: React.FC<WorkPageProps> = ({
         )}
 
         {submittedQuery ? (
-          <div className="mx-auto max-w-[820px] space-y-5" role="log" aria-live="polite">
-            <div className="flex justify-end">
-              <div className="max-w-[720px] rounded-[22px] bg-[var(--work-ink)] px-4 py-3 text-sm leading-6 text-white shadow-[0_12px_30px_rgba(23,20,18,0.14)]" lang={agentRespondsInZh ? 'zh-CN' : 'en'} dir="auto">
-                {submittedQuery}
-              </div>
-            </div>
-            <div className="rounded-[22px] bg-white/74 p-4 shadow-[var(--work-shadow-border)]" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
-              <div className="mb-4 flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--work-ink)] text-white">
-                  <Bot size={16} aria-hidden="true" />
-                </span>
-                <div>
-                  <h2 className="font-sans text-lg font-semibold text-[var(--work-ink)]">{agentCopy.matchedHeading}</h2>
-                  <p className="mt-1 text-sm leading-6 text-[var(--work-muted)]">
-                    {agentCopy.matchedSummary(scoredMatches.length)}
-                  </p>
+          <div
+            className="mx-auto grid w-full max-w-[1120px] gap-5 lg:grid-cols-[minmax(260px,0.36fr)_minmax(0,1fr)] lg:items-start xl:gap-6"
+            role="log"
+            aria-live="polite"
+          >
+            <aside className="min-w-0 lg:sticky lg:top-32">
+              <div className="rounded-[22px] bg-[var(--work-ink)] p-4 text-white shadow-[0_18px_52px_rgba(23,20,18,0.16)] sm:p-5">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
+                    <Bot size={17} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-mono text-[11px] uppercase text-white/52">{agentRespondsInZh ? '需求' : 'Brief'}</p>
+                    <p className="mt-0.5 font-mono text-xs text-white/58">
+                      {scoredMatches.length} {agentRespondsInZh ? '个匹配项目' : scoredMatches.length === 1 ? 'matching work' : 'matching works'}
+                    </p>
+                  </div>
                 </div>
+                <p className="mt-4 rounded-[16px] bg-white/[0.07] p-3 text-sm leading-6 text-white/90 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] text-pretty" lang={agentRespondsInZh ? 'zh-CN' : 'en'} dir="auto">
+                  {submittedQuery}
+                </p>
+                <p className="mt-4 border-t border-white/12 pt-4 text-sm leading-6 text-white/66 text-pretty" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
+                  {agentCopy.matchedSummary(scoredMatches.length)}
+                </p>
               </div>
+            </aside>
+
+            <div className="min-w-0" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
+              <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentRespondsInZh ? '匹配项目' : 'MATCHED WORKS'}</p>
+                  <h2 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-3xl">
+                    {agentCopy.matchedHeading}
+                  </h2>
+                </div>
+                <span className="font-mono text-xs text-[var(--work-muted)]">
+                  {scoredMatches.length} {agentRespondsInZh ? '个项目' : scoredMatches.length === 1 ? 'work' : 'works'}
+                </span>
+              </div>
+
               {scoredMatches.length > 0 ? (
                 <div className="space-y-3">
                   {scoredMatches.map((item, idx) => (
@@ -1345,8 +1367,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
       </div>
 
       {submittedQuery ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/95 to-transparent px-4 pb-4 pt-8 sm:px-6 sm:pb-6">
-          <div className="pointer-events-auto mx-auto max-w-[900px]">
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/95 to-transparent px-4 pb-3 pt-6 sm:px-6 sm:pb-4 lg:pb-5">
+          <div className="pointer-events-auto mx-auto w-full max-w-[1120px]">
             <AgentInputComposer placement="dock" />
           </div>
         </div>
