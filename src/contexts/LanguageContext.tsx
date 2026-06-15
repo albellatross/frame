@@ -12,6 +12,7 @@ const translations: Record<Language, Record<string, string>> = {
   en: {
     // Navigation
     'nav.narrative': 'Narrative',
+    'nav.home': 'Home',
     'nav.timeline': 'Timeline',
     'nav.work': 'Work',
     'nav.profile': 'Profile',
@@ -108,6 +109,7 @@ const translations: Record<Language, Record<string, string>> = {
   zh: {
     // Navigation
     'nav.narrative': '叙事',
+    'nav.home': '首页',
     'nav.timeline': '时间线',
     'nav.work': '作品',
     'nav.profile': '简介',

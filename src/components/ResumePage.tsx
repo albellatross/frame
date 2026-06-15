@@ -7,6 +7,7 @@ import { assetUrl } from '../utils/assets';
 const ResumePage: React.FC = () => {
   const { language } = useLanguage();
   const isZh = language === 'zh';
+  const resumePdfHref = assetUrl('/郭格里-4年工作经验-18301191997.pdf');
 
   const skills = [
     { label: isZh ? 'AI 产品体验设计' : 'AI Product Experience', accent: true },
@@ -349,10 +350,15 @@ const ResumePage: React.FC = () => {
 
         {/* Download */}
         <motion.div {...fadeIn(0.45)} className="flex justify-center">
-          <button className="flex items-center gap-3 px-8 py-4 rounded-full bg-neutral-900 text-white font-medium shadow-lg hover:scale-105 transition-transform">
+          <a
+            href={resumePdfHref}
+            download="郭格里-4年工作经验-18301191997.pdf"
+            className="flex items-center gap-3 px-8 py-4 rounded-full bg-neutral-900 text-white font-medium shadow-lg transition-transform duration-300 hover:scale-105 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-4"
+            aria-label={isZh ? '下载 PDF 简历' : 'Download PDF resume'}
+          >
             <Download size={18} />
             {isZh ? '下载 PDF 简历' : 'Download PDF Resume'}
-          </button>
+          </a>
         </motion.div>
 
       </div>

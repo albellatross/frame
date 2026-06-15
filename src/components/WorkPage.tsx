@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Project } from '../types';
 import {
   ArrowLeft,
@@ -653,7 +653,7 @@ const ProjectImage: React.FC<{
       fetchPriority={idx < 2 ? 'high' : 'auto'}
       onError={() => setHasError(true)}
       sizes="(min-width: 1200px) 360px, (min-width: 768px) 45vw, calc(100vw - 48px)"
-      className="h-full w-full bg-white object-cover object-top outline outline-1 -outline-offset-1 outline-black/10"
+      className="h-full w-full scale-[1.04] bg-white object-cover object-top outline outline-1 -outline-offset-1 outline-black/10 transition-transform duration-300 ease-out group-hover:scale-[1.06]"
     />
   );
 };
@@ -688,6 +688,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const [query, setQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
+  const composerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const projectById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [projects]);
   const getProjectById = (id: string) => projectById.get(id);
@@ -882,13 +883,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const wallProjects = useMemo(() => indexProjects.slice(0, 18), [indexProjects]);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    setSubmittedQuery(query.trim());
+  const submitAgentQuery = () => {
+    const trimmedQuery = query.trim();
+    setSubmittedQuery(trimmedQuery);
     setViewMode('agent');
-    if (!query.trim()) {
+    if (!trimmedQuery) {
       setActiveSuggestionId(null);
     }
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    submitAgentQuery();
   };
 
   const handleSuggestionClick = (suggestion: CapabilitySuggestion) => {
@@ -974,16 +980,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
     return (
       <motion.article layout {...cardMotion(idx, 8)}>
-        <div className="group relative rounded-[14px] bg-white p-2 shadow-[var(--work-shadow-border)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
+        <div className="group relative rounded-[16px] bg-white p-2.5 shadow-[var(--work-shadow-border)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
           <button
             type="button"
             onClick={() => onProjectClick(project)}
-            className="absolute inset-0 z-10 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            className="absolute inset-0 z-10 rounded-[16px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
             aria-label={`${copy.viewCase}: ${project.title}`}
           />
-          <div className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">
-            <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
-            <div className="relative z-20 flex min-w-0 flex-col justify-between py-1 pr-1">
+          <div className="grid gap-4 sm:grid-cols-[176px_minmax(0,1fr)_auto] sm:items-center">
+            <div className="min-w-0">
+              <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
+            </div>
+            <div className="relative z-20 flex min-w-0 flex-col justify-center py-1">
               <div>
                 <div className="mb-1.5 flex flex-wrap items-center gap-2 text-[11px] text-[var(--work-muted)]">
                   <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
@@ -992,17 +1000,17 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   <span>{getProjectKind(project, isZh)}</span>
                 </div>
                 <h3 className="font-sans text-lg font-semibold leading-tight text-[var(--work-ink)] text-balance">{getProjectTitle(project, isZh)}</h3>
-                <p className="mt-2 line-clamp-2 text-sm leading-5 text-[var(--work-muted)]">
+                <p className="mt-2 line-clamp-2 text-sm leading-5 text-[var(--work-muted)] text-pretty">
                   <span className="font-semibold text-[var(--work-ink)]">{copy.why}: </span>
                   {getAgentReason(project, isZh)}
                 </p>
               </div>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--work-ink)] opacity-80 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0.5 group-hover:opacity-100">
-                  {copy.viewCase}
-                  <ArrowRight size={13} aria-hidden="true" />
-                </span>
-              </div>
+            </div>
+            <div className="relative z-20 flex items-center justify-start sm:justify-end">
+              <span className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3.5 text-xs font-semibold text-[var(--work-ink)] shadow-[0_8px_24px_rgba(23,20,18,0.04)] transition-[background-color,border-color,transform] duration-200 ease-out group-hover:border-[var(--work-ink)] group-hover:bg-white group-hover:translate-x-0.5">
+                {copy.viewCase}
+                <ArrowRight size={13} aria-hidden="true" />
+              </span>
             </div>
           </div>
         </div>
@@ -1034,12 +1042,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
           {copy.agentHeading}
         </label>
         <div
+          onClick={(event) => {
+            const target = event.target;
+            if (target instanceof HTMLElement && target.closest('button, a')) return;
+            composerTextareaRef.current?.focus();
+          }}
           className={cn(
-            'bg-white shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]',
+            'cursor-text bg-white shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]',
             isDock ? 'rounded-[24px] p-3 sm:p-3.5' : 'rounded-[28px] p-4'
           )}
         >
           <textarea
+            ref={composerTextareaRef}
             id="work-agent-query"
             name="portfolio-agent-query"
             value={query}
@@ -1051,6 +1065,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
             rows={isDock ? 2 : 3}
             spellCheck={false}
             autoComplete="off"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+                event.preventDefault();
+                submitAgentQuery();
+              }
+            }}
             className={cn(
               'w-full resize-none bg-transparent px-1 py-1 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]',
               isDock ? 'min-h-[52px] max-h-[150px] text-base leading-6' : 'min-h-[88px] text-[17px] leading-7'
@@ -1102,7 +1122,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         'relative',
         submittedQuery
           ? 'min-h-[calc(100vh-220px)] pb-[190px] pt-4 sm:pb-[200px] sm:pt-6'
-          : 'flex min-h-[calc(100vh-220px)] flex-col items-center justify-center py-10'
+          : 'flex min-h-[calc(100vh-340px)] flex-col items-center justify-center py-8 sm:min-h-[calc(100vh-360px)] sm:py-10'
       )}
     >
       <div className="w-full max-w-[980px]">

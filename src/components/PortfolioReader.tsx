@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  PanelLeftClose,
+  PanelLeftOpen,
   ChevronUp,
   FileText,
   Maximize2,
@@ -30,6 +32,7 @@ const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh,
   const [zoom, setZoom] = useState(1);
   const [activePage, setActivePage] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isThumbRailCollapsed, setIsThumbRailCollapsed] = useState(false);
   const uniquePages = useMemo(() => pages.filter(Boolean), [pages]);
 
   useEffect(() => {
@@ -136,10 +139,17 @@ const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh,
             </button>
           </div>
 
-          <div className="hidden items-center overflow-hidden rounded-full border border-white/10 bg-white/[0.06] p-1 md:flex">
-            <span className="rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-[#242528]">中</span>
-            <span className="px-3 py-1.5 text-[11px] text-white/38">EN</span>
-          </div>
+          <button
+            type="button"
+            onClick={() => setIsThumbRailCollapsed((value) => !value)}
+            className="hidden h-9 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 text-xs font-medium text-white/68 transition hover:bg-white/10 hover:text-white lg:inline-flex"
+            aria-label={isThumbRailCollapsed ? (isZh ? '展开缩略图' : 'Show thumbnails') : (isZh ? '折叠缩略图' : 'Hide thumbnails')}
+            aria-pressed={!isThumbRailCollapsed}
+            title={isThumbRailCollapsed ? (isZh ? '展开缩略图' : 'Show thumbnails') : (isZh ? '折叠缩略图' : 'Hide thumbnails')}
+          >
+            {isThumbRailCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
+            <span className="hidden xl:inline">{isThumbRailCollapsed ? (isZh ? '缩略图' : 'Thumbs') : (isZh ? '收起' : 'Hide')}</span>
+          </button>
 
           <button
             type="button"
@@ -189,41 +199,59 @@ const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh,
       </div>
 
       <div className="mx-auto flex max-w-[1680px]">
-        <aside className="sticky top-[58px] hidden h-[calc(100vh-58px)] w-[168px] flex-shrink-0 overflow-y-auto border-r border-white/10 bg-[#343538] px-4 py-5 lg:block">
-          <div className="space-y-4">
-            {uniquePages.map((page, index) => (
-              <button
-                key={`${page}-${index}`}
-                type="button"
-                onClick={() => scrollToPage(index)}
-                className="group block w-full text-left"
-                aria-label={`${isZh ? '第' : 'Page '}${index + 1}${isZh ? '页' : ''}`}
-              >
-                <span
-                  className={`block overflow-hidden rounded-[8px] border bg-white p-1.5 shadow-sm transition ${
-                    activePage === index ? 'border-white shadow-[0_16px_34px_rgba(0,0,0,0.34)]' : 'border-white/16 group-hover:border-white/55'
-                  }`}
-                >
-                  {isPdf(page) ? (
-                    <span className="grid aspect-[4/3] place-items-center rounded-[5px] bg-neutral-100 text-neutral-500">
-                      <FileText size={22} />
-                    </span>
-                  ) : (
-                    <img
-                      src={assetUrl(page)}
-                      alt=""
-                      className="aspect-[4/3] w-full rounded-[5px] object-contain"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                </span>
-                <span className={`mt-2 block text-center font-mono text-[10px] ${activePage === index ? 'text-white' : 'text-white/42'}`}>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </button>
-            ))}
+        <aside
+          className={`sticky top-[58px] hidden h-[calc(100vh-58px)] flex-shrink-0 overflow-y-auto border-r border-white/10 bg-[#343538] transition-[width,padding] duration-300 ease-out lg:block ${
+            isThumbRailCollapsed ? 'w-[52px] px-2 py-4' : 'w-[168px] px-4 py-5'
+          }`}
+          aria-label={isZh ? '页面缩略图' : 'Page thumbnails'}
+        >
+          <div className={isThumbRailCollapsed ? 'flex justify-center' : 'mb-4 flex justify-end'}>
+            <button
+              type="button"
+              onClick={() => setIsThumbRailCollapsed((value) => !value)}
+              className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-white/68 transition hover:bg-white/10 hover:text-white"
+              aria-label={isThumbRailCollapsed ? (isZh ? '展开缩略图' : 'Show thumbnails') : (isZh ? '折叠缩略图' : 'Hide thumbnails')}
+              title={isThumbRailCollapsed ? (isZh ? '展开缩略图' : 'Show thumbnails') : (isZh ? '折叠缩略图' : 'Hide thumbnails')}
+            >
+              {isThumbRailCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
+            </button>
           </div>
+          {!isThumbRailCollapsed ? (
+            <div className="space-y-4">
+              {uniquePages.map((page, index) => (
+                <button
+                  key={`${page}-${index}`}
+                  type="button"
+                  onClick={() => scrollToPage(index)}
+                  className="group block w-full text-left"
+                  aria-label={`${isZh ? '第' : 'Page '}${index + 1}${isZh ? '页' : ''}`}
+                >
+                  <span
+                    className={`block overflow-hidden rounded-[8px] border bg-white p-1.5 shadow-sm transition ${
+                      activePage === index ? 'border-white shadow-[0_16px_34px_rgba(0,0,0,0.34)]' : 'border-white/16 group-hover:border-white/55'
+                    }`}
+                  >
+                    {isPdf(page) ? (
+                      <span className="grid aspect-[4/3] place-items-center rounded-[5px] bg-neutral-100 text-neutral-500">
+                        <FileText size={22} />
+                      </span>
+                    ) : (
+                      <img
+                        src={assetUrl(page)}
+                        alt=""
+                        className="aspect-[4/3] w-full rounded-[5px] object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                  </span>
+                  <span className={`mt-2 block text-center font-mono text-[10px] ${activePage === index ? 'text-white' : 'text-white/42'}`}>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                </button>
+              ))}
+            </div>
+          ) : null}
         </aside>
 
         <main className="min-w-0 flex-1 overflow-x-auto">

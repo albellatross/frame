@@ -56,6 +56,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
   };
 
   const navLinks = [
+    { label: t('nav.home'), id: 'hero', type: 'scroll' as const },
     { label: t('nav.timeline'), id: 'timeline', type: 'scroll' as const },
     { label: t('nav.work'), id: 'work', type: 'page' as const },
     { label: t('nav.profile'), id: 'profile', type: 'page' as const }
@@ -64,7 +65,8 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
   const isActive = (linkId: string) => {
     if (currentPage === 'work' && linkId === 'work') return true;
     if (currentPage === 'profile' && linkId === 'profile') return true;
-    if (currentPage === 'home' && linkId !== 'work' && linkId !== 'profile' && isScrolled) return true;
+    if (currentPage === 'home' && linkId === 'hero') return !isScrolled;
+    if (currentPage === 'home' && linkId === 'timeline') return isScrolled;
     return false;
   };
 
