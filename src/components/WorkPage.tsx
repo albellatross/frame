@@ -809,7 +809,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const [query, setQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
-  const composerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const centerComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const dockComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const isComposingQueryRef = useRef(false);
   const agentRespondsInZh = isZh || containsChinese(query) || containsChinese(submittedQuery);
 
   const projectById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [projects]);
@@ -1183,17 +1185,19 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const AgentInputComposer: React.FC<{ placement: 'center' | 'dock' }> = ({ placement }) => {
     const isDock = placement === 'dock';
+    const inputId = `work-agent-query-${placement}`;
+    const textareaRef = isDock ? dockComposerTextareaRef : centerComposerTextareaRef;
 
     return (
       <form onSubmit={handleSubmit} className={cn('mx-auto max-w-[820px]', isDock ? 'w-full' : 'mt-8')}>
-        <label htmlFor="work-agent-query" className="sr-only">
+        <label htmlFor={inputId} className="sr-only">
           {agentCopy.inputLabel}
         </label>
         <div
           onClick={(event) => {
             const target = event.target;
             if (target instanceof HTMLElement && target.closest('button, a')) return;
-            composerTextareaRef.current?.focus();
+            textareaRef.current?.focus({ preventScroll: true });
           }}
           className={cn(
             'cursor-text bg-white shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]',
@@ -1201,13 +1205,20 @@ const WorkPage: React.FC<WorkPageProps> = ({
           )}
         >
           <textarea
-            ref={composerTextareaRef}
-            id="work-agent-query"
+            ref={textareaRef}
+            id={inputId}
             name="portfolio-agent-query"
+            data-testid={inputId}
             value={query}
             onChange={(event) => {
               setQuery(event.target.value);
               setActiveSuggestionId(null);
+            }}
+            onCompositionStart={() => {
+              isComposingQueryRef.current = true;
+            }}
+            onCompositionEnd={() => {
+              isComposingQueryRef.current = false;
             }}
             placeholder={agentCopy.placeholder}
             lang={agentRespondsInZh ? 'zh-CN' : 'en'}
@@ -1216,7 +1227,11 @@ const WorkPage: React.FC<WorkPageProps> = ({
             spellCheck={false}
             autoComplete="off"
             onKeyDown={(event) => {
-              if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+              const nativeEvent = event.nativeEvent as KeyboardEvent & { isComposing?: boolean; keyCode?: number };
+              const isImeComposing =
+                isComposingQueryRef.current || nativeEvent.isComposing || nativeEvent.keyCode === 229;
+
+              if (event.key === 'Enter' && !event.shiftKey && !isImeComposing) {
                 event.preventDefault();
                 submitAgentQuery();
               }
@@ -1607,14 +1622,14 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </div>
 
           <form onSubmit={handleSubmit}>
-            <label htmlFor="work-agent-query" className="mb-2 block text-xs font-semibold text-white/76">
+            <label htmlFor="work-agent-panel-query" className="mb-2 block text-xs font-semibold text-white/76">
               {agentCopy.inputLabel}
             </label>
             <div className="rounded-[12px] bg-[#1C1D22] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.10)] focus-within:shadow-[0_0_0_2px_rgba(143,163,255,0.70)]">
               <div className="flex items-start gap-3">
                 <Search size={18} className="mt-2.5 shrink-0 text-white/52" aria-hidden="true" />
                 <textarea
-                  id="work-agent-query"
+                  id="work-agent-panel-query"
                   name="portfolio-agent-query"
                   value={query}
                   onChange={(event) => {
