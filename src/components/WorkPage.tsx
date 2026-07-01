@@ -1008,7 +1008,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     responseHeading: agentRespondsInZh ? 'Agent 回答' : 'Agent answer',
     loading: agentRespondsInZh ? '正在检索作品并生成回答…' : 'Retrieving portfolio context and drafting an answer...',
     sending: agentRespondsInZh ? '生成中' : 'Thinking',
-    localFallback: agentRespondsInZh ? '本地兜底模式' : 'Local fallback',
+    localFallback: agentRespondsInZh ? '作品知识库模式' : 'Portfolio knowledge mode',
     modelLabel: agentRespondsInZh ? '模型' : 'Model',
     groundedLabel: agentRespondsInZh ? '作品知识库' : 'Portfolio knowledge',
     followUpLabel: agentRespondsInZh ? '可以继续追问' : 'Suggested follow-ups',
@@ -1105,9 +1105,54 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const wallProjects = useMemo(() => indexProjects.slice(0, 18), [indexProjects]);
 
+  const buildClientFallbackReply = (
+    message: string,
+    locale: 'zh' | 'en',
+    candidateProjectIds: string[],
+    localMatches: ScoredProject[]
+  ): PortfolioAgentReply => {
+    const fallbackMatches = localMatches.length > 0 ? localMatches : getLocalMatchesForQuery('', null);
+    const topMatches = fallbackMatches.slice(0, 3);
+    const isReplyZh = locale === 'zh';
+    const projectIds = candidateProjectIds.length > 0
+      ? candidateProjectIds
+      : topMatches.map(({ project }) => project.id);
+    const projectLines = topMatches
+      .map(({ project }, index) => {
+        const title = getProjectTitle(project, isReplyZh);
+        const reason = getAgentReason(project, isReplyZh);
+        return `${index + 1}. ${title}: ${reason}`;
+      })
+      .join('\n');
+
+    return {
+      mode: 'local',
+      model: isReplyZh ? '作品知识库' : 'Portfolio knowledge',
+      projectIds,
+      confidence: topMatches.length > 0 ? 'medium' : 'low',
+      embeddingUsed: false,
+      keyConfigured: false,
+      followUps: isReplyZh
+        ? [
+            '她做过哪些 Agent 或 AI 工作流项目？',
+            '哪个项目最能证明 AI 产品 UX 能力？',
+            '她如何把研究模型能力转成可用 Demo？',
+          ]
+        : [
+            'Which agent or AI workflow projects has she done?',
+            'Which case best proves her AI product UX ability?',
+            'How does she turn model capability into a usable demo?',
+          ],
+      answer: isReplyZh
+        ? `我先基于作品集内置知识库回答。针对「${message}」，最相关的证据是：\n\n${projectLines}\n\n如果面试官想更快判断匹配度，可以重点看这些项目里的问题拆解、交互状态、研究能力转译和最终可展示的界面结果。`
+        : `I can answer from the built-in portfolio knowledge. For "${message}", the strongest evidence is:\n\n${projectLines}\n\nFor an interview, these cases are the fastest way to judge problem framing, interaction decisions, research translation, and the final interface craft.`,
+    };
+  };
+
   const requestPortfolioAgent = async (message: string, suggestionId: string | null) => {
     const locale = isZh || containsChinese(message) ? 'zh' : 'en';
-    const candidateProjectIds = getLocalMatchesForQuery(message, suggestionId).map((item) => item.project.id);
+    const localMatches = getLocalMatchesForQuery(message, suggestionId);
+    const candidateProjectIds = localMatches.map((item) => item.project.id);
     const userMessage: AgentMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -1163,7 +1208,19 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ]);
       setAgentStatus('ready');
     } catch (error) {
-      setAgentStatus('error');
+      const fallbackReply = buildClientFallbackReply(message, locale, candidateProjectIds, localMatches);
+      setAgentReply(fallbackReply);
+      setAgentMessages((messages) => [
+        ...messages,
+        {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant',
+          content: fallbackReply.answer,
+          mode: fallbackReply.mode,
+          model: fallbackReply.model,
+        },
+      ]);
+      setAgentStatus('ready');
       setAgentError(error instanceof Error ? error.message : 'Agent request failed.');
     }
   };
@@ -1399,6 +1456,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             <div className="flex min-w-0 items-center gap-2">
               <button
                 type="button"
+                onClick={() => textareaRef.current?.focus({ preventScroll: true })}
                 className={cn('inline-flex shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
                 aria-label={agentCopy.addContext}
                 title={agentCopy.addContext}
