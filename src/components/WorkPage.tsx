@@ -46,6 +46,29 @@ interface ArchiveTrack {
   projectIds: string[];
 }
 
+type AgentRole = 'user' | 'assistant';
+type AgentStatus = 'idle' | 'loading' | 'ready' | 'error';
+
+interface AgentMessage {
+  id: string;
+  role: AgentRole;
+  content: string;
+  mode?: 'openai' | 'github' | 'local';
+  model?: string | null;
+}
+
+interface PortfolioAgentReply {
+  answer: string;
+  projectIds: string[];
+  followUps: string[];
+  mode: 'openai' | 'github' | 'local';
+  model?: string | null;
+  confidence?: 'high' | 'medium' | 'low';
+  embeddingUsed?: boolean;
+  keyConfigured?: boolean;
+  error?: string;
+}
+
 const practiceProjectIds = new Set(['p2', 'p12', 'p14']);
 
 const featuredProjectOrder = [
@@ -731,6 +754,7 @@ const getAgentReason = (project: Project, isZh: boolean) =>
   );
 
 const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
+const portfolioAgentApiUrl = import.meta.env.VITE_PORTFOLIO_AGENT_API_URL || '/api/portfolio-agent';
 
 const AbstractCover: React.FC<{ project: Project; isZh: boolean }> = ({ project, isZh }) => (
   <div
@@ -809,6 +833,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const [query, setQuery] = useState('');
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [activeSuggestionId, setActiveSuggestionId] = useState<string | null>(null);
+  const [agentMessages, setAgentMessages] = useState<AgentMessage[]>([]);
+  const [agentReply, setAgentReply] = useState<PortfolioAgentReply | null>(null);
+  const [agentStatus, setAgentStatus] = useState<AgentStatus>('idle');
+  const [agentError, setAgentError] = useState('');
   const centerComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const dockComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const isComposingQueryRef = useRef(false);
@@ -913,8 +941,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
     formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
     agentTitle: isZh ? 'Agent' : 'Agent',
     agentBody: isZh
-      ? '输入职位、能力或项目类型，获得一组更相关的作品。'
-      : 'Describe a role, capability, or project type and get a curated set of matching works.',
+      ? '像面试一样提问，Agent 会基于作品集回答并推荐相关案例。'
+      : 'Ask interview-style questions and get portfolio-grounded answers with matching cases.',
     archiveTitle: isZh ? '项目库' : 'Project Library',
     archiveBody: isZh
       ? '直接浏览完整项目库，按工作来源、时间和项目类型扫读。'
@@ -922,8 +950,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
     agentKicker: isZh ? 'AGENT MATCH' : 'AGENT MATCH',
     agentHeading: 'Hi',
     agentSubheading: isZh
-      ? '描述角色、能力或项目类型。这里使用本地项目元数据做前端匹配，不伪装成实时 AI 后端。'
-      : 'Describe a role, capability, or project type. This uses local project metadata, not a live AI backend.',
+      ? '可以像面试一样提问。Agent 会基于作品知识库回答，并在没有 API key 时自动回到本地模式。'
+      : 'Ask interview-style questions. The agent answers from portfolio knowledge and falls back locally when no API key is configured.',
     placeholder: isZh
       ? '告诉我你在找的职位、能力或项目类型…'
       : 'Tell me in English or Chinese what role, capability, or project type you are looking for…',
@@ -945,7 +973,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     indexBody: isZh ? '用 Year / Project / Track / Role 的方式保留完整数量感。' : 'A compact Year / Project / Track / Role view of the full body of work.',
     viewCase: isZh ? '查看案例' : 'View case',
     recent: isZh ? '近期' : 'Recent',
-    localMatch: isZh ? 'Local metadata match' : 'Local metadata match',
+    localMatch: isZh ? 'Portfolio knowledge grounded' : 'Portfolio knowledge grounded',
     tableYear: isZh ? 'Year' : 'Year',
     tableProject: isZh ? 'Project' : 'Project',
     tableTrack: isZh ? 'Track' : 'Track',
@@ -965,27 +993,36 @@ const WorkPage: React.FC<WorkPageProps> = ({
     agentName: agentRespondsInZh ? '作品 Agent' : 'Portfolio Agent',
     addContext: agentRespondsInZh ? '添加更多需求' : 'Add more context',
     intro: agentRespondsInZh
-      ? '可以用中文告诉我你在找什么，我会按能力、项目类型和工作背景帮你挑出相关作品。'
-      : "Tell me what you're looking for, and I'll pull together the most relevant projects.",
-    matchedHeading: agentRespondsInZh ? '我找到了这些匹配项目' : 'I found these matching projects',
+      ? '可以直接像面试官一样问我：做过哪些 Agent？AI UX 方法是什么？某个项目里怎么做决策？'
+      : 'Ask like an interviewer: agent work, AI UX methods, project decisions, or which cases best prove a skill.',
+    matchedHeading: agentRespondsInZh ? '相关案例' : 'Relevant cases',
     matchedSummary: (count: number) =>
       agentRespondsInZh
-        ? `我找到了 ${count} 个相关项目。你可以继续用中文改写需求，或直接打开案例。`
-        : `I found ${count} relevant ${count === 1 ? 'project' : 'projects'}. Refine the brief or open a case directly.`,
+        ? `我会基于作品知识库回答，并推荐 ${count} 个可打开的相关项目。`
+        : `I answer from the portfolio knowledge base and recommend ${count} relevant ${count === 1 ? 'case' : 'cases'}.`,
     noResults: agentRespondsInZh
       ? '暂时没有完全匹配的项目。你可以继续用中文描述能力、公司、工具、项目类型或想看的案例方向。'
       : 'No exact match yet. Try a skill, company, tool, or project type.',
     why: agentRespondsInZh ? '原因' : 'Why',
     viewCase: agentRespondsInZh ? '查看案例' : 'View case',
+    responseHeading: agentRespondsInZh ? 'Agent 回答' : 'Agent answer',
+    loading: agentRespondsInZh ? '正在检索作品并生成回答…' : 'Retrieving portfolio context and drafting an answer...',
+    sending: agentRespondsInZh ? '生成中' : 'Thinking',
+    localFallback: agentRespondsInZh ? '本地兜底模式' : 'Local fallback',
+    modelLabel: agentRespondsInZh ? '模型' : 'Model',
+    groundedLabel: agentRespondsInZh ? '作品知识库' : 'Portfolio knowledge',
+    followUpLabel: agentRespondsInZh ? '可以继续追问' : 'Suggested follow-ups',
+    errorTitle: agentRespondsInZh ? 'Agent 暂时没有连上' : 'Agent is not connected yet',
+    errorBody: agentRespondsInZh
+      ? '我先保留本地项目匹配。检查本地 API 服务和模型 token 后可以继续提问。'
+      : 'Local project matching is still available. Check the local API service and model token, then ask again.',
   };
 
   const archiveSummary = isZh
     ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源 · ${formalProjects.length} 个正式项目`
     : `${projects.length} works across ${archiveTrackCount} contexts · ${formalProjects.length} formal works`;
 
-  const scoredMatches = useMemo<ScoredProject[]>(() => {
-    const effectiveQuery = submittedQuery.trim();
-
+  const getLocalMatchesForQuery = (effectiveQuery: string, suggestionId: string | null): ScoredProject[] => {
     if (!effectiveQuery) {
       return agentDefaultIds
         .map(getProjectById)
@@ -1000,7 +1037,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
     return projects
       .map((project) => {
-        const rawScore = scoreProject(project, effectiveQuery, activeSuggestionId);
+        const rawScore = scoreProject(project, effectiveQuery, suggestionId);
         return {
           project,
           score: rawScore + getProjectSortBoost(project),
@@ -1014,7 +1051,42 @@ const WorkPage: React.FC<WorkPageProps> = ({
         return a.rank - b.rank;
       })
       .slice(0, 5);
+  };
+
+  const scoredMatches = useMemo<ScoredProject[]>(() => {
+    const effectiveQuery = submittedQuery.trim();
+    return getLocalMatchesForQuery(effectiveQuery, activeSuggestionId);
   }, [activeSuggestionId, projects, submittedQuery, projectById]);
+
+  const displayedMatches = useMemo<ScoredProject[]>(() => {
+    if (!submittedQuery.trim() || !agentReply?.projectIds?.length) return scoredMatches;
+
+    const existingById = new Map(scoredMatches.map((item) => [item.project.id, item]));
+    const selected = agentReply.projectIds
+      .map((projectId, index) => {
+        const existing = existingById.get(projectId);
+        if (existing) return existing;
+
+        const project = getProjectById(projectId);
+        if (!project) return null;
+
+        return {
+          project,
+          score: 100 - index,
+          rawScore: 100 - index,
+          rank: priorityRank.get(project.id) ?? 999,
+        };
+      })
+      .filter((item): item is ScoredProject => Boolean(item));
+
+    scoredMatches.forEach((item) => {
+      if (!selected.some((selectedItem) => selectedItem.project.id === item.project.id)) {
+        selected.push(item);
+      }
+    });
+
+    return selected.slice(0, 5);
+  }, [agentReply, projectById, scoredMatches, submittedQuery]);
 
   const featuredProjects = archiveFeaturedIds
     .map(getProjectById)
@@ -1033,13 +1105,82 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const wallProjects = useMemo(() => indexProjects.slice(0, 18), [indexProjects]);
 
+  const requestPortfolioAgent = async (message: string, suggestionId: string | null) => {
+    const locale = isZh || containsChinese(message) ? 'zh' : 'en';
+    const candidateProjectIds = getLocalMatchesForQuery(message, suggestionId).map((item) => item.project.id);
+    const userMessage: AgentMessage = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content: message,
+    };
+    const history = [...agentMessages.slice(-6), userMessage].map(({ role, content }) => ({ role, content }));
+
+    setAgentMessages((messages) => [...messages, userMessage]);
+    setAgentStatus('loading');
+    setAgentError('');
+
+    try {
+      const response = await fetch(portfolioAgentApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          locale,
+          candidateProjectIds,
+          history,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Agent API returned ${response.status}`);
+      }
+
+      const data = (await response.json()) as PortfolioAgentReply;
+      const normalizedReply: PortfolioAgentReply = {
+        answer: data.answer || (locale === 'zh' ? '我暂时没有生成出有效回答。' : 'I could not generate a useful answer yet.'),
+        projectIds: Array.isArray(data.projectIds) ? data.projectIds : candidateProjectIds,
+        followUps: Array.isArray(data.followUps) ? data.followUps : [],
+        mode: data.mode || 'local',
+        model: data.model || null,
+        confidence: data.confidence,
+        embeddingUsed: data.embeddingUsed,
+        keyConfigured: data.keyConfigured,
+        error: data.error,
+      };
+
+      setAgentReply(normalizedReply);
+      setAgentMessages((messages) => [
+        ...messages,
+        {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant',
+          content: normalizedReply.answer,
+          mode: normalizedReply.mode,
+          model: normalizedReply.model,
+        },
+      ]);
+      setAgentStatus('ready');
+    } catch (error) {
+      setAgentStatus('error');
+      setAgentError(error instanceof Error ? error.message : 'Agent request failed.');
+    }
+  };
+
   const submitAgentQuery = () => {
+    if (agentStatus === 'loading') return;
+
     const trimmedQuery = query.trim();
     setSubmittedQuery(trimmedQuery);
     setViewMode('agent');
+
     if (!trimmedQuery) {
       setActiveSuggestionId(null);
+      return;
     }
+
+    void requestPortfolioAgent(trimmedQuery, activeSuggestionId);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -1053,12 +1194,25 @@ const WorkPage: React.FC<WorkPageProps> = ({
     setSubmittedQuery(nextQuery);
     setActiveSuggestionId(suggestion.id);
     setViewMode('agent');
+    void requestPortfolioAgent(nextQuery, suggestion.id);
+  };
+
+  const handleFollowUpClick = (nextQuery: string) => {
+    setQuery(nextQuery);
+    setSubmittedQuery(nextQuery);
+    setActiveSuggestionId(null);
+    setViewMode('agent');
+    void requestPortfolioAgent(nextQuery, null);
   };
 
   const handleClear = () => {
     setQuery('');
     setSubmittedQuery('');
     setActiveSuggestionId(null);
+    setAgentMessages([]);
+    setAgentReply(null);
+    setAgentStatus('idle');
+    setAgentError('');
   };
 
   const cardMotion = (idx: number, y = 12) => ({
@@ -1269,15 +1423,105 @@ const WorkPage: React.FC<WorkPageProps> = ({
               ) : null}
               <button
                 type="submit"
-                className={cn('inline-flex items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9' : 'h-10')}
+                disabled={agentStatus === 'loading'}
+                className={cn(
+                  'inline-flex items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform,opacity] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] disabled:cursor-not-allowed disabled:opacity-58',
+                  isDock ? 'h-9' : 'h-10'
+                )}
               >
-                {agentCopy.submit}
+                {agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
                 <ArrowRight size={15} aria-hidden="true" />
               </button>
             </div>
           </div>
         </div>
       </form>
+    );
+  };
+
+  const AgentConversation = () => {
+    const statusText = agentReply?.mode === 'openai' || agentReply?.mode === 'github'
+      ? `${agentCopy.modelLabel}: ${agentReply.model || 'OpenAI'}`
+      : agentReply?.mode === 'local'
+        ? agentCopy.localFallback
+        : agentCopy.groundedLabel;
+
+    return (
+      <section className="mb-5 rounded-[18px] bg-white p-4 shadow-[var(--work-shadow-border)] sm:p-5">
+        <div className="mb-4 flex flex-col gap-2 border-b border-[var(--work-line)] pb-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentCopy.responseHeading}</p>
+            <h2 className="mt-1 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance">
+              {agentRespondsInZh ? '基于作品集回答面试问题' : 'Portfolio-grounded interview answer'}
+            </h2>
+          </div>
+          <span className="inline-flex h-8 w-fit items-center rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3 font-mono text-[11px] text-[var(--work-muted)]">
+            {statusText}
+          </span>
+        </div>
+
+        <div className="space-y-3" role="log" aria-live="polite">
+          {agentMessages.map((message) => {
+            const isAssistant = message.role === 'assistant';
+            return (
+              <article key={message.id} className={cn('flex', isAssistant ? 'justify-start' : 'justify-end')}>
+                <div
+                  className={cn(
+                    'max-w-[860px] rounded-[16px] px-4 py-3 text-sm leading-6 shadow-[0_0_0_1px_rgba(23,20,18,0.06)] whitespace-pre-line',
+                    isAssistant
+                      ? 'bg-[var(--work-bg)] text-[var(--work-ink)]'
+                      : 'bg-[var(--work-ink)] text-white'
+                  )}
+                  lang={agentRespondsInZh ? 'zh-CN' : 'en'}
+                  dir="auto"
+                >
+                  <p className={cn('mb-1 font-mono text-[10px] uppercase', isAssistant ? 'text-[var(--work-muted)]' : 'text-white/52')}>
+                    {isAssistant ? agentCopy.agentName : agentRespondsInZh ? '面试官问题' : 'Interviewer question'}
+                    {isAssistant && (message.mode === 'openai' || message.mode === 'github') && message.model ? ` · ${message.model}` : ''}
+                    {isAssistant && message.mode === 'local' ? ` · ${agentCopy.localFallback}` : ''}
+                  </p>
+                  {message.content}
+                </div>
+              </article>
+            );
+          })}
+
+          {agentStatus === 'loading' ? (
+            <article className="flex justify-start">
+              <div className="max-w-[760px] rounded-[16px] bg-[var(--work-bg)] px-4 py-3 text-sm leading-6 text-[var(--work-muted)] shadow-[0_0_0_1px_rgba(23,20,18,0.06)]">
+                <p className="mb-2 font-mono text-[10px] uppercase text-[var(--work-muted)]">{agentCopy.agentName}</p>
+                {agentCopy.loading}
+              </div>
+            </article>
+          ) : null}
+
+          {agentStatus === 'error' ? (
+            <div className="rounded-[14px] border border-[#E7B7A4] bg-[#FFF7F3] px-4 py-3 text-sm leading-6 text-[#7B341E]">
+              <p className="font-semibold">{agentCopy.errorTitle}</p>
+              <p className="mt-1">{agentCopy.errorBody}</p>
+              {agentError ? <p className="mt-2 font-mono text-[11px] text-[#9A5A42]">{agentError}</p> : null}
+            </div>
+          ) : null}
+        </div>
+
+        {agentReply?.followUps?.length ? (
+          <div className="mt-4 border-t border-[var(--work-line)] pt-4">
+            <p className="mb-2 font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentCopy.followUpLabel}</p>
+            <div className="flex flex-wrap gap-2">
+              {agentReply.followUps.map((followUp) => (
+                <button
+                  key={followUp}
+                  type="button"
+                  onClick={() => handleFollowUpClick(followUp)}
+                  className="min-h-9 rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3 py-1.5 text-xs font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                >
+                  {followUp}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </section>
     );
   };
 
@@ -1317,7 +1561,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   <div className="min-w-0">
                     <p className="font-mono text-[11px] uppercase text-white/52">{agentRespondsInZh ? '需求' : 'Brief'}</p>
                     <p className="mt-0.5 font-mono text-xs text-white/58">
-                      {scoredMatches.length} {agentRespondsInZh ? '个匹配项目' : scoredMatches.length === 1 ? 'matching work' : 'matching works'}
+                      {displayedMatches.length} {agentRespondsInZh ? '个相关案例' : displayedMatches.length === 1 ? 'relevant case' : 'relevant cases'}
                     </p>
                   </div>
                 </div>
@@ -1325,27 +1569,29 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   {submittedQuery}
                 </p>
                 <p className="mt-4 border-t border-white/12 pt-4 text-sm leading-6 text-white/66 text-pretty" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
-                  {agentCopy.matchedSummary(scoredMatches.length)}
+                  {agentCopy.matchedSummary(displayedMatches.length)}
                 </p>
               </div>
             </aside>
 
             <div className="min-w-0" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
+              <AgentConversation />
+
               <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                  <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentRespondsInZh ? '匹配项目' : 'MATCHED WORKS'}</p>
+                  <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentRespondsInZh ? '相关案例' : 'RELEVANT CASES'}</p>
                   <h2 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-3xl">
                     {agentCopy.matchedHeading}
                   </h2>
                 </div>
                 <span className="font-mono text-xs text-[var(--work-muted)]">
-                  {scoredMatches.length} {agentRespondsInZh ? '个项目' : scoredMatches.length === 1 ? 'work' : 'works'}
+                  {displayedMatches.length} {agentRespondsInZh ? '个案例' : displayedMatches.length === 1 ? 'case' : 'cases'}
                 </span>
               </div>
 
-              {scoredMatches.length > 0 ? (
+              {displayedMatches.length > 0 ? (
                 <div className="space-y-3">
-                  {scoredMatches.map((item, idx) => (
+                  {displayedMatches.map((item, idx) => (
                     <ComposerResultCard key={item.project.id} item={item} idx={idx} />
                   ))}
                 </div>

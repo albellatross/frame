@@ -1,0 +1,100 @@
+{
+  "profile": {
+    "name": "Geli Guo",
+    "positioning": {
+      "en": "UI/UX designer focused on AI product experience, generative AI, research demos, creator tools, and design systems.",
+      "zh": "专注 AI 产品体验、生成式 AI、研究 Demo、创作者工具和设计系统的 UI/UX 设计师。"
+    },
+    "principles": [
+      "Translate complex AI capability into understandable, controllable user actions.",
+      "Use interaction design to make unfamiliar research demos feel tryable instead of only readable.",
+      "Keep visual craft and system hierarchy strong enough for both users and cross-functional teams."
+    ]
+  },
+  "documents": [
+    {
+      "id": "profile-ai-ux",
+      "title": "AI product experience positioning",
+      "projectIds": ["p1", "p3", "p5", "p13", "p20", "p21"],
+      "content": "Geli Guo is a UI/UX designer with a background in brand design, visual design, and AI product experience. Her current work focuses on Copilot, Office voice UX, AI research demos, generative AI tools, and agent workflows. The main portfolio argument is that she can turn complex AI capability into clear product experiences that users can understand, control, test, and discuss with teams. Strongest evidence includes Copilot Read Aloud, RD-Agent, TaskMatrix.AI, NUWA Series, RODIN Diffusion, and Lantern Night Return."
+    },
+    {
+      "id": "career-microsoft",
+      "title": "Microsoft STCA and Microsoft Research Asia experience",
+      "projectIds": ["p1", "p3", "p5", "p6", "p13", "p17", "p20", "p21", "p22"],
+      "content": "At Microsoft STCA from February 2025 to present, Geli works on Copilot and Office product UX, including real-time voice interaction for Word Read Aloud and lightweight H5 interaction prototypes. From June 2022 to February 2025 at Microsoft Research Asia, she translated AI research capabilities into demos, agent workflows, visual systems, and research communication projects. The MSRA body of work includes RD-Agent, NUWA Series, TaskMatrix.AI Storytelling Agent, RODIN Diffusion, BatteryML, Value Compass, MSRA 25th Anniversary, ReMe, and ProbTS."
+    },
+    {
+      "id": "p1-copilot-read-aloud",
+      "title": "Copilot Read Aloud",
+      "projectIds": ["p1"],
+      "content": "Copilot Read Aloud is an AI product UX and voice interaction project for Office documents. The design goal was to move Word Read Aloud from passive listening into active conversational reading. Users can ask questions, request summaries, and resume reading without losing context. Geli's role covered UI/UX design, conversation design, accessibility thinking, and cross-timezone collaboration with design and engineering teams. Interview evidence: voice UX, multimodal interaction, accessibility, AI response state design, and productizing AI inside a mature productivity surface."
+    },
+    {
+      "id": "p5-rd-agent",
+      "title": "RD-Agent",
+      "projectIds": ["p5"],
+      "content": "RD-Agent is a multi-agent research workflow and AI-assisted hypothesis generation platform for researchers. The design challenge was to structure agent-driven research actions into a usable tool rather than a black-box automation. Geli's work focused on workflow hierarchy, task status, agent reasoning visibility, and helping researchers understand where the agent is planning, running, and producing outputs. Interview evidence: agent UX, B2B research tooling, complex interface hierarchy, AI workflow orchestration, and translating technical research capability into a product interface."
+    },
+    {
+      "id": "p13-taskmatrix",
+      "title": "TaskMatrix.AI Storytelling Agent",
+      "projectIds": ["p13"],
+      "content": "TaskMatrix.AI Storytelling Agent is an AI agent workflow design project from Microsoft Research Asia. The project needed a clear way to explain agent-driven storytelling and task orchestration. Geli organized the experience around workflow clarity, original source order, and a responsive reader that helps viewers understand the agent process. Interview evidence: AI agent workflow, story generation, task orchestration, research demo communication, and making agent behavior legible."
+    },
+    {
+      "id": "p3-nuwa-series",
+      "title": "NUWA Series",
+      "projectIds": ["p3"],
+      "content": "NUWA Series covers Microsoft Research AI demos around generative AI, outpainting, long video, trajectory, and multimodal generation. The core design challenge was that early AI demos often looked like research pages, so visitors did not know whether to read or try. Geli designed first-use paths, prompt entry, gallery exploration, canvas boundaries, timeline and trajectory interactions so users could understand what part they control and what part AI generates. Interview evidence: research demo UX, generative AI interaction, model capability translation, and designing around uncertainty in AI output."
+    },
+    {
+      "id": "p20-rodin-diffusion",
+      "title": "RODIN Diffusion",
+      "projectIds": ["p20"],
+      "content": "RODIN Diffusion is a 3D AI avatar and character generation research demo. The project required turning 3D generation capability into a usable web experience. Geli's work emphasizes clear inputs, previewing generated states, and presenting research output so non-technical visitors can understand what the model can do. Interview evidence: 3D AI demo, generative interface design, research-to-product translation, and visual storytelling for AI capability."
+    },
+    {
+      "id": "p4-reme",
+      "title": "ReMe AI Companion",
+      "projectIds": ["p4"],
+      "content": "ReMe is an AI conversation product for users with cognitive impairment such as Alzheimer's patients. The design concern is not only task completion but empathy, memory, trust, and quality of life. It is useful evidence when interviewers ask about human-centered AI, sensitive user groups, conversation design, or emotional AI product experience."
+    },
+    {
+      "id": "p21-lantern",
+      "title": "Lantern Night Return",
+      "projectIds": ["p21"],
+      "content": "Lantern Night Return is a lightweight H5 game and interaction prototype connected to the STCA period. Geli restructured the experience into story choices, quiz flow, ending collection, and a train-ticket share artifact. It demonstrates frontend prototyping, vibe coding, fast interaction experiments, and turning a cultural seasonal concept into a testable product experience."
+    },
+    {
+      "id": "p12-baidu-ai-cloud",
+      "title": "Baidu AI Cloud Knowledge Platform",
+      "projectIds": ["p12"],
+      "content": "Baidu AI Cloud Knowledge Platform is an enterprise AI platform visual and hierarchy upgrade. The project is categorized as a product design test, not formal work experience. It is useful evidence for B2B platform thinking, complex information hierarchy, AI entry points, enterprise product structure, and visual polish in dense interfaces."
+    },
+    {
+      "id": "p17-batteryml",
+      "title": "BatteryML Visual Design",
+      "projectIds": ["p17"],
+      "content": "BatteryML Visual Design is a Microsoft Research visual identity and research communication project. It demonstrates how Geli builds visual systems for AI or machine learning research work, balancing technical credibility, brand identity, data-oriented presentation, and polished craft."
+    },
+    {
+      "id": "p15-value-compass",
+      "title": "Value Compass and Visual System Web",
+      "projectIds": ["p15"],
+      "content": "Value Compass combines an AI value-alignment research interface with a companion web design in the same visual system. It is strong evidence for research communication, visual system building, information design, and translating abstract AI values into a clear interface and web presence."
+    },
+    {
+      "id": "p6-msra-25th",
+      "title": "MSRA 25th Anniversary",
+      "projectIds": ["p6"],
+      "content": "MSRA 25th Anniversary is an event visual system for Microsoft Research Asia. It demonstrates visual design, brand event communication, system consistency, and the ability to support high-visibility research organization communication beyond product UI."
+    },
+    {
+      "id": "visual-brand-foundation",
+      "title": "Visual and brand foundation",
+      "projectIds": ["p7", "p8", "p9", "p10", "p11", "p16", "p18", "p19", "p22"],
+      "content": "Geli's earlier background includes brand identity, packaging, editorial web, hand drawing, illustration, and visual communication training in Milan. This supports her AI product work because complex AI products still require hierarchy, tone, composition, iconography, and a coherent visual system. Relevant projects include Ioete Tea Shop, Fera, PROFILTUBI Rebranding, Salone del Mobile, ProbTS visual identity, illustration works, White Elephant, Heart Printing, and Palette of the Dreamer."
+    }
+  ]
+}

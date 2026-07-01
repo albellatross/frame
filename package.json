@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/dev-with-agent.mjs",
+    "dev:site": "vite",
+    "agent:server": "node scripts/portfolio-agent-server.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
