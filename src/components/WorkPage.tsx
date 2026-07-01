@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Project } from '../types';
 import {
   ArrowLeft,
@@ -17,6 +17,7 @@ interface WorkPageProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
   onReturnToTimeline?: () => void;
+  onViewModeChange?: (viewMode: ViewMode) => void;
 }
 
 type ViewMode = 'agent' | 'archive';
@@ -828,6 +829,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
   onReturnToTimeline,
+  onViewModeChange,
 }) => {
   const { language, t } = useLanguage();
   const isZh = language === 'zh';
@@ -844,6 +846,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const dockComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const isComposingQueryRef = useRef(false);
   const agentRespondsInZh = isZh || containsChinese(query) || containsChinese(submittedQuery);
+
+  useEffect(() => {
+    onViewModeChange?.(viewMode);
+  }, [onViewModeChange, viewMode]);
 
   const projectById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [projects]);
   const getProjectById = (id: string) => projectById.get(id);

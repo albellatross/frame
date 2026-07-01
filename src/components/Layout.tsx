@@ -8,9 +8,10 @@ interface LayoutProps {
   children: React.ReactNode;
   currentPage: 'home' | 'work' | 'profile';
   onNavigate: (page: 'home' | 'work' | 'profile') => void;
+  hideFooter?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hideFooter = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useLanguage();
@@ -242,36 +243,38 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
         {children}
       </main>
 
-      <footer className="bg-dark-brown text-white py-16 sm:py-24 px-6 md:px-12 relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mb-6 sm:mb-8 leading-tight">Let's create <br/>together.</h2>
-            <div className="flex flex-col gap-3 sm:gap-4 text-neutral-400">
-              <a href="mailto:albellatross@gmail.com" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Mail size={18}/> albellatross@gmail.com</a>
-              <a href="https://www.linkedin.com/in/geli-guo-239807164/" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Linkedin size={18}/> LinkedIn</a>
-              <a href="https://www.behance.net/albellatrocb95" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Globe size={18}/> Behance</a>
-              <a href="https://www.zcool.com.cn/u/18429743" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Globe size={18}/> Zcool</a>
+      {!hideFooter ? (
+        <footer className="bg-dark-brown text-white py-16 sm:py-24 px-6 md:px-12 relative z-10">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mb-6 sm:mb-8 leading-tight">Let's create <br/>together.</h2>
+              <div className="flex flex-col gap-3 sm:gap-4 text-neutral-400">
+                <a href="mailto:albellatross@gmail.com" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Mail size={18}/> albellatross@gmail.com</a>
+                <a href="https://www.linkedin.com/in/geli-guo-239807164/" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Linkedin size={18}/> LinkedIn</a>
+                <a href="https://www.behance.net/albellatrocb95" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Globe size={18}/> Behance</a>
+                <a href="https://www.zcool.com.cn/u/18429743" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg transition-colors"><Globe size={18}/> Zcool</a>
+              </div>
+            </div>
+            <div className="flex flex-col justify-end items-start md:items-end">
+               <div className="mb-6 sm:mb-8">
+                 <button 
+                   onClick={() => handleNavClick('hero', 'scroll')}
+                   className="w-12 h-12 sm:w-16 sm:h-16 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-neutral-900 transition-all group"
+                 >
+                   <ArrowUpRight size={20} className="sm:hidden group-hover:scale-125 transition-transform" />
+                   <ArrowUpRight size={24} className="hidden sm:block group-hover:scale-125 transition-transform" />
+                 </button>
+               </div>
+               <p className="text-xs sm:text-sm text-neutral-500 max-w-xs text-left md:text-right leading-relaxed">
+                 {t('footer.meta')} <br className="hidden sm:block"/>
+                 {t('footer.exploration')}
+                 <br/><br/>
+                 {t('footer.copyright')}
+               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-end items-start md:items-end">
-             <div className="mb-6 sm:mb-8">
-               <button 
-                 onClick={() => handleNavClick('hero', 'scroll')}
-                 className="w-12 h-12 sm:w-16 sm:h-16 border border-white/20 rounded-full flex items-center justify-center hover:bg-white hover:text-neutral-900 transition-all group"
-               >
-                 <ArrowUpRight size={20} className="sm:hidden group-hover:scale-125 transition-transform" />
-                 <ArrowUpRight size={24} className="hidden sm:block group-hover:scale-125 transition-transform" />
-               </button>
-             </div>
-             <p className="text-xs sm:text-sm text-neutral-500 max-w-xs text-left md:text-right leading-relaxed">
-               {t('footer.meta')} <br className="hidden sm:block"/>
-               {t('footer.exploration')}
-               <br/><br/>
-               {t('footer.copyright')}
-             </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      ) : null}
     </div>
   );
 };

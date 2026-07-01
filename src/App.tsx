@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { PROJECTS_EN, PROJECTS_ZH, CAREER_TIMELINE_EN, CAREER_TIMELINE_ZH } from './data';
 import { Project } from './types';
@@ -28,6 +28,7 @@ const AppContent: React.FC = () => {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [isWalkThroughOpen, setIsWalkThroughOpen] = useState(false);
   const [workReturnTarget, setWorkReturnTarget] = useState<'timeline' | null>(null);
+  const [workViewMode, setWorkViewMode] = useState<'agent' | 'archive'>('agent');
 
   // Re-resolve activeProject when language changes
   const resolvedProject = activeProject
@@ -54,6 +55,7 @@ const AppContent: React.FC = () => {
 
   const handleViewAllWorksFromTimeline = () => {
     setWorkReturnTarget('timeline');
+    setWorkViewMode('agent');
     setCurrentPage('work');
     window.scrollTo(0, 0);
   };
@@ -67,13 +69,23 @@ const AppContent: React.FC = () => {
   const handleNavigate = (page: 'home' | 'work' | 'profile') => {
     setCurrentPage(page);
     setWorkReturnTarget(null);
+    if (page === 'work') {
+      setWorkViewMode('agent');
+    }
   };
+
+  const handleWorkViewModeChange = useCallback((viewMode: 'agent' | 'archive') => {
+    setWorkViewMode(viewMode);
+  }, []);
+
+  const hideFooter = currentPage === 'work' && workViewMode === 'agent' && !activeProject;
 
   return (
     <>
     <Layout 
       currentPage={currentPage}
       onNavigate={handleNavigate}
+      hideFooter={hideFooter}
     >
       {currentPage === 'home' && (
         <>
@@ -93,6 +105,7 @@ const AppContent: React.FC = () => {
           projects={WORK_PROJECTS}
           onProjectClick={handleProjectClick}
           onReturnToTimeline={workReturnTarget === 'timeline' ? handleReturnToTimeline : undefined}
+          onViewModeChange={handleWorkViewModeChange}
         />
       )}
 
@@ -118,6 +131,7 @@ const AppContent: React.FC = () => {
           onClose={() => setIsWalkThroughOpen(false)}
           onExploreWork={() => {
             setIsWalkThroughOpen(false);
+            setWorkViewMode('agent');
             setCurrentPage('work');
           }}
           onOpenResume={() => {
