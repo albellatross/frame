@@ -755,6 +755,10 @@ const getAgentReason = (project: Project, isZh: boolean) =>
 
 const cn = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
 const portfolioAgentApiUrl = import.meta.env.VITE_PORTFOLIO_AGENT_API_URL || '/api/portfolio-agent';
+const shouldUseClientOnlyAgent = () =>
+  portfolioAgentApiUrl === '/api/portfolio-agent' &&
+  typeof window !== 'undefined' &&
+  window.location.hostname.endsWith('github.io');
 
 const AbstractCover: React.FC<{ project: Project; isZh: boolean }> = ({ project, isZh }) => (
   <div
@@ -1149,6 +1153,21 @@ const WorkPage: React.FC<WorkPageProps> = ({
     };
   };
 
+  const appendAgentReply = (reply: PortfolioAgentReply) => {
+    setAgentReply(reply);
+    setAgentMessages((messages) => [
+      ...messages,
+      {
+        id: `assistant-${Date.now()}`,
+        role: 'assistant',
+        content: reply.answer,
+        mode: reply.mode,
+        model: reply.model,
+      },
+    ]);
+    setAgentStatus('ready');
+  };
+
   const requestPortfolioAgent = async (message: string, suggestionId: string | null) => {
     const locale = isZh || containsChinese(message) ? 'zh' : 'en';
     const localMatches = getLocalMatchesForQuery(message, suggestionId);
@@ -1163,6 +1182,11 @@ const WorkPage: React.FC<WorkPageProps> = ({
     setAgentMessages((messages) => [...messages, userMessage]);
     setAgentStatus('loading');
     setAgentError('');
+
+    if (shouldUseClientOnlyAgent()) {
+      appendAgentReply(buildClientFallbackReply(message, locale, candidateProjectIds, localMatches));
+      return;
+    }
 
     try {
       const response = await fetch(portfolioAgentApiUrl, {
@@ -1195,32 +1219,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
         error: data.error,
       };
 
-      setAgentReply(normalizedReply);
-      setAgentMessages((messages) => [
-        ...messages,
-        {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: normalizedReply.answer,
-          mode: normalizedReply.mode,
-          model: normalizedReply.model,
-        },
-      ]);
-      setAgentStatus('ready');
+      appendAgentReply(normalizedReply);
     } catch (error) {
       const fallbackReply = buildClientFallbackReply(message, locale, candidateProjectIds, localMatches);
-      setAgentReply(fallbackReply);
-      setAgentMessages((messages) => [
-        ...messages,
-        {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: fallbackReply.answer,
-          mode: fallbackReply.mode,
-          model: fallbackReply.model,
-        },
-      ]);
-      setAgentStatus('ready');
+      appendAgentReply(fallbackReply);
       setAgentError(error instanceof Error ? error.message : 'Agent request failed.');
     }
   };
