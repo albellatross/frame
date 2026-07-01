@@ -5,7 +5,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Bot,
-  FilePlus2,
   LibraryBig,
   Search,
   X,
@@ -1239,6 +1238,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       return;
     }
 
+    setQuery('');
     void requestPortfolioAgent(trimmedQuery, activeSuggestionId);
   };
 
@@ -1249,7 +1249,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const handleSuggestionClick = (suggestion: CapabilitySuggestion) => {
     const nextQuery = getLocalized(suggestion.query, agentRespondsInZh);
-    setQuery(nextQuery);
+    setQuery('');
     setSubmittedQuery(nextQuery);
     setActiveSuggestionId(suggestion.id);
     setViewMode('agent');
@@ -1257,7 +1257,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const handleFollowUpClick = (nextQuery: string) => {
-    setQuery(nextQuery);
+    setQuery('');
     setSubmittedQuery(nextQuery);
     setActiveSuggestionId(null);
     setViewMode('agent');
@@ -1338,59 +1338,26 @@ const WorkPage: React.FC<WorkPageProps> = ({
     </div>
   );
 
-  const ComposerResultCard: React.FC<{ item: ScoredProject; idx: number }> = ({ item, idx }) => {
-    const project = item.project;
-
-    return (
-      <motion.article layout {...cardMotion(idx, 8)}>
-        <div className="group relative rounded-[16px] bg-white p-2.5 shadow-[var(--work-shadow-border)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-shadow-border-hover)]">
-          <button
-            type="button"
-            onClick={() => onProjectClick(project)}
-            className="absolute inset-0 z-10 rounded-[16px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
-            aria-label={`${agentCopy.viewCase}: ${getProjectTitle(project, agentRespondsInZh)}`}
-          />
-          <div className="grid gap-4 sm:grid-cols-[176px_minmax(0,1fr)_auto] sm:items-center">
-            <div className="min-w-0">
-              <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
-            </div>
-            <div className="relative z-20 flex min-w-0 flex-col justify-center py-1">
-              <div>
-                <div className="mb-1.5 flex flex-wrap items-center gap-2 text-[11px] text-[var(--work-muted)]">
-                  <span className="font-mono tabular-nums">{String(idx + 1).padStart(2, '0')}</span>
-                  <span>{project.year}</span>
-                  <span className="h-1 w-1 rounded-full bg-[var(--work-line-strong)]" aria-hidden="true" />
-                  <span>{getProjectKind(project, agentRespondsInZh)}</span>
-                </div>
-                <h3 className="font-sans text-lg font-semibold leading-tight text-[var(--work-ink)] text-balance">{getProjectTitle(project, agentRespondsInZh)}</h3>
-                <p className="mt-2 line-clamp-2 text-sm leading-5 text-[var(--work-muted)] text-pretty">
-                  <span className="font-semibold text-[var(--work-ink)]">{agentCopy.why}: </span>
-                  {getAgentReason(project, agentRespondsInZh)}
-                </p>
-              </div>
-            </div>
-            <div className="relative z-20 flex items-center justify-start sm:justify-end">
-              <span className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3.5 text-xs font-semibold text-[var(--work-ink)] shadow-[0_8px_24px_rgba(23,20,18,0.04)] transition-[background-color,border-color,transform] duration-200 ease-out group-hover:border-[var(--work-ink)] group-hover:bg-white group-hover:translate-x-0.5">
-                {agentCopy.viewCase}
-                <ArrowRight size={13} aria-hidden="true" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </motion.article>
-    );
-  };
-
   const PromptChips = () => (
-    <div className="mx-auto mt-5 flex max-w-[820px] flex-wrap justify-center gap-2">
+    <div className="mx-auto mt-5 grid max-w-[860px] gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
       {capabilitySuggestions.map((suggestion) => (
         <button
           key={suggestion.id}
           type="button"
           onClick={() => handleSuggestionClick(suggestion)}
-          className="min-h-10 shrink-0 rounded-full border border-[var(--work-line)] bg-white/70 px-4 py-2 text-sm font-medium text-[var(--work-muted)] transition-[background-color,border-color,color,transform] duration-200 ease-out hover:border-[var(--work-ink)] hover:bg-white hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+          className="group min-h-[76px] rounded-[18px] bg-white/74 px-4 py-3 text-left shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_12px_34px_-26px_rgba(23,20,18,0.34)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_0_0_1px_rgba(49,92,255,0.24),0_20px_44px_-28px_rgba(23,20,18,0.42)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
         >
-          {getLocalized(suggestion.label, agentRespondsInZh)}
+          <span className="flex items-start justify-between gap-3">
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold leading-5 text-[var(--work-ink)]">
+                {getLocalized(suggestion.label, agentRespondsInZh)}
+              </span>
+              <span className="mt-1.5 line-clamp-2 block text-xs leading-5 text-[var(--work-muted)]">
+                {getLocalized(suggestion.query, agentRespondsInZh)}
+              </span>
+            </span>
+            <ArrowRight size={14} className="mt-0.5 shrink-0 text-[var(--work-muted)] transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--work-accent)]" aria-hidden="true" />
+          </span>
         </button>
       ))}
     </div>
@@ -1400,9 +1367,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
     const isDock = placement === 'dock';
     const inputId = `work-agent-query-${placement}`;
     const textareaRef = isDock ? dockComposerTextareaRef : centerComposerTextareaRef;
+    const clearLabel = query ? agentCopy.clear : agentRespondsInZh ? '清空对话' : 'Clear chat';
 
     return (
-      <form onSubmit={handleSubmit} className={cn('mx-auto', isDock ? 'w-full max-w-none' : 'mt-8 max-w-[820px]')}>
+      <form onSubmit={handleSubmit} className={cn('mx-auto', isDock ? 'w-full max-w-none' : 'mt-8 max-w-[860px]')}>
         <label htmlFor={inputId} className="sr-only">
           {agentCopy.inputLabel}
         </label>
@@ -1413,8 +1381,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
             textareaRef.current?.focus({ preventScroll: true });
           }}
           className={cn(
-            'cursor-text bg-white shadow-[0_0_0_1px_rgba(23,20,18,0.08),0_24px_90px_-52px_rgba(23,20,18,0.38)] focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.35),0_24px_90px_-52px_rgba(23,20,18,0.38)]',
-            isDock ? 'rounded-[24px] p-3 sm:p-3.5' : 'rounded-[28px] p-4'
+            'cursor-text bg-white/94 shadow-[0_0_0_1px_rgba(23,20,18,0.09),0_26px_80px_-52px_rgba(23,20,18,0.55)] backdrop-blur focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.32),0_30px_86px_-54px_rgba(23,20,18,0.58)]',
+            isDock ? 'rounded-[26px] p-2.5 sm:p-3' : 'rounded-[30px] p-3'
           )}
         >
           <textarea
@@ -1450,22 +1418,14 @@ const WorkPage: React.FC<WorkPageProps> = ({
               }
             }}
             className={cn(
-              'w-full resize-none bg-transparent px-1 py-1 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]',
-              isDock ? 'min-h-[38px] max-h-[96px] text-[15px] leading-6' : 'min-h-[88px] text-[17px] leading-7'
+              'w-full resize-none bg-transparent px-3 text-[var(--work-ink)] outline-none placeholder:text-[#8A837B]',
+              isDock ? 'min-h-[44px] max-h-[104px] py-2 text-[15px] leading-6' : 'min-h-[82px] py-3 text-[17px] leading-7'
             )}
           />
-          <div className={cn('flex items-center justify-between gap-3 border-t border-[var(--work-line)]', isDock ? 'mt-2 pt-2' : 'mt-3 pt-3')}>
+          <div className={cn('flex items-center justify-between gap-3', isDock ? 'mt-1' : 'mt-1.5')}>
             <div className="flex min-w-0 items-center gap-2">
-              <button
-                type="button"
-                onClick={() => textareaRef.current?.focus({ preventScroll: true })}
-                className={cn('inline-flex shrink-0 items-center justify-center rounded-full border border-[var(--work-line)] text-[var(--work-ink)] transition-[background-color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
-                aria-label={agentCopy.addContext}
-                title={agentCopy.addContext}
-              >
-                <FilePlus2 size={17} aria-hidden="true" />
-              </button>
-              <span className={cn('inline-flex min-w-0 items-center truncate rounded-full border border-[var(--work-line)] px-3 text-sm font-medium text-[var(--work-muted)]', isDock ? 'h-9' : 'h-10')}>
+              <span className={cn('inline-flex min-w-0 items-center gap-2 truncate rounded-full bg-[var(--work-bg)] px-3 text-xs font-medium text-[var(--work-muted)] shadow-[inset_0_0_0_1px_rgba(23,20,18,0.06)]', isDock ? 'h-9' : 'h-10')}>
+                <Bot size={14} className="shrink-0 text-[var(--work-accent)]" aria-hidden="true" />
                 {agentCopy.agentName}
               </span>
             </div>
@@ -1475,8 +1435,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   type="button"
                   onClick={handleClear}
                   className={cn('inline-flex items-center justify-center rounded-full text-[var(--work-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-[var(--work-bg)] hover:text-[var(--work-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
-                  aria-label={agentCopy.clear}
-                  title={agentCopy.clear}
+                  aria-label={clearLabel}
+                  title={clearLabel}
                 >
                   <X size={17} aria-hidden="true" />
                 </button>
@@ -1485,12 +1445,16 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 type="submit"
                 disabled={agentStatus === 'loading'}
                 className={cn(
-                  'inline-flex items-center justify-center gap-2 rounded-full bg-[var(--work-ink)] pl-4 pr-3.5 text-sm font-semibold text-white transition-[background-color,transform,opacity] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] disabled:cursor-not-allowed disabled:opacity-58',
-                  isDock ? 'h-9' : 'h-10'
+                  'inline-flex items-center justify-center rounded-full bg-[var(--work-ink)] text-white transition-[background-color,transform,opacity] duration-200 ease-out hover:bg-[var(--work-accent)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] disabled:cursor-not-allowed disabled:opacity-58',
+                  isDock ? 'h-10 w-10' : 'h-11 w-11'
                 )}
+                aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
               >
-                {agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
-                <ArrowRight size={15} aria-hidden="true" />
+                {agentStatus === 'loading' ? (
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/88 animate-pulse" aria-hidden="true" />
+                ) : (
+                  <ArrowRight size={18} aria-hidden="true" />
+                )}
               </button>
             </div>
           </div>
@@ -1507,30 +1471,38 @@ const WorkPage: React.FC<WorkPageProps> = ({
         : agentCopy.groundedLabel;
 
     return (
-      <section className="mb-5 rounded-[18px] bg-white p-4 shadow-[var(--work-shadow-border)] sm:p-5">
-        <div className="mb-4 flex flex-col gap-2 border-b border-[var(--work-line)] pb-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentCopy.responseHeading}</p>
-            <h2 className="mt-1 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance">
-              {agentRespondsInZh ? '基于作品集回答面试问题' : 'Portfolio-grounded interview answer'}
-            </h2>
+      <section className="mx-auto w-full max-w-[900px]">
+        <div className="mb-5 flex items-center justify-between gap-3 rounded-full bg-white/76 px-3 py-2 shadow-[0_0_0_1px_rgba(23,20,18,0.06),0_18px_48px_-38px_rgba(23,20,18,0.42)] backdrop-blur">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF] text-[var(--work-accent)] shadow-[inset_0_0_0_1px_rgba(49,92,255,0.12)]">
+              <Bot size={16} aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-[var(--work-ink)]">{agentCopy.agentName}</p>
+              <p className="truncate font-mono text-[10px] uppercase text-[var(--work-muted)]">{agentCopy.responseHeading}</p>
+            </div>
           </div>
-          <span className="inline-flex h-8 w-fit items-center rounded-full border border-[var(--work-line)] bg-[var(--work-bg)] px-3 font-mono text-[11px] text-[var(--work-muted)]">
+          <span className="inline-flex h-8 w-fit max-w-[48vw] items-center truncate rounded-full bg-[var(--work-bg)] px-3 font-mono text-[10px] uppercase text-[var(--work-muted)] shadow-[inset_0_0_0_1px_rgba(23,20,18,0.06)]">
             {statusText}
           </span>
         </div>
 
-        <div className="space-y-3" role="log" aria-live="polite">
+        <div className="space-y-5" role="log" aria-live="polite">
           {agentMessages.map((message) => {
             const isAssistant = message.role === 'assistant';
             return (
-              <article key={message.id} className={cn('flex', isAssistant ? 'justify-start' : 'justify-end')}>
+              <article key={message.id} className={cn('flex gap-3', isAssistant ? 'justify-start' : 'justify-end')}>
+                {isAssistant ? (
+                  <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF] text-[var(--work-accent)] shadow-[inset_0_0_0_1px_rgba(49,92,255,0.12)]">
+                    <Bot size={14} aria-hidden="true" />
+                  </span>
+                ) : null}
                 <div
                   className={cn(
-                    'max-w-[860px] rounded-[16px] px-4 py-3 text-sm leading-6 shadow-[0_0_0_1px_rgba(23,20,18,0.06)] whitespace-pre-line',
+                    'max-w-[760px] px-4 py-3 text-sm leading-6 whitespace-pre-line',
                     isAssistant
-                      ? 'bg-[var(--work-bg)] text-[var(--work-ink)]'
-                      : 'bg-[var(--work-ink)] text-white'
+                      ? 'rounded-[18px] rounded-tl-[6px] bg-white text-[var(--work-ink)] shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_16px_40px_-34px_rgba(23,20,18,0.5)]'
+                      : 'rounded-[18px] rounded-tr-[6px] bg-[var(--work-ink)] text-white shadow-[0_14px_34px_-30px_rgba(23,20,18,0.6)]'
                   )}
                   lang={agentRespondsInZh ? 'zh-CN' : 'en'}
                   dir="auto"
@@ -1547,8 +1519,11 @@ const WorkPage: React.FC<WorkPageProps> = ({
           })}
 
           {agentStatus === 'loading' ? (
-            <article className="flex justify-start">
-              <div className="max-w-[760px] rounded-[16px] bg-[var(--work-bg)] px-4 py-3 text-sm leading-6 text-[var(--work-muted)] shadow-[0_0_0_1px_rgba(23,20,18,0.06)]">
+            <article className="flex justify-start gap-3">
+              <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EEF2FF] text-[var(--work-accent)] shadow-[inset_0_0_0_1px_rgba(49,92,255,0.12)]">
+                <Bot size={14} aria-hidden="true" />
+              </span>
+              <div className="max-w-[760px] rounded-[18px] rounded-tl-[6px] bg-white px-4 py-3 text-sm leading-6 text-[var(--work-muted)] shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_16px_40px_-34px_rgba(23,20,18,0.5)]">
                 <p className="mb-2 font-mono text-[10px] uppercase text-[var(--work-muted)]">{agentCopy.agentName}</p>
                 {agentCopy.loading}
               </div>
@@ -1564,8 +1539,45 @@ const WorkPage: React.FC<WorkPageProps> = ({
           ) : null}
         </div>
 
+        {agentReply && displayedMatches.length > 0 ? (
+          <div className="mt-6 pl-0 sm:pl-11">
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <p className="font-mono text-[10px] uppercase text-[var(--work-muted)]">
+                {agentRespondsInZh ? '引用案例' : 'Evidence'}
+              </p>
+              <span className="font-mono text-[10px] text-[var(--work-muted)] tabular-nums">
+                {displayedMatches.length} {agentRespondsInZh ? '个案例' : displayedMatches.length === 1 ? 'case' : 'cases'}
+              </span>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {displayedMatches.slice(0, 3).map((item, idx) => {
+                const project = item.project;
+                return (
+                  <button
+                    key={project.id}
+                    type="button"
+                    onClick={() => onProjectClick(project)}
+                    className="group min-h-[96px] rounded-[16px] bg-white/78 p-3 text-left shadow-[0_0_0_1px_rgba(23,20,18,0.06),0_14px_34px_-30px_rgba(23,20,18,0.45)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_0_0_1px_rgba(49,92,255,0.22),0_18px_40px_-30px_rgba(23,20,18,0.52)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
+                  >
+                    <span className="mb-2 flex items-center justify-between gap-2 font-mono text-[10px] text-[var(--work-muted)]">
+                      <span>{String(idx + 1).padStart(2, '0')}</span>
+                      <ArrowRight size={12} className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--work-accent)]" aria-hidden="true" />
+                    </span>
+                    <span className="line-clamp-2 block text-sm font-semibold leading-5 text-[var(--work-ink)]">
+                      {getProjectTitle(project, agentRespondsInZh)}
+                    </span>
+                    <span className="mt-1 line-clamp-1 block text-xs text-[var(--work-muted)]">
+                      {getProjectKind(project, agentRespondsInZh)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
         {agentReply?.followUps?.length ? (
-          <div className="mt-4 border-t border-[var(--work-line)] pt-4">
+          <div className="mt-5 pl-0 sm:pl-11">
             <p className="mb-2 font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentCopy.followUpLabel}</p>
             <div className="flex flex-wrap gap-2">
               {agentReply.followUps.map((followUp) => (
@@ -1590,15 +1602,18 @@ const WorkPage: React.FC<WorkPageProps> = ({
       className={cn(
         'relative',
         submittedQuery
-          ? 'min-h-[calc(100vh-220px)] pb-[150px] pt-5 sm:pb-[165px] sm:pt-7 lg:pb-[155px] lg:pt-8'
-          : 'flex min-h-[calc(100vh-420px)] flex-col items-center justify-start pb-10 pt-6 sm:min-h-[calc(100vh-500px)] sm:pb-12 sm:pt-8 lg:min-h-[calc(100vh-520px)] lg:pt-10'
+          ? 'min-h-[calc(100vh-220px)] pb-[150px] pt-4 sm:pb-[165px] sm:pt-6 lg:pb-[155px] lg:pt-7'
+          : 'flex min-h-[calc(100vh-360px)] flex-col items-center justify-start pb-10 pt-5 sm:min-h-[calc(100vh-430px)] sm:pb-12 sm:pt-7 lg:min-h-[calc(100vh-470px)] lg:pt-8'
       )}
     >
       <div className={cn('w-full', submittedQuery ? 'max-w-none' : 'max-w-[980px]')}>
         {submittedQuery ? null : (
           <div className="text-center">
+            <span className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[var(--work-accent)] shadow-[0_0_0_1px_rgba(23,20,18,0.07),0_18px_40px_-30px_rgba(23,20,18,0.45)]">
+              <Bot size={20} aria-hidden="true" />
+            </span>
             <h1 className="font-sans text-3xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-5xl">
-              {agentCopy.greeting}
+              {agentRespondsInZh ? '想了解哪段作品？' : 'What should we look at?'}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-muted)] sm:text-base">
               {agentCopy.intro}
@@ -1607,60 +1622,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
         )}
 
         {submittedQuery ? (
-          <div
-            className="mx-auto grid w-full max-w-[1120px] gap-5 lg:grid-cols-[minmax(260px,0.36fr)_minmax(0,1fr)] lg:items-start xl:gap-6"
-            role="log"
-            aria-live="polite"
-          >
-            <aside className="min-w-0 lg:sticky lg:top-32">
-              <div className="rounded-[22px] bg-[var(--work-ink)] p-4 text-white shadow-[0_18px_52px_rgba(23,20,18,0.16)] sm:p-5">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]">
-                    <Bot size={17} aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-mono text-[11px] uppercase text-white/52">{agentRespondsInZh ? '需求' : 'Brief'}</p>
-                    <p className="mt-0.5 font-mono text-xs text-white/58">
-                      {displayedMatches.length} {agentRespondsInZh ? '个相关案例' : displayedMatches.length === 1 ? 'relevant case' : 'relevant cases'}
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-4 rounded-[16px] bg-white/[0.07] p-3 text-sm leading-6 text-white/90 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] text-pretty" lang={agentRespondsInZh ? 'zh-CN' : 'en'} dir="auto">
-                  {submittedQuery}
-                </p>
-                <p className="mt-4 border-t border-white/12 pt-4 text-sm leading-6 text-white/66 text-pretty" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
-                  {agentCopy.matchedSummary(displayedMatches.length)}
-                </p>
-              </div>
-            </aside>
-
-            <div className="min-w-0" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
-              <AgentConversation />
-
-              <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p className="font-mono text-[11px] uppercase text-[var(--work-muted)]">{agentRespondsInZh ? '相关案例' : 'RELEVANT CASES'}</p>
-                  <h2 className="mt-2 font-sans text-2xl font-semibold leading-tight text-[var(--work-ink)] text-balance sm:text-3xl">
-                    {agentCopy.matchedHeading}
-                  </h2>
-                </div>
-                <span className="font-mono text-xs text-[var(--work-muted)]">
-                  {displayedMatches.length} {agentRespondsInZh ? '个案例' : displayedMatches.length === 1 ? 'case' : 'cases'}
-                </span>
-              </div>
-
-              {displayedMatches.length > 0 ? (
-                <div className="space-y-3">
-                  {displayedMatches.map((item, idx) => (
-                    <ComposerResultCard key={item.project.id} item={item} idx={idx} />
-                  ))}
-                </div>
-              ) : (
-                <div className="rounded-[14px] border border-dashed border-[var(--work-line)] px-4 py-8 text-center text-sm text-[var(--work-muted)]">
-                  {agentCopy.noResults}
-                </div>
-              )}
-            </div>
+          <div className="mx-auto w-full max-w-[940px]" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
+            <AgentConversation />
           </div>
         ) : null}
 
@@ -1673,8 +1636,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
       </div>
 
       {submittedQuery ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/95 to-transparent px-4 pb-3 pt-6 sm:px-6 sm:pb-4 lg:pb-5">
-          <div className="pointer-events-auto mx-auto w-full max-w-[1120px]">
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/96 to-transparent px-4 pb-3 pt-8 sm:px-6 sm:pb-4 lg:pb-5">
+          <div className="pointer-events-auto mx-auto w-full max-w-[940px]">
             {renderAgentInputComposer('dock')}
           </div>
         </div>
