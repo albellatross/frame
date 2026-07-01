@@ -1396,7 +1396,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     </div>
   );
 
-  const AgentInputComposer: React.FC<{ placement: 'center' | 'dock' }> = ({ placement }) => {
+  const renderAgentInputComposer = (placement: 'center' | 'dock') => {
     const isDock = placement === 'dock';
     const inputId = `work-agent-query-${placement}`;
     const textareaRef = isDock ? dockComposerTextareaRef : centerComposerTextareaRef;
@@ -1666,7 +1666,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
         {submittedQuery ? null : (
           <>
-            <AgentInputComposer placement="center" />
+            {renderAgentInputComposer('center')}
             <PromptChips />
           </>
         )}
@@ -1675,7 +1675,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       {submittedQuery ? (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-bg)] via-[var(--work-bg)]/95 to-transparent px-4 pb-3 pt-6 sm:px-6 sm:pb-4 lg:pb-5">
           <div className="pointer-events-auto mx-auto w-full max-w-[1120px]">
-            <AgentInputComposer placement="dock" />
+            {renderAgentInputComposer('dock')}
           </div>
         </div>
       ) : null}
