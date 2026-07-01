@@ -1585,7 +1585,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     );
   };
 
-  const AgentComposer = () => (
+  const renderAgentComposer = () => (
     <section
       className={cn(
         'relative',
@@ -2213,7 +2213,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         ) : null}
 
         <TopModeToggle />
-        {viewMode === 'agent' ? <AgentComposer /> : <ArchiveSection />}
+        {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
     </motion.div>
   );
