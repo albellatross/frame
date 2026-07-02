@@ -2138,7 +2138,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         'work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 font-sans text-[var(--work-ink)] sm:px-7',
         viewMode === 'agent'
           ? 'pb-0 pt-5 sm:pt-6'
-          : 'pb-16 pt-28 sm:pb-24 sm:pt-32'
+          : 'pb-16 pt-5 sm:pb-24 sm:pt-6'
       )}
     >
       <div className="mx-auto max-w-[1180px]">

@@ -124,9 +124,9 @@ const AppContent: React.FC = () => {
           ? { en: 'Back to Profile', zh: '返回 Profile' }
           : { en: 'Back', zh: '返回' };
 
-  const hideAgentChrome = currentPage === 'work' && workViewMode === 'agent' && !activeProject;
-  const hideFooter = hideAgentChrome;
-  const hideHeader = hideAgentChrome;
+  const hideWorkChrome = currentPage === 'work' && !activeProject;
+  const hideFooter = hideWorkChrome;
+  const hideHeader = hideWorkChrome;
 
   return (
     <>
