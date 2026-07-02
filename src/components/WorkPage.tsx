@@ -1470,15 +1470,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
         role="status"
         aria-label={agentCopy.loading}
       >
-        <div className="w-full max-w-[520px] rounded-[20px] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,254,250,0.74))] px-4 py-3.5 text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(47,98,255,0.12),0_18px_52px_-38px_rgba(22,21,19,0.46)] backdrop-blur-md sm:px-5">
+        <div className="w-full max-w-[500px] rounded-[18px] bg-[rgba(255,254,250,0.78)] px-4 py-3 text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(22,21,19,0.075),0_18px_46px_-36px_rgba(22,21,19,0.46)] backdrop-blur-md sm:px-5">
           <div className="flex items-center gap-3.5">
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[15px] bg-[#F2F4FF] shadow-[inset_0_0_0_1px_rgba(47,98,255,0.16),0_12px_28px_-22px_rgba(47,98,255,0.72)]" aria-hidden="true">
-              <div className="absolute inset-2 flex items-end gap-1.5">
-                <span className="agent-thinking-cardlet h-6 w-2.5 rounded-[4px] bg-[var(--work-agent-blue)]/85" />
-                <span className="agent-thinking-cardlet h-8 w-2.5 rounded-[4px] bg-[var(--work-agent-green)]/80" />
-                <span className="agent-thinking-cardlet h-5 w-2.5 rounded-[4px] bg-[var(--work-agent-warm)]/80" />
-              </div>
-              <span className="agent-thinking-scan absolute left-1.5 right-1.5 top-1/2 h-5 rounded-full bg-white/70 shadow-[0_0_18px_rgba(47,98,255,0.42)]" />
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-[#F7E6A5]/42 shadow-[inset_0_0_0_1px_rgba(22,21,19,0.08),0_10px_24px_-22px_rgba(22,21,19,0.5)]" aria-hidden="true">
+              <span className="absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 bg-[rgba(22,21,19,0.28)]" />
+              <span className="absolute left-1/2 top-1/2 h-6 w-px -translate-x-1/2 -translate-y-1/2 bg-[rgba(22,21,19,0.16)]" />
+              <span className="agent-thinking-core absolute left-1/2 top-1/2 h-2.5 w-2.5 rounded-full bg-[#D7A928] shadow-[0_0_0_5px_rgba(215,169,40,0.14)]" />
             </div>
 
             <div className="min-w-0 flex-1">
@@ -1486,13 +1483,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 <p className="text-[12px] font-semibold leading-5 text-[var(--work-agent-ink)]">
                   {agentRespondsInZh ? '正在阅读作品证据' : 'Reading portfolio evidence'}
                 </p>
-                <span className="rounded-full bg-[rgba(47,98,255,0.08)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase text-[var(--work-agent-blue)]">
-                  {agentRespondsInZh ? '生成中' : 'live'}
+                <span className="flex items-center gap-1.5" aria-hidden="true">
+                  <span className="agent-thinking-dot h-1.5 w-1.5 rounded-full bg-[#171412]" />
+                  <span className="agent-thinking-dot h-1.5 w-1.5 rounded-full bg-[#D7A928]" />
+                  <span className="agent-thinking-dot h-1.5 w-1.5 rounded-full bg-[#171412]" />
                 </span>
               </div>
               <p className="mt-1 text-sm leading-6 text-[var(--work-agent-muted)] text-pretty">{agentCopy.loading}</p>
-              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[rgba(22,21,19,0.075)]">
-                <span className="agent-thinking-progress block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,var(--work-agent-blue),var(--work-agent-green),var(--work-agent-warm))]" />
+              <div className="mt-3 h-px overflow-hidden bg-[rgba(22,21,19,0.12)]">
+                <span className="agent-thinking-progress block h-full w-24 bg-[linear-gradient(90deg,rgba(22,21,19,0),rgba(22,21,19,0.76),rgba(215,169,40,0.72),rgba(22,21,19,0))]" />
               </div>
             </div>
           </div>
@@ -1611,6 +1610,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const renderAgentComposer = () => (
     <section
+      style={{
+        backgroundImage: `url("${agentBackgroundImage}")`,
+        backgroundPosition: submittedQuery ? 'top center' : 'center',
+        backgroundRepeat: submittedQuery ? 'repeat' : 'no-repeat',
+        backgroundSize: submittedQuery ? '720px auto' : 'cover',
+      }}
       className={cn(
         'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
@@ -1618,25 +1623,16 @@ const WorkPage: React.FC<WorkPageProps> = ({
           : 'flex min-h-[calc(100svh-156px)] flex-col pb-4 pt-0 sm:min-h-[calc(100svh-124px)] sm:pb-5'
       )}
     >
-      <img
-        src={agentBackgroundImage}
-        alt=""
-        aria-hidden="true"
-        className={cn(
-          'pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover transition-opacity duration-500 ease-out',
-          submittedQuery ? 'object-bottom opacity-80' : 'object-center opacity-95'
-        )}
-      />
       <div
         className={cn(
-          'pointer-events-none absolute inset-0 -z-10',
+          'pointer-events-none absolute inset-0 z-0',
           submittedQuery
             ? 'bg-[linear-gradient(180deg,rgba(247,244,238,0.68)_0%,rgba(247,244,238,0.74)_44%,rgba(247,244,238,0.9)_100%)]'
             : 'bg-[linear-gradient(180deg,rgba(247,244,238,0.28)_0%,rgba(247,244,238,0.48)_58%,rgba(247,244,238,0.64)_100%)]'
         )}
         aria-hidden="true"
       />
-      <div className={cn('w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
+      <div className={cn('relative z-10 w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
         {submittedQuery ? null : (
           <>
             <div className="flex min-h-0 flex-1 items-center">
