@@ -1363,6 +1363,14 @@ const WorkPage: React.FC<WorkPageProps> = ({
     </div>
   );
 
+  const AgentIdleFooter = () => (
+    <footer className="mx-auto flex min-h-9 w-full max-w-[744px] flex-wrap items-center justify-center gap-x-2 gap-y-1 px-2 pb-1 text-center text-[11px] font-medium leading-5 text-[var(--work-agent-muted)] opacity-70">
+      <span>{agentRespondsInZh ? '基于作品集内容回答' : 'Portfolio-grounded answers'}</span>
+      <span className="h-1 w-1 rounded-full bg-current opacity-35" aria-hidden="true" />
+      <span>{agentRespondsInZh ? '支持中英文提问' : 'English or Chinese'}</span>
+    </footer>
+  );
+
   const renderAgentInputComposer = (placement: 'center' | 'dock') => {
     const isDock = placement === 'dock';
     const inputId = `work-agent-query-${placement}`;
@@ -1570,22 +1578,27 @@ const WorkPage: React.FC<WorkPageProps> = ({
         'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
           ? 'min-h-[calc(100vh-168px)] pb-[156px] pt-4 sm:pb-[172px] lg:pb-[164px]'
-          : 'flex min-h-[calc(100vh-220px)] flex-col pb-12 pt-0 sm:min-h-[calc(100vh-250px)] sm:pb-14 lg:min-h-[calc(100vh-280px)]'
+          : 'flex min-h-[calc(100svh-156px)] flex-col pb-4 pt-0 sm:min-h-[calc(100svh-124px)] sm:pb-5'
       )}
     >
-      <div className="w-full">
+      <div className={cn('w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
         {submittedQuery ? null : (
-          <div className="mx-auto flex w-full max-w-[744px] flex-1 flex-col justify-center pb-[12vh] pt-[16vh] sm:pt-[18vh]">
-            <div>
-              <h1 className="text-[2.5rem] font-semibold leading-[1.04] text-[var(--work-agent-ink)] text-balance sm:text-[3.35rem]">
-                Geli Portfolio
-              </h1>
-              <p className="mt-3 max-w-[520px] text-[15px] font-normal leading-6 text-[var(--work-agent-muted)] text-pretty">
-                {agentRespondsInZh ? '问作品、能力或设计决策。' : 'Ask about projects, skills, or design decisions.'}
-              </p>
+          <>
+            <div className="flex min-h-0 flex-1 items-center">
+              <div className="mx-auto w-full max-w-[744px] py-8 sm:py-10">
+                <div>
+                  <h1 className="text-[2.5rem] font-semibold leading-[1.04] text-[var(--work-agent-ink)] text-balance sm:text-[3.35rem]">
+                    Geli Portfolio
+                  </h1>
+                  <p className="mt-3 max-w-[520px] text-[15px] font-normal leading-6 text-[var(--work-agent-muted)] text-pretty">
+                    {agentRespondsInZh ? '问作品、能力或设计决策。' : 'Ask about projects, skills, or design decisions.'}
+                  </p>
+                </div>
+                {renderAgentInputComposer('center')}
+              </div>
             </div>
-            {renderAgentInputComposer('center')}
-          </div>
+            <AgentIdleFooter />
+          </>
         )}
 
         {submittedQuery ? (
