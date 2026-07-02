@@ -73,6 +73,14 @@ const AppContent: React.FC = () => {
     window.setTimeout(scrollToTimeline, 120);
   };
 
+  const handleWorkHome = useCallback(() => {
+    setCurrentPage('home');
+    setWorkReturnTarget(null);
+    setAgentReturnTarget('home');
+    setWorkViewMode('agent');
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleNavigate = (page: Page) => {
     const previousPage = currentPage;
     setCurrentPage(page);
@@ -153,7 +161,7 @@ const AppContent: React.FC = () => {
         <WorkPage 
           projects={WORK_PROJECTS}
           onProjectClick={handleProjectClick}
-          onReturnToTimeline={workReturnTarget === 'timeline' ? handleReturnToTimeline : undefined}
+          onGoHome={handleWorkHome}
           onAgentBack={agentReturnTarget === 'archive' ? undefined : handleAgentBack}
           agentBackLabel={agentBackLabel}
           onViewModeChange={handleWorkViewModeChange}

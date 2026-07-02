@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Project } from '../types';
 import {
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Bot,
@@ -16,7 +15,7 @@ import { projectCoverAsset } from '../utils/assets';
 interface WorkPageProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
-  onReturnToTimeline?: () => void;
+  onGoHome?: () => void;
   onAgentBack?: () => void;
   agentBackLabel?: { en: string; zh: string };
   onViewModeChange?: (viewMode: ViewMode) => void;
@@ -830,12 +829,12 @@ const CoverFrame: React.FC<{
 const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
-  onReturnToTimeline,
+  onGoHome,
   onAgentBack,
   agentBackLabel,
   onViewModeChange,
 }) => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const isZh = language === 'zh';
   const reduceMotion = useReducedMotion();
   const [viewMode, setViewMode] = useState<ViewMode>('agent');
@@ -1357,6 +1356,20 @@ const WorkPage: React.FC<WorkPageProps> = ({
       >
         <span aria-hidden="true" className="text-base leading-none">←</span>
         {agentBackLabel ? getLocalized(agentBackLabel, agentRespondsInZh) : agentRespondsInZh ? '返回项目库' : 'Back to Library'}
+      </button>
+      <WorkSubpageNav className="sm:justify-self-center" />
+      <span className="hidden sm:block" aria-hidden="true" />
+    </div>
+  );
+
+  const LibraryTopControls = () => (
+    <div className="mb-7 flex flex-col gap-4 sm:grid sm:grid-cols-[minmax(128px,1fr)_auto_minmax(128px,1fr)] sm:items-center">
+      <button
+        type="button"
+        onClick={onGoHome}
+        className="inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 text-sm font-medium text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+      >
+        {agentRespondsInZh ? '首页' : 'Home'}
       </button>
       <WorkSubpageNav className="sm:justify-self-center" />
       <span className="hidden sm:block" aria-hidden="true" />
@@ -2142,18 +2155,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       )}
     >
       <div className="mx-auto max-w-[1180px]">
-        {onReturnToTimeline && viewMode === 'archive' ? (
-          <button
-            type="button"
-            onClick={onReturnToTimeline}
-            className="mb-8 inline-flex min-h-10 items-center gap-2 rounded-full bg-white/70 pl-3.5 pr-4 text-sm font-medium text-[var(--work-ink)] shadow-[var(--work-shadow-border)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:bg-white hover:shadow-[var(--work-shadow-border-hover)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]"
-          >
-            <ArrowLeft size={16} aria-hidden="true" />
-            {t('work.backToTimeline')}
-          </button>
-        ) : null}
-
-        {viewMode === 'agent' ? <AgentTopControls /> : <WorkSubpageNav />}
+        {viewMode === 'agent' ? <AgentTopControls /> : <LibraryTopControls />}
         {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
     </motion.div>
