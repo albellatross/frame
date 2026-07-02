@@ -1600,10 +1600,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
             <div className="flex min-h-0 flex-1 items-center">
               <div className="mx-auto w-full max-w-[744px] py-8 sm:py-10">
                 <div>
-                  <h1 className="text-[2.5rem] font-semibold leading-[1.04] text-[var(--work-agent-ink)] text-balance sm:text-[3.35rem]">
-                    Geli Portfolio
+                  <h1 className="text-[2rem] font-medium leading-[1.12] text-[var(--work-agent-ink)] text-balance sm:text-[2.55rem]">
+                    Hi, welcome to Geli's portfolio
                   </h1>
-                  <p className="mt-3 max-w-[520px] text-[15px] font-normal leading-6 text-[var(--work-agent-muted)] text-pretty">
+                  <p className="mt-2.5 max-w-[500px] text-sm font-normal leading-6 text-[var(--work-agent-muted)] text-pretty">
                     {agentRespondsInZh ? '问作品、能力或设计决策。' : 'Ask about projects, skills, or design decisions.'}
                   </p>
                 </div>
