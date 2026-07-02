@@ -18,7 +18,7 @@ interface WorkPageProps {
   onProjectClick: (project: Project) => void;
   onReturnToTimeline?: () => void;
   onAgentBack?: () => void;
-  agentBackLabel?: string;
+  agentBackLabel?: { en: string; zh: string };
   onViewModeChange?: (viewMode: ViewMode) => void;
 }
 
@@ -849,7 +849,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const centerComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const dockComposerTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const isComposingQueryRef = useRef(false);
-  const agentRespondsInZh = isZh || containsChinese(query) || containsChinese(submittedQuery);
+  const activeAgentQuestion = query.trim() || submittedQuery.trim();
+  const agentRespondsInZh = activeAgentQuestion ? containsChinese(activeAgentQuestion) : isZh;
 
   useEffect(() => {
     onViewModeChange?.(viewMode);
@@ -997,9 +998,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const agentCopy = {
     greeting: agentRespondsInZh ? '你好' : 'Hi',
     inputLabel: agentRespondsInZh ? '作品 Agent 输入' : 'Portfolio Agent input',
-    placeholder: agentRespondsInZh
-      ? '可以直接用中文描述：职位、能力、项目类型、公司或技术方向…'
-      : copy.placeholder,
+    placeholder: agentRespondsInZh ? '问作品、能力或项目决策…' : 'Ask about work, skills, or decisions...',
     submit: agentRespondsInZh ? '发送' : 'Send',
     clear: agentRespondsInZh ? '清空输入' : 'Clear input',
     promptLabel: agentRespondsInZh ? '可直接点击，也可以用中文改写' : 'Suggested prompts',
@@ -1178,7 +1177,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const requestPortfolioAgent = async (message: string, suggestionId: string | null) => {
-    const locale = isZh || containsChinese(message) ? 'zh' : 'en';
+    const locale = containsChinese(message) ? 'zh' : 'en';
     const localMatches = getLocalMatchesForQuery(message, suggestionId);
     const candidateProjectIds = localMatches.map((item) => item.project.id);
     const userMessage: AgentMessage = {
@@ -1294,16 +1293,16 @@ const WorkPage: React.FC<WorkPageProps> = ({
     const items: Array<{ mode: ViewMode; label: string }> = [
       {
         mode: 'agent',
-        label: isZh ? 'Chat' : 'Chat',
+        label: agentRespondsInZh ? '聊天' : 'Chat',
       },
       {
         mode: 'archive',
-        label: isZh ? '项目库' : 'Library',
+        label: agentRespondsInZh ? '项目库' : 'Library',
       },
     ];
 
     return (
-      <nav className={cn('flex justify-center', className)} aria-label={isZh ? 'Work 子页面' : 'Work subpages'}>
+      <nav className={cn('flex justify-center', className)} aria-label={agentRespondsInZh ? 'Work 子页面' : 'Work subpages'}>
         <div className="relative inline-flex min-h-12 items-center gap-1 rounded-full bg-white/50 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_18px_48px_-42px_rgba(22,21,19,0.48)] backdrop-blur-md">
           {items.map((item) => {
             const isActive = viewMode === item.mode;
@@ -1354,10 +1353,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
       <button
         type="button"
         onClick={handleAgentBackClick}
-        className="inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-white/56 px-3.5 pr-4 text-sm font-medium text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_16px_42px_-34px_rgba(22,21,19,0.42)] transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:-translate-x-0.5 hover:bg-white hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(22,21,19,0.09),0_18px_44px_-34px_rgba(22,21,19,0.48)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+        className="inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-transparent px-2.5 pr-3 text-sm font-medium text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:-translate-x-0.5 hover:bg-white/58 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
       >
         <span aria-hidden="true" className="text-base leading-none">←</span>
-        {agentBackLabel || (agentRespondsInZh ? '返回项目库' : 'Back to Library')}
+        {agentBackLabel ? getLocalized(agentBackLabel, agentRespondsInZh) : agentRespondsInZh ? '返回项目库' : 'Back to Library'}
       </button>
       <WorkSubpageNav className="sm:justify-self-center" />
       <span className="hidden sm:block" aria-hidden="true" />
@@ -1577,13 +1576,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
       <div className="w-full">
         {submittedQuery ? null : (
           <div className="mx-auto flex w-full max-w-[744px] flex-1 flex-col justify-center pb-[12vh] pt-[16vh] sm:pt-[18vh]">
-            <h1 className="text-[28px] font-normal leading-[34px] text-[var(--work-agent-ink)] text-balance">
-              {agentRespondsInZh ? '想了解 Geli 的哪些作品？' : "Ask Geli's portfolio."}
-            </h1>
+            <div>
+              <h1 className="text-[2.5rem] font-semibold leading-[1.04] text-[var(--work-agent-ink)] text-balance sm:text-[3.35rem]">
+                Geli Portfolio
+              </h1>
+              <p className="mt-3 max-w-[520px] text-[15px] font-normal leading-6 text-[var(--work-agent-muted)] text-pretty">
+                {agentRespondsInZh ? '问作品、能力或设计决策。' : 'Ask about projects, skills, or design decisions.'}
+              </p>
+            </div>
             {renderAgentInputComposer('center')}
-            <p className="mt-4 max-w-[620px] text-sm leading-6 text-[var(--work-agent-muted)]">
-              {agentRespondsInZh ? '可以像面试官一样问：Agent 项目、AI UX 方法、项目决策或某项能力的证据。' : 'Ask about agent work, AI UX methods, project decisions, or which cases best prove a skill.'}
-            </p>
           </div>
         )}
 

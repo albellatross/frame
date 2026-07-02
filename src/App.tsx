@@ -14,6 +14,7 @@ import WalkThrough from './components/walk-through';
 
 type Page = 'home' | 'work' | 'profile';
 type AgentReturnTarget = 'home' | 'profile' | 'timeline' | 'archive';
+type LocalizedLabel = { en: string; zh: string };
 
 const hasPortfolioReaderPages = (project: Project) =>
   Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length || project.caseSections?.length);
@@ -114,14 +115,14 @@ const AppContent: React.FC = () => {
     window.scrollTo(0, 0);
   }, [agentReturnTarget, workReturnTarget]);
 
-  const agentBackLabel =
+  const agentBackLabel: LocalizedLabel =
     workReturnTarget === 'timeline' || agentReturnTarget === 'timeline'
-      ? language === 'zh' ? '返回时间线' : 'Back to Timeline'
+      ? { en: 'Back to Timeline', zh: '返回时间线' }
       : agentReturnTarget === 'archive'
-        ? language === 'zh' ? '返回项目库' : 'Back to Library'
+        ? { en: 'Back to Library', zh: '返回项目库' }
         : agentReturnTarget === 'profile'
-          ? language === 'zh' ? '返回 Profile' : 'Back to Profile'
-          : language === 'zh' ? '返回' : 'Back';
+          ? { en: 'Back to Profile', zh: '返回 Profile' }
+          : { en: 'Back', zh: '返回' };
 
   const hideAgentChrome = currentPage === 'work' && workViewMode === 'agent' && !activeProject;
   const hideFooter = hideAgentChrome;
