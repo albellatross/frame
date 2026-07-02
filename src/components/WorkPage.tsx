@@ -1114,6 +1114,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const agentBackgroundImage = submittedQuery
     ? assetUrl('/agent-backgrounds/cover-02.png')
     : assetUrl('/agent-backgrounds/cover-01.png');
+  const agentPageBackgroundStyle = {
+    backgroundImage: `url("${agentBackgroundImage}")`,
+    backgroundPosition: submittedQuery ? 'center top' : 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+  };
 
   const buildClientFallbackReply = (
     message: string,
@@ -1610,29 +1616,14 @@ const WorkPage: React.FC<WorkPageProps> = ({
 
   const renderAgentComposer = () => (
     <section
-      style={{
-        backgroundImage: `url("${agentBackgroundImage}")`,
-        backgroundPosition: submittedQuery ? 'top center' : 'center',
-        backgroundRepeat: submittedQuery ? 'repeat' : 'no-repeat',
-        backgroundSize: submittedQuery ? '720px auto' : 'cover',
-      }}
       className={cn(
-        'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
+        'relative -mx-5 bg-transparent px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
           ? 'min-h-[calc(100vh-168px)] pb-[184px] pt-4 sm:pb-[200px] lg:pb-[194px]'
           : 'flex min-h-[calc(100svh-156px)] flex-col pb-4 pt-0 sm:min-h-[calc(100svh-124px)] sm:pb-5'
       )}
     >
-      <div
-        className={cn(
-          'pointer-events-none absolute inset-0 z-0',
-          submittedQuery
-            ? 'bg-[linear-gradient(180deg,rgba(247,244,238,0.68)_0%,rgba(247,244,238,0.74)_44%,rgba(247,244,238,0.9)_100%)]'
-            : 'bg-[linear-gradient(180deg,rgba(247,244,238,0.28)_0%,rgba(247,244,238,0.48)_58%,rgba(247,244,238,0.64)_100%)]'
-        )}
-        aria-hidden="true"
-      />
-      <div className={cn('relative z-10 w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
+      <div className={cn('w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
         {submittedQuery ? null : (
           <>
             <div className="flex min-h-0 flex-1 items-center">
@@ -2187,13 +2178,30 @@ const WorkPage: React.FC<WorkPageProps> = ({
       exit={{ opacity: 0 }}
       transition={{ duration: reduceMotion ? 0 : 0.28 }}
       className={cn(
-        'work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 font-sans text-[var(--work-ink)] sm:px-7',
+        'work-page relative isolate min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 font-sans text-[var(--work-ink)] sm:px-7',
         viewMode === 'agent'
           ? 'pb-0 pt-5 sm:pt-6'
           : 'pb-16 pt-5 sm:pb-24 sm:pt-6'
       )}
     >
-      <div className="mx-auto max-w-[1180px]">
+      {viewMode === 'agent' ? (
+        <div className="pointer-events-none fixed inset-0 z-0 bg-[var(--work-agent-canvas)]" aria-hidden="true">
+          <div
+            className={cn('absolute inset-0', submittedQuery ? 'opacity-[0.88]' : 'opacity-95')}
+            style={agentPageBackgroundStyle}
+          />
+          <div
+            className={cn(
+              'absolute inset-0',
+              submittedQuery
+                ? 'bg-[linear-gradient(180deg,rgba(247,244,238,0.68)_0%,rgba(247,244,238,0.76)_46%,rgba(247,244,238,0.92)_100%)]'
+                : 'bg-[linear-gradient(180deg,rgba(247,244,238,0.28)_0%,rgba(247,244,238,0.48)_58%,rgba(247,244,238,0.64)_100%)]'
+            )}
+          />
+        </div>
+      ) : null}
+
+      <div className="relative z-10 mx-auto max-w-[1180px]">
         <WorkTopControls />
         {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
