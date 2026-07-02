@@ -1361,7 +1361,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   );
 
   const AgentDockFooter = () => (
-    <footer className="mt-2 flex min-h-6 items-center justify-center px-2 text-center text-[11px] font-medium leading-5 text-[var(--work-agent-muted)] opacity-62">
+    <footer className="mt-2 flex min-h-6 items-center justify-center px-2 text-center text-[11px] font-normal leading-5 text-[rgba(22,21,19,0.34)]">
       <span>{agentRespondsInZh ? '继续追问，我会基于作品集补充证据。' : 'Ask a follow-up for more portfolio evidence.'}</span>
     </footer>
   );
@@ -1445,7 +1445,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const AgentConversation = () => {
     const renderAssistantContent = (content: string) =>
       content.split(/\n{2,}/).map((block, index) => (
-        <p key={`${block.slice(0, 24)}-${index}`} className="whitespace-pre-line text-pretty">
+        <p
+          key={`${block.slice(0, 24)}-${index}`}
+          className={cn(
+            'whitespace-pre-line text-pretty',
+            index === 0
+              ? 'text-[17px] font-normal leading-[1.88] text-[var(--work-agent-ink)] sm:text-[18px]'
+              : 'max-w-[680px] text-[14px] leading-6 text-[rgba(22,21,19,0.66)] sm:text-[15px] sm:leading-7'
+          )}
+        >
           {block}
         </p>
       ));
@@ -1508,12 +1516,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 >
                   {isAssistant ? (
                     <>
-                      <div className="flex items-center gap-2 text-[12px] font-medium text-[var(--work-agent-muted)]">
+                      <div className="flex items-center gap-2 text-[11px] font-medium leading-5 text-[rgba(22,21,19,0.48)]">
                         <span>{agentCopy.agentName}</span>
                         {(message.mode === 'openai' || message.mode === 'github') && message.model ? <span>· {message.model}</span> : null}
                         {message.mode === 'local' ? <span>· {agentCopy.localFallback}</span> : null}
                       </div>
-                      <div className="space-y-4">{renderAssistantContent(message.content)}</div>
+                      <div className="max-w-[700px] space-y-3.5">{renderAssistantContent(message.content)}</div>
                     </>
                   ) : (
                     <p className="whitespace-pre-line text-pretty">{message.content}</p>
@@ -1578,15 +1586,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
         ) : null}
 
         {agentReply?.followUps?.length ? (
-          <div className="mt-6">
-            <p className="mb-2 text-[12px] font-semibold text-[var(--work-agent-muted)]">{agentCopy.followUpLabel}</p>
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-7 max-w-[680px]">
+            <p className="mb-2 text-[11px] font-medium leading-5 text-[rgba(22,21,19,0.42)]">{agentCopy.followUpLabel}</p>
+            <div className="divide-y divide-[rgba(22,21,19,0.06)] border-y border-[rgba(22,21,19,0.06)]">
               {agentReply.followUps.map((followUp) => (
                 <button
                   key={followUp}
                   type="button"
                   onClick={() => handleFollowUpClick(followUp)}
-                  className="min-h-10 rounded-full bg-white/52 px-3.5 py-2 text-xs font-medium text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055)] transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:bg-white hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(49,92,255,0.18)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+                  className="block w-full min-h-11 rounded-[10px] px-2 py-2.5 text-left text-[13px] font-normal leading-5 text-[rgba(22,21,19,0.56)] transition-[background-color,color,transform] duration-200 ease-out hover:translate-x-1 hover:bg-white/48 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-green)] sm:text-sm"
                 >
                   {followUp}
                 </button>
