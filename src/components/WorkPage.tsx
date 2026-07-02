@@ -7,7 +7,6 @@ import {
   Bot,
   LibraryBig,
   Search,
-  Sparkles,
   X,
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -949,7 +948,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个来源`
       : `${projects.length} reader-ready works across ${archiveTrackCount} contexts`,
     formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
-    agentTitle: isZh ? '对话' : 'Chats',
+    agentTitle: 'Chat',
     agentBody: isZh
       ? '像面试一样提问，Agent 会基于作品集回答并推荐相关案例。'
       : 'Ask interview-style questions and get portfolio-grounded answers with matching cases.',
@@ -1287,23 +1286,21 @@ const WorkPage: React.FC<WorkPageProps> = ({
     transition: { delay: reduceMotion ? 0 : Math.min(idx * 0.035, 0.18), duration: reduceMotion ? 0 : 0.32 },
   });
 
-  const ModeRail = () => {
-    const items: Array<{ mode: ViewMode; label: string; icon: React.ReactNode }> = [
+  const WorkSubpageNav = () => {
+    const items: Array<{ mode: ViewMode; label: string }> = [
       {
         mode: 'agent',
-        label: isZh ? '对话' : 'Chats',
-        icon: <Bot size={16} aria-hidden="true" />,
+        label: isZh ? 'Chat' : 'Chat',
       },
       {
         mode: 'archive',
         label: isZh ? '项目库' : 'Library',
-        icon: <LibraryBig size={16} aria-hidden="true" />,
       },
     ];
 
     return (
-      <nav className="mb-4 lg:sticky lg:top-28 lg:mb-0 lg:self-start" aria-label={isZh ? '作品视图切换' : 'Work view switch'}>
-        <div className="inline-flex w-full items-center gap-1 rounded-full bg-white/68 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.06),0_16px_44px_-34px_rgba(22,21,19,0.45)] lg:w-14 lg:flex-col lg:rounded-[28px] lg:py-2">
+      <nav className="mb-7 flex justify-center" aria-label={isZh ? 'Work 子页面' : 'Work subpages'}>
+        <div className="relative inline-flex min-h-12 items-center gap-1 rounded-full bg-white/50 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_18px_48px_-42px_rgba(22,21,19,0.48)] backdrop-blur-md">
           {items.map((item) => {
             const isActive = viewMode === item.mode;
             return (
@@ -1312,16 +1309,25 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 type="button"
                 onClick={() => setViewMode(item.mode)}
                 className={cn(
-                  'group inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full px-4 text-xs font-semibold transition-[background-color,box-shadow,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] lg:h-12 lg:w-12 lg:flex-none lg:flex-col lg:gap-0.5 lg:px-0',
+                  'group relative isolate min-h-10 min-w-[104px] rounded-full px-5 text-sm font-medium transition-[color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
                   isActive
-                    ? 'bg-white text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(22,21,19,0.08),0_10px_28px_-22px_rgba(22,21,19,0.38)]'
-                    : 'text-[var(--work-muted)] hover:bg-white/74 hover:text-[var(--work-agent-ink)]'
+                    ? 'text-[var(--work-agent-ink)]'
+                    : 'text-[var(--work-muted)] hover:text-[var(--work-agent-ink)]'
                 )}
                 aria-pressed={isActive}
+                aria-current={isActive ? 'page' : undefined}
                 title={item.label}
               >
-                {item.icon}
-                <span className="lg:text-[9px] lg:leading-none">{item.label}</span>
+                {isActive ? (
+                  <motion.span
+                    layoutId="work-subpage-active"
+                    className="absolute inset-0 -z-10 rounded-full bg-white shadow-[0_0_0_1px_rgba(22,21,19,0.075),0_12px_28px_-24px_rgba(22,21,19,0.42)]"
+                    transition={{ type: 'spring', duration: reduceMotion ? 0 : 0.36, bounce: 0 }}
+                  />
+                ) : (
+                  <span className="absolute inset-0 -z-10 rounded-full bg-white/0 transition-[background-color,box-shadow] duration-200 ease-out group-hover:bg-white/48 group-hover:shadow-[0_0_0_1px_rgba(22,21,19,0.045)]" aria-hidden="true" />
+                )}
+                <span>{item.label}</span>
               </button>
             );
           })}
@@ -1348,7 +1354,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             textareaRef.current?.focus({ preventScroll: true });
           }}
           className={cn(
-            'flex min-h-14 cursor-text items-end rounded-[32px] bg-[var(--work-agent-elevated)] px-2 shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.22),0_22px_54px_-38px_rgba(22,21,19,0.5)]',
+            'group flex min-h-14 cursor-text items-end rounded-[32px] bg-[var(--work-agent-elevated)] px-2 shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(22,21,19,0.105),0_24px_64px_-48px_rgba(22,21,19,0.56)] focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.20),0_24px_64px_-42px_rgba(22,21,19,0.54)]',
             isDock ? 'backdrop-blur-md' : ''
           )}
         >
@@ -1389,7 +1395,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <button
             type="submit"
             disabled={!canSubmit}
-            className="mb-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-18px_rgba(22,21,19,0.82)] transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out hover:bg-[var(--work-agent-blue)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)] disabled:cursor-not-allowed disabled:bg-[#E9E4DC] disabled:text-[#9B9389] disabled:shadow-none"
+            className="mb-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-18px_rgba(22,21,19,0.82)] transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out group-hover:shadow-[0_16px_32px_-20px_rgba(22,21,19,0.86)] hover:bg-[var(--work-agent-blue)] hover:translate-x-0.5 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)] disabled:translate-x-0 disabled:cursor-not-allowed disabled:bg-[#E9E4DC] disabled:text-[#9B9389] disabled:shadow-none"
             aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
           >
             {agentStatus === 'loading' ? (
@@ -1431,7 +1437,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   {isAssistant ? (
                     <>
                       <div className="flex items-center gap-2 text-[12px] font-medium text-[var(--work-agent-muted)]">
-                        <Sparkles size={13} aria-hidden="true" />
                         <span>{agentCopy.agentName}</span>
                         {(message.mode === 'openai' || message.mode === 'github') && message.model ? <span>· {message.model}</span> : null}
                         {message.mode === 'local' ? <span>· {agentCopy.localFallback}</span> : null}
@@ -1537,27 +1542,13 @@ const WorkPage: React.FC<WorkPageProps> = ({
       className={cn(
         'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
-          ? 'min-h-[calc(100vh-168px)] pb-[156px] pt-0 sm:pb-[172px] lg:pb-[164px]'
+          ? 'min-h-[calc(100vh-168px)] pb-[156px] pt-4 sm:pb-[172px] lg:pb-[164px]'
           : 'flex min-h-[calc(100vh-220px)] flex-col pb-12 pt-0 sm:min-h-[calc(100vh-250px)] sm:pb-14 lg:min-h-[calc(100vh-280px)]'
       )}
     >
-      {submittedQuery ? (
-        <div className="mx-auto flex h-14 w-full max-w-[920px] items-center justify-between border-b border-[var(--work-agent-line)]">
-          <p className="text-sm font-semibold text-[var(--work-agent-ink)]">{agentRespondsInZh ? '对话' : 'Chats'}</p>
-
-          <button
-            type="button"
-            onClick={handleClear}
-            className="inline-flex min-h-10 items-center justify-center rounded-full px-3 text-xs font-semibold text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/74 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
-          >
-            {agentRespondsInZh ? '新对话' : 'New chat'}
-          </button>
-        </div>
-      ) : null}
-
       <div className="w-full">
         {submittedQuery ? null : (
-          <div className="mx-auto flex w-full max-w-[744px] flex-1 flex-col justify-center pb-[12vh] pt-[18vh] sm:pt-[20vh]">
+          <div className="mx-auto flex w-full max-w-[744px] flex-1 flex-col justify-center pb-[12vh] pt-[16vh] sm:pt-[18vh]">
             <h1 className="text-[28px] font-normal leading-[34px] text-[var(--work-agent-ink)] text-balance">
               {agentRespondsInZh ? '想了解 Geli 的哪些作品？' : "Ask Geli's portfolio."}
             </h1>
@@ -2115,12 +2106,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </button>
         ) : null}
 
-        <div className="grid gap-4 lg:grid-cols-[64px_minmax(0,1fr)] lg:items-start">
-          <ModeRail />
-          <div className="min-w-0">
-            {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
-          </div>
-        </div>
+        <WorkSubpageNav />
+        {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
     </motion.div>
   );
