@@ -17,6 +17,8 @@ interface WorkPageProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
   onReturnToTimeline?: () => void;
+  onAgentBack?: () => void;
+  agentBackLabel?: string;
   onViewModeChange?: (viewMode: ViewMode) => void;
 }
 
@@ -829,6 +831,8 @@ const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
   onReturnToTimeline,
+  onAgentBack,
+  agentBackLabel,
   onViewModeChange,
 }) => {
   const { language, t } = useLanguage();
@@ -1286,7 +1290,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     transition: { delay: reduceMotion ? 0 : Math.min(idx * 0.035, 0.18), duration: reduceMotion ? 0 : 0.32 },
   });
 
-  const WorkSubpageNav = () => {
+  const WorkSubpageNav = ({ className = 'mb-7' }: { className?: string } = {}) => {
     const items: Array<{ mode: ViewMode; label: string }> = [
       {
         mode: 'agent',
@@ -1299,7 +1303,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     ];
 
     return (
-      <nav className="mb-7 flex justify-center" aria-label={isZh ? 'Work 子页面' : 'Work subpages'}>
+      <nav className={cn('flex justify-center', className)} aria-label={isZh ? 'Work 子页面' : 'Work subpages'}>
         <div className="relative inline-flex min-h-12 items-center gap-1 rounded-full bg-white/50 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_18px_48px_-42px_rgba(22,21,19,0.48)] backdrop-blur-md">
           {items.map((item) => {
             const isActive = viewMode === item.mode;
@@ -1335,6 +1339,30 @@ const WorkPage: React.FC<WorkPageProps> = ({
       </nav>
     );
   };
+
+  const handleAgentBackClick = () => {
+    if (onAgentBack) {
+      onAgentBack();
+      return;
+    }
+
+    setViewMode('archive');
+  };
+
+  const AgentTopControls = () => (
+    <div className="mb-7 flex flex-col gap-4 sm:grid sm:grid-cols-[minmax(128px,1fr)_auto_minmax(128px,1fr)] sm:items-center">
+      <button
+        type="button"
+        onClick={handleAgentBackClick}
+        className="inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-white/56 px-3.5 pr-4 text-sm font-medium text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_16px_42px_-34px_rgba(22,21,19,0.42)] transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:-translate-x-0.5 hover:bg-white hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(22,21,19,0.09),0_18px_44px_-34px_rgba(22,21,19,0.48)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+      >
+        <span aria-hidden="true" className="text-base leading-none">←</span>
+        {agentBackLabel || (agentRespondsInZh ? '返回项目库' : 'Back to Library')}
+      </button>
+      <WorkSubpageNav className="sm:justify-self-center" />
+      <span className="hidden sm:block" aria-hidden="true" />
+    </div>
+  );
 
   const renderAgentInputComposer = (placement: 'center' | 'dock') => {
     const isDock = placement === 'dock';
@@ -2092,10 +2120,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: reduceMotion ? 0 : 0.28 }}
-      className="work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 pb-16 pt-28 font-sans text-[var(--work-ink)] sm:px-7 sm:pb-24 sm:pt-32"
+      className={cn(
+        'work-page min-h-screen overflow-x-hidden bg-[var(--work-bg)] px-5 font-sans text-[var(--work-ink)] sm:px-7',
+        viewMode === 'agent'
+          ? 'pb-0 pt-5 sm:pt-6'
+          : 'pb-16 pt-28 sm:pb-24 sm:pt-32'
+      )}
     >
       <div className="mx-auto max-w-[1180px]">
-        {onReturnToTimeline ? (
+        {onReturnToTimeline && viewMode === 'archive' ? (
           <button
             type="button"
             onClick={onReturnToTimeline}
@@ -2106,7 +2139,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </button>
         ) : null}
 
-        <WorkSubpageNav />
+        {viewMode === 'agent' ? <AgentTopControls /> : <WorkSubpageNav />}
         {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
     </motion.div>

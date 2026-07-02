@@ -12,6 +12,9 @@ import WorkPage from './components/WorkPage';
 import ProjectDetail from './components/ProjectDetail';
 import WalkThrough from './components/walk-through';
 
+type Page = 'home' | 'work' | 'profile';
+type AgentReturnTarget = 'home' | 'profile' | 'timeline' | 'archive';
+
 const hasPortfolioReaderPages = (project: Project) =>
   Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length || project.caseSections?.length);
 
@@ -24,11 +27,12 @@ const AppContent: React.FC = () => {
   const CAREER_TIMELINE = language === 'zh' ? CAREER_TIMELINE_ZH : CAREER_TIMELINE_EN;
 
   // State
-  const [currentPage, setCurrentPage] = useState<'home' | 'work' | 'profile'>('home');
+  const [currentPage, setCurrentPage] = useState<Page>('home');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [isWalkThroughOpen, setIsWalkThroughOpen] = useState(false);
   const [workReturnTarget, setWorkReturnTarget] = useState<'timeline' | null>(null);
   const [workViewMode, setWorkViewMode] = useState<'agent' | 'archive'>('agent');
+  const [agentReturnTarget, setAgentReturnTarget] = useState<AgentReturnTarget>('home');
 
   // Re-resolve activeProject when language changes
   const resolvedProject = activeProject
@@ -55,6 +59,7 @@ const AppContent: React.FC = () => {
 
   const handleViewAllWorksFromTimeline = () => {
     setWorkReturnTarget('timeline');
+    setAgentReturnTarget('timeline');
     setWorkViewMode('agent');
     setCurrentPage('work');
     window.scrollTo(0, 0);
@@ -63,28 +68,71 @@ const AppContent: React.FC = () => {
   const handleReturnToTimeline = () => {
     setCurrentPage('home');
     setWorkReturnTarget(null);
+    setAgentReturnTarget('home');
     window.setTimeout(scrollToTimeline, 120);
   };
 
-  const handleNavigate = (page: 'home' | 'work' | 'profile') => {
+  const handleNavigate = (page: Page) => {
+    const previousPage = currentPage;
     setCurrentPage(page);
     setWorkReturnTarget(null);
     if (page === 'work') {
+      setAgentReturnTarget(previousPage === 'work' && workViewMode === 'archive' ? 'archive' : previousPage === 'profile' ? 'profile' : 'home');
       setWorkViewMode('agent');
     }
   };
 
   const handleWorkViewModeChange = useCallback((viewMode: 'agent' | 'archive') => {
+    if (viewMode === 'agent' && workViewMode === 'archive') {
+      setAgentReturnTarget('archive');
+    }
+    if (viewMode === 'archive') {
+      setWorkReturnTarget(null);
+    }
     setWorkViewMode(viewMode);
-  }, []);
+  }, [workViewMode]);
 
-  const hideFooter = currentPage === 'work' && workViewMode === 'agent' && !activeProject;
+  const handleAgentBack = useCallback(() => {
+    const target = workReturnTarget === 'timeline' ? 'timeline' : agentReturnTarget;
+
+    if (target === 'timeline') {
+      handleReturnToTimeline();
+      return;
+    }
+
+    if (target === 'profile') {
+      setCurrentPage('profile');
+      setWorkReturnTarget(null);
+      setAgentReturnTarget('home');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    setCurrentPage('home');
+    setWorkReturnTarget(null);
+    setAgentReturnTarget('home');
+    window.scrollTo(0, 0);
+  }, [agentReturnTarget, workReturnTarget]);
+
+  const agentBackLabel =
+    workReturnTarget === 'timeline' || agentReturnTarget === 'timeline'
+      ? language === 'zh' ? '返回时间线' : 'Back to Timeline'
+      : agentReturnTarget === 'archive'
+        ? language === 'zh' ? '返回项目库' : 'Back to Library'
+        : agentReturnTarget === 'profile'
+          ? language === 'zh' ? '返回 Profile' : 'Back to Profile'
+          : language === 'zh' ? '返回' : 'Back';
+
+  const hideAgentChrome = currentPage === 'work' && workViewMode === 'agent' && !activeProject;
+  const hideFooter = hideAgentChrome;
+  const hideHeader = hideAgentChrome;
 
   return (
     <>
     <Layout 
       currentPage={currentPage}
       onNavigate={handleNavigate}
+      hideHeader={hideHeader}
       hideFooter={hideFooter}
     >
       {currentPage === 'home' && (
@@ -105,6 +153,8 @@ const AppContent: React.FC = () => {
           projects={WORK_PROJECTS}
           onProjectClick={handleProjectClick}
           onReturnToTimeline={workReturnTarget === 'timeline' ? handleReturnToTimeline : undefined}
+          onAgentBack={agentReturnTarget === 'archive' ? undefined : handleAgentBack}
+          agentBackLabel={agentBackLabel}
           onViewModeChange={handleWorkViewModeChange}
         />
       )}
@@ -131,11 +181,13 @@ const AppContent: React.FC = () => {
           onClose={() => setIsWalkThroughOpen(false)}
           onExploreWork={() => {
             setIsWalkThroughOpen(false);
+            setAgentReturnTarget(currentPage === 'profile' ? 'profile' : 'home');
             setWorkViewMode('agent');
             setCurrentPage('work');
           }}
           onOpenResume={() => {
             setIsWalkThroughOpen(false);
+            setAgentReturnTarget('home');
             setCurrentPage('profile');
           }}
         />

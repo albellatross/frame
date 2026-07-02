@@ -8,10 +8,11 @@ interface LayoutProps {
   children: React.ReactNode;
   currentPage: 'home' | 'work' | 'profile';
   onNavigate: (page: 'home' | 'work' | 'profile') => void;
+  hideHeader?: boolean;
   hideFooter?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hideFooter = false }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hideHeader = false, hideFooter = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { t } = useLanguage();
@@ -24,6 +25,12 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (hideHeader) {
+      setIsMenuOpen(false);
+    }
+  }, [hideHeader]);
 
   // Smooth scroll handler
   const handleNavClick = (id: string, type: 'scroll' | 'page') => {
@@ -74,111 +81,113 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
   return (
     <div className="min-h-screen bg-cream-light font-sans selection:bg-accent selection:text-white">
       
-      {/* Navigation Bar */}
-      <nav 
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 transition-all duration-500 ease-in-out flex justify-between items-center ${
-          isScrolled && !isMenuOpen 
-            ? 'py-4 bg-white/80 backdrop-blur-xl border-b border-neutral-200/50 shadow-[0_2px_20px_rgba(0,0,0,0.02)]' 
-            : 'py-6 md:py-8 bg-transparent'
-        }`}
-      >
-        {/* Logo */}
-        <div className="z-50 relative">
-          <button
-            onClick={() => handleNavClick('hero', 'scroll')}
-            className="text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-4"
-            aria-label="Go to home"
+      {!hideHeader ? (
+        <>
+          {/* Navigation Bar */}
+          <nav
+            className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 transition-all duration-500 ease-in-out flex justify-between items-center ${
+              isScrolled && !isMenuOpen
+                ? 'py-4 bg-white/80 backdrop-blur-xl border-b border-neutral-200/50 shadow-[0_2px_20px_rgba(0,0,0,0.02)]'
+                : 'py-6 md:py-8 bg-transparent'
+            }`}
           >
-            <span className={`block text-xl font-bold tracking-tighter transition-colors duration-300 ${isMenuOpen ? 'text-neutral-900' : 'text-neutral-900'}`}>
-              FRAME.
-            </span>
-            {!isScrolled && !isMenuOpen && (
-              <span className="text-[10px] text-neutral-500 uppercase tracking-widest mt-0.5 block group-hover:text-accent transition-colors">
-                Bella's portfolio
-              </span>
-            )}
-          </button>
-        </div>
+            {/* Logo */}
+            <div className="z-50 relative">
+              <button
+                onClick={() => handleNavClick('hero', 'scroll')}
+                className="text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] focus-visible:ring-offset-4"
+                aria-label="Go to home"
+              >
+                <span className={`block text-xl font-bold tracking-tighter transition-colors duration-300 ${isMenuOpen ? 'text-neutral-900' : 'text-neutral-900'}`}>
+                  FRAME.
+                </span>
+                {!isScrolled && !isMenuOpen && (
+                  <span className="text-[10px] text-neutral-500 uppercase tracking-widest mt-0.5 block group-hover:text-accent transition-colors">
+                    Bella's portfolio
+                  </span>
+                )}
+              </button>
+            </div>
 
-        {/* Desktop Center Menu - Floating Island Style */}
-        <div className={`absolute left-1/2 -translate-x-1/2 transition-all duration-500 hidden md:block ${
-           isMenuOpen ? 'opacity-0 translate-y-[-20px] pointer-events-none' : 'opacity-100 translate-y-0'
-        }`}>
-           <div className={`flex items-center gap-1 p-1.5 rounded-full transition-all duration-300 ${
-             isScrolled
-               ? 'bg-white/90 border border-neutral-200/60 backdrop-blur-xl shadow-button'
-               : 'bg-white/70 border border-neutral-200/40 backdrop-blur-md'
-           }`}>
-             {navLinks.map((link) => (
-               <motion.button
-                 key={link.id}
-                 onClick={() => handleNavClick(link.id, link.type)}
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-                 className={`relative w-20 py-2.5 rounded-full text-xs font-medium transition-all duration-300 uppercase tracking-wide text-center overflow-hidden ${
-                    isActive(link.id)
-                    ? 'text-neutral-900 bg-white shadow-sm'
-                    : 'text-neutral-600 hover:text-neutral-900'
-                 }`}
-               >
-                 {isActive(link.id) && (
-                   <motion.div
-                     layoutId="activeTab"
-                     className="absolute inset-0 bg-white rounded-full shadow-sm"
-                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                   />
-                 )}
-                 <span className="relative inline-block transition-transform duration-300">
-                   {link.label}
-                 </span>
-               </motion.button>
-             ))}
-           </div>
-        </div>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3 z-50">
-           {/* Language Toggle Switch */}
-           <LanguageToggle
-             trackClassName={isMenuOpen || isScrolled
-               ? 'bg-neutral-200'
-               : 'bg-white/90 backdrop-blur-md shadow-sm border border-neutral-200/50'}
-           />
-
-           {/* Hamburger Toggle */}
-           <motion.button
-             onClick={() => setIsMenuOpen(!isMenuOpen)}
-             whileHover={{ scale: 1.05 }}
-             whileTap={{ scale: 0.96 }}
-             className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group ${
-               isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100/80'
-             }`}
-             aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
-             aria-expanded={isMenuOpen}
-           >
-             {isMenuOpen ? (
-               <X size={24} className="text-neutral-900" />
-             ) : (
-               <div className="space-y-1.5 p-2">
-                 <motion.span
-                   className="block w-6 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
-                   animate={{ width: isMenuOpen ? 24 : 24 }}
-                   whileHover={{ width: 16 }}
-                 />
-                 <motion.span
-                   className="block w-4 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
-                   whileHover={{ width: 24 }}
-                 />
+            {/* Desktop Center Menu - Floating Island Style */}
+            <div className={`absolute left-1/2 -translate-x-1/2 transition-all duration-500 hidden md:block ${
+               isMenuOpen ? 'opacity-0 translate-y-[-20px] pointer-events-none' : 'opacity-100 translate-y-0'
+            }`}>
+               <div className={`flex items-center gap-1 p-1.5 rounded-full transition-all duration-300 ${
+                 isScrolled
+                   ? 'bg-white/90 border border-neutral-200/60 backdrop-blur-xl shadow-button'
+                   : 'bg-white/70 border border-neutral-200/40 backdrop-blur-md'
+               }`}>
+                 {navLinks.map((link) => (
+                   <motion.button
+                     key={link.id}
+                     onClick={() => handleNavClick(link.id, link.type)}
+                     whileHover={{ scale: 1.05 }}
+                     whileTap={{ scale: 0.95 }}
+                     className={`relative w-20 py-2.5 rounded-full text-xs font-medium transition-all duration-300 uppercase tracking-wide text-center overflow-hidden ${
+                        isActive(link.id)
+                        ? 'text-neutral-900 bg-white shadow-sm'
+                        : 'text-neutral-600 hover:text-neutral-900'
+                     }`}
+                   >
+                     {isActive(link.id) && (
+                       <motion.div
+                         layoutId="activeTab"
+                         className="absolute inset-0 bg-white rounded-full shadow-sm"
+                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                       />
+                     )}
+                     <span className="relative inline-block transition-transform duration-300">
+                       {link.label}
+                     </span>
+                   </motion.button>
+                 ))}
                </div>
-             )}
-           </motion.button>
-        </div>
-      </nav>
+            </div>
 
-      {/* Full Screen Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
+            {/* Right Actions */}
+            <div className="flex items-center gap-2 sm:gap-3 z-50">
+               {/* Language Toggle Switch */}
+               <LanguageToggle
+                 trackClassName={isMenuOpen || isScrolled
+                   ? 'bg-neutral-200'
+                   : 'bg-white/90 backdrop-blur-md shadow-sm border border-neutral-200/50'}
+               />
+
+               {/* Hamburger Toggle */}
+               <motion.button
+                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                 whileHover={{ scale: 1.05 }}
+                 whileTap={{ scale: 0.96 }}
+                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group ${
+                   isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100/80'
+                 }`}
+                 aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
+                 aria-expanded={isMenuOpen}
+               >
+                 {isMenuOpen ? (
+                   <X size={24} className="text-neutral-900" />
+                 ) : (
+                   <div className="space-y-1.5 p-2">
+                     <motion.span
+                       className="block w-6 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
+                       animate={{ width: isMenuOpen ? 24 : 24 }}
+                       whileHover={{ width: 16 }}
+                     />
+                     <motion.span
+                       className="block w-4 h-0.5 bg-neutral-900 transition-all duration-300 ml-auto"
+                       whileHover={{ width: 24 }}
+                     />
+                   </div>
+                 )}
+               </motion.button>
+            </div>
+          </nav>
+
+          {/* Full Screen Menu Overlay */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -235,9 +244,11 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
                 <span>© 2024 FRAME</span>
                 <span>San Francisco, CA</span>
              </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      ) : null}
 
       <main className="relative">
         {children}
