@@ -1013,7 +1013,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
     why: agentRespondsInZh ? '原因' : 'Why',
     viewCase: agentRespondsInZh ? '查看案例' : 'View case',
     responseHeading: agentRespondsInZh ? 'Agent 回答' : 'Agent answer',
-    loading: agentRespondsInZh ? '正在检索作品并生成回答…' : 'Retrieving portfolio context and drafting an answer...',
+    loading: agentRespondsInZh ? '正在整理作品证据和回答…' : 'Composing an evidence-backed answer...',
     sending: agentRespondsInZh ? '生成中' : 'Thinking',
     localFallback: agentRespondsInZh ? '作品知识库模式' : 'Portfolio knowledge mode',
     modelLabel: agentRespondsInZh ? '模型' : 'Model',
@@ -1423,7 +1423,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
             aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
           >
             {agentStatus === 'loading' ? (
-              <span className="h-2.5 w-2.5 rounded-full bg-current animate-pulse" aria-hidden="true" />
+              <span className="relative h-4 w-4" aria-hidden="true">
+                <span className="absolute inset-0 rounded-full border border-white/35 border-t-white animate-spin" />
+                <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/90" />
+              </span>
             ) : (
               <ArrowRight size={18} aria-hidden="true" />
             )}
@@ -1440,6 +1443,45 @@ const WorkPage: React.FC<WorkPageProps> = ({
           {block}
         </p>
       ));
+
+    const AgentThinkingIndicator = () => (
+      <motion.article
+        initial={reduceMotion ? false : { opacity: 0, y: 8, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: reduceMotion ? 0 : 0.26, ease: 'easeOut' }}
+        className="flex justify-start"
+        role="status"
+        aria-label={agentCopy.loading}
+      >
+        <div className="w-full max-w-[520px] rounded-[20px] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,254,250,0.74))] px-4 py-3.5 text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(47,98,255,0.12),0_18px_52px_-38px_rgba(22,21,19,0.46)] backdrop-blur-md sm:px-5">
+          <div className="flex items-center gap-3.5">
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-[15px] bg-[#F2F4FF] shadow-[inset_0_0_0_1px_rgba(47,98,255,0.16),0_12px_28px_-22px_rgba(47,98,255,0.72)]" aria-hidden="true">
+              <div className="absolute inset-2 flex items-end gap-1.5">
+                <span className="agent-thinking-cardlet h-6 w-2.5 rounded-[4px] bg-[var(--work-agent-blue)]/85" />
+                <span className="agent-thinking-cardlet h-8 w-2.5 rounded-[4px] bg-[var(--work-agent-green)]/80" />
+                <span className="agent-thinking-cardlet h-5 w-2.5 rounded-[4px] bg-[var(--work-agent-warm)]/80" />
+              </div>
+              <span className="agent-thinking-scan absolute left-1.5 right-1.5 top-1/2 h-5 rounded-full bg-white/70 shadow-[0_0_18px_rgba(47,98,255,0.42)]" />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[12px] font-semibold leading-5 text-[var(--work-agent-ink)]">
+                  {agentRespondsInZh ? '正在阅读作品证据' : 'Reading portfolio evidence'}
+                </p>
+                <span className="rounded-full bg-[rgba(47,98,255,0.08)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase text-[var(--work-agent-blue)]">
+                  {agentRespondsInZh ? '生成中' : 'live'}
+                </span>
+              </div>
+              <p className="mt-1 text-sm leading-6 text-[var(--work-agent-muted)] text-pretty">{agentCopy.loading}</p>
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[rgba(22,21,19,0.075)]">
+                <span className="agent-thinking-progress block h-full w-1/2 rounded-full bg-[linear-gradient(90deg,var(--work-agent-blue),var(--work-agent-green),var(--work-agent-warm))]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    );
 
     return (
       <section className="mx-auto w-full max-w-[744px]">
@@ -1476,18 +1518,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           })}
 
           {agentStatus === 'loading' ? (
-            <article className="flex justify-start">
-              <div className="rounded-[18px] bg-white/72 px-4 py-3 text-sm leading-6 text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_16px_42px_-34px_rgba(22,21,19,0.42)]">
-                <span className="inline-flex items-center gap-2">
-                  <span className="inline-flex gap-1" aria-hidden="true">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--work-agent-blue)] animate-pulse" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#6D8AFF] animate-pulse [animation-delay:120ms]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#A7B7FF] animate-pulse [animation-delay:240ms]" />
-                  </span>
-                  {agentCopy.loading}
-                </span>
-              </div>
-            </article>
+            <AgentThinkingIndicator />
           ) : null}
 
           {agentStatus === 'error' ? (
