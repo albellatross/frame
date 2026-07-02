@@ -15,9 +15,7 @@ import { projectCoverAsset } from '../utils/assets';
 interface WorkPageProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
-  onGoHome?: () => void;
-  onAgentBack?: () => void;
-  agentBackLabel?: { en: string; zh: string };
+  onGoHome: () => void;
   onViewModeChange?: (viewMode: ViewMode) => void;
 }
 
@@ -830,8 +828,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
   projects,
   onProjectClick,
   onGoHome,
-  onAgentBack,
-  agentBackLabel,
   onViewModeChange,
 }) => {
   const { language } = useLanguage();
@@ -1338,39 +1334,19 @@ const WorkPage: React.FC<WorkPageProps> = ({
     );
   };
 
-  const handleAgentBackClick = () => {
-    if (onAgentBack) {
-      onAgentBack();
-      return;
-    }
-
-    setViewMode('archive');
-  };
-
-  const AgentTopControls = () => (
-    <div className="mb-7 flex flex-col gap-4 sm:grid sm:grid-cols-[minmax(128px,1fr)_auto_minmax(128px,1fr)] sm:items-center">
-      <button
-        type="button"
-        onClick={handleAgentBackClick}
-        className="inline-flex min-h-10 w-fit items-center gap-2 rounded-full bg-transparent px-2.5 pr-3 text-sm font-medium text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:-translate-x-0.5 hover:bg-white/58 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
-      >
-        <span aria-hidden="true" className="text-base leading-none">←</span>
-        {agentBackLabel ? getLocalized(agentBackLabel, agentRespondsInZh) : agentRespondsInZh ? '返回项目库' : 'Back to Library'}
-      </button>
-      <WorkSubpageNav className="sm:justify-self-center" />
-      <span className="hidden sm:block" aria-hidden="true" />
-    </div>
+  const WorkHomeButton = () => (
+    <button
+      type="button"
+      onClick={onGoHome}
+      className="inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 text-sm font-medium text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+    >
+      {agentRespondsInZh ? '首页' : 'Home'}
+    </button>
   );
 
-  const LibraryTopControls = () => (
+  const WorkTopControls = () => (
     <div className="mb-7 flex flex-col gap-4 sm:grid sm:grid-cols-[minmax(128px,1fr)_auto_minmax(128px,1fr)] sm:items-center">
-      <button
-        type="button"
-        onClick={onGoHome}
-        className="inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 text-sm font-medium text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
-      >
-        {agentRespondsInZh ? '首页' : 'Home'}
-      </button>
+      <WorkHomeButton />
       <WorkSubpageNav className="sm:justify-self-center" />
       <span className="hidden sm:block" aria-hidden="true" />
     </div>
@@ -2155,7 +2131,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       )}
     >
       <div className="mx-auto max-w-[1180px]">
-        {viewMode === 'agent' ? <AgentTopControls /> : <LibraryTopControls />}
+        <WorkTopControls />
         {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
       </div>
     </motion.div>
