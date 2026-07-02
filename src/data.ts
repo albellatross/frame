@@ -2675,13 +2675,13 @@ export const EXPLORATIONS_EN: Project[] = [
     platform: 'Web',
     year: '2024',
     role: 'AI Workflow Designer',
-    shortDescription: 'Building AI-powered helper tools for complex image-generation production.',
+    shortDescription: 'Building AI-powered helper tools for image production, review boards, and PPT generation.',
     coverImage: '/projects/walk-through/aigc-03.png',
-    tags: ['Batch Generation', '3:4 Review Board', 'AIGC Production', 'Design Automation'],
+    tags: ['Batch Generation', '3:4 Review Board', 'AI Presentation', 'Design Automation'],
     acts: {
-      act1: { title: 'Production Complexity', content: 'Complex image-generation work created repeated generating, filtering, resizing, and review preparation.' },
-      act2: { title: 'AI Helper Tools', content: 'I built two small tools: batch image generation and a 3:4 review board for team selection.', decisionPoints: ['Batch generation', '3:4 normalization', 'Team screening', 'Final selection'] },
-      act3: { title: 'Result', content: 'My time moved from manual operation to image judgment, review, and communication.', impact: 'Faster review-ready production' }
+      act1: { title: 'Production Complexity', content: 'Complex production work created repeated generating, filtering, resizing, deck drafting, and review preparation.' },
+      act2: { title: 'AI Helper Tools', content: 'I built three small tools: batch image generation, a 3:4 review board, and OPG-MXP-Presentation for generated PPT review.', decisionPoints: ['Batch generation', '3:4 normalization', 'PPT generation review', 'Final selection'] },
+      act3: { title: 'Result', content: 'My time moved from manual operation to image judgment, slide review, and team communication.', impact: 'Faster review-ready production' }
     }
   },
   {
@@ -2754,13 +2754,13 @@ export const EXPLORATIONS_ZH: Project[] = [
     platform: 'Web',
     year: '2024',
     role: 'AI Workflow 设计师',
-    shortDescription: '为复杂生图生产制作 AI 提效小工具。',
+    shortDescription: '为复杂生图、展示板和 PPT 生成制作 AI 提效小工具。',
     coverImage: '/projects/walk-through/aigc-03.png',
-    tags: ['批量生图', '3:4 展示板', 'AIGC 生产', '设计自动化'],
+    tags: ['批量生图', '3:4 展示板', 'AI Presentation', '设计自动化'],
     acts: {
-      act1: { title: '生产复杂度', content: '复杂生图工作会产生大量重复生成、筛选、改比例和整理 review 的工作。' },
-      act2: { title: 'AI 提效工具', content: '我做了两个小工具：批量生图，以及给团队筛选用的 3:4 图片展示板。', decisionPoints: ['批量生成', '统一 3:4', '团队筛选', '最终选择'] },
-      act3: { title: '结果', content: '我的时间从重复操作转向审美判断、review 和沟通。', impact: '更快进入可筛选状态' }
+      act1: { title: '生产复杂度', content: '复杂生产工作会产生大量重复生成、筛选、改比例、搭 PPT 初稿和整理 review 的工作。' },
+      act2: { title: 'AI 提效工具', content: '我做了三个小工具：批量生图、给团队筛选用的 3:4 图片展示板，以及 OPG-MXP-Presentation PPT 生成 review 工具。', decisionPoints: ['批量生成', '统一 3:4', 'PPT 生成 review', '最终选择'] },
+      act3: { title: '结果', content: '我的时间从重复操作转向审美判断、页面 review 和沟通。', impact: '更快进入可 review 状态' }
     }
   },
   {

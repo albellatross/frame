@@ -23,7 +23,7 @@ interface WorkflowArticleViewProps {
   isZh: boolean;
 }
 
-type WorkflowTool = 'batch' | 'board';
+type WorkflowTool = 'batch' | 'board' | 'presentation';
 
 const sampleImages = [
   '/AI images/20251010 Images for Creator Gallery - Halloween__image16.webp',
@@ -38,6 +38,7 @@ const evidenceImages = {
   batch: '/Frame.png',
   board: '/Frame-2.png',
   boardCard: '/Frame-1.png',
+  presentation: '/projects/ai-workflow-design/opg-mxp-presentation-review.png',
 };
 
 const sectionTransition = (delay: number) => ({ duration: 0.42, delay, ease: [0.22, 1, 0.36, 1] as const });
@@ -46,7 +47,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
   const [activeTool, setActiveTool] = useState<WorkflowTool>('batch');
 
   useEffect(() => {
-    [evidenceImages.board, evidenceImages.boardCard].forEach((src) => {
+    [evidenceImages.board, evidenceImages.boardCard, evidenceImages.presentation].forEach((src) => {
       const image = new Image();
       image.src = assetUrl(src);
     });
@@ -89,6 +90,19 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
       output: isZh ? '统一 3:4 的 review surface，方便团队快速比较和选择。' : 'A unified 3:4 review surface for fast team comparison and selection.',
       image: evidenceImages.boardCard,
     },
+    presentation: {
+      icon: ClipboardCheck,
+      title: isZh ? '工具 3：OPG-MXP-Presentation' : 'Tool 3: OPG-MXP-Presentation',
+      short: isZh ? '生成 PPT 初稿后，直接进入 review。' : 'Generate a deck draft and move straight into review.',
+      problem: isZh
+        ? 'PPT 第一版需要整理主题、素材、页面逻辑和评审标准，手动搭建很耗时。'
+        : 'A first deck draft still required turning topic, source material, page logic, and review criteria into slides by hand.',
+      input: isZh ? '主题、目标观众、内容大纲、素材、视觉方向和 review 标准。' : 'Topic, audience, outline, source material, visual direction, and review criteria.',
+      output: isZh
+        ? '一版可进入 review 的 PPT 初稿，以及用于检查叙事、结构和视觉一致性的界面。'
+        : 'A review-ready PPT draft plus a surface for checking narrative, structure, and visual consistency.',
+      image: evidenceImages.presentation,
+    },
   };
 
   const activeToolData = tools[activeTool];
@@ -113,7 +127,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
     {
       icon: Users,
       title: isZh ? '团队评审' : 'Team review',
-      body: isZh ? '统一 3:4 展示，让其他团队快速选桌面图。' : 'A unified 3:4 board helps teams choose desktop images faster.',
+      body: isZh ? '统一图片展示和 PPT review 界面，让团队更快判断结果。' : 'Unified image boards and PPT review surfaces help teams judge outputs faster.',
     },
   ];
 
@@ -194,7 +208,7 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
                     key={toolId}
                     type="button"
                     onClick={() => setActiveTool(toolId)}
-                    className={`rounded-[22px] p-4 text-left transition ${
+                    className={`rounded-[22px] p-4 text-left transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8C5462]/35 ${
                       activeTool === toolId
                         ? 'bg-[#3B230E] text-white shadow-[0_18px_42px_rgba(59,35,14,0.18)]'
                         : 'bg-white/76 text-[#3B230E] shadow-[0_12px_30px_rgba(59,35,14,0.05)] hover:bg-white'
@@ -222,7 +236,17 @@ const WorkflowArticleView: React.FC<WorkflowArticleViewProps> = ({ content, proj
                 <p className="text-[17px] font-semibold text-[#3B230E]">{activeToolData.title}</p>
               </div>
               <span className="rounded-full bg-[#8C5462]/10 px-3 py-1.5 text-[11px] font-semibold text-[#8C5462]">
-                {activeTool === 'batch' ? (isZh ? '生产提效' : 'Production') : (isZh ? '评审提效' : 'Review')}
+                {activeTool === 'batch'
+                  ? isZh
+                    ? '生产提效'
+                    : 'Production'
+                  : activeTool === 'board'
+                    ? isZh
+                      ? '评审提效'
+                      : 'Review'
+                    : isZh
+                      ? 'PPT 生成'
+                      : 'PPT generation'}
               </span>
             </div>
 

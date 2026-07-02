@@ -1393,7 +1393,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             textareaRef.current?.focus({ preventScroll: true });
           }}
           className={cn(
-            'group flex min-h-14 cursor-text items-end rounded-[32px] bg-[var(--work-agent-elevated)] px-2 shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(22,21,19,0.105),0_24px_64px_-48px_rgba(22,21,19,0.56)] focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_2px_rgba(36,120,92,0.22),0_0_0_6px_rgba(182,87,44,0.08),0_24px_64px_-42px_rgba(22,21,19,0.54)]',
+            'group flex min-h-14 cursor-text items-end rounded-[32px] bg-[var(--work-agent-elevated)] px-2 shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(22,21,19,0.105),0_24px_64px_-48px_rgba(22,21,19,0.56)] focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_1px_rgba(22,21,19,0.16),0_24px_64px_-42px_rgba(22,21,19,0.52)]',
             isDock ? 'backdrop-blur-md' : ''
           )}
         >
@@ -1429,12 +1429,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 submitAgentQuery();
               }
             }}
-            className="min-h-[52px] flex-1 resize-none overflow-y-auto bg-transparent py-[14px] pl-4 pr-2 text-[16px] leading-7 text-[var(--work-agent-ink)] caret-[var(--work-agent-green)] outline-none placeholder:text-[#8B857D]"
+            className="min-h-[52px] flex-1 resize-none overflow-y-auto bg-transparent py-[14px] pl-4 pr-2 text-[16px] leading-7 text-[var(--work-agent-ink)] caret-[var(--work-agent-ink)] outline-none placeholder:text-[#8B857D]"
           />
           <button
             type="submit"
             disabled={!canSubmit}
-            className="mb-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-18px_rgba(22,21,19,0.82)] transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out group-hover:shadow-[0_16px_32px_-20px_rgba(22,21,19,0.86)] hover:bg-[var(--work-agent-green)] hover:translate-x-0.5 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-green)] disabled:translate-x-0 disabled:cursor-not-allowed disabled:bg-[#E9E4DC] disabled:text-[#9B9389] disabled:shadow-none"
+            className="mb-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-18px_rgba(22,21,19,0.82)] transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out group-hover:shadow-[0_16px_32px_-20px_rgba(22,21,19,0.86)] hover:bg-[#2A2620] hover:translate-x-0.5 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(22,21,19,0.24)] disabled:translate-x-0 disabled:cursor-not-allowed disabled:bg-[#E9E4DC] disabled:text-[#9B9389] disabled:shadow-none"
             aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
           >
             {agentStatus === 'loading' ? (
@@ -1602,7 +1602,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   key={followUp}
                   type="button"
                   onClick={() => handleFollowUpClick(followUp)}
-                  className="block w-full min-h-11 rounded-[10px] px-2 py-2.5 text-left text-[13px] font-normal leading-5 text-[rgba(22,21,19,0.56)] transition-[background-color,color,transform] duration-200 ease-out hover:translate-x-1 hover:bg-white/48 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-green)] sm:text-sm"
+                  className="block w-full min-h-11 rounded-[10px] px-2 py-2.5 text-left text-[13px] font-normal leading-5 text-[rgba(22,21,19,0.56)] transition-[background-color,color,transform] duration-200 ease-out hover:translate-x-1 hover:bg-white/48 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(22,21,19,0.18)] sm:text-sm"
                 >
                   {followUp}
                 </button>

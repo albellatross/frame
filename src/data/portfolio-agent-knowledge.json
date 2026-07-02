@@ -43,6 +43,12 @@
       "content": "TaskMatrix.AI Storytelling Agent is an AI agent workflow design project from Microsoft Research Asia. The project needed a clear way to explain agent-driven storytelling and task orchestration. Geli organized the experience around workflow clarity, original source order, and a responsive reader that helps viewers understand the agent process. Interview evidence: AI agent workflow, story generation, task orchestration, research demo communication, and making agent behavior legible."
     },
     {
+      "id": "exp-workflow-ai-tools",
+      "title": "AI Workflow Design helper tools",
+      "projectIds": ["exp-workflow"],
+      "content": "AI Workflow Design is a self-made tooling case about using AI to reduce repeated production work while keeping design judgment in the loop. Geli built three focused tools: batch image generation, a 3:4 image review board, and OPG-MXP-Presentation for generating PPT drafts and reviewing narrative, structure, and visual consistency. Interview evidence: AI workflow design, design automation, review-ready surfaces, presentation generation, and using tools to move time from manual operation to judgment and communication."
+    },
+    {
       "id": "p3-nuwa-series",
       "title": "NUWA Series",
       "projectIds": ["p3"],

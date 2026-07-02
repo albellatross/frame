@@ -16,7 +16,7 @@ export const WALK_DATA = {
       explorations: [
         { label: 'AIGC Image Creation', desc: 'From loose ideas to finished visuals, testing how AI changes creative expression.' },
         { label: 'Prompt & Template Thinking', desc: 'Writing image prompts as visual design briefs, from vague intent to executable decisions.' },
-        { label: 'AI Workflow Design', desc: 'Two AI-made helper tools for batch image generation and 3:4 team review.' },
+        { label: 'AI Workflow Design', desc: 'AI-made tools for batch image generation, 3:4 review, and PPT generation review.' },
         { label: 'Vibe Coding', desc: 'Elsewhere: an independent AI template website from product idea to working demo.' },
       ],
       artworks: [
@@ -91,7 +91,7 @@ export const WALK_DATA = {
       explorations: [
         { label: 'AIGC 图像创作', desc: '从松散想法到完整视觉，观察 AI 怎样改变创作表达。' },
         { label: 'Prompt 与模板思维', desc: '把图像 prompt 写成视觉设计 brief，从模糊想法变成可执行决策。' },
-        { label: 'AI Workflow 设计', desc: '为批量生图和 3:4 团队筛选制作两个 AI 提效小工具。' },
+        { label: 'AI Workflow 设计', desc: '为批量生图、3:4 团队筛选和 PPT 生成 review 制作 AI 提效小工具。' },
         { label: 'Vibe Coding', desc: 'Elsewhere：独立完成的 AI 模板网站，从产品想法到可运行 demo。' },
       ],
       artworks: [
