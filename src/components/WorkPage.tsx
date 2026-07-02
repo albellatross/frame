@@ -949,7 +949,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       ? `${projects.length} 个可阅读项目 · ${archiveTrackCount} 个来源`
       : `${projects.length} reader-ready works across ${archiveTrackCount} contexts`,
     formalStat: isZh ? `${formalProjects.length} 个正式项目` : `${formalProjects.length} formal works`,
-    agentTitle: isZh ? 'Agent' : 'Agent',
+    agentTitle: isZh ? '对话' : 'Chats',
     agentBody: isZh
       ? '像面试一样提问，Agent 会基于作品集回答并推荐相关案例。'
       : 'Ask interview-style questions and get portfolio-grounded answers with matching cases.',
@@ -1287,49 +1287,57 @@ const WorkPage: React.FC<WorkPageProps> = ({
     transition: { delay: reduceMotion ? 0 : Math.min(idx * 0.035, 0.18), duration: reduceMotion ? 0 : 0.32 },
   });
 
-  const TopModeToggle = () => (
-    <div className="mb-5 flex justify-center sm:mb-7">
-      <div className="inline-flex rounded-full bg-white/72 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.07),0_12px_30px_-25px_rgba(22,21,19,0.42)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
-        <button
-          type="button"
-          onClick={() => setViewMode('agent')}
-          className={cn(
-              'inline-flex h-9 min-w-[104px] items-center justify-center gap-1.5 rounded-full px-4 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
-              viewMode === 'agent'
-                ? 'bg-[var(--work-agent-ink)] text-white shadow-[0_10px_20px_-15px_rgba(22,21,19,0.72)]'
-                : 'text-[var(--work-muted)] hover:bg-white hover:text-[var(--work-ink)]'
-          )}
-          aria-pressed={viewMode === 'agent'}
-        >
-          <Bot size={13} aria-hidden="true" />
-          Agent
-        </button>
-        <button
-          type="button"
-          onClick={() => setViewMode('archive')}
-          className={cn(
-              'inline-flex h-9 min-w-[104px] items-center justify-center gap-1.5 rounded-full px-4 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
-              viewMode === 'archive'
-                ? 'bg-[var(--work-agent-ink)] text-white shadow-[0_10px_20px_-15px_rgba(22,21,19,0.72)]'
-                : 'text-[var(--work-muted)] hover:bg-white hover:text-[var(--work-ink)]'
-          )}
-          aria-pressed={viewMode === 'archive'}
-        >
-          <LibraryBig size={13} aria-hidden="true" />
-          Library
-        </button>
-      </div>
-    </div>
-  );
+  const ModeRail = () => {
+    const items: Array<{ mode: ViewMode; label: string; icon: React.ReactNode }> = [
+      {
+        mode: 'agent',
+        label: isZh ? '对话' : 'Chats',
+        icon: <Bot size={16} aria-hidden="true" />,
+      },
+      {
+        mode: 'archive',
+        label: isZh ? '项目库' : 'Library',
+        icon: <LibraryBig size={16} aria-hidden="true" />,
+      },
+    ];
+
+    return (
+      <nav className="mb-4 lg:sticky lg:top-28 lg:mb-0 lg:self-start" aria-label={isZh ? '作品视图切换' : 'Work view switch'}>
+        <div className="inline-flex w-full items-center gap-1 rounded-full bg-white/68 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.06),0_16px_44px_-34px_rgba(22,21,19,0.45)] lg:w-14 lg:flex-col lg:rounded-[28px] lg:py-2">
+          {items.map((item) => {
+            const isActive = viewMode === item.mode;
+            return (
+              <button
+                key={item.mode}
+                type="button"
+                onClick={() => setViewMode(item.mode)}
+                className={cn(
+                  'group inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full px-4 text-xs font-semibold transition-[background-color,box-shadow,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] lg:h-12 lg:w-12 lg:flex-none lg:flex-col lg:gap-0.5 lg:px-0',
+                  isActive
+                    ? 'bg-white text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(22,21,19,0.08),0_10px_28px_-22px_rgba(22,21,19,0.38)]'
+                    : 'text-[var(--work-muted)] hover:bg-white/74 hover:text-[var(--work-agent-ink)]'
+                )}
+                aria-pressed={isActive}
+                title={item.label}
+              >
+                {item.icon}
+                <span className="lg:text-[9px] lg:leading-none">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    );
+  };
 
   const renderAgentInputComposer = (placement: 'center' | 'dock') => {
     const isDock = placement === 'dock';
     const inputId = `work-agent-query-${placement}`;
     const textareaRef = isDock ? dockComposerTextareaRef : centerComposerTextareaRef;
-    const clearLabel = query ? agentCopy.clear : agentRespondsInZh ? '清空对话' : 'Clear chat';
+    const canSubmit = query.trim().length > 0 && agentStatus !== 'loading';
 
     return (
-      <form onSubmit={handleSubmit} className={cn('mx-auto', isDock ? 'w-full max-w-none' : 'mt-8 max-w-[860px]')}>
+      <form onSubmit={handleSubmit} className={cn('mx-auto w-full max-w-[744px]', isDock ? '' : 'mt-7')}>
         <label htmlFor={inputId} className="sr-only">
           {agentCopy.inputLabel}
         </label>
@@ -1340,11 +1348,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
             textareaRef.current?.focus({ preventScroll: true });
           }}
           className={cn(
-            'cursor-text rounded-[30px] bg-[var(--work-agent-surface)] shadow-[var(--work-agent-shadow)] backdrop-blur-md transition-[box-shadow,transform] duration-200 ease-out focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_2px_rgba(47,98,255,0.28),0_36px_86px_-58px_rgba(22,21,19,0.72)]',
-            isDock ? 'p-2.5 sm:p-3' : 'p-3.5'
+            'flex min-h-14 cursor-text items-end rounded-[32px] bg-[var(--work-agent-elevated)] px-2 shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out focus-within:-translate-y-0.5 focus-within:shadow-[0_0_0_2px_rgba(49,92,255,0.22),0_22px_54px_-38px_rgba(22,21,19,0.5)]',
+            isDock ? 'backdrop-blur-md' : ''
           )}
         >
-          <div className="rounded-[22px] bg-white/72 shadow-[inset_0_0_0_1px_rgba(22,21,19,0.045)]">
           <textarea
             ref={textareaRef}
             id={inputId}
@@ -1364,7 +1371,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             placeholder={agentCopy.placeholder}
             lang={agentRespondsInZh ? 'zh-CN' : 'en'}
             dir="auto"
-            rows={isDock ? 1 : 3}
+            rows={1}
             spellCheck={false}
             autoComplete="off"
             onKeyDown={(event) => {
@@ -1377,93 +1384,76 @@ const WorkPage: React.FC<WorkPageProps> = ({
                 submitAgentQuery();
               }
             }}
-            className={cn(
-              'w-full resize-none bg-transparent px-4 text-[var(--work-agent-ink)] outline-none placeholder:text-[#90887E]',
-              isDock ? 'min-h-[42px] max-h-[96px] py-2.5 text-[15px] leading-6' : 'min-h-[104px] py-4 text-[16px] leading-7'
-            )}
+            className="min-h-[52px] flex-1 resize-none overflow-y-auto bg-transparent py-[14px] pl-4 pr-2 text-[16px] leading-7 text-[var(--work-agent-ink)] outline-none placeholder:text-[#8B857D]"
           />
-          </div>
-          <div className={cn('flex items-center justify-end gap-2', isDock ? 'mt-2' : 'mt-3')}>
-              {query || submittedQuery ? (
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className={cn('inline-flex items-center justify-center rounded-full text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
-                  aria-label={clearLabel}
-                  title={clearLabel}
-                >
-                  <X size={17} aria-hidden="true" />
-                </button>
-              ) : null}
-              <button
-                type="submit"
-                disabled={agentStatus === 'loading'}
-                className={cn(
-                  'inline-flex items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-16px_rgba(22,21,19,0.82)] transition-[background-color,opacity,transform] duration-200 ease-out hover:bg-[var(--work-agent-blue)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)] disabled:cursor-not-allowed disabled:opacity-58',
-                  isDock ? 'h-10 w-10' : 'h-11 w-11'
-                )}
-                aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
-              >
-                {agentStatus === 'loading' ? (
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/88 animate-pulse" aria-hidden="true" />
-                ) : (
-                  <ArrowRight size={18} aria-hidden="true" />
-                )}
-              </button>
-          </div>
+          <button
+            type="submit"
+            disabled={!canSubmit}
+            className="mb-2 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_12px_26px_-18px_rgba(22,21,19,0.82)] transition-[background-color,box-shadow,opacity,transform] duration-200 ease-out hover:bg-[var(--work-agent-blue)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)] disabled:cursor-not-allowed disabled:bg-[#E9E4DC] disabled:text-[#9B9389] disabled:shadow-none"
+            aria-label={agentStatus === 'loading' ? agentCopy.sending : agentCopy.submit}
+          >
+            {agentStatus === 'loading' ? (
+              <span className="h-2.5 w-2.5 rounded-full bg-current animate-pulse" aria-hidden="true" />
+            ) : (
+              <ArrowRight size={18} aria-hidden="true" />
+            )}
+          </button>
         </div>
       </form>
     );
   };
 
   const AgentConversation = () => {
+    const renderAssistantContent = (content: string) =>
+      content.split(/\n{2,}/).map((block, index) => (
+        <p key={`${block.slice(0, 24)}-${index}`} className="whitespace-pre-line text-pretty">
+          {block}
+        </p>
+      ));
+
     return (
-      <section className="mx-auto w-full max-w-[900px]">
-        <div className="space-y-6" role="log" aria-live="polite">
+      <section className="mx-auto w-full max-w-[744px]">
+        <div className="space-y-8" role="log" aria-live="polite">
           {agentMessages.map((message) => {
             const isAssistant = message.role === 'assistant';
             return (
-              <article key={message.id} className={cn('flex gap-3 sm:gap-4', isAssistant ? 'justify-start' : 'justify-end')}>
-                {isAssistant ? (
-                  <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_0_0_1px_rgba(22,21,19,0.12),0_18px_34px_-25px_rgba(22,21,19,0.72)]">
-                    <Sparkles size={14} aria-hidden="true" />
-                  </span>
-                ) : null}
+              <article key={message.id} className={cn('flex', isAssistant ? 'justify-start' : 'justify-end')}>
                 <div
                   className={cn(
-                    'max-w-[760px] whitespace-pre-line text-sm leading-7',
+                    'text-[15px] leading-7 sm:text-[16px]',
                     isAssistant
-                      ? 'pt-0.5 text-[var(--work-agent-ink)]'
-                      : 'rounded-[24px] rounded-br-[8px] bg-[var(--work-agent-ink)] px-4 py-3 text-white shadow-[0_18px_38px_-28px_rgba(22,21,19,0.82)]'
+                      ? 'w-full space-y-4 text-[var(--work-agent-ink)]'
+                      : 'max-w-[580px] rounded-[16px] bg-[#ECE8E0] px-4 py-2.5 text-[var(--work-agent-ink)] shadow-[0_0_0_1px_rgba(22,21,19,0.045)]'
                   )}
                   lang={agentRespondsInZh ? 'zh-CN' : 'en'}
                   dir="auto"
                 >
-                  <p className={cn('mb-1.5 font-mono text-[10px] uppercase', isAssistant ? 'text-[var(--work-agent-muted)]' : 'text-white/52')}>
-                    {isAssistant ? agentCopy.agentName : agentRespondsInZh ? '面试官问题' : 'Interviewer question'}
-                    {isAssistant && (message.mode === 'openai' || message.mode === 'github') && message.model ? ` · ${message.model}` : ''}
-                    {isAssistant && message.mode === 'local' ? ` · ${agentCopy.localFallback}` : ''}
-                  </p>
-                  <div className={isAssistant ? 'rounded-[24px] rounded-tl-[8px] bg-[var(--work-agent-surface)] px-4 py-3.5 shadow-[var(--work-agent-shadow)] sm:px-5 sm:py-4' : ''}>
-                    {message.content}
-                  </div>
+                  {isAssistant ? (
+                    <>
+                      <div className="flex items-center gap-2 text-[12px] font-medium text-[var(--work-agent-muted)]">
+                        <Sparkles size={13} aria-hidden="true" />
+                        <span>{agentCopy.agentName}</span>
+                        {(message.mode === 'openai' || message.mode === 'github') && message.model ? <span>· {message.model}</span> : null}
+                        {message.mode === 'local' ? <span>· {agentCopy.localFallback}</span> : null}
+                      </div>
+                      <div className="space-y-4">{renderAssistantContent(message.content)}</div>
+                    </>
+                  ) : (
+                    <p className="whitespace-pre-line text-pretty">{message.content}</p>
+                  )}
                 </div>
               </article>
             );
           })}
 
           {agentStatus === 'loading' ? (
-            <article className="flex justify-start gap-3 sm:gap-4">
-              <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_0_0_1px_rgba(22,21,19,0.12),0_18px_34px_-25px_rgba(22,21,19,0.72)]">
-                <Sparkles size={14} aria-hidden="true" />
-              </span>
-              <div className="max-w-[760px] rounded-[24px] rounded-tl-[8px] bg-[var(--work-agent-surface)] px-5 py-4 text-sm leading-6 text-[var(--work-agent-muted)] shadow-[var(--work-agent-shadow)]">
-                <p className="mb-3 font-mono text-[10px] uppercase text-[var(--work-agent-muted)]">{agentCopy.agentName}</p>
+            <article className="flex justify-start">
+              <div className="rounded-[18px] bg-white/72 px-4 py-3 text-sm leading-6 text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055),0_16px_42px_-34px_rgba(22,21,19,0.42)]">
                 <span className="inline-flex items-center gap-2">
                   <span className="inline-flex gap-1" aria-hidden="true">
                     <span className="h-1.5 w-1.5 rounded-full bg-[var(--work-agent-blue)] animate-pulse" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--work-agent-green)] animate-pulse [animation-delay:120ms]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--work-agent-warm)] animate-pulse [animation-delay:240ms]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#6D8AFF] animate-pulse [animation-delay:120ms]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#A7B7FF] animate-pulse [animation-delay:240ms]" />
                   </span>
                   {agentCopy.loading}
                 </span>
@@ -1481,16 +1471,16 @@ const WorkPage: React.FC<WorkPageProps> = ({
         </div>
 
         {agentReply && displayedMatches.length > 0 ? (
-          <div className="mt-6 pl-0 sm:pl-[52px]">
+          <div className="mt-8 border-t border-[var(--work-agent-line)] pt-5">
             <div className="mb-2 flex items-center justify-between gap-3">
-              <p className="font-mono text-[10px] uppercase text-[var(--work-agent-muted)]">
+              <p className="text-[12px] font-semibold text-[var(--work-agent-muted)]">
                 {agentRespondsInZh ? '引用案例' : 'Evidence'}
               </p>
-              <span className="font-mono text-[10px] text-[var(--work-agent-muted)] tabular-nums">
+              <span className="text-[12px] text-[var(--work-agent-muted)] tabular-nums">
                 {displayedMatches.length} {agentRespondsInZh ? '个案例' : displayedMatches.length === 1 ? 'case' : 'cases'}
               </span>
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid gap-2">
               {displayedMatches.slice(0, 3).map((item, idx) => {
                 const project = item.project;
                 return (
@@ -1498,18 +1488,21 @@ const WorkPage: React.FC<WorkPageProps> = ({
                     key={project.id}
                     type="button"
                     onClick={() => onProjectClick(project)}
-                    className="group rounded-[22px] bg-[var(--work-agent-elevated)] p-2 text-left shadow-[var(--work-agent-shadow)] transition-[box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-agent-shadow-hover)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+                    className="group flex min-h-[76px] items-center gap-3 rounded-[16px] bg-white/72 p-2 pr-3 text-left shadow-[0_0_0_1px_rgba(22,21,19,0.055)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_0_0_1px_rgba(22,21,19,0.085),0_16px_34px_-28px_rgba(22,21,19,0.42)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
                   >
-                    <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
-                    <span className="mt-3 flex items-center justify-between gap-2 px-1 font-mono text-[10px] text-[var(--work-agent-muted)]">
-                      <span>{String(idx + 1).padStart(2, '0')}</span>
-                      <ArrowRight size={12} className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--work-agent-blue)]" aria-hidden="true" />
+                    <span className="w-[82px] shrink-0">
+                      <CoverFrame project={project} idx={idx} isZh={isZh} density="agent" />
                     </span>
-                    <span className="mt-1 line-clamp-2 block px-1 text-sm font-semibold leading-5 text-[var(--work-agent-ink)]">
-                      {getProjectTitle(project, agentRespondsInZh)}
+                    <span className="min-w-0 flex-1">
+                      <span className="line-clamp-1 block text-sm font-semibold leading-5 text-[var(--work-agent-ink)]">
+                        {getProjectTitle(project, agentRespondsInZh)}
+                      </span>
+                      <span className="mt-1 line-clamp-1 block text-xs text-[var(--work-agent-muted)]">
+                        {String(idx + 1).padStart(2, '0')} · {getProjectKind(project, agentRespondsInZh)}
+                      </span>
                     </span>
-                    <span className="mt-1 line-clamp-1 block px-1 pb-1 text-xs text-[var(--work-agent-muted)]">
-                      {getProjectKind(project, agentRespondsInZh)}
+                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out group-hover:bg-[var(--work-agent-ink)] group-hover:text-white group-hover:translate-x-0.5">
+                      <ArrowRight size={14} aria-hidden="true" />
                     </span>
                   </button>
                 );
@@ -1519,15 +1512,15 @@ const WorkPage: React.FC<WorkPageProps> = ({
         ) : null}
 
         {agentReply?.followUps?.length ? (
-          <div className="mt-6 pl-0 sm:pl-[52px]">
-            <p className="mb-2 font-mono text-[11px] uppercase text-[var(--work-agent-muted)]">{agentCopy.followUpLabel}</p>
+          <div className="mt-6">
+            <p className="mb-2 text-[12px] font-semibold text-[var(--work-agent-muted)]">{agentCopy.followUpLabel}</p>
             <div className="flex flex-wrap gap-2">
               {agentReply.followUps.map((followUp) => (
                 <button
                   key={followUp}
                   type="button"
                   onClick={() => handleFollowUpClick(followUp)}
-                  className="min-h-10 rounded-full bg-[var(--work-agent-elevated)] px-3.5 py-2 text-xs font-medium text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.07)] transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:bg-white hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(47,98,255,0.22),0_14px_28px_-24px_rgba(22,21,19,0.5)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+                  className="min-h-10 rounded-full bg-white/52 px-3.5 py-2 text-xs font-medium text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.055)] transition-[background-color,box-shadow,color,transform] duration-200 ease-out hover:bg-white hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(49,92,255,0.18)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
                 >
                   {followUp}
                 </button>
@@ -1542,52 +1535,49 @@ const WorkPage: React.FC<WorkPageProps> = ({
   const renderAgentComposer = () => (
     <section
       className={cn(
-        'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7',
+        'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
-          ? 'min-h-[calc(100vh-188px)] pb-[156px] pt-4 sm:pb-[172px] sm:pt-6 lg:pb-[164px] lg:pt-7'
-          : 'flex min-h-[calc(100vh-246px)] flex-col items-center justify-center pb-12 pt-6 sm:min-h-[calc(100vh-286px)] sm:pb-14 lg:min-h-[calc(100vh-320px)]'
+          ? 'min-h-[calc(100vh-168px)] pb-[156px] pt-0 sm:pb-[172px] lg:pb-[164px]'
+          : 'flex min-h-[calc(100vh-220px)] flex-col pb-12 pt-0 sm:min-h-[calc(100vh-250px)] sm:pb-14 lg:min-h-[calc(100vh-280px)]'
       )}
     >
-      <div className={cn('w-full', submittedQuery ? 'max-w-none' : 'max-w-[1060px]')}>
-        {submittedQuery ? (
-          <div className="mx-auto mb-6 flex w-full max-w-[900px] flex-col gap-3 border-b border-[var(--work-agent-line)] pb-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="font-mono text-[10px] uppercase text-[var(--work-agent-muted)]">
-                {agentRespondsInZh ? 'Portfolio conversation' : 'Portfolio conversation'}
-              </p>
-              <h1 className="mt-1 text-2xl font-semibold leading-tight text-[var(--work-agent-ink)] sm:text-3xl">
-                {agentRespondsInZh ? '对话记录' : 'Conversation'}
-              </h1>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-[var(--work-agent-muted)] sm:text-right">
-              {agentRespondsInZh ? '回答会附带可打开的作品证据，方便面试官继续追问。' : 'Answers stay grounded in openable case evidence.'}
-            </p>
-          </div>
-        ) : (
-          <div className="text-center">
-            <h1 className="mx-auto max-w-[820px] font-serif text-[2.85rem] font-normal leading-[0.98] text-[var(--work-agent-ink)] text-balance sm:text-[4.55rem]">
-              {agentRespondsInZh ? '问问 Geli 的作品集。' : "Ask Geli's portfolio."}
+      {submittedQuery ? (
+        <div className="mx-auto flex h-14 w-full max-w-[920px] items-center justify-between border-b border-[var(--work-agent-line)]">
+          <p className="text-sm font-semibold text-[var(--work-agent-ink)]">{agentRespondsInZh ? '对话' : 'Chats'}</p>
+
+          <button
+            type="button"
+            onClick={handleClear}
+            className="inline-flex min-h-10 items-center justify-center rounded-full px-3 text-xs font-semibold text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/74 hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
+          >
+            {agentRespondsInZh ? '新对话' : 'New chat'}
+          </button>
+        </div>
+      ) : null}
+
+      <div className="w-full">
+        {submittedQuery ? null : (
+          <div className="mx-auto flex w-full max-w-[744px] flex-1 flex-col justify-center pb-[12vh] pt-[18vh] sm:pt-[20vh]">
+            <h1 className="text-[28px] font-normal leading-[34px] text-[var(--work-agent-ink)] text-balance">
+              {agentRespondsInZh ? '想了解 Geli 的哪些作品？' : "Ask Geli's portfolio."}
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-6 text-[var(--work-agent-muted)] sm:text-base">
-              {agentRespondsInZh ? '输入面试问题、岗位方向或想验证的能力，Agent 会用真实项目回答。' : 'Type an interview question, role direction, or skill to verify. The agent answers with real project evidence.'}
+            {renderAgentInputComposer('center')}
+            <p className="mt-4 max-w-[620px] text-sm leading-6 text-[var(--work-agent-muted)]">
+              {agentRespondsInZh ? '可以像面试官一样问：Agent 项目、AI UX 方法、项目决策或某项能力的证据。' : 'Ask about agent work, AI UX methods, project decisions, or which cases best prove a skill.'}
             </p>
           </div>
         )}
 
         {submittedQuery ? (
-          <div className="mx-auto w-full max-w-[960px]" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
+          <div className="mx-auto w-full max-w-[744px] pb-10 pt-8" lang={agentRespondsInZh ? 'zh-CN' : 'en'}>
             <AgentConversation />
           </div>
         ) : null}
-
-        {submittedQuery ? null : (
-          renderAgentInputComposer('center')
-        )}
       </div>
 
       {submittedQuery ? (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-agent-canvas)] via-[var(--work-agent-canvas)]/97 to-transparent px-4 pb-3 pt-10 sm:px-6 sm:pb-4 lg:pb-5">
-          <div className="pointer-events-auto mx-auto w-full max-w-[860px]">
+          <div className="pointer-events-auto mx-auto w-full max-w-[744px]">
             {renderAgentInputComposer('dock')}
           </div>
         </div>
@@ -2125,8 +2115,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </button>
         ) : null}
 
-        <TopModeToggle />
-        {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
+        <div className="grid gap-4 lg:grid-cols-[64px_minmax(0,1fr)] lg:items-start">
+          <ModeRail />
+          <div className="min-w-0">
+            {viewMode === 'agent' ? renderAgentComposer() : <ArchiveSection />}
+          </div>
+        </div>
       </div>
     </motion.div>
   );
