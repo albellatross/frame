@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
-import { projectCoverAsset } from '../utils/assets';
+import { assetUrl, projectCoverAsset } from '../utils/assets';
 
 interface WorkPageProps {
   projects: Project[];
@@ -1111,6 +1111,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
   );
 
   const wallProjects = useMemo(() => indexProjects.slice(0, 18), [indexProjects]);
+  const agentBackgroundImage = submittedQuery
+    ? assetUrl('/agent-backgrounds/cover-02.png')
+    : assetUrl('/agent-backgrounds/cover-01.png');
 
   const buildClientFallbackReply = (
     message: string,
@@ -1615,6 +1618,24 @@ const WorkPage: React.FC<WorkPageProps> = ({
           : 'flex min-h-[calc(100svh-156px)] flex-col pb-4 pt-0 sm:min-h-[calc(100svh-124px)] sm:pb-5'
       )}
     >
+      <img
+        src={agentBackgroundImage}
+        alt=""
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover transition-opacity duration-500 ease-out',
+          submittedQuery ? 'object-bottom opacity-80' : 'object-center opacity-95'
+        )}
+      />
+      <div
+        className={cn(
+          'pointer-events-none absolute inset-0 -z-10',
+          submittedQuery
+            ? 'bg-[linear-gradient(180deg,rgba(247,244,238,0.68)_0%,rgba(247,244,238,0.74)_44%,rgba(247,244,238,0.9)_100%)]'
+            : 'bg-[linear-gradient(180deg,rgba(247,244,238,0.28)_0%,rgba(247,244,238,0.48)_58%,rgba(247,244,238,0.64)_100%)]'
+        )}
+        aria-hidden="true"
+      />
       <div className={cn('w-full', submittedQuery ? '' : 'flex min-h-0 flex-1 flex-col')}>
         {submittedQuery ? null : (
           <>
@@ -1643,7 +1664,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       </div>
 
       {submittedQuery ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-agent-canvas)] via-[var(--work-agent-canvas)]/97 to-transparent px-4 pb-5 pt-10 sm:px-6 sm:pb-7 lg:pb-8">
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[rgba(247,244,238,0.96)] via-[rgba(247,244,238,0.82)] to-transparent px-4 pb-5 pt-10 sm:px-6 sm:pb-7 lg:pb-8">
           <div className="pointer-events-auto mx-auto w-full max-w-[744px]">
             {renderAgentInputComposer('dock')}
             <AgentDockFooter />
