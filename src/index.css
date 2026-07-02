@@ -29,7 +29,7 @@ body {
   --work-line-strong: #c9c1b8;
   --work-accent: #315cff;
   --work-accent-2: #6c5cff;
-  --work-agent-canvas: #f4f1ea;
+  --work-agent-canvas: #f7f4ee;
   --work-agent-surface: #fffefa;
   --work-agent-elevated: #ffffff;
   --work-agent-ink: #161513;
@@ -40,9 +40,9 @@ body {
   --work-agent-green: #24785c;
   --work-agent-warm: #b6572c;
   --work-agent-shadow:
-    0 0 0 1px rgba(22, 21, 19, 0.08),
-    0 1px 2px -1px rgba(22, 21, 19, 0.1),
-    0 28px 70px -52px rgba(22, 21, 19, 0.62);
+    0 0 0 1px rgba(22, 21, 19, 0.075),
+    0 1px 2px -1px rgba(22, 21, 19, 0.08),
+    0 30px 78px -58px rgba(22, 21, 19, 0.52);
   --work-agent-shadow-hover:
     0 0 0 1px rgba(22, 21, 19, 0.12),
     0 2px 6px -3px rgba(22, 21, 19, 0.15),
@@ -63,7 +63,7 @@ body {
   --work-cover-shadow:
     0 0 0 1px rgba(23, 20, 18, 0.07),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  --work-agent-shadow:
+  --work-agent-dark-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08),
     0 28px 80px -40px rgba(17, 18, 23, 0.9);
   --work-motion-fast: 160ms;

@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   Bot,
   LibraryBig,
-  Plus,
   Search,
   Sparkles,
   X,
@@ -1029,21 +1028,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
       : 'Local project matching is still available. Check the local API service and model token, then ask again.',
   };
 
-  const agentStatusPills = [
-    {
-      label: agentRespondsInZh ? '知识库' : 'Knowledge',
-      value: agentRespondsInZh ? `${projects.length} 个作品` : `${projects.length} works`,
-    },
-    {
-      label: agentRespondsInZh ? '回答方式' : 'Mode',
-      value: agentRespondsInZh ? '可追问' : 'Conversational',
-    },
-    {
-      label: agentRespondsInZh ? '证据' : 'Evidence',
-      value: agentRespondsInZh ? '可打开案例' : 'Openable cases',
-    },
-  ];
-
   const archiveSummary = isZh
     ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源 · ${formalProjects.length} 个正式项目`
     : `${projects.length} works across ${archiveTrackCount} contexts · ${formalProjects.length} formal works`;
@@ -1304,34 +1288,19 @@ const WorkPage: React.FC<WorkPageProps> = ({
   });
 
   const TopModeToggle = () => (
-    <div className="mb-8 border-y border-[var(--work-line)] py-3 sm:mb-10">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex min-w-0 items-center gap-2.5 text-[11px] text-[var(--work-muted)]">
-          <span className="font-mono uppercase tracking-normal">Works</span>
-          <span className="h-3 w-px bg-[var(--work-line)]" aria-hidden="true" />
-          <span className="truncate tabular-nums">
-            {isZh ? `${projects.length} 个项目 · ${archiveTrackCount} 个来源` : `${projects.length} works · ${archiveTrackCount} contexts`}
-          </span>
-        </div>
-        <div className="flex w-full items-center gap-1 border-t border-[var(--work-line)] pt-3 sm:w-auto sm:border-t-0 sm:pt-0" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
+    <div className="mb-5 flex justify-center sm:mb-7">
+      <div className="inline-flex rounded-full bg-white/72 p-1 shadow-[0_0_0_1px_rgba(22,21,19,0.07),0_12px_30px_-25px_rgba(22,21,19,0.42)]" role="group" aria-label={isZh ? '切换作品浏览模式' : 'Switch work browsing mode'}>
         <button
           type="button"
           onClick={() => setViewMode('agent')}
           className={cn(
-              'inline-flex h-9 flex-1 items-center justify-center gap-1.5 border-b px-2 text-xs font-semibold transition-[border-color,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] sm:flex-none sm:px-3',
+              'inline-flex h-9 min-w-[104px] items-center justify-center gap-1.5 rounded-full px-4 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
               viewMode === 'agent'
-                ? 'border-[var(--work-ink)] text-[var(--work-ink)]'
-                : 'border-transparent text-[var(--work-muted)] hover:border-[var(--work-line-strong)] hover:text-[var(--work-ink)]'
+                ? 'bg-[var(--work-agent-ink)] text-white shadow-[0_10px_20px_-15px_rgba(22,21,19,0.72)]'
+                : 'text-[var(--work-muted)] hover:bg-white hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'agent'}
         >
-            <span
-              className={cn(
-                'h-1.5 w-1.5 rounded-full transition-colors duration-200 ease-out',
-                viewMode === 'agent' ? 'bg-[var(--work-accent)]' : 'bg-[var(--work-line-strong)]'
-              )}
-              aria-hidden="true"
-            />
           <Bot size={13} aria-hidden="true" />
           Agent
         </button>
@@ -1339,63 +1308,17 @@ const WorkPage: React.FC<WorkPageProps> = ({
           type="button"
           onClick={() => setViewMode('archive')}
           className={cn(
-              'inline-flex h-9 flex-1 items-center justify-center gap-1.5 border-b px-2 text-xs font-semibold transition-[border-color,color,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)] sm:flex-none sm:px-3',
+              'inline-flex h-9 min-w-[104px] items-center justify-center gap-1.5 rounded-full px-4 text-xs font-semibold transition-[background-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-accent)]',
               viewMode === 'archive'
-                ? 'border-[var(--work-ink)] text-[var(--work-ink)]'
-                : 'border-transparent text-[var(--work-muted)] hover:border-[var(--work-line-strong)] hover:text-[var(--work-ink)]'
+                ? 'bg-[var(--work-agent-ink)] text-white shadow-[0_10px_20px_-15px_rgba(22,21,19,0.72)]'
+                : 'text-[var(--work-muted)] hover:bg-white hover:text-[var(--work-ink)]'
           )}
           aria-pressed={viewMode === 'archive'}
         >
-            <span
-              className={cn(
-                'h-1.5 w-1.5 rounded-full transition-colors duration-200 ease-out',
-                viewMode === 'archive' ? 'bg-[var(--work-accent)]' : 'bg-[var(--work-line-strong)]'
-              )}
-              aria-hidden="true"
-            />
           <LibraryBig size={13} aria-hidden="true" />
           Library
         </button>
-        </div>
       </div>
-    </div>
-  );
-
-  const PromptChips = () => (
-    <div className="mx-auto mt-6 grid w-full max-w-[860px] grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-      {capabilitySuggestions.slice(0, 6).map((suggestion, index) => (
-        <button
-          key={suggestion.id}
-          type="button"
-          onClick={() => handleSuggestionClick(suggestion)}
-          className="group flex min-h-[58px] items-center justify-between gap-3 rounded-[18px] bg-[var(--work-agent-elevated)] px-3.5 py-3 text-left shadow-[0_0_0_1px_rgba(22,21,19,0.07),0_16px_34px_-30px_rgba(22,21,19,0.42)] transition-[background-color,box-shadow,transform] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--work-agent-shadow-hover)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]"
-        >
-          <span className="flex min-w-0 items-center gap-3">
-            <span
-              className={cn(
-                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white shadow-[0_10px_22px_-16px_rgba(22,21,19,0.62)]',
-                index % 3 === 0
-                  ? 'bg-[var(--work-agent-blue)]'
-                  : index % 3 === 1
-                    ? 'bg-[var(--work-agent-green)]'
-                    : 'bg-[var(--work-agent-warm)]'
-              )}
-              aria-hidden="true"
-            >
-              <Sparkles size={13} />
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate text-sm font-semibold text-[var(--work-agent-ink)]">
-                {getLocalized(suggestion.label, agentRespondsInZh)}
-              </span>
-              <span className="mt-0.5 block truncate text-[11px] text-[var(--work-agent-muted)]">
-                {agentRespondsInZh ? '快速生成面试答案' : 'Ask as an interview prompt'}
-              </span>
-            </span>
-          </span>
-          <ArrowRight size={14} className="shrink-0 text-[var(--work-agent-muted)] transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:text-[var(--work-agent-blue)]" aria-hidden="true" />
-        </button>
-      ))}
     </div>
   );
 
@@ -1460,30 +1383,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
             )}
           />
           </div>
-          <div className={cn('flex items-center justify-between gap-3 border-t border-[var(--work-agent-line)]', isDock ? 'mt-2 pt-2' : 'mt-3 pt-3')}>
-            <div className="flex min-w-0 items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => textareaRef.current?.focus({ preventScroll: true })}
-                className={cn('inline-flex shrink-0 items-center justify-center rounded-full text-[var(--work-agent-muted)] transition-[background-color,color,transform] duration-200 ease-out hover:bg-white hover:text-[var(--work-agent-ink)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]', isDock ? 'h-9 w-9' : 'h-10 w-10')}
-                aria-label={agentCopy.addContext}
-                title={agentCopy.addContext}
-              >
-                <Plus size={18} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => textareaRef.current?.focus({ preventScroll: true })}
-                className={cn('inline-flex min-w-0 items-center gap-2 truncate rounded-full bg-white px-3 text-xs font-semibold text-[var(--work-agent-muted)] shadow-[0_0_0_1px_rgba(22,21,19,0.07),0_8px_20px_-18px_rgba(22,21,19,0.4)] transition-[background-color,color,box-shadow,transform] duration-200 ease-out hover:bg-[#F1F4FF] hover:text-[var(--work-agent-ink)] hover:shadow-[0_0_0_1px_rgba(47,98,255,0.2),0_12px_24px_-20px_rgba(22,21,19,0.48)] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--work-agent-blue)]', isDock ? 'h-9' : 'h-10')}
-                aria-label={agentRespondsInZh ? '回答模式' : 'Response mode'}
-                title={agentRespondsInZh ? '回答模式' : 'Response mode'}
-              >
-                <Sparkles size={14} className="shrink-0 text-[var(--work-agent-blue)]" aria-hidden="true" />
-                {agentRespondsInZh ? 'Portfolio answer' : 'Portfolio answer'}
-                <span className="text-[10px] text-[var(--work-agent-muted)]" aria-hidden="true">⌄</span>
-              </button>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
+          <div className={cn('flex items-center justify-end gap-2', isDock ? 'mt-2' : 'mt-3')}>
               {query || submittedQuery ? (
                 <button
                   type="button"
@@ -1510,7 +1410,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
                   <ArrowRight size={18} aria-hidden="true" />
                 )}
               </button>
-            </div>
           </div>
         </div>
       </form>
@@ -1649,11 +1548,6 @@ const WorkPage: React.FC<WorkPageProps> = ({
           : 'flex min-h-[calc(100vh-246px)] flex-col items-center justify-center pb-12 pt-6 sm:min-h-[calc(100vh-286px)] sm:pb-14 lg:min-h-[calc(100vh-320px)]'
       )}
     >
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[62%] opacity-70 [background-image:linear-gradient(rgba(22,21,19,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(22,21,19,0.035)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:linear-gradient(to_bottom,black_0%,transparent_78%)]"
-        aria-hidden="true"
-      />
-      <div className="pointer-events-none absolute left-1/2 top-8 -z-10 hidden h-40 w-px -translate-x-[430px] bg-[var(--work-agent-line-strong)] lg:block" aria-hidden="true" />
       <div className={cn('w-full', submittedQuery ? 'max-w-none' : 'max-w-[1060px]')}>
         {submittedQuery ? (
           <div className="mx-auto mb-6 flex w-full max-w-[900px] flex-col gap-3 border-b border-[var(--work-agent-line)] pb-4 sm:flex-row sm:items-end sm:justify-between">
@@ -1671,35 +1565,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
           </div>
         ) : (
           <div className="text-center">
-            <div className="mx-auto mb-7 flex max-w-[760px] flex-wrap items-center justify-center gap-2">
-              {agentStatusPills.map((item, index) => (
-                <span
-                  key={`${item.label}-${item.value}`}
-                  className="inline-flex min-h-8 items-center gap-2 rounded-full bg-white/72 px-3 text-[11px] shadow-[0_0_0_1px_rgba(22,21,19,0.07),0_10px_24px_-22px_rgba(22,21,19,0.45)]"
-                >
-                  <span
-                    className={cn(
-                      'h-1.5 w-1.5 rounded-full',
-                      index === 0
-                        ? 'bg-[var(--work-agent-blue)]'
-                        : index === 1
-                          ? 'bg-[var(--work-agent-green)]'
-                          : 'bg-[var(--work-agent-warm)]'
-                    )}
-                    aria-hidden="true"
-                  />
-                  <span className="font-mono uppercase text-[var(--work-agent-muted)]">{item.label}</span>
-                  <span className="font-semibold text-[var(--work-agent-ink)]">{item.value}</span>
-                </span>
-              ))}
-            </div>
-            <span className="mx-auto mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--work-agent-ink)] text-white shadow-[0_0_0_1px_rgba(22,21,19,0.12),0_22px_46px_-30px_rgba(22,21,19,0.78)]">
-              <Sparkles size={18} aria-hidden="true" />
-            </span>
-            <h1 className="mx-auto max-w-[820px] font-serif text-[2.7rem] font-normal leading-[0.98] text-[var(--work-agent-ink)] text-balance sm:text-[4.25rem]">
+            <h1 className="mx-auto max-w-[820px] font-serif text-[2.85rem] font-normal leading-[0.98] text-[var(--work-agent-ink)] text-balance sm:text-[4.55rem]">
               {agentRespondsInZh ? '问问 Geli 的作品集。' : "Ask Geli's portfolio."}
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--work-agent-muted)] sm:text-base">
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-6 text-[var(--work-agent-muted)] sm:text-base">
               {agentRespondsInZh ? '输入面试问题、岗位方向或想验证的能力，Agent 会用真实项目回答。' : 'Type an interview question, role direction, or skill to verify. The agent answers with real project evidence.'}
             </p>
           </div>
@@ -1712,10 +1581,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         ) : null}
 
         {submittedQuery ? null : (
-          <>
-            {renderAgentInputComposer('center')}
-            <PromptChips />
-          </>
+          renderAgentInputComposer('center')
         )}
       </div>
 
@@ -1980,7 +1846,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
   };
 
   const AgentMatchPanel = () => (
-    <section className="mt-10 rounded-[16px] bg-[var(--work-agent-bg)] p-4 text-white shadow-[var(--work-agent-shadow)] sm:p-6 lg:p-7">
+    <section className="mt-10 rounded-[16px] bg-[var(--work-agent-bg)] p-4 text-white shadow-[var(--work-agent-dark-shadow)] sm:p-6 lg:p-7">
       <div className="grid gap-6 lg:grid-cols-[minmax(300px,0.92fr)_minmax(0,1.08fr)]">
         <div className="min-w-0">
           <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/10 pb-5">
