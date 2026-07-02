@@ -1360,6 +1360,12 @@ const WorkPage: React.FC<WorkPageProps> = ({
     </footer>
   );
 
+  const AgentDockFooter = () => (
+    <footer className="mt-2 flex min-h-6 items-center justify-center px-2 text-center text-[11px] font-medium leading-5 text-[var(--work-agent-muted)] opacity-62">
+      <span>{agentRespondsInZh ? '继续追问，我会基于作品集补充证据。' : 'Ask a follow-up for more portfolio evidence.'}</span>
+    </footer>
+  );
+
   const renderAgentInputComposer = (placement: 'center' | 'dock') => {
     const isDock = placement === 'dock';
     const inputId = `work-agent-query-${placement}`;
@@ -1597,7 +1603,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
       className={cn(
         'relative isolate -mx-5 overflow-hidden bg-[var(--work-agent-canvas)] px-5 sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0',
         submittedQuery
-          ? 'min-h-[calc(100vh-168px)] pb-[156px] pt-4 sm:pb-[172px] lg:pb-[164px]'
+          ? 'min-h-[calc(100vh-168px)] pb-[184px] pt-4 sm:pb-[200px] lg:pb-[194px]'
           : 'flex min-h-[calc(100svh-156px)] flex-col pb-4 pt-0 sm:min-h-[calc(100svh-124px)] sm:pb-5'
       )}
     >
@@ -1629,9 +1635,10 @@ const WorkPage: React.FC<WorkPageProps> = ({
       </div>
 
       {submittedQuery ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-agent-canvas)] via-[var(--work-agent-canvas)]/97 to-transparent px-4 pb-3 pt-10 sm:px-6 sm:pb-4 lg:pb-5">
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-gradient-to-t from-[var(--work-agent-canvas)] via-[var(--work-agent-canvas)]/97 to-transparent px-4 pb-5 pt-10 sm:px-6 sm:pb-7 lg:pb-8">
           <div className="pointer-events-auto mx-auto w-full max-w-[744px]">
             {renderAgentInputComposer('dock')}
+            <AgentDockFooter />
           </div>
         </div>
       ) : null}
