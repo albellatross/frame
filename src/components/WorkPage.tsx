@@ -71,12 +71,12 @@ interface PortfolioAgentReply {
 const practiceProjectIds = new Set(['p2', 'p12', 'p14']);
 
 const featuredProjectOrder = [
+  'p23',
   'p1',
   'p5',
   'p3',
   'p13',
   'p20',
-  'p21',
   'p17',
   'p15',
   'p12',
@@ -96,10 +96,10 @@ const featuredProjectOrder = [
 ];
 
 const priorityRank = new Map(featuredProjectOrder.map((id, index) => [id, index]));
-const featuredProjectIds = new Set(['p1', 'p5', 'p3', 'p13', 'p20', 'p17', 'p15']);
-const coreCapabilityProjectIds = new Set(['p1', 'p3', 'p5', 'p13', 'p20', 'p21', 'p17', 'p15', 'p12']);
-const archiveFeaturedIds = ['p1', 'p5', 'p3', 'p13'];
-const agentDefaultIds = ['p1', 'p5', 'p3', 'p20'];
+const featuredProjectIds = new Set(['p23', 'p1', 'p5', 'p3', 'p20', 'p17', 'p15']);
+const coreCapabilityProjectIds = new Set(['p23', 'p1', 'p3', 'p5', 'p13', 'p20', 'p17', 'p15', 'p12']);
+const archiveFeaturedIds = ['p23', 'p1', 'p3'];
+const agentDefaultIds = ['p23', 'p1', 'p5', 'p3'];
 
 const capabilitySuggestions: CapabilitySuggestion[] = [
   {
@@ -109,7 +109,7 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'AI interaction designer with Microsoft product UX and research demo experience',
       zh: '会做 AI 交互、微软产品 UX 和研究 demo 的设计师',
     },
-    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p12'],
+    projectIds: ['p23', 'p1', 'p3', 'p20', 'p5', 'p13', 'p12'],
     keywords: ['ai', 'aigc', 'research', 'multimodal', 'interaction', 'copilot', '生成式', '多模态', '研究', '交互', '微软'],
   },
   {
@@ -129,7 +129,7 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'designer who can use frontend prototyping and vibe coding to make ideas testable',
       zh: '能用前端原型和 Vibe Coding 把想法做成可测试体验的设计师',
     },
-    projectIds: ['p21', 'p20', 'p3', 'p5'],
+    projectIds: ['p20', 'p3', 'p5'],
     keywords: ['vibe', 'coding', 'frontend', 'prototype', 'react', 'h5', '前端', '原型', '可运行', '小游戏'],
   },
   {
@@ -159,12 +159,13 @@ const capabilitySuggestions: CapabilitySuggestion[] = [
       en: 'designer with Microsoft product and research experience across Copilot, Office, and MSRA demos',
       zh: '有 Copilot、Office 和 MSRA 研究 demo 经验的微软设计师',
     },
-    projectIds: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
+    projectIds: ['p23', 'p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
     keywords: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '研究院', 'office'],
   },
 ];
 
 const projectSearchHints: Record<string, string[]> = {
+  p23: ['copilot cmc image editing', 'copilot image editing', 'ai image editing', 'selection ux', 'brush size', 'result iteration', 'mobile ux', 'copilot', 'cmc', '图片编辑', '图像编辑', '选区', '画笔', '结果回流', '移动端'],
   p1: ['copilot read aloud', 'word', 'office', 'voice ux', 'conversation design', 'accessibility', 'microsoft', '微软', '语音交互', '朗读'],
   p2: ['keeta', 'user flow', 'mobile app analysis', 'test exercise', 'personal practice', '流程分析', '移动端', '测试题', '练习'],
   p3: ['nuwa', 'outpainting', 'long video', 'trajectory', 'multimodal ai', 'generative ai', 'research demo', '多模态', '生成式 ai', '研究 demo'],
@@ -185,13 +186,12 @@ const projectSearchHints: Record<string, string[]> = {
   p18: ['fera', 'branding', 'identity', 'visual design', '品牌', '识别', '视觉'],
   p19: ['profiltubi', 'rebranding', 'group work', 'identity', 'brand system', '品牌重塑', '视觉识别'],
   p20: ['rodin diffusion', '3d avatar', '3d generation', 'microsoft research', 'research demo', 'ai interaction', '3d 头像', '三维生成', '研究 demo'],
-  p21: ['lantern night return', 'spring festival', 'lantern festival', 'h5 game', 'vibe coding', 'frontend prototype', '元宵', '春节', '小游戏'],
   p22: ['probts', 'time series', 'probabilistic time series', 'visual identity', 'logo guideline', 'research brand', 'msra', '概率时间序列', '视觉识别', 'logo 规范', '研究品牌'],
 };
 
 const projectContextHints: Record<string, string[]> = {
+  p23: ['stca', 'stac', 'microsoft stca', 'copilot', 'cmc', 'image editing', 'ai editing', '微软 stca', '微软产品', '图片编辑'],
   p1: ['stca', 'stac', 'microsoft stca', 'copilot', 'office', '微软 stca', '微软产品'],
-  p21: ['stca', 'stac', 'microsoft stca', 'lantern night return', 'h5', 'prototype', '元宵夜归人', '节日 h5'],
   p3: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
   p4: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
   p5: ['msra', 'microsoft research asia', '微软亚洲研究院', '研究院项目'],
@@ -215,6 +215,7 @@ const projectContextHints: Record<string, string[]> = {
 };
 
 const projectKinds: Record<string, LocalizedText> = {
+  p23: { en: 'AI Image Editing UX', zh: 'AI 图像编辑 UX' },
   p1: { en: 'AI Product UX', zh: 'AI 产品 UX' },
   p2: { en: 'Flow Analysis Practice', zh: '流程分析练习' },
   p3: { en: 'AI Research Demo', zh: 'AI 研究 Demo' },
@@ -240,6 +241,7 @@ const projectKinds: Record<string, LocalizedText> = {
 };
 
 const projectDisplayTitles: Record<string, LocalizedText> = {
+  p23: { en: 'Copilot CMC Image Editing', zh: 'Copilot CMC 图像编辑' },
   p1: { en: 'Copilot Read Aloud', zh: 'Copilot 朗读体验' },
   p2: { en: 'Keeta User Flow', zh: 'Keeta 用户流程' },
   p3: { en: 'NUWA Series', zh: 'NUWA 系列研究 Demo' },
@@ -265,6 +267,10 @@ const projectDisplayTitles: Record<string, LocalizedText> = {
 };
 
 const projectTeasers: Record<string, LocalizedText> = {
+  p23: {
+    en: 'Turns Copilot image editing into a controllable where-plus-what flow.',
+    zh: '把 Copilot 图像编辑整理成可控的“改哪里 + 改什么”流程。',
+  },
   p1: {
     en: 'Turns Copilot voice control into a readable Office workflow.',
     zh: '把 Copilot 语音控制转成清晰的 Office 工作流。',
@@ -356,6 +362,10 @@ const projectTeasers: Record<string, LocalizedText> = {
 };
 
 const agentReasons: Record<string, LocalizedText> = {
+  p23: {
+    en: 'Direct evidence for Copilot image editing, selection UX, brush control, and result iteration.',
+    zh: '直接证明 Copilot 图像编辑、选区 UX、画笔控制和结果迭代能力。',
+  },
   p1: {
     en: 'Direct evidence for Copilot voice UX, recovery states, and Office context.',
     zh: '直接证明 Copilot 语音 UX、恢复状态和 Office 场景能力。',
@@ -399,6 +409,10 @@ const agentReasons: Record<string, LocalizedText> = {
 };
 
 const projectSkillChips: Record<string, LocalizedText[]> = {
+  p23: [
+    { en: 'Copilot', zh: 'Copilot' },
+    { en: 'Image editing', zh: '图像编辑' },
+  ],
   p1: [
     { en: 'Microsoft', zh: '微软' },
     { en: 'Voice UX', zh: '语音 UX' },
@@ -444,15 +458,15 @@ const projectSkillChips: Record<string, LocalizedText[]> = {
 const intentBoosters = [
   {
     terms: ['ai', 'aigc', 'generative', 'research', 'multimodal', 'model', 'demo', 'ai product', 'ai产品', '生成式', '生成式 ai', '人工智能', '多模态', '研究', '研究 demo', '研究demo', '技术 demo', '模型', '模型能力'],
-    ids: ['p3', 'p20', 'p5', 'p13', 'p15', 'p17', 'p1', 'p12'],
+    ids: ['p23', 'p3', 'p20', 'p5', 'p13', 'p15', 'p17', 'p1', 'p12'],
   },
   {
     terms: ['interaction', 'ux', 'product', 'flow', 'prototype', 'control', 'writing', 'communication', '交互', '用户体验', '产品体验', '体验', '流程', '原型', '控制', '输入', '书写', '交流'],
-    ids: ['p1', 'p3', 'p20', 'p21', 'p5', 'p13', 'p12', 'p14', 'p4'],
+    ids: ['p23', 'p1', 'p3', 'p20', 'p5', 'p13', 'p12', 'p14', 'p4'],
   },
   {
     terms: ['microsoft', 'office', 'copilot', 'stca', 'msra', '微软', '微软经验', '微软项目', '研究院', '亚洲研究院', '语音'],
-    ids: ['p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
+    ids: ['p23', 'p1', 'p3', 'p20', 'p5', 'p13', 'p6', 'p12', 'p22'],
   },
   {
     terms: ['visual', 'brand', 'branding', 'packaging', 'identity', 'graphic', 'poster', '视觉', '视觉系统', '设计系统', '品牌', '包装', '平面', '海报'],
@@ -464,11 +478,11 @@ const intentBoosters = [
   },
   {
     terms: ['vibe', 'coding', 'frontend', 'h5', 'game', 'festival', 'lantern', 'spring', '前端', '可运行', '互动原型', '小游戏', '节日', '元宵', '春节'],
-    ids: ['p21', 'p20', 'p3', 'p5'],
+    ids: ['p20', 'p3', 'p5'],
   },
   {
     terms: ['mobile', 'app', 'journey', 'analysis', 'exercise', 'test', '移动端', '路径', '分析', '测试题', '练习'],
-    ids: ['p2', 'p4', 'p14', 'p21'],
+    ids: ['p23', 'p2', 'p4', 'p14'],
   },
   {
     terms: ['chinese', 'bilingual', 'writing', 'communication', 'storytelling', '中文', '中英', '中英文', '中文交流', '写作', '文案', '沟通', '叙事', '讲述'],
@@ -479,7 +493,7 @@ const intentBoosters = [
 const phraseIntentBoosters = [
   {
     terms: ['microsoft product ux', 'office', '微软产品', '微软设计师', '语音'],
-    ids: ['p1', 'p3', 'p20', 'p5', 'p13'],
+    ids: ['p23', 'p1', 'p3', 'p20', 'p5', 'p13'],
     weight: 8,
   },
   {
@@ -495,6 +509,7 @@ const phraseIntentBoosters = [
 ];
 
 const namedProjectBoosters = [
+  { terms: ['copilot cmc', 'copilot image editing', 'cmc image editing', 'image editing', 'selection ux', 'brush size', '图片编辑', '图像编辑', '选区', '画笔'], id: 'p23', weight: 24 },
   { terms: ['copilot', 'read aloud', 'office voice', '朗读', '语音阅读'], id: 'p1', weight: 24 },
   { terms: ['rd-agent', 'rd agent', 'research workflow', '科研工作流'], id: 'p5', weight: 20 },
   { terms: ['nuwa', 'outpainting', 'trajectory'], id: 'p3', weight: 20 },
@@ -510,6 +525,8 @@ const queryTermAliases = [
   'aigc',
   'b2b',
   'copilot',
+  'cmc',
+  'image editing',
   'h5',
   'msra',
   'office',
@@ -528,6 +545,10 @@ const queryTermAliases = [
   '交互',
   '语音',
   '朗读',
+  '图片编辑',
+  '图像编辑',
+  '选区',
+  '画笔',
   '微软',
   '微软亚洲研究院',
   '研究院',
@@ -862,9 +883,9 @@ const WorkPage: React.FC<WorkPageProps> = ({
         id: 'stca',
         title: 'Microsoft STCA',
         subtitle: isZh
-          ? 'Copilot 语音阅读体验和 STCA 阶段的交互原型项目。'
-          : 'Copilot voice UX and interaction prototypes from the STCA stage.',
-        projectIds: ['p1', 'p21'],
+          ? 'Copilot 图像编辑和语音阅读体验项目。'
+          : 'Copilot image editing and voice UX projects.',
+        projectIds: ['p23', 'p1'],
       },
       {
         id: 'msra',
@@ -872,7 +893,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
         subtitle: isZh
           ? '研究 Demo、Agent 工作流、AI 伴侣、视觉系统、周年视觉和插画项目。'
           : 'Research demos, agent workflows, AI companion work, visual systems, anniversary visuals, and illustration.',
-        projectIds: ['p5', 'p3', 'p13', 'p20', 'p17', 'p15', 'p6', 'p4', 'p8', 'p22'],
+        projectIds: ['p5', 'p13', 'p17', 'p15', 'p6', 'p4', 'p8', 'p22', 'p3', 'p20'],
       },
       {
         id: 'design-tests',

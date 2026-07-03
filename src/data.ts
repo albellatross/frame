@@ -5,6 +5,11 @@ const FIGMA_READ_ALOUD_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/read-aloud/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
+const FIGMA_COPILOT_CMC_IMAGE_EDITING_SLIDES = Array.from(
+  { length: 12 },
+  (_, index) => `/projects/figma-portfolio/copilot-cmc-image-editing/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
 const FIGMA_KEETA_SLIDES = Array.from(
   { length: 6 },
   (_, index) => `/projects/figma-portfolio/keeta-user-flow/page-${String(index + 1).padStart(2, '0')}.png`
@@ -53,6 +58,11 @@ const FIGMA_MSRA_25TH_SLIDES = Array.from(
 const FIGMA_PROBTS_SLIDES = Array.from(
   { length: 7 },
   (_, index) => `/projects/figma-portfolio/probts/page-${String(index + 1).padStart(2, '0')}.png`
+);
+
+const FIGMA_RODIN_DIFFUSION_SLIDES = Array.from(
+  { length: 9 },
+  (_, index) => `/projects/figma-portfolio/rodin-diffusion/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
 const behanceOriginal = (projectSlug: string, index: number, extension = 'jpg') =>
@@ -105,7 +115,7 @@ const FIGMA_ILLUSTRATION_SLIDES = Array.from(
   (_, index) => `/projects/figma-portfolio/illustration-works/page-${String(index + 1).padStart(2, '0')}.png`
 );
 
-const RODIN_DIFFUSION_COVER_IMAGE = '/projects/rodin-diffusion/original-site/hero-cover-01.jpg';
+const RODIN_DIFFUSION_COVER_IMAGE = '/projects/figma-portfolio/rodin-diffusion/page-01.png';
 const LANTERN_HOMECOMING_COVER_IMAGE = '/projects/lantern-homecoming/placeholder-cover.svg';
 
 // ===== CAREER TIMELINE - English =====
@@ -118,7 +128,7 @@ export const CAREER_TIMELINE_EN: CareerStage[] = [
     oneLiner: 'Designing Copilot and interaction prototypes across Office voice UX and lightweight H5 experiences.',
     skills: ['Copilot Voice', 'Office UX', 'Interaction Prototype', 'H5 Flow'],
     image: '/timeline-scenes/STAC.webp',
-    relatedProjectIds: ['p1', 'p21']
+    relatedProjectIds: ['p23', 'p1']
   },
   {
     id: 'c2',
@@ -162,7 +172,7 @@ export const CAREER_TIMELINE_ZH: CareerStage[] = [
     oneLiner: '围绕 Copilot、Office 语音体验和轻量 H5 交互原型推进产品设计。',
     skills: ['Copilot Voice', 'Office UX', '交互原型', 'H5 流程'],
     image: '/timeline-scenes/STAC.webp',
-    relatedProjectIds: ['p1', 'p21']
+    relatedProjectIds: ['p23', 'p1']
   },
   {
     id: 'c2',
@@ -476,6 +486,41 @@ export const PROJECTS_EN: Project[] = [
     ]
   },
   {
+    id: 'p23',
+    title: 'Copilot CMC Image Editing',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: 'Lead UX & Product Designer',
+    shortDescription: 'AI image editing flow for Copilot CMC, connecting selection, prompt input, and result iteration in chat.',
+    coverImage: '/projects/figma-portfolio/copilot-cmc-image-editing/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_COPILOT_CMC_IMAGE_EDITING_SLIDES,
+    },
+    tags: ['Copilot', 'AI Image Editing', 'Selection UX', 'Mobile UX', 'Brush Interaction', 'Result Iteration'],
+    externalLinks: {
+      behance: 'https://www.figma.com/design/1MdXjP52UK8cwvVo6VgzHD/Portfolio?node-id=635-37806&m=dev'
+    },
+    acts: {
+      act1: {
+        title: 'Where + What Split',
+        content: 'Designed an image editing flow where users mark the area to change and describe what the edit should become.'
+      },
+      act2: {
+        title: 'Selection-Based Editing',
+        content: 'Moved editing entry points into image cards and detail views, then used a clean canvas, brush size, and visible selection states to reduce prompt burden.',
+        decisionPoints: ['Image card and detail-page entry', 'Clean editing canvas', 'Purple mask and dashed boundary', 'Brush size control', 'Prompt bound to selection']
+      },
+      act3: {
+        title: 'Contextual Result Loop',
+        content: 'Kept edited results in the same Copilot conversation so users could continue editing, reuse, download, or give feedback without restarting.',
+        impact: 'AI Image Editing Flow'
+      }
+    }
+  },
+  {
     id: 'p2',
     title: 'Keeta User Flow Analysis & Design Optimization',
     category: 'B-Side',
@@ -764,34 +809,32 @@ export const PROJECTS_EN: Project[] = [
     platform: 'Web',
     year: '2022',
     role: 'Interaction Designer / Web Experience Designer / Front-end Developer',
-    shortDescription: 'A Microsoft Research case study for turning 3D avatar generation into a readable, explorable web demo.',
+    shortDescription: 'A PPT-sourced case study for presenting 3D avatar generation, interaction ideas, and web page states.',
     coverImage: RODIN_DIFFUSION_COVER_IMAGE,
-    coverDisplay: 'cover',
-    coverAspectRatio: 1,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      en: FIGMA_RODIN_DIFFUSION_SLIDES,
+      zh: FIGMA_RODIN_DIFFUSION_SLIDES,
+    },
     tags: ['Microsoft Research', '3D Avatar', 'Diffusion Model', 'Research Demo UX', 'Front-end'],
     externalLinks: {
-      live: 'https://3d-avatar-diffusion.microsoft.com/'
+      behance: 'https://www.figma.com/design/lscl0BysjMvjXiMwVrZQhM/PPT?node-id=82-22&m=dev'
     },
-    caseSections: [
-      {
-        type: 'text',
-        title: 'RODIN Diffusion'
-      }
-    ],
     acts: {
       act1: {
-        title: 'Research Demo Entry',
-        content: 'Started the page from visible 3D avatar results, then guided readers into portrait input, text prompts, viewer behavior, and semantic editing.'
+        title: 'PPT Source Case',
+        content: 'Organized the original PPT pages as the source presentation for RODIN Diffusion.'
       },
       act2: {
-        title: 'Interaction Translation',
-        content: 'Mapped a complex 3D generation model into familiar web actions: choose an input, inspect a turntable, compare mesh, and click edit chips.',
-        decisionPoints: ['Result-first hero', 'Portrait / text entry modes', '3D viewer evidence', 'Text-guided editing chips']
+        title: '3D Avatar Interaction Ideas',
+        content: 'Presented grid, color, portrait-guided creation, text-guided creation, and avatar editing page states from the PPT.',
+        decisionPoints: ['PPT source order', 'Portrait-guided avatar creation', 'Text-guided avatar creation', 'Text-guided avatar editing']
       },
       act3: {
-        title: 'Portfolio Case Study',
-        content: 'Rebuilt the case around real official assets and a precomputed demo simulator so hiring readers can see the interaction logic without running the model.',
-        impact: '3D AI Research Demo'
+        title: 'Reader Delivery',
+        content: 'Displayed the original PPT content as exported pages in the portfolio reader.',
+        impact: '9 PPT Pages'
       }
     }
   },
@@ -1692,6 +1735,41 @@ export const PROJECTS_ZH: Project[] = [
     ]
   },
   {
+    id: 'p23',
+    title: 'Copilot CMC Image Editing',
+    category: 'C-Side',
+    platform: 'Web',
+    year: '2025',
+    role: 'Lead UX & Product Designer',
+    shortDescription: 'Copilot / CMC 的 AI 图像编辑体验设计：把选区、编辑描述和结果回流整理成连续的聊天编辑流程。',
+    coverImage: '/projects/figma-portfolio/copilot-cmc-image-editing/page-01.png',
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      zh: FIGMA_COPILOT_CMC_IMAGE_EDITING_SLIDES,
+    },
+    tags: ['Copilot', 'AI 图像编辑', '选区 UX', '移动端 UX', '画笔交互', '结果迭代'],
+    externalLinks: {
+      behance: 'https://www.figma.com/design/1MdXjP52UK8cwvVo6VgzHD/Portfolio?node-id=635-37806&m=dev'
+    },
+    acts: {
+      act1: {
+        title: '拆开 where 和 what',
+        content: '为 Copilot / CMC 设计图像编辑流程：用户先圈出要修改的区域，再输入希望改成什么。'
+      },
+      act2: {
+        title: '基于选区的图片编辑',
+        content: '从聊天图片卡片和图片详情页进入编辑，用干净画布、brush size 和可见选区状态降低 prompt 负担。',
+        decisionPoints: ['图片卡片与详情页入口', '干净的编辑画布', '紫色蒙层与虚线边界', 'Brush size 控制', 'Prompt 与选区绑定']
+      },
+      act3: {
+        title: '结果回到对话上下文',
+        content: '编辑结果保留在同一条 Copilot 对话里，用户可以继续修改、复用、下载或反馈，不需要重新开始。',
+        impact: 'AI 图像编辑流程'
+      }
+    }
+  },
+  {
     id: 'p2',
     title: 'Keeta 用户流分析与设计优化',
     category: 'B-Side',
@@ -1979,34 +2057,32 @@ export const PROJECTS_ZH: Project[] = [
     platform: 'Web',
     year: '2022',
     role: '交互设计师 / Web 体验设计师 / 前端开发',
-    shortDescription: '把 Microsoft Research 的 3D avatar generation 研究整理成可读、可浏览、可交互的网页 demo。',
+    shortDescription: '来自 PPT 源稿的 RODIN Diffusion 案例，展示 3D Avatar 生成、交互想法和网页状态。',
     coverImage: RODIN_DIFFUSION_COVER_IMAGE,
-    coverDisplay: 'cover',
-    coverAspectRatio: 1,
+    coverDisplay: 'contain',
+    coverAspectRatio: 16 / 9,
+    slideSets: {
+      en: FIGMA_RODIN_DIFFUSION_SLIDES,
+      zh: FIGMA_RODIN_DIFFUSION_SLIDES,
+    },
     tags: ['Microsoft Research', '3D Avatar', 'Diffusion Model', 'Research Demo UX', '前端实现'],
     externalLinks: {
-      live: 'https://3d-avatar-diffusion.microsoft.com/'
+      behance: 'https://www.figma.com/design/lscl0BysjMvjXiMwVrZQhM/PPT?node-id=82-22&m=dev'
     },
-    caseSections: [
-      {
-        type: 'text',
-        title: 'RODIN Diffusion'
-      }
-    ],
     acts: {
       act1: {
-        title: 'Research Demo 入口',
-        content: '页面先展示可见的 3D avatar 结果，再引导读者进入 portrait input、text prompt、viewer 和 semantic editing。'
+        title: 'PPT 源稿案例',
+        content: '按原始 PPT 页面顺序整理 RODIN Diffusion 的展示内容。'
       },
       act2: {
-        title: '把模型能力转成界面动作',
-        content: '把复杂的 3D 生成能力映射成用户熟悉的网页动作：选择输入、检查转台、对比 mesh、点击编辑 chip。',
-        decisionPoints: ['结果先行的 hero', 'Portrait / Text 双入口', '3D viewer 证据', '语义编辑 chip']
+        title: '3D Avatar 交互想法',
+        content: '展示 PPT 中的 grid、色彩、portrait-guided creation、text-guided creation 和 avatar editing 页面状态。',
+        decisionPoints: ['PPT 源稿顺序', 'Portrait-guided avatar creation', 'Text-guided avatar creation', 'Text-guided avatar editing']
       },
       act3: {
-        title: 'Portfolio Case Study',
-        content: '用官网真实素材和预生成 demo simulator 重构作品集页面，让招聘方不运行模型也能看到交互逻辑。',
-        impact: '3D AI Research Demo'
+        title: 'Reader 呈现',
+        content: '在作品集阅读器中展示从 PPT 导出的原始页面。',
+        impact: '9 页 PPT 源稿'
       }
     }
   },

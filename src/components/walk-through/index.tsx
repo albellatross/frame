@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import LanguageToggle from '../LanguageToggle';
 import ExplorationGallery from './ExplorationGallery';
@@ -79,8 +79,8 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
     ? `pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 text-center ${zhWalkthroughType.micro} text-[11px] text-white/90 sm:bottom-10`
     : 'pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 text-center font-mono text-[10px] uppercase tracking-[0.32em] text-white/90 sm:bottom-10';
   const backButtonClass = language === 'zh'
-    ? `flex items-center gap-2 rounded-full bg-white/70 px-3.5 py-2.5 ${zhWalkthroughType.ui} text-[14px] text-dark-brown shadow-button backdrop-blur-md hover:bg-white/85`
-    : 'flex items-center gap-2 rounded-full bg-white/70 px-3 py-2 font-sans text-xs font-medium text-dark-brown shadow-button backdrop-blur-md hover:bg-white/85';
+    ? `inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 ${zhWalkthroughType.ui} text-[14px] font-medium text-dark-brown/70 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-dark-brown active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8fb7ff]`
+    : 'inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 font-sans text-sm font-medium text-dark-brown/70 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-dark-brown active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8fb7ff]';
   const navButtonClass = (isActive: boolean) => language === 'zh'
     ? `rounded-full px-4 py-2.5 ${zhWalkthroughType.ui} text-[14px] transition-all ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`
     : `rounded-full px-3 py-2 font-sans text-[13px] transition-all ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`;
@@ -234,8 +234,7 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
           onClick={onClose}
           className={backButtonClass}
         >
-          <ArrowLeft size={13} />
-          <span>{language === 'zh' ? '返回主页' : 'Back Home'}</span>
+          {language === 'zh' ? '首页' : 'Home'}
         </motion.button>
       </div>
 

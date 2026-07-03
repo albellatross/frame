@@ -14,6 +14,8 @@ import WalkThrough from './components/walk-through';
 
 type Page = 'home' | 'work' | 'profile';
 
+const HIDDEN_WORK_PROJECT_IDS = new Set(['p21']);
+
 const hasPortfolioReaderPages = (project: Project) =>
   Boolean(project.slideSets?.zh?.length || project.slideSets?.en?.length || project.slides?.length || project.caseSections?.length);
 
@@ -22,7 +24,7 @@ const AppContent: React.FC = () => {
   
   // 根据语言选择数据
   const PROJECTS = language === 'zh' ? PROJECTS_ZH : PROJECTS_EN;
-  const WORK_PROJECTS = PROJECTS.filter(hasPortfolioReaderPages);
+  const WORK_PROJECTS = PROJECTS.filter((project) => hasPortfolioReaderPages(project) && !HIDDEN_WORK_PROJECT_IDS.has(project.id));
   const CAREER_TIMELINE = language === 'zh' ? CAREER_TIMELINE_ZH : CAREER_TIMELINE_EN;
 
   // State
@@ -44,12 +46,6 @@ const AppContent: React.FC = () => {
   const handleProjectClickById = (id: string) => {
     const project = WORK_PROJECTS.find(p => p.id === id);
     if (project) setActiveProject(project);
-  };
-
-  const handleViewAllWorksFromTimeline = () => {
-    setWorkViewMode('agent');
-    setCurrentPage('work');
-    window.scrollTo(0, 0);
   };
 
   const handleWorkHome = useCallback(() => {
@@ -89,7 +85,6 @@ const AppContent: React.FC = () => {
             stages={CAREER_TIMELINE}
             allProjects={WORK_PROJECTS}
             onProjectClick={handleProjectClickById}
-            onViewAllWorks={handleViewAllWorksFromTimeline}
           />
         </>
       )}

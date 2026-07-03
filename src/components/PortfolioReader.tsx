@@ -22,9 +22,31 @@ interface PortfolioReaderProps {
   scrollRootRef?: React.RefObject<HTMLDivElement | null>;
 }
 
+interface PageVideoOverlay {
+  src: string;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  borderRadius: number;
+}
+
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 const isPdf = (src: string) => src.split('?')[0].toLowerCase().endsWith('.pdf');
+
+const getPageVideoOverlay = (project: Project, page: string): PageVideoOverlay | null => {
+  if (project.id !== 'p23' || !page.includes('/copilot-cmc-image-editing/page-05.png')) return null;
+
+  return {
+    src: '/projects/figma-portfolio/copilot-cmc-image-editing/desktop-01.mp4',
+    left: (246 / 1920) * 100,
+    top: (45 / 1080) * 100,
+    width: (1428 / 1920) * 100,
+    height: (990 / 1080) * 100,
+    borderRadius: (8 / 1920) * 100,
+  };
+};
 
 const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh, onClose, scrollRootRef }) => {
   const readerRef = useRef<HTMLDivElement>(null);
@@ -259,6 +281,7 @@ const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh,
             {uniquePages.map((page, index) => {
               const src = assetUrl(page);
               const pdf = isPdf(page);
+              const videoOverlay = getPageVideoOverlay(project, page);
 
               return (
                 <section
@@ -282,14 +305,37 @@ const PortfolioReader: React.FC<PortfolioReaderProps> = ({ project, pages, isZh,
                         </a>
                       </object>
                     ) : (
-                      <img
-                        src={src}
-                        alt={`${project.title} ${isZh ? '第' : 'page '}${index + 1}${isZh ? '页' : ''}`}
-                        className="block h-auto w-full select-none"
-                        loading={index < 1 ? 'eager' : 'lazy'}
-                        decoding="async"
-                        draggable={false}
-                      />
+                      <div className="relative">
+                        <img
+                          src={src}
+                          alt={`${project.title} ${isZh ? '第' : 'page '}${index + 1}${isZh ? '页' : ''}`}
+                          className="block h-auto w-full select-none"
+                          loading={index < 1 ? 'eager' : 'lazy'}
+                          decoding="async"
+                          draggable={false}
+                        />
+                        {videoOverlay ? (
+                          <div
+                            className="absolute z-10 overflow-hidden border border-black/10 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.14)]"
+                            style={{
+                              left: `${videoOverlay.left}%`,
+                              top: `${videoOverlay.top}%`,
+                              width: `${videoOverlay.width}%`,
+                              height: `${videoOverlay.height}%`,
+                              borderRadius: `${videoOverlay.borderRadius}%`,
+                            }}
+                          >
+                            <video
+                              src={assetUrl(videoOverlay.src)}
+                              controls
+                              playsInline
+                              preload="metadata"
+                              className="h-full w-full bg-black object-cover"
+                              aria-label={isZh ? 'Copilot CMC 桌面交互录屏' : 'Copilot CMC desktop interaction recording'}
+                            />
+                          </div>
+                        ) : null}
+                      </div>
                     )}
                   </div>
                 </section>

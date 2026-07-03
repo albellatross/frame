@@ -15,20 +15,26 @@
     {
       "id": "profile-ai-ux",
       "title": "AI product experience positioning",
-      "projectIds": ["p1", "p3", "p5", "p13", "p20", "p21"],
-      "content": "Geli Guo is a UI/UX designer with a background in brand design, visual design, and AI product experience. Her current work focuses on Copilot, Office voice UX, AI research demos, generative AI tools, and agent workflows. The main portfolio argument is that she can turn complex AI capability into clear product experiences that users can understand, control, test, and discuss with teams. Strongest evidence includes Copilot Read Aloud, RD-Agent, TaskMatrix.AI, NUWA Series, RODIN Diffusion, and Lantern Night Return."
+      "projectIds": ["p23", "p1", "p3", "p5", "p13", "p20"],
+      "content": "Geli Guo is a UI/UX designer with a background in brand design, visual design, and AI product experience. Her current work focuses on Copilot, AI image editing, Office voice UX, AI research demos, generative AI tools, and agent workflows. The main portfolio argument is that she can turn complex AI capability into clear product experiences that users can understand, control, test, and discuss with teams. Strongest evidence includes Copilot CMC Image Editing, Copilot Read Aloud, RD-Agent, TaskMatrix.AI, NUWA Series, and RODIN Diffusion."
     },
     {
       "id": "career-microsoft",
       "title": "Microsoft STCA and Microsoft Research Asia experience",
-      "projectIds": ["p1", "p3", "p5", "p6", "p13", "p17", "p20", "p21", "p22"],
-      "content": "At Microsoft STCA from February 2025 to present, Geli works on Copilot and Office product UX, including real-time voice interaction for Word Read Aloud and lightweight H5 interaction prototypes. From June 2022 to February 2025 at Microsoft Research Asia, she translated AI research capabilities into demos, agent workflows, visual systems, and research communication projects. The MSRA body of work includes RD-Agent, NUWA Series, TaskMatrix.AI Storytelling Agent, RODIN Diffusion, BatteryML, Value Compass, MSRA 25th Anniversary, ReMe, and ProbTS."
+      "projectIds": ["p23", "p1", "p3", "p5", "p6", "p13", "p17", "p20", "p22"],
+      "content": "At Microsoft STCA from February 2025 to present, Geli works on Copilot and Office product UX, including AI image editing for Copilot CMC and real-time voice interaction for Word Read Aloud. From June 2022 to February 2025 at Microsoft Research Asia, she translated AI research capabilities into demos, agent workflows, visual systems, and research communication projects. The MSRA body of work includes RD-Agent, NUWA Series, TaskMatrix.AI Storytelling Agent, RODIN Diffusion, BatteryML, Value Compass, MSRA 25th Anniversary, ReMe, and ProbTS."
     },
     {
       "id": "p1-copilot-read-aloud",
       "title": "Copilot Read Aloud",
       "projectIds": ["p1"],
       "content": "Copilot Read Aloud is an AI product UX and voice interaction project for Office documents. The design goal was to move Word Read Aloud from passive listening into active conversational reading. Users can ask questions, request summaries, and resume reading without losing context. Geli's role covered UI/UX design, conversation design, accessibility thinking, and cross-timezone collaboration with design and engineering teams. Interview evidence: voice UX, multimodal interaction, accessibility, AI response state design, and productizing AI inside a mature productivity surface."
+    },
+    {
+      "id": "p23-copilot-cmc-image-editing",
+      "title": "Copilot CMC Image Editing",
+      "projectIds": ["p23"],
+      "content": "Copilot CMC Image Editing is an AI product UX project for editing generated or uploaded images inside Copilot chat. The design separates where and what: users mark the image area with a brush selection, then describe the intended edit in text. Geli's work covers image-card and detail-page entry points, clean editing canvas states, purple mask and dashed selection boundaries, brush size control, prompt-to-selection binding, mobile exploration, and keeping edited results in the same conversation for continued iteration. Interview evidence: Copilot product UX, AI image editing, selection UX, multimodal input, result iteration, and reducing prompt burden through direct manipulation."
     },
     {
       "id": "p5-rd-agent",
@@ -58,19 +64,13 @@
       "id": "p20-rodin-diffusion",
       "title": "RODIN Diffusion",
       "projectIds": ["p20"],
-      "content": "RODIN Diffusion is a 3D AI avatar and character generation research demo. The project required turning 3D generation capability into a usable web experience. Geli's work emphasizes clear inputs, previewing generated states, and presenting research output so non-technical visitors can understand what the model can do. Interview evidence: 3D AI demo, generative interface design, research-to-product translation, and visual storytelling for AI capability."
+      "content": "RODIN Diffusion is a 3D AI avatar and character generation research demo presented from the original PPT source pages. The case shows project overview, design idea, grid and color system, portrait-guided avatar creation, text-guided avatar creation, and text-guided avatar editing. Interview evidence: 3D AI demo, source presentation craft, generative interface design, and explaining model capability through concrete web page states."
     },
     {
       "id": "p4-reme",
       "title": "ReMe AI Companion",
       "projectIds": ["p4"],
       "content": "ReMe is an AI conversation product for users with cognitive impairment such as Alzheimer's patients. The design concern is not only task completion but empathy, memory, trust, and quality of life. It is useful evidence when interviewers ask about human-centered AI, sensitive user groups, conversation design, or emotional AI product experience."
-    },
-    {
-      "id": "p21-lantern",
-      "title": "Lantern Night Return",
-      "projectIds": ["p21"],
-      "content": "Lantern Night Return is a lightweight H5 game and interaction prototype connected to the STCA period. Geli restructured the experience into story choices, quiz flow, ending collection, and a train-ticket share artifact. It demonstrates frontend prototyping, vibe coding, fast interaction experiments, and turning a cultural seasonal concept into a testable product experience."
     },
     {
       "id": "p12-baidu-ai-cloud",

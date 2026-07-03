@@ -58,9 +58,6 @@ const translations: Record<Language, Record<string, string>> = {
     'timeline.viewCase': 'View Case Study',
     'timeline.featuredWork': 'Featured Work',
     'timeline.selectedWorks': 'Selected Works',
-    'timeline.viewAllWorks': 'View all works',
-    'timeline.hiddenOne': '1 more project is kept in the work index.',
-    'timeline.hiddenMany': '{count} more projects are kept in the work index.',
     
     // Work Page
     'work.title': 'Work Index.',
@@ -155,9 +152,6 @@ const translations: Record<Language, Record<string, string>> = {
     'timeline.viewCase': '查看案例',
     'timeline.featuredWork': '重点作品',
     'timeline.selectedWorks': '精选项目',
-    'timeline.viewAllWorks': '查看全部作品',
-    'timeline.hiddenOne': '还有 1 个项目收在作品索引里。',
-    'timeline.hiddenMany': '还有 {count} 个项目收在作品索引里。',
     
     // Work Page
     'work.title': '作品索引',

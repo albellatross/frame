@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { CareerStage, Project } from '../types';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { projectCoverAsset, timelineImageAsset } from '../utils/assets';
 
@@ -9,7 +9,6 @@ interface TimelineProps {
   stages: CareerStage[];
   allProjects: Project[];
   onProjectClick: (projectId: string) => void;
-  onViewAllWorks?: () => void;
 }
 
 const getTimelineVisualMeta = (stage: CareerStage, language: 'en' | 'zh') => {
@@ -54,7 +53,7 @@ const getTimelineVisualMeta = (stage: CareerStage, language: 'en' | 'zh') => {
   };
 };
 
-const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick, onViewAllWorks }) => {
+const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStageId, setActiveStageId] = useState<string>(stages[0].id);
   const { t, language } = useLanguage();
@@ -139,7 +138,6 @@ const Timeline: React.FC<TimelineProps> = ({ stages, allProjects, onProjectClick
                   .map((projectId) => allProjects.find((project) => project.id === projectId))
                   .filter((project): project is Project => Boolean(project))}
                 onProjectClick={onProjectClick}
-                onViewAllWorks={onViewAllWorks}
                 onInView={() => setActiveStageId(stage.id)}
                 t={t}
                 index={index}
@@ -159,15 +157,13 @@ const TimelineItem: React.FC<{
   stage: CareerStage; 
   projects: Project[]; 
   onProjectClick: (id: string) => void;
-  onViewAllWorks?: () => void;
   onInView: () => void;
   t: (key: string) => string;
   index: number;
   total: number;
-}> = ({ stage, projects, onProjectClick, onViewAllWorks, onInView, t, index, total }) => {
+}> = ({ stage, projects, onProjectClick, onInView, t, index, total }) => {
   const ref = useRef(null);
   const visibleProjects = projects.slice(0, 2);
-  const hiddenProjectCount = Math.max(projects.length - visibleProjects.length, 0);
   const featuredProject = visibleProjects[0];
   const supportingProjects = visibleProjects.slice(1);
   
@@ -333,24 +329,6 @@ const TimelineItem: React.FC<{
             })}
           </div>
         </div>
-      )}
-
-      {hiddenProjectCount > 0 && onViewAllWorks && (
-        <button
-          type="button"
-          onClick={onViewAllWorks}
-          className="mt-5 inline-flex w-full items-center justify-between gap-4 rounded-lg border border-cream-dark bg-cream-light px-4 py-3 text-left text-sm text-dark-brown transition hover:border-brown hover:bg-white hover:shadow-sm"
-        >
-          <span>
-            <span className="block font-medium">{t('timeline.viewAllWorks')}</span>
-            <span className="mt-1 block text-xs text-warm-gray">
-              {hiddenProjectCount === 1
-                ? t('timeline.hiddenOne')
-                : t('timeline.hiddenMany').replace('{count}', String(hiddenProjectCount))}
-            </span>
-          </span>
-          <ArrowRight size={16} className="shrink-0 text-brown" />
-        </button>
       )}
 
       <div className="flex flex-wrap gap-2 mt-8">
