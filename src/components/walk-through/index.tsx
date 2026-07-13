@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import LanguageToggle from '../LanguageToggle';
 import ExplorationGallery from './ExplorationGallery';
@@ -70,23 +70,19 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
     : ['Welcome', 'AI Garden', 'IP World', 'Daily Sparks', 'Final Frame'];
   const activeNav = chapter >= 0 ? chapter : -1;
   const navTargets = [0, 1, 2, 3, 4];
-  const scrollHintText = chapter === 0
-    ? (language === 'zh' ? '向下滚动开始' : 'SCROLL TO BEGIN')
-    : chapter === 1 || chapter === 3
-    ? (language === 'zh' ? '向下滚动继续' : 'SCROLL TO EXPLORE')
-    : null;
-  const hintClass = language === 'zh'
-    ? `pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 text-center ${zhWalkthroughType.micro} text-[11px] text-white/90 sm:bottom-10`
-    : 'pointer-events-none absolute bottom-8 left-1/2 z-40 -translate-x-1/2 text-center font-mono text-[10px] uppercase tracking-[0.32em] text-white/90 sm:bottom-10';
   const backButtonClass = language === 'zh'
     ? `inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 ${zhWalkthroughType.ui} text-[14px] font-medium text-dark-brown/70 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-dark-brown active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8fb7ff]`
     : 'inline-flex min-h-10 w-fit items-center rounded-full bg-transparent px-2.5 font-sans text-sm font-medium text-dark-brown/70 transition-[background-color,color,transform] duration-200 ease-out hover:bg-white/58 hover:text-dark-brown active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8fb7ff]';
   const navButtonClass = (isActive: boolean) => language === 'zh'
-    ? `rounded-full px-4 py-2.5 ${zhWalkthroughType.ui} text-[14px] transition-all ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`
-    : `rounded-full px-3 py-2 font-sans text-[13px] transition-all ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`;
+    ? `rounded-full px-4 py-2.5 ${zhWalkthroughType.ui} text-[14px] transition-[background-color,color,box-shadow,transform] duration-200 ease-out ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`
+    : `rounded-full px-3 py-2 font-sans text-[13px] transition-[background-color,color,box-shadow,transform] duration-200 ease-out ${isActive ? 'bg-white text-dark-brown shadow-sm' : 'text-neutral-500 hover:text-dark-brown'}`;
   const navNumberClass = language === 'zh'
     ? `mr-1.5 ${zhWalkthroughType.microTight} text-[10px] opacity-60`
     : 'mr-2 font-mono text-[11px] opacity-70';
+  const mobileControlsVisible = chapter >= 0 && !activeExploration;
+  const mobileCheckinProgress = activeNav >= 0 && TOTAL_CHAPTERS > 1
+    ? (activeNav / (TOTAL_CHAPTERS - 1)) * 100
+    : 0;
   const wheelLockedRef = useRef(false);
   const wheelAccumRef = useRef(0);
 
@@ -279,26 +275,6 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
 
 
 
-      <AnimatePresence mode="wait">
-        {scrollHintText && (
-          <motion.div
-            key={scrollHintText}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.35 }}
-            className={hintClass}
-          >
-            <div>{scrollHintText}</div>
-            <motion.div
-              animate={{ y: [0, 7, 0], opacity: [0.65, 1, 0.65] }}
-              transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}
-              className="mx-auto mt-2 h-8 w-px bg-white/70"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Chapter content */}
       <AnimatePresence mode="wait" custom={direction}>
         {chapter === -1 && (
@@ -391,6 +367,90 @@ const WalkThrough: React.FC<WalkThroughProps> = ({ onClose, onExploreWork, onOpe
           </motion.div>
         )}
       </AnimatePresence>
+
+      {mobileControlsVisible && (
+        <div
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-[10020] bg-gradient-to-t from-[#2f2112]/14 via-[#2f2112]/3 to-transparent px-3 pt-3 sm:hidden"
+          style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="pointer-events-auto mx-auto max-w-[430px] rounded-[18px] bg-[rgba(255,250,238,0.8)] px-2 py-1.5 shadow-[0_0_0_1px_rgba(255,248,232,0.66),0_8px_20px_rgba(54,34,15,0.13),inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-xl">
+            <div className="grid grid-cols-[40px_minmax(0,1fr)_40px] items-center gap-2">
+              <button
+                type="button"
+                onClick={prev}
+                disabled={Boolean(transitionVideo)}
+                className="grid h-10 w-10 place-items-center rounded-full bg-[#fff8ec]/76 text-[#4a2c12] shadow-[0_0_0_1px_rgba(92,63,32,0.1),0_6px_14px_rgba(62,39,18,0.08)] transition-[background-color,opacity,transform] duration-200 ease-out active:scale-[0.96] disabled:opacity-35"
+                aria-label={language === 'zh' ? '上一页' : 'Previous chapter'}
+              >
+                <ChevronLeft size={17} />
+              </button>
+
+              <div className="min-w-0">
+                <div
+                  className="relative flex h-10 items-center justify-between px-1"
+                  aria-label={`${language === 'zh' ? '章节打卡时间轴' : 'Chapter check-in timeline'}: ${String(chapter + 1).padStart(2, '0')} / ${String(TOTAL_CHAPTERS).padStart(2, '0')} ${navItems[chapter]}`}
+                >
+                  <div className="absolute left-5 right-5 top-1/2 h-[2px] -translate-y-1/2 overflow-hidden rounded-full bg-[repeating-linear-gradient(90deg,rgba(123,93,54,0.26)_0,rgba(123,93,54,0.26)_5px,transparent_5px,transparent_10px)]" aria-hidden="true">
+                    <span
+                      className="block h-full rounded-full bg-[#3b230e]/66 transition-[width] duration-300 ease-out"
+                      style={{ width: `${mobileCheckinProgress}%` }}
+                    />
+                  </div>
+                  {navTargets.map((target, index) => {
+                    const isCurrent = activeNav === index;
+                    const isCompleted = activeNav > index;
+
+                    return (
+                      <button
+                        key={target}
+                        type="button"
+                        onClick={() => goToChapter(target)}
+                        disabled={Boolean(transitionVideo)}
+                        className="relative z-10 grid h-10 w-9 place-items-center rounded-full transition-[opacity,transform] duration-200 ease-out active:scale-[0.96] disabled:opacity-35"
+                        aria-label={`${language === 'zh' ? '前往' : 'Go to'} ${navItems[index]}`}
+                        aria-current={isCurrent ? 'page' : undefined}
+                      >
+                        {isCurrent ? (
+                          <span className="grid h-7 w-7 -rotate-3 place-items-center rounded-[8px] bg-[#3b230e] font-mono text-[10px] text-[#fff7e8] shadow-[0_0_0_3px_rgba(255,249,236,0.78),0_8px_18px_rgba(62,39,18,0.2)]">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                        ) : isCompleted ? (
+                          <span className="grid h-5 w-5 place-items-center rounded-full bg-[#8a643c] text-[#fff7e8] shadow-[0_0_0_2px_rgba(255,249,236,0.72)]">
+                            <Check size={12} strokeWidth={2.4} />
+                          </span>
+                        ) : (
+                          <span className="h-3.5 w-3.5 rounded-full bg-[#fffaf0] shadow-[0_0_0_1px_rgba(92,63,32,0.18),0_4px_10px_rgba(62,39,18,0.08)]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {chapter < TOTAL_CHAPTERS - 1 ? (
+                <button
+                  type="button"
+                  onClick={next}
+                  disabled={Boolean(transitionVideo)}
+                  className="grid h-10 w-10 place-items-center rounded-full bg-[#3b230e] text-[#fff7e8] shadow-[0_9px_20px_rgba(62,39,18,0.2),inset_0_1px_0_rgba(255,255,255,0.18)] transition-[background-color,opacity,transform] duration-200 ease-out active:scale-[0.96] disabled:opacity-35"
+                  aria-label={language === 'zh' ? '下一页' : 'Next chapter'}
+                >
+                  <ChevronRight size={17} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={onExploreWork || onClose}
+                  className="grid h-10 w-10 place-items-center rounded-full bg-[#3b230e] text-[#fff7e8] shadow-[0_9px_20px_rgba(62,39,18,0.2),inset_0_1px_0_rgba(255,255,255,0.18)] transition-[background-color,transform] duration-200 ease-out active:scale-[0.96]"
+                  aria-label={language === 'zh' ? '查看作品' : 'View work'}
+                >
+                  <ChevronRight size={17} />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Transition video overlay - warm dissolve */}
       <AnimatePresence>

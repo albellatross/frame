@@ -51,12 +51,12 @@ const ChapterFinalFrame: React.FC<Props> = ({ data, onClose, onPrev, onExploreWo
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative h-full w-full overflow-hidden"
+      className="relative h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain"
     >
       <video src={assetUrl('/background/03.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,251,242,0.72),rgba(255,251,242,0.18)_38%,rgba(59,35,14,0.14)_82%,rgba(59,35,14,0.24)_100%)]" />
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 flex min-h-full flex-col items-center justify-center px-6 py-28 pb-36 text-center sm:pb-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1556,17 +1556,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
         onClick={onClose}
       />
 
-      {/* Bottom sheet panel */}
+      {/* Detail panel */}
       <motion.div
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-        className="fixed inset-x-0 bottom-0 z-[60] flex flex-col"
-        style={{ top: hasReaderPages ? '24px' : '120px' }}
+        initial={hasReaderPages ? { opacity: 0, scale: 0.985 } : { y: '100%' }}
+        animate={hasReaderPages ? { opacity: 1, scale: 1 } : { y: 0 }}
+        exit={hasReaderPages ? { opacity: 0, scale: 0.985 } : { y: '100%' }}
+        transition={hasReaderPages ? { duration: 0.22, ease: [0.2, 0, 0, 1] } : { type: 'spring', damping: 30, stiffness: 300 }}
+        className={hasReaderPages ? 'fixed inset-0 z-[60] flex flex-col' : 'fixed inset-x-0 bottom-0 z-[60] flex flex-col'}
+        style={hasReaderPages ? undefined : { top: '120px' }}
       >
         {/* Rounded top container */}
-        <div className={`relative flex flex-col h-full overflow-hidden shadow-2xl ${hasReaderPages ? 'bg-[#2F3033] rounded-t-xl' : 'bg-white rounded-t-2xl'}`}>
+        <div className={`relative flex flex-col h-full overflow-hidden shadow-2xl ${hasReaderPages ? 'bg-[#202124]' : 'bg-white rounded-t-2xl'}`}>
 
           {/* Drag handle / top bar */}
           {!hasReaderPages && (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Linkedin, Mail, X, ArrowUpRight, Globe } from 'lucide-react';
+import { Briefcase, Home as HomeIcon, Linkedin, Mail, UserRound, X, ArrowUpRight, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import LanguageToggle from './LanguageToggle';
@@ -31,6 +31,18 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
       setIsMenuOpen(false);
     }
   }, [hideHeader]);
+
+  useEffect(() => {
+    const closeDesktopMenu = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    closeDesktopMenu();
+    window.addEventListener('resize', closeDesktopMenu);
+    return () => window.removeEventListener('resize', closeDesktopMenu);
+  }, []);
 
   // Smooth scroll handler
   const handleNavClick = (id: string, type: 'scroll' | 'page') => {
@@ -64,17 +76,15 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
   };
 
   const navLinks = [
-    { label: t('nav.home'), id: 'hero', type: 'scroll' as const },
-    { label: t('nav.timeline'), id: 'timeline', type: 'scroll' as const },
-    { label: t('nav.work'), id: 'work', type: 'page' as const },
-    { label: t('nav.profile'), id: 'profile', type: 'page' as const }
+    { label: t('nav.home'), id: 'hero', type: 'scroll' as const, icon: HomeIcon },
+    { label: t('nav.work'), id: 'work', type: 'page' as const, icon: Briefcase },
+    { label: t('nav.profile'), id: 'profile', type: 'page' as const, icon: UserRound }
   ];
 
   const isActive = (linkId: string) => {
     if (currentPage === 'work' && linkId === 'work') return true;
     if (currentPage === 'profile' && linkId === 'profile') return true;
-    if (currentPage === 'home' && linkId === 'hero') return !isScrolled;
-    if (currentPage === 'home' && linkId === 'timeline') return isScrolled;
+    if (currentPage === 'home' && linkId === 'hero') return true;
     return false;
   };
 
@@ -159,8 +169,10 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
                  onClick={() => setIsMenuOpen(!isMenuOpen)}
                  whileHover={{ scale: 1.05 }}
                  whileTap={{ scale: 0.96 }}
-                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 group ${
-                   isMenuOpen ? 'bg-neutral-100 rotate-90' : 'bg-transparent hover:bg-neutral-100/80'
+                 className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 group md:hidden ${
+                   isMenuOpen
+                     ? 'bg-white text-neutral-900 shadow-[0_10px_28px_rgba(54,34,16,0.14)] rotate-90'
+                     : 'bg-white/82 shadow-[0_8px_24px_rgba(54,34,16,0.1)] backdrop-blur-xl hover:bg-white'
                  }`}
                  aria-label={isMenuOpen ? 'Close navigation' : 'Open navigation'}
                  aria-expanded={isMenuOpen}
@@ -184,67 +196,86 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate, hide
             </div>
           </nav>
 
-          {/* Full Screen Menu Overlay */}
+          {/* Menu Overlay */}
           <AnimatePresence>
             {isMenuOpen && (
-              <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl flex flex-col pt-32 px-6 md:px-12 pb-12 overflow-hidden"
-          >
-             <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 h-full">
-                
-                {/* Left: Navigation List */}
-                <div className="flex flex-col justify-center space-y-2">
-                   <p className="text-[10px] sm:text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6 sm:mb-8">{t('nav.navigation')}</p>
-                   {navLinks.map((link, idx) => (
-                     <motion.button
-                       key={link.id}
-                       initial={{ opacity: 0, x: -50 }}
-                       animate={{ opacity: 1, x: 0 }}
-                       transition={{ delay: 0.1 + idx * 0.1, duration: 0.5 }}
-                       onClick={() => handleNavClick(link.id, link.type)}
-                       className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif text-neutral-900 text-left hover:text-accent hover:pl-4 sm:hover:pl-8 transition-all duration-300 group flex items-center gap-3 sm:gap-4"
-                     >
-                       <span className="text-xs sm:text-sm font-mono text-neutral-300 group-hover:text-accent/50 align-top opacity-0 group-hover:opacity-100 transition-opacity">0{idx + 1}</span>
-                       {link.label}
-                     </motion.button>
-                   ))}
-                </div>
+              <>
+                <motion.button
+                  key="mobile-menu-backdrop"
+                  type="button"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="fixed inset-0 z-40 bg-[#2f2112]/28 backdrop-blur-lg md:hidden"
+                  aria-label="Close navigation"
+                />
 
-                {/* Right: Info & Visuals */}
-                <div className="hidden md:flex flex-col justify-center border-l border-neutral-100 pl-12 lg:pl-24">
-                   <motion.div
-                     initial={{ opacity: 0, y: 20 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ delay: 0.4 }}
-                   >
-                     <p className="text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6 lg:mb-8">{t('nav.connect')}</p>
-                     
-                     <div className="space-y-4 lg:space-y-6 text-base lg:text-lg text-neutral-600">
-                        <a href="mailto:albellatross@gmail.com" className="block hover:text-neutral-900 transition-colors">albellatross@gmail.com</a>
-                        <a href="https://www.linkedin.com/in/geli-guo-239807164/" target="_blank" rel="noopener noreferrer" className="block hover:text-neutral-900 transition-colors">LinkedIn</a>
-                        <a href="https://www.behance.net/albellatrocb95" target="_blank" rel="noopener noreferrer" className="block hover:text-neutral-900 transition-colors">Behance</a>
-                     </div>
+                <motion.div
+                  key="mobile-menu"
+                  initial={{ opacity: 0, y: -12, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }}
+                  transition={{ type: 'spring', duration: 0.32, bounce: 0 }}
+                  className="fixed left-3 right-3 top-[84px] z-[45] md:hidden"
+                >
+                  <div className="rounded-[26px] bg-[#fffaf2] p-2 shadow-[0_0_0_1px_rgba(59,35,14,0.12),0_22px_54px_rgba(52,32,15,0.26),inset_0_1px_0_rgba(255,255,255,0.92)] backdrop-blur-[30px]">
+                    <div className="flex items-center justify-between px-3 pb-2 pt-2">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-neutral-400">{t('nav.navigation')}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-300">FRAME</span>
+                    </div>
 
-                     <div className="mt-16 lg:mt-24 p-6 lg:p-8 bg-neutral-50 rounded-2xl max-w-xs lg:max-w-sm">
-                        <p className="text-xs lg:text-sm text-neutral-500 italic mb-3 lg:mb-4">
-                          {t('quote.eames')}
-                        </p>
-                        <p className="text-[10px] lg:text-xs font-bold text-neutral-900 uppercase tracking-wider">{t('quote.author')}</p>
-                     </div>
-                   </motion.div>
-                </div>
-             </div>
-             
-             {/* Bottom Footer in Menu */}
-             <div className="mt-auto border-t border-neutral-100 pt-8 flex justify-between items-center text-neutral-400 text-xs uppercase tracking-widest">
-                <span>© 2024 FRAME</span>
-                <span>San Francisco, CA</span>
-             </div>
-              </motion.div>
+                    <div className="space-y-1">
+                      {navLinks.map((link) => {
+                        const Icon = link.icon;
+                        const active = isActive(link.id);
+
+                        return (
+                          <button
+                            key={link.id}
+                            type="button"
+                            onClick={() => handleNavClick(link.id, link.type)}
+                            className={`flex min-h-[56px] w-full items-center justify-between rounded-[18px] px-3.5 text-left transition-[background-color,color,transform] duration-200 ease-out active:scale-[0.96] ${
+                              active
+                                ? 'bg-[#f5efe4] text-neutral-950'
+                                : 'text-neutral-700 hover:bg-neutral-50 hover:text-neutral-950'
+                            }`}
+                          >
+                            <span className="flex min-w-0 items-center gap-3">
+                              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full ${
+                                active ? 'bg-white text-[#3b230e] shadow-[0_0_0_1px_rgba(0,0,0,0.04)]' : 'bg-neutral-100 text-neutral-500'
+                              }`}>
+                                <Icon size={17} strokeWidth={2} />
+                              </span>
+                              <span className="truncate text-[15px] font-medium">{link.label}</span>
+                            </span>
+                            <ArrowUpRight size={16} className={active ? 'text-neutral-500' : 'text-neutral-300'} />
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-2 grid grid-cols-2 gap-1 border-t border-neutral-100 pt-2">
+                      <a
+                        href="mailto:albellatross@gmail.com"
+                        className="rounded-[15px] px-3 py-2.5 text-center text-[12px] font-medium text-neutral-500 transition-[background-color,color,transform] duration-200 ease-out hover:bg-neutral-50 hover:text-neutral-900 active:scale-[0.96]"
+                      >
+                        Email
+                      </a>
+                      <a
+                        href="https://www.linkedin.com/in/geli-guo-239807164/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-[15px] px-3 py-2.5 text-center text-[12px] font-medium text-neutral-500 transition-[background-color,color,transform] duration-200 ease-out hover:bg-neutral-50 hover:text-neutral-900 active:scale-[0.96]"
+                      >
+                        LinkedIn
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+
+              </>
             )}
           </AnimatePresence>
         </>

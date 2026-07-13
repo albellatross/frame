@@ -87,8 +87,8 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
     ? `rounded-2xl bg-[#f8f3ea] p-4 text-center ${zhWalkthroughType.bodyM} text-[14px] text-neutral-600`
     : 'rounded-2xl bg-[#f8f3ea] p-4 text-center font-sans text-sm text-neutral-600';
   const bottomQuoteClass = language === 'zh'
-    ? `absolute bottom-9 left-1/2 z-10 -translate-x-1/2 text-center ${zhWalkthroughType.bodyL} text-[17px] text-white/92 drop-shadow-[0_3px_12px_rgba(0,0,0,0.22)]`
-    : 'absolute bottom-9 left-1/2 z-10 -translate-x-1/2 text-center font-sans text-base leading-relaxed text-white/92 drop-shadow-[0_3px_12px_rgba(0,0,0,0.22)]';
+    ? `absolute bottom-[112px] left-1/2 z-10 -translate-x-1/2 text-center ${zhWalkthroughType.bodyL} text-[17px] text-white/92 drop-shadow-[0_3px_12px_rgba(0,0,0,0.22)] sm:bottom-12 lg:bottom-9`
+    : 'absolute bottom-[112px] left-1/2 z-10 -translate-x-1/2 text-center font-sans text-base leading-relaxed text-white/92 drop-shadow-[0_3px_12px_rgba(0,0,0,0.22)] sm:bottom-12 lg:bottom-9';
 
   return (
     <motion.div
@@ -96,12 +96,12 @@ const ChapterVisualStudio: React.FC<Props> = ({ data, onNext, onPrev }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, x: -60 }}
       transition={{ duration: 0.6 }}
-      className="relative h-full w-full overflow-hidden"
+      className="relative h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain lg:overflow-hidden"
     >
       <video src={assetUrl('/background/05.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,250,242,0.7),rgba(255,250,242,0.16)_38%,rgba(59,35,14,0.18)_82%,rgba(59,35,14,0.26)_100%)]" />
 
-      <div className="relative z-10 h-full w-full px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pt-32">
+      <div className="relative z-10 min-h-full w-full px-6 pb-36 pt-28 sm:px-10 lg:h-full lg:px-12 lg:pb-16 lg:pt-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}

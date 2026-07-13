@@ -1800,7 +1800,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <button
             type="button"
             onClick={() => onProjectClick(project)}
-            className="absolute inset-0 z-10 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            className="absolute inset-0 z-30 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
             aria-label={`${copy.viewCase}: ${project.title}`}
           />
           <div className={cn('grid gap-4', variant === 'lead' ? 'lg:grid-cols-[minmax(0,0.98fr)_minmax(220px,0.78fr)] lg:items-center' : '')}>
@@ -1852,7 +1852,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <button
             type="button"
             onClick={() => onProjectClick(project)}
-            className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
+            className="absolute inset-0 z-30 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--work-accent)]"
             aria-label={`${copy.viewCase}: ${project.title}`}
           />
           <CoverFrame project={project} idx={idx} isZh={isZh} density="compact" />
@@ -1893,7 +1893,7 @@ const WorkPage: React.FC<WorkPageProps> = ({
           <button
             type="button"
             onClick={() => onProjectClick(project)}
-            className="absolute inset-0 z-10 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8FA3FF]"
+            className="absolute inset-0 z-30 rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#8FA3FF]"
             aria-label={`${agentCopy.viewCase}: ${getProjectTitle(project, agentRespondsInZh)}`}
           />
           <div className="grid gap-3 sm:grid-cols-[132px_minmax(0,1fr)]">

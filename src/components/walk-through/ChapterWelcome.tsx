@@ -25,8 +25,8 @@ const ChapterWelcome: React.FC<Props> = ({ data, onNext }) => {
     setTimeout(() => onNext(), 1800);
   }, [exiting, onNext]);
   const titleClass = language === 'zh'
-    ? 'max-w-3xl font-serif text-[68px] italic tracking-tight leading-[0.95] text-dark-brown sm:text-[92px] lg:text-[110px]'
-    : 'max-w-3xl font-serif text-[68px] italic tracking-tight leading-[0.95] text-dark-brown sm:text-[92px] lg:text-[110px]';
+    ? 'max-w-3xl font-serif text-[56px] italic tracking-tight leading-[0.95] text-dark-brown sm:text-[92px] lg:text-[110px]'
+    : 'max-w-3xl font-serif text-[56px] italic tracking-tight leading-[0.95] text-dark-brown sm:text-[92px] lg:text-[110px]';
   const titleLeadClass = language === 'zh'
     ? 'block font-serif text-[42px] italic tracking-tight leading-none text-dark-brown sm:text-[50px] lg:text-[58px]'
     : '';
@@ -76,7 +76,7 @@ const ChapterWelcome: React.FC<Props> = ({ data, onNext }) => {
         initial={{ opacity: 0, y: 30 }}
         animate={exiting ? { opacity: 0, y: -25 } : { opacity: 1, y: 0 }}
         transition={exiting ? { duration: 0.5, delay: 0.2, ease: 'easeIn' } : { delay: 0.3, duration: 0.8 }}
-        className="relative z-10 flex h-full flex-col items-center justify-center px-6 pl-20 text-center"
+        className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center sm:px-10 lg:px-20"
       >
         <div className="absolute left-1/2 top-1/2 -z-10 h-[380px] w-[min(92vw,920px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,251,243,0.96),rgba(255,251,243,0.52)_38%,transparent_74%)] blur-2xl" />
 

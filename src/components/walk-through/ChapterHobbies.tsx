@@ -76,12 +76,12 @@ const ChapterHobbies: React.FC<Props> = ({ data, onNext, onPrev }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, x: -60 }}
       transition={{ duration: 0.6 }}
-      className="relative h-full w-full overflow-hidden"
+      className="relative h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain lg:overflow-hidden"
     >
       <video src={assetUrl('/background/06.mp4')} autoPlay loop muted playsInline className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,250,242,0.74),rgba(255,250,242,0.2)_34%,rgba(59,35,14,0.14)_82%,rgba(59,35,14,0.22)_100%)]" />
 
-      <div className="relative z-10 h-full w-full px-6 pb-16 pt-28 sm:px-10 lg:px-12 lg:pt-32">
+      <div className="relative z-10 min-h-full w-full px-6 pb-36 pt-28 sm:px-10 lg:h-full lg:px-12 lg:pb-16 lg:pt-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
