@@ -9,6 +9,9 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 5173,
         host: '0.0.0.0',
+        allowedHosts: env.VITE_ALLOWED_HOSTS
+          ? env.VITE_ALLOWED_HOSTS.split(',').map((host) => host.trim()).filter(Boolean)
+          : undefined,
         proxy: {
           '/api': {
             target: 'http://127.0.0.1:8787',

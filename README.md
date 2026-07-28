@@ -30,6 +30,7 @@ GITHUB_TOKEN=your_github_token
 PORTFOLIO_AGENT_MODEL=openai/gpt-4.1
 PORTFOLIO_AGENT_DEEP_MODEL=openai/gpt-4.1
 PORTFOLIO_AGENT_EMBEDDING_MODEL=openai/text-embedding-3-small
+PORTFOLIO_AGENT_USE_EMBEDDINGS=false
 ```
 
 If your organization has enabled attributed GitHub Models usage, you can also add:

@@ -20,6 +20,9 @@ const GITHUB_MODELS_ORG = process.env.GITHUB_MODELS_ORG;
 const DEFAULT_MODEL = process.env.PORTFOLIO_AGENT_MODEL || (MODEL_PROVIDER === 'github' ? 'openai/gpt-4.1' : 'gpt-5.4-mini');
 const DEEP_MODEL = process.env.PORTFOLIO_AGENT_DEEP_MODEL || (MODEL_PROVIDER === 'github' ? 'openai/gpt-4.1' : 'gpt-5.5');
 const EMBEDDING_MODEL = process.env.PORTFOLIO_AGENT_EMBEDDING_MODEL || (MODEL_PROVIDER === 'github' ? 'openai/text-embedding-3-small' : 'text-embedding-3-small');
+const USE_EMBEDDINGS = process.env.PORTFOLIO_AGENT_USE_EMBEDDINGS
+  ? process.env.PORTFOLIO_AGENT_USE_EMBEDDINGS !== 'false'
+  : MODEL_PROVIDER !== 'github';
 
 const knowledge = JSON.parse(readFileSync(knowledgePath, 'utf8'));
 const documents = knowledge.documents || [];
@@ -197,7 +200,7 @@ async function embed(text) {
 }
 
 async function ensureDocumentEmbeddings() {
-  if (!isModelProviderReady()) return null;
+  if (!isModelProviderReady() || !USE_EMBEDDINGS) return null;
   if (!documentEmbeddingPromise) {
     documentEmbeddingPromise = Promise.all(
       documents.map(async (doc) => ({
@@ -218,7 +221,7 @@ async function retrieveDocuments(message, candidateProjectIds) {
     .map((doc) => ({ doc, score: keywordScore(doc, message, candidateProjectIds) }))
     .sort((a, b) => b.score - a.score);
 
-  if (!isModelProviderReady()) {
+  if (!isModelProviderReady() || !USE_EMBEDDINGS) {
     return {
       embeddingUsed: false,
       docs: keywordRanked.slice(0, 6).map((item) => item.doc),
@@ -467,6 +470,7 @@ const server = createServer(async (req, res) => {
       defaultModel: DEFAULT_MODEL,
       deepModel: DEEP_MODEL,
       embeddingModel: EMBEDDING_MODEL,
+      embeddingsEnabled: USE_EMBEDDINGS,
       documents: documents.length,
     });
     return;

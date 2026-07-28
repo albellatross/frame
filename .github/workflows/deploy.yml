@@ -24,6 +24,8 @@ jobs:
           cache: npm
       - run: npm install --legacy-peer-deps
       - run: npm run build
+        env:
+          VITE_PORTFOLIO_AGENT_API_URL: https://dance-iowa-mold-sen.trycloudflare.com/api/portfolio-agent
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
